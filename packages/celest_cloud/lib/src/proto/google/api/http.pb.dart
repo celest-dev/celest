@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/api/http.proto
-//
+// Generated from google/api/http.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -23,22 +24,21 @@ class Http extends $pb.GeneratedMessage {
     $core.Iterable<HttpRule>? rules,
     $core.bool? fullyDecodeReservedExpansion,
   }) {
-    final $result = create();
-    if (rules != null) {
-      $result.rules.addAll(rules);
-    }
-    if (fullyDecodeReservedExpansion != null) {
-      $result.fullyDecodeReservedExpansion = fullyDecodeReservedExpansion;
-    }
-    return $result;
+    final result = create();
+    if (rules != null) result.rules.addAll(rules);
+    if (fullyDecodeReservedExpansion != null)
+      result.fullyDecodeReservedExpansion = fullyDecodeReservedExpansion;
+    return result;
   }
-  Http._() : super();
-  factory Http.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Http.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Http._();
+
+  factory Http.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Http.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Http',
@@ -49,20 +49,18 @@ class Http extends $pb.GeneratedMessage {
     ..aOB(2, _omitFieldNames ? '' : 'fullyDecodeReservedExpansion')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Http clone() => Http()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Http copyWith(void Function(Http) updates) =>
       super.copyWith((message) => updates(message as Http)) as Http;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Http create() => Http._();
+  @$core.override
   Http createEmptyInstance() => create();
   static $pb.PbList<Http> createRepeated() => $pb.PbList<Http>();
   @$core.pragma('dart2js:noInline')
@@ -70,25 +68,22 @@ class Http extends $pb.GeneratedMessage {
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Http>(create);
   static Http? _defaultInstance;
 
-  ///  A list of HTTP configuration rules that apply to individual API methods.
+  /// A list of HTTP configuration rules that apply to individual API methods.
   ///
-  ///  **NOTE:** All service configuration rules follow "last one wins" order.
+  /// **NOTE:** All service configuration rules follow "last one wins" order.
   @$pb.TagNumber(1)
   $pb.PbList<HttpRule> get rules => $_getList(0);
 
-  ///  When set to true, URL path parameters will be fully URI-decoded except in
-  ///  cases of single segment matches in reserved expansion, where "%2F" will be
-  ///  left encoded.
+  /// When set to true, URL path parameters will be fully URI-decoded except in
+  /// cases of single segment matches in reserved expansion, where "%2F" will be
+  /// left encoded.
   ///
-  ///  The default behavior is to not decode RFC 6570 reserved characters in multi
-  ///  segment matches.
+  /// The default behavior is to not decode RFC 6570 reserved characters in multi
+  /// segment matches.
   @$pb.TagNumber(2)
   $core.bool get fullyDecodeReservedExpansion => $_getBF(1);
   @$pb.TagNumber(2)
-  set fullyDecodeReservedExpansion($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set fullyDecodeReservedExpansion($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
   $core.bool hasFullyDecodeReservedExpansion() => $_has(1);
   @$pb.TagNumber(2)
@@ -97,270 +92,270 @@ class Http extends $pb.GeneratedMessage {
 
 enum HttpRule_Pattern { get, put, post, delete, patch, custom, notSet }
 
-///  gRPC Transcoding
+/// gRPC Transcoding
 ///
-///  gRPC Transcoding is a feature for mapping between a gRPC method and one or
-///  more HTTP REST endpoints. It allows developers to build a single API service
-///  that supports both gRPC APIs and REST APIs. Many systems, including [Google
-///  APIs](https://github.com/googleapis/googleapis),
-///  [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC
-///  Gateway](https://github.com/grpc-ecosystem/grpc-gateway),
-///  and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature
-///  and use it for large scale production services.
+/// gRPC Transcoding is a feature for mapping between a gRPC method and one or
+/// more HTTP REST endpoints. It allows developers to build a single API service
+/// that supports both gRPC APIs and REST APIs. Many systems, including [Google
+/// APIs](https://github.com/googleapis/googleapis),
+/// [Cloud Endpoints](https://cloud.google.com/endpoints), [gRPC
+/// Gateway](https://github.com/grpc-ecosystem/grpc-gateway),
+/// and [Envoy](https://github.com/envoyproxy/envoy) proxy support this feature
+/// and use it for large scale production services.
 ///
-///  `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
-///  how different portions of the gRPC request message are mapped to the URL
-///  path, URL query parameters, and HTTP request body. It also controls how the
-///  gRPC response message is mapped to the HTTP response body. `HttpRule` is
-///  typically specified as an `google.api.http` annotation on the gRPC method.
+/// `HttpRule` defines the schema of the gRPC/REST mapping. The mapping specifies
+/// how different portions of the gRPC request message are mapped to the URL
+/// path, URL query parameters, and HTTP request body. It also controls how the
+/// gRPC response message is mapped to the HTTP response body. `HttpRule` is
+/// typically specified as an `google.api.http` annotation on the gRPC method.
 ///
-///  Each mapping specifies a URL path template and an HTTP method. The path
-///  template may refer to one or more fields in the gRPC request message, as long
-///  as each field is a non-repeated field with a primitive (non-message) type.
-///  The path template controls how fields of the request message are mapped to
-///  the URL path.
+/// Each mapping specifies a URL path template and an HTTP method. The path
+/// template may refer to one or more fields in the gRPC request message, as long
+/// as each field is a non-repeated field with a primitive (non-message) type.
+/// The path template controls how fields of the request message are mapped to
+/// the URL path.
 ///
-///  Example:
+/// Example:
 ///
-///      service Messaging {
-///        rpc GetMessage(GetMessageRequest) returns (Message) {
-///          option (google.api.http) = {
-///              get: "/v1/{name=messages/*}"
-///          };
-///        }
-///      }
-///      message GetMessageRequest {
-///        string name = 1; // Mapped to URL path.
-///      }
-///      message Message {
-///        string text = 1; // The resource content.
-///      }
+///     service Messaging {
+///       rpc GetMessage(GetMessageRequest) returns (Message) {
+///         option (google.api.http) = {
+///             get: "/v1/{name=messages/*}"
+///         };
+///       }
+///     }
+///     message GetMessageRequest {
+///       string name = 1; // Mapped to URL path.
+///     }
+///     message Message {
+///       string text = 1; // The resource content.
+///     }
 ///
-///  This enables an HTTP REST to gRPC mapping as below:
+/// This enables an HTTP REST to gRPC mapping as below:
 ///
-///  - HTTP: `GET /v1/messages/123456`
-///  - gRPC: `GetMessage(name: "messages/123456")`
+/// - HTTP: `GET /v1/messages/123456`
+/// - gRPC: `GetMessage(name: "messages/123456")`
 ///
-///  Any fields in the request message which are not bound by the path template
-///  automatically become HTTP query parameters if there is no HTTP request body.
-///  For example:
+/// Any fields in the request message which are not bound by the path template
+/// automatically become HTTP query parameters if there is no HTTP request body.
+/// For example:
 ///
-///      service Messaging {
-///        rpc GetMessage(GetMessageRequest) returns (Message) {
-///          option (google.api.http) = {
-///              get:"/v1/messages/{message_id}"
-///          };
-///        }
-///      }
-///      message GetMessageRequest {
-///        message SubMessage {
-///          string subfield = 1;
-///        }
-///        string message_id = 1; // Mapped to URL path.
-///        int64 revision = 2;    // Mapped to URL query parameter `revision`.
-///        SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.
-///      }
+///     service Messaging {
+///       rpc GetMessage(GetMessageRequest) returns (Message) {
+///         option (google.api.http) = {
+///             get:"/v1/messages/{message_id}"
+///         };
+///       }
+///     }
+///     message GetMessageRequest {
+///       message SubMessage {
+///         string subfield = 1;
+///       }
+///       string message_id = 1; // Mapped to URL path.
+///       int64 revision = 2;    // Mapped to URL query parameter `revision`.
+///       SubMessage sub = 3;    // Mapped to URL query parameter `sub.subfield`.
+///     }
 ///
-///  This enables a HTTP JSON to RPC mapping as below:
+/// This enables a HTTP JSON to RPC mapping as below:
 ///
-///  - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`
-///  - gRPC: `GetMessage(message_id: "123456" revision: 2 sub:
-///  SubMessage(subfield: "foo"))`
+/// - HTTP: `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+/// - gRPC: `GetMessage(message_id: "123456" revision: 2 sub:
+/// SubMessage(subfield: "foo"))`
 ///
-///  Note that fields which are mapped to URL query parameters must have a
-///  primitive type or a repeated primitive type or a non-repeated message type.
-///  In the case of a repeated type, the parameter can be repeated in the URL
-///  as `...?param=A&param=B`. In the case of a message type, each field of the
-///  message is mapped to a separate parameter, such as
-///  `...?foo.a=A&foo.b=B&foo.c=C`.
+/// Note that fields which are mapped to URL query parameters must have a
+/// primitive type or a repeated primitive type or a non-repeated message type.
+/// In the case of a repeated type, the parameter can be repeated in the URL
+/// as `...?param=A&param=B`. In the case of a message type, each field of the
+/// message is mapped to a separate parameter, such as
+/// `...?foo.a=A&foo.b=B&foo.c=C`.
 ///
-///  For HTTP methods that allow a request body, the `body` field
-///  specifies the mapping. Consider a REST update method on the
-///  message resource collection:
+/// For HTTP methods that allow a request body, the `body` field
+/// specifies the mapping. Consider a REST update method on the
+/// message resource collection:
 ///
-///      service Messaging {
-///        rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
-///          option (google.api.http) = {
-///            patch: "/v1/messages/{message_id}"
-///            body: "message"
-///          };
-///        }
-///      }
-///      message UpdateMessageRequest {
-///        string message_id = 1; // mapped to the URL
-///        Message message = 2;   // mapped to the body
-///      }
+///     service Messaging {
+///       rpc UpdateMessage(UpdateMessageRequest) returns (Message) {
+///         option (google.api.http) = {
+///           patch: "/v1/messages/{message_id}"
+///           body: "message"
+///         };
+///       }
+///     }
+///     message UpdateMessageRequest {
+///       string message_id = 1; // mapped to the URL
+///       Message message = 2;   // mapped to the body
+///     }
 ///
-///  The following HTTP JSON to RPC mapping is enabled, where the
-///  representation of the JSON in the request body is determined by
-///  protos JSON encoding:
+/// The following HTTP JSON to RPC mapping is enabled, where the
+/// representation of the JSON in the request body is determined by
+/// protos JSON encoding:
 ///
-///  - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
-///  - gRPC: `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+/// - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
+/// - gRPC: `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
 ///
-///  The special name `*` can be used in the body mapping to define that
-///  every field not bound by the path template should be mapped to the
-///  request body.  This enables the following alternative definition of
-///  the update method:
+/// The special name `*` can be used in the body mapping to define that
+/// every field not bound by the path template should be mapped to the
+/// request body.  This enables the following alternative definition of
+/// the update method:
 ///
-///      service Messaging {
-///        rpc UpdateMessage(Message) returns (Message) {
-///          option (google.api.http) = {
-///            patch: "/v1/messages/{message_id}"
-///            body: "*"
-///          };
-///        }
-///      }
-///      message Message {
-///        string message_id = 1;
-///        string text = 2;
-///      }
+///     service Messaging {
+///       rpc UpdateMessage(Message) returns (Message) {
+///         option (google.api.http) = {
+///           patch: "/v1/messages/{message_id}"
+///           body: "*"
+///         };
+///       }
+///     }
+///     message Message {
+///       string message_id = 1;
+///       string text = 2;
+///     }
 ///
 ///
-///  The following HTTP JSON to RPC mapping is enabled:
+/// The following HTTP JSON to RPC mapping is enabled:
 ///
-///  - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
-///  - gRPC: `UpdateMessage(message_id: "123456" text: "Hi!")`
+/// - HTTP: `PATCH /v1/messages/123456 { "text": "Hi!" }`
+/// - gRPC: `UpdateMessage(message_id: "123456" text: "Hi!")`
 ///
-///  Note that when using `*` in the body mapping, it is not possible to
-///  have HTTP parameters, as all fields not bound by the path end in
-///  the body. This makes this option more rarely used in practice when
-///  defining REST APIs. The common usage of `*` is in custom methods
-///  which don't use the URL at all for transferring data.
+/// Note that when using `*` in the body mapping, it is not possible to
+/// have HTTP parameters, as all fields not bound by the path end in
+/// the body. This makes this option more rarely used in practice when
+/// defining REST APIs. The common usage of `*` is in custom methods
+/// which don't use the URL at all for transferring data.
 ///
-///  It is possible to define multiple HTTP methods for one RPC by using
-///  the `additional_bindings` option. Example:
+/// It is possible to define multiple HTTP methods for one RPC by using
+/// the `additional_bindings` option. Example:
 ///
-///      service Messaging {
-///        rpc GetMessage(GetMessageRequest) returns (Message) {
-///          option (google.api.http) = {
-///            get: "/v1/messages/{message_id}"
-///            additional_bindings {
-///              get: "/v1/users/{user_id}/messages/{message_id}"
-///            }
-///          };
-///        }
-///      }
-///      message GetMessageRequest {
-///        string message_id = 1;
-///        string user_id = 2;
-///      }
+///     service Messaging {
+///       rpc GetMessage(GetMessageRequest) returns (Message) {
+///         option (google.api.http) = {
+///           get: "/v1/messages/{message_id}"
+///           additional_bindings {
+///             get: "/v1/users/{user_id}/messages/{message_id}"
+///           }
+///         };
+///       }
+///     }
+///     message GetMessageRequest {
+///       string message_id = 1;
+///       string user_id = 2;
+///     }
 ///
-///  This enables the following two alternative HTTP JSON to RPC mappings:
+/// This enables the following two alternative HTTP JSON to RPC mappings:
 ///
-///  - HTTP: `GET /v1/messages/123456`
-///  - gRPC: `GetMessage(message_id: "123456")`
+/// - HTTP: `GET /v1/messages/123456`
+/// - gRPC: `GetMessage(message_id: "123456")`
 ///
-///  - HTTP: `GET /v1/users/me/messages/123456`
-///  - gRPC: `GetMessage(user_id: "me" message_id: "123456")`
+/// - HTTP: `GET /v1/users/me/messages/123456`
+/// - gRPC: `GetMessage(user_id: "me" message_id: "123456")`
 ///
-///  Rules for HTTP mapping
+/// Rules for HTTP mapping
 ///
-///  1. Leaf request fields (recursive expansion nested messages in the request
-///     message) are classified into three categories:
-///     - Fields referred by the path template. They are passed via the URL path.
-///     - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They
-///     are passed via the HTTP
-///       request body.
-///     - All other fields are passed via the URL query parameters, and the
-///       parameter name is the field path in the request message. A repeated
-///       field can be represented as multiple query parameters under the same
-///       name.
-///   2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL
-///   query parameter, all fields
-///      are passed via URL path and HTTP request body.
-///   3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP
-///   request body, all
-///      fields are passed via URL path and URL query parameters.
+/// 1. Leaf request fields (recursive expansion nested messages in the request
+///    message) are classified into three categories:
+///    - Fields referred by the path template. They are passed via the URL path.
+///    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They
+///    are passed via the HTTP
+///      request body.
+///    - All other fields are passed via the URL query parameters, and the
+///      parameter name is the field path in the request message. A repeated
+///      field can be represented as multiple query parameters under the same
+///      name.
+///  2. If [HttpRule.body][google.api.HttpRule.body] is "*", there is no URL
+///  query parameter, all fields
+///     are passed via URL path and HTTP request body.
+///  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP
+///  request body, all
+///     fields are passed via URL path and URL query parameters.
 ///
-///  Path template syntax
+/// Path template syntax
 ///
-///      Template = "/" Segments [ Verb ] ;
-///      Segments = Segment { "/" Segment } ;
-///      Segment  = "*" | "**" | LITERAL | Variable ;
-///      Variable = "{" FieldPath [ "=" Segments ] "}" ;
-///      FieldPath = IDENT { "." IDENT } ;
-///      Verb     = ":" LITERAL ;
+///     Template = "/" Segments [ Verb ] ;
+///     Segments = Segment { "/" Segment } ;
+///     Segment  = "*" | "**" | LITERAL | Variable ;
+///     Variable = "{" FieldPath [ "=" Segments ] "}" ;
+///     FieldPath = IDENT { "." IDENT } ;
+///     Verb     = ":" LITERAL ;
 ///
-///  The syntax `*` matches a single URL path segment. The syntax `**` matches
-///  zero or more URL path segments, which must be the last part of the URL path
-///  except the `Verb`.
+/// The syntax `*` matches a single URL path segment. The syntax `**` matches
+/// zero or more URL path segments, which must be the last part of the URL path
+/// except the `Verb`.
 ///
-///  The syntax `Variable` matches part of the URL path as specified by its
-///  template. A variable template must not contain other variables. If a variable
-///  matches a single path segment, its template may be omitted, e.g. `{var}`
-///  is equivalent to `{var=*}`.
+/// The syntax `Variable` matches part of the URL path as specified by its
+/// template. A variable template must not contain other variables. If a variable
+/// matches a single path segment, its template may be omitted, e.g. `{var}`
+/// is equivalent to `{var=*}`.
 ///
-///  The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`
-///  contains any reserved character, such characters should be percent-encoded
-///  before the matching.
+/// The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`
+/// contains any reserved character, such characters should be percent-encoded
+/// before the matching.
 ///
-///  If a variable contains exactly one path segment, such as `"{var}"` or
-///  `"{var=*}"`, when such a variable is expanded into a URL path on the client
-///  side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The
-///  server side does the reverse decoding. Such variables show up in the
-///  [Discovery
-///  Document](https://developers.google.com/discovery/v1/reference/apis) as
-///  `{var}`.
+/// If a variable contains exactly one path segment, such as `"{var}"` or
+/// `"{var=*}"`, when such a variable is expanded into a URL path on the client
+/// side, all characters except `[-_.~0-9a-zA-Z]` are percent-encoded. The
+/// server side does the reverse decoding. Such variables show up in the
+/// [Discovery
+/// Document](https://developers.google.com/discovery/v1/reference/apis) as
+/// `{var}`.
 ///
-///  If a variable contains multiple path segments, such as `"{var=foo/*}"`
-///  or `"{var=**}"`, when such a variable is expanded into a URL path on the
-///  client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.
-///  The server side does the reverse decoding, except "%2F" and "%2f" are left
-///  unchanged. Such variables show up in the
-///  [Discovery
-///  Document](https://developers.google.com/discovery/v1/reference/apis) as
-///  `{+var}`.
+/// If a variable contains multiple path segments, such as `"{var=foo/*}"`
+/// or `"{var=**}"`, when such a variable is expanded into a URL path on the
+/// client side, all characters except `[-_.~/0-9a-zA-Z]` are percent-encoded.
+/// The server side does the reverse decoding, except "%2F" and "%2f" are left
+/// unchanged. Such variables show up in the
+/// [Discovery
+/// Document](https://developers.google.com/discovery/v1/reference/apis) as
+/// `{+var}`.
 ///
-///  Using gRPC API Service Configuration
+/// Using gRPC API Service Configuration
 ///
-///  gRPC API Service Configuration (service config) is a configuration language
-///  for configuring a gRPC service to become a user-facing product. The
-///  service config is simply the YAML representation of the `google.api.Service`
-///  proto message.
+/// gRPC API Service Configuration (service config) is a configuration language
+/// for configuring a gRPC service to become a user-facing product. The
+/// service config is simply the YAML representation of the `google.api.Service`
+/// proto message.
 ///
-///  As an alternative to annotating your proto file, you can configure gRPC
-///  transcoding in your service config YAML files. You do this by specifying a
-///  `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same
-///  effect as the proto annotation. This can be particularly useful if you
-///  have a proto that is reused in multiple services. Note that any transcoding
-///  specified in the service config will override any matching transcoding
-///  configuration in the proto.
+/// As an alternative to annotating your proto file, you can configure gRPC
+/// transcoding in your service config YAML files. You do this by specifying a
+/// `HttpRule` that maps the gRPC method to a REST endpoint, achieving the same
+/// effect as the proto annotation. This can be particularly useful if you
+/// have a proto that is reused in multiple services. Note that any transcoding
+/// specified in the service config will override any matching transcoding
+/// configuration in the proto.
 ///
-///  The following example selects a gRPC method and applies an `HttpRule` to it:
+/// The following example selects a gRPC method and applies an `HttpRule` to it:
 ///
-///      http:
-///        rules:
-///          - selector: example.v1.Messaging.GetMessage
-///            get: /v1/messages/{message_id}/{sub.subfield}
+///     http:
+///       rules:
+///         - selector: example.v1.Messaging.GetMessage
+///           get: /v1/messages/{message_id}/{sub.subfield}
 ///
-///  Special notes
+/// Special notes
 ///
-///  When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the
-///  proto to JSON conversion must follow the [proto3
-///  specification](https://developers.google.com/protocol-buffers/docs/proto3#json).
+/// When gRPC Transcoding is used to map a gRPC to JSON REST endpoints, the
+/// proto to JSON conversion must follow the [proto3
+/// specification](https://developers.google.com/protocol-buffers/docs/proto3#json).
 ///
-///  While the single segment variable follows the semantics of
-///  [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
-///  Expansion, the multi segment variable **does not** follow RFC 6570 Section
-///  3.2.3 Reserved Expansion. The reason is that the Reserved Expansion
-///  does not expand special characters like `?` and `#`, which would lead
-///  to invalid URLs. As the result, gRPC Transcoding uses a custom encoding
-///  for multi segment variables.
+/// While the single segment variable follows the semantics of
+/// [RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2 Simple String
+/// Expansion, the multi segment variable **does not** follow RFC 6570 Section
+/// 3.2.3 Reserved Expansion. The reason is that the Reserved Expansion
+/// does not expand special characters like `?` and `#`, which would lead
+/// to invalid URLs. As the result, gRPC Transcoding uses a custom encoding
+/// for multi segment variables.
 ///
-///  The path variables **must not** refer to any repeated or mapped field,
-///  because client libraries are not capable of handling such variable expansion.
+/// The path variables **must not** refer to any repeated or mapped field,
+/// because client libraries are not capable of handling such variable expansion.
 ///
-///  The path variables **must not** capture the leading "/" character. The reason
-///  is that the most common use case "{var}" does not capture the leading "/"
-///  character. For consistency, all path variables must share the same behavior.
+/// The path variables **must not** capture the leading "/" character. The reason
+/// is that the most common use case "{var}" does not capture the leading "/"
+/// character. For consistency, all path variables must share the same behavior.
 ///
-///  Repeated message fields must not be mapped to URL query parameters, because
-///  no client library can support such complicated mapping.
+/// Repeated message fields must not be mapped to URL query parameters, because
+/// no client library can support such complicated mapping.
 ///
-///  If an API needs to use a JSON array for request or response body, it can map
-///  the request or response body to a repeated field. However, some gRPC
-///  Transcoding implementations may not support this feature.
+/// If an API needs to use a JSON array for request or response body, it can map
+/// the request or response body to a repeated field. However, some gRPC
+/// Transcoding implementations may not support this feature.
 class HttpRule extends $pb.GeneratedMessage {
   factory HttpRule({
     $core.String? selector,
@@ -374,46 +369,29 @@ class HttpRule extends $pb.GeneratedMessage {
     $core.Iterable<HttpRule>? additionalBindings,
     $core.String? responseBody,
   }) {
-    final $result = create();
-    if (selector != null) {
-      $result.selector = selector;
-    }
-    if (get != null) {
-      $result.get = get;
-    }
-    if (put != null) {
-      $result.put = put;
-    }
-    if (post != null) {
-      $result.post = post;
-    }
-    if (delete != null) {
-      $result.delete = delete;
-    }
-    if (patch != null) {
-      $result.patch = patch;
-    }
-    if (body != null) {
-      $result.body = body;
-    }
-    if (custom != null) {
-      $result.custom = custom;
-    }
-    if (additionalBindings != null) {
-      $result.additionalBindings.addAll(additionalBindings);
-    }
-    if (responseBody != null) {
-      $result.responseBody = responseBody;
-    }
-    return $result;
+    final result = create();
+    if (selector != null) result.selector = selector;
+    if (get != null) result.get = get;
+    if (put != null) result.put = put;
+    if (post != null) result.post = post;
+    if (delete != null) result.delete = delete;
+    if (patch != null) result.patch = patch;
+    if (body != null) result.body = body;
+    if (custom != null) result.custom = custom;
+    if (additionalBindings != null)
+      result.additionalBindings.addAll(additionalBindings);
+    if (responseBody != null) result.responseBody = responseBody;
+    return result;
   }
-  HttpRule._() : super();
-  factory HttpRule.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory HttpRule.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  HttpRule._();
+
+  factory HttpRule.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory HttpRule.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, HttpRule_Pattern> _HttpRule_PatternByTag = {
     2: HttpRule_Pattern.get,
@@ -444,20 +422,18 @@ class HttpRule extends $pb.GeneratedMessage {
     ..aOS(12, _omitFieldNames ? '' : 'responseBody')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   HttpRule clone() => HttpRule()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   HttpRule copyWith(void Function(HttpRule) updates) =>
       super.copyWith((message) => updates(message as HttpRule)) as HttpRule;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static HttpRule create() => HttpRule._();
+  @$core.override
   HttpRule createEmptyInstance() => create();
   static $pb.PbList<HttpRule> createRepeated() => $pb.PbList<HttpRule>();
   @$core.pragma('dart2js:noInline')
@@ -468,17 +444,14 @@ class HttpRule extends $pb.GeneratedMessage {
   HttpRule_Pattern whichPattern() => _HttpRule_PatternByTag[$_whichOneof(0)]!;
   void clearPattern() => $_clearField($_whichOneof(0));
 
-  ///  Selects a method to which this rule applies.
+  /// Selects a method to which this rule applies.
   ///
-  ///  Refer to [selector][google.api.DocumentationRule.selector] for syntax
-  ///  details.
+  /// Refer to [selector][google.api.DocumentationRule.selector] for syntax
+  /// details.
   @$pb.TagNumber(1)
   $core.String get selector => $_getSZ(0);
   @$pb.TagNumber(1)
-  set selector($core.String v) {
-    $_setString(0, v);
-  }
-
+  set selector($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSelector() => $_has(0);
   @$pb.TagNumber(1)
@@ -489,10 +462,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get get => $_getSZ(1);
   @$pb.TagNumber(2)
-  set get($core.String v) {
-    $_setString(1, v);
-  }
-
+  set get($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasGet() => $_has(1);
   @$pb.TagNumber(2)
@@ -502,10 +472,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get put => $_getSZ(2);
   @$pb.TagNumber(3)
-  set put($core.String v) {
-    $_setString(2, v);
-  }
-
+  set put($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasPut() => $_has(2);
   @$pb.TagNumber(3)
@@ -515,10 +482,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get post => $_getSZ(3);
   @$pb.TagNumber(4)
-  set post($core.String v) {
-    $_setString(3, v);
-  }
-
+  set post($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasPost() => $_has(3);
   @$pb.TagNumber(4)
@@ -528,10 +492,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get delete => $_getSZ(4);
   @$pb.TagNumber(5)
-  set delete($core.String v) {
-    $_setString(4, v);
-  }
-
+  set delete($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasDelete() => $_has(4);
   @$pb.TagNumber(5)
@@ -541,28 +502,22 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get patch => $_getSZ(5);
   @$pb.TagNumber(6)
-  set patch($core.String v) {
-    $_setString(5, v);
-  }
-
+  set patch($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasPatch() => $_has(5);
   @$pb.TagNumber(6)
   void clearPatch() => $_clearField(6);
 
-  ///  The name of the request field whose value is mapped to the HTTP request
-  ///  body, or `*` for mapping all request fields not captured by the path
-  ///  pattern to the HTTP body, or omitted for not having any HTTP request body.
+  /// The name of the request field whose value is mapped to the HTTP request
+  /// body, or `*` for mapping all request fields not captured by the path
+  /// pattern to the HTTP body, or omitted for not having any HTTP request body.
   ///
-  ///  NOTE: the referred field must be present at the top-level of the request
-  ///  message type.
+  /// NOTE: the referred field must be present at the top-level of the request
+  /// message type.
   @$pb.TagNumber(7)
   $core.String get body => $_getSZ(6);
   @$pb.TagNumber(7)
-  set body($core.String v) {
-    $_setString(6, v);
-  }
-
+  set body($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
   $core.bool hasBody() => $_has(6);
   @$pb.TagNumber(7)
@@ -575,10 +530,7 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   CustomHttpPattern get custom => $_getN(7);
   @$pb.TagNumber(8)
-  set custom(CustomHttpPattern v) {
-    $_setField(8, v);
-  }
-
+  set custom(CustomHttpPattern value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasCustom() => $_has(7);
   @$pb.TagNumber(8)
@@ -592,19 +544,16 @@ class HttpRule extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $pb.PbList<HttpRule> get additionalBindings => $_getList(8);
 
-  ///  Optional. The name of the response field whose value is mapped to the HTTP
-  ///  response body. When omitted, the entire response message will be used
-  ///  as the HTTP response body.
+  /// Optional. The name of the response field whose value is mapped to the HTTP
+  /// response body. When omitted, the entire response message will be used
+  /// as the HTTP response body.
   ///
-  ///  NOTE: The referred field must be present at the top-level of the response
-  ///  message type.
+  /// NOTE: The referred field must be present at the top-level of the response
+  /// message type.
   @$pb.TagNumber(12)
   $core.String get responseBody => $_getSZ(9);
   @$pb.TagNumber(12)
-  set responseBody($core.String v) {
-    $_setString(9, v);
-  }
-
+  set responseBody($core.String value) => $_setString(9, value);
   @$pb.TagNumber(12)
   $core.bool hasResponseBody() => $_has(9);
   @$pb.TagNumber(12)
@@ -617,22 +566,20 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
     $core.String? kind,
     $core.String? path,
   }) {
-    final $result = create();
-    if (kind != null) {
-      $result.kind = kind;
-    }
-    if (path != null) {
-      $result.path = path;
-    }
-    return $result;
+    final result = create();
+    if (kind != null) result.kind = kind;
+    if (path != null) result.path = path;
+    return result;
   }
-  CustomHttpPattern._() : super();
-  factory CustomHttpPattern.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CustomHttpPattern.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CustomHttpPattern._();
+
+  factory CustomHttpPattern.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CustomHttpPattern.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CustomHttpPattern',
@@ -642,21 +589,19 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'path')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CustomHttpPattern clone() => CustomHttpPattern()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CustomHttpPattern copyWith(void Function(CustomHttpPattern) updates) =>
       super.copyWith((message) => updates(message as CustomHttpPattern))
           as CustomHttpPattern;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CustomHttpPattern create() => CustomHttpPattern._();
+  @$core.override
   CustomHttpPattern createEmptyInstance() => create();
   static $pb.PbList<CustomHttpPattern> createRepeated() =>
       $pb.PbList<CustomHttpPattern>();
@@ -669,10 +614,7 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get kind => $_getSZ(0);
   @$pb.TagNumber(1)
-  set kind($core.String v) {
-    $_setString(0, v);
-  }
-
+  set kind($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasKind() => $_has(0);
   @$pb.TagNumber(1)
@@ -682,16 +624,14 @@ class CustomHttpPattern extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get path => $_getSZ(1);
   @$pb.TagNumber(2)
-  set path($core.String v) {
-    $_setString(1, v);
-  }
-
+  set path($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
   void clearPath() => $_clearField(2);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

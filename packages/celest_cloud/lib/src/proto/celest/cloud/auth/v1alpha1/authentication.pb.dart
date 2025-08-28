@@ -1,24 +1,24 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/auth/v1alpha1/authentication.proto
-//
+// Generated from celest/cloud/auth/v1alpha1/authentication.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import '../../../../google/protobuf/empty.pb.dart' as $1;
-import '../../../../google/protobuf/struct.pb.dart' as $11;
-import '../../../../google/protobuf/timestamp.pb.dart' as $9;
+import '../../../../google/protobuf/struct.pb.dart' as $4;
+import '../../../../google/protobuf/timestamp.pb.dart' as $2;
 import 'authentication.pbenum.dart';
-import 'users.pb.dart' as $2;
-import 'users.pbenum.dart' as $2;
+import 'users.pb.dart' as $3;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
@@ -32,42 +32,30 @@ class Session extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? sessionId,
     $core.String? sessionToken,
-    $9.Timestamp? expireTime,
+    $2.Timestamp? expireTime,
     AuthenticationSuccess? success,
     AuthenticationStep? nextStep,
     SessionClient? client,
   }) {
-    final $result = create();
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (sessionId != null) {
-      $result.sessionId = sessionId;
-    }
-    if (sessionToken != null) {
-      $result.sessionToken = sessionToken;
-    }
-    if (expireTime != null) {
-      $result.expireTime = expireTime;
-    }
-    if (success != null) {
-      $result.success = success;
-    }
-    if (nextStep != null) {
-      $result.nextStep = nextStep;
-    }
-    if (client != null) {
-      $result.client = client;
-    }
-    return $result;
+    final result = create();
+    if (parent != null) result.parent = parent;
+    if (sessionId != null) result.sessionId = sessionId;
+    if (sessionToken != null) result.sessionToken = sessionToken;
+    if (expireTime != null) result.expireTime = expireTime;
+    if (success != null) result.success = success;
+    if (nextStep != null) result.nextStep = nextStep;
+    if (client != null) result.client = client;
+    return result;
   }
-  Session._() : super();
-  factory Session.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Session.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Session._();
+
+  factory Session.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Session.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Session_State> _Session_StateByTag = {
     5: Session_State.success,
@@ -83,8 +71,8 @@ class Session extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'parent')
     ..aOS(2, _omitFieldNames ? '' : 'sessionId')
     ..aOS(3, _omitFieldNames ? '' : 'sessionToken')
-    ..aOM<$9.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$2.Timestamp>(4, _omitFieldNames ? '' : 'expireTime',
+        subBuilder: $2.Timestamp.create)
     ..aOM<AuthenticationSuccess>(5, _omitFieldNames ? '' : 'success',
         subBuilder: AuthenticationSuccess.create)
     ..aOM<AuthenticationStep>(6, _omitFieldNames ? '' : 'nextStep',
@@ -93,20 +81,18 @@ class Session extends $pb.GeneratedMessage {
         subBuilder: SessionClient.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Session clone() => Session()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Session copyWith(void Function(Session) updates) =>
       super.copyWith((message) => updates(message as Session)) as Session;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Session create() => Session._();
+  @$core.override
   Session createEmptyInstance() => create();
   static $pb.PbList<Session> createRepeated() => $pb.PbList<Session>();
   @$core.pragma('dart2js:noInline')
@@ -121,10 +107,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
-  set parent($core.String v) {
-    $_setString(0, v);
-  }
-
+  set parent($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
@@ -134,25 +117,19 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get sessionId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set sessionId($core.String v) {
-    $_setString(1, v);
-  }
-
+  set sessionId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasSessionId() => $_has(1);
   @$pb.TagNumber(2)
   void clearSessionId() => $_clearField(2);
 
-  ///  A token to continue the authentication operation.
+  /// A token to continue the authentication operation.
   ///
-  ///  This token is valid for a limited time and must be passed to `ContinueSession`.
+  /// This token is valid for a limited time and must be passed to `ContinueSession`.
   @$pb.TagNumber(3)
   $core.String get sessionToken => $_getSZ(2);
   @$pb.TagNumber(3)
-  set sessionToken($core.String v) {
-    $_setString(2, v);
-  }
-
+  set sessionToken($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasSessionToken() => $_has(2);
   @$pb.TagNumber(3)
@@ -160,27 +137,21 @@ class Session extends $pb.GeneratedMessage {
 
   /// Required. The time the flow will expire.
   @$pb.TagNumber(4)
-  $9.Timestamp get expireTime => $_getN(3);
+  $2.Timestamp get expireTime => $_getN(3);
   @$pb.TagNumber(4)
-  set expireTime($9.Timestamp v) {
-    $_setField(4, v);
-  }
-
+  set expireTime($2.Timestamp value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasExpireTime() => $_has(3);
   @$pb.TagNumber(4)
   void clearExpireTime() => $_clearField(4);
   @$pb.TagNumber(4)
-  $9.Timestamp ensureExpireTime() => $_ensure(3);
+  $2.Timestamp ensureExpireTime() => $_ensure(3);
 
   /// The authentication operation was successful.
   @$pb.TagNumber(5)
   AuthenticationSuccess get success => $_getN(4);
   @$pb.TagNumber(5)
-  set success(AuthenticationSuccess v) {
-    $_setField(5, v);
-  }
-
+  set success(AuthenticationSuccess value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasSuccess() => $_has(4);
   @$pb.TagNumber(5)
@@ -188,16 +159,13 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   AuthenticationSuccess ensureSuccess() => $_ensure(4);
 
-  ///  Further action is needed to complete the authentication.
+  /// Further action is needed to complete the authentication.
   ///
-  ///  Fill in the required fields and call `ContinueSession` with the same `session_id`.
+  /// Fill in the required fields and call `ContinueSession` with the same `session_id`.
   @$pb.TagNumber(6)
   AuthenticationStep get nextStep => $_getN(5);
   @$pb.TagNumber(6)
-  set nextStep(AuthenticationStep v) {
-    $_setField(6, v);
-  }
-
+  set nextStep(AuthenticationStep value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasNextStep() => $_has(5);
   @$pb.TagNumber(6)
@@ -209,10 +177,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   SessionClient get client => $_getN(6);
   @$pb.TagNumber(7)
-  set client(SessionClient v) {
-    $_setField(7, v);
-  }
-
+  set client(SessionClient value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasClient() => $_has(6);
   @$pb.TagNumber(7)
@@ -228,25 +193,21 @@ class SessionClient extends $pb.GeneratedMessage {
     ClientType? clientType,
     SessionCallbacks? callbacks,
   }) {
-    final $result = create();
-    if (clientId != null) {
-      $result.clientId = clientId;
-    }
-    if (clientType != null) {
-      $result.clientType = clientType;
-    }
-    if (callbacks != null) {
-      $result.callbacks = callbacks;
-    }
-    return $result;
+    final result = create();
+    if (clientId != null) result.clientId = clientId;
+    if (clientType != null) result.clientType = clientType;
+    if (callbacks != null) result.callbacks = callbacks;
+    return result;
   }
-  SessionClient._() : super();
-  factory SessionClient.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SessionClient.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SessionClient._();
+
+  factory SessionClient.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SessionClient.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionClient',
@@ -262,21 +223,19 @@ class SessionClient extends $pb.GeneratedMessage {
         subBuilder: SessionCallbacks.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionClient clone() => SessionClient()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionClient copyWith(void Function(SessionClient) updates) =>
       super.copyWith((message) => updates(message as SessionClient))
           as SessionClient;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SessionClient create() => SessionClient._();
+  @$core.override
   SessionClient createEmptyInstance() => create();
   static $pb.PbList<SessionClient> createRepeated() =>
       $pb.PbList<SessionClient>();
@@ -289,10 +248,7 @@ class SessionClient extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get clientId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set clientId($core.String v) {
-    $_setString(0, v);
-  }
-
+  set clientId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasClientId() => $_has(0);
   @$pb.TagNumber(1)
@@ -302,10 +258,7 @@ class SessionClient extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ClientType get clientType => $_getN(1);
   @$pb.TagNumber(2)
-  set clientType(ClientType v) {
-    $_setField(2, v);
-  }
-
+  set clientType(ClientType value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasClientType() => $_has(1);
   @$pb.TagNumber(2)
@@ -315,10 +268,7 @@ class SessionClient extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   SessionCallbacks get callbacks => $_getN(2);
   @$pb.TagNumber(3)
-  set callbacks(SessionCallbacks v) {
-    $_setField(3, v);
-  }
-
+  set callbacks(SessionCallbacks value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasCallbacks() => $_has(2);
   @$pb.TagNumber(3)
@@ -333,22 +283,20 @@ class SessionCallbacks extends $pb.GeneratedMessage {
     $core.String? successUri,
     $core.String? errorUri,
   }) {
-    final $result = create();
-    if (successUri != null) {
-      $result.successUri = successUri;
-    }
-    if (errorUri != null) {
-      $result.errorUri = errorUri;
-    }
-    return $result;
+    final result = create();
+    if (successUri != null) result.successUri = successUri;
+    if (errorUri != null) result.errorUri = errorUri;
+    return result;
   }
-  SessionCallbacks._() : super();
-  factory SessionCallbacks.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SessionCallbacks.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SessionCallbacks._();
+
+  factory SessionCallbacks.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SessionCallbacks.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionCallbacks',
@@ -359,21 +307,19 @@ class SessionCallbacks extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'errorUri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionCallbacks clone() => SessionCallbacks()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionCallbacks copyWith(void Function(SessionCallbacks) updates) =>
       super.copyWith((message) => updates(message as SessionCallbacks))
           as SessionCallbacks;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SessionCallbacks create() => SessionCallbacks._();
+  @$core.override
   SessionCallbacks createEmptyInstance() => create();
   static $pb.PbList<SessionCallbacks> createRepeated() =>
       $pb.PbList<SessionCallbacks>();
@@ -386,25 +332,19 @@ class SessionCallbacks extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get successUri => $_getSZ(0);
   @$pb.TagNumber(1)
-  set successUri($core.String v) {
-    $_setString(0, v);
-  }
-
+  set successUri($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSuccessUri() => $_has(0);
   @$pb.TagNumber(1)
   void clearSuccessUri() => $_clearField(1);
 
-  ///  Optional. The URI to redirect to upon an error.
+  /// Optional. The URI to redirect to upon an error.
   ///
-  ///  If not provided, the user will be redirected to the success URL with an error query parameter.
+  /// If not provided, the user will be redirected to the success URL with an error query parameter.
   @$pb.TagNumber(2)
   $core.String get errorUri => $_getSZ(1);
   @$pb.TagNumber(2)
-  set errorUri($core.String v) {
-    $_setString(1, v);
-  }
-
+  set errorUri($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasErrorUri() => $_has(1);
   @$pb.TagNumber(2)
@@ -422,31 +362,23 @@ class StartSessionRequest extends $pb.GeneratedMessage {
     AuthenticationFactorIdp? idp,
     SessionClient? client,
   }) {
-    final $result = create();
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (emailOtp != null) {
-      $result.emailOtp = emailOtp;
-    }
-    if (smsOtp != null) {
-      $result.smsOtp = smsOtp;
-    }
-    if (idp != null) {
-      $result.idp = idp;
-    }
-    if (client != null) {
-      $result.client = client;
-    }
-    return $result;
+    final result = create();
+    if (parent != null) result.parent = parent;
+    if (emailOtp != null) result.emailOtp = emailOtp;
+    if (smsOtp != null) result.smsOtp = smsOtp;
+    if (idp != null) result.idp = idp;
+    if (client != null) result.client = client;
+    return result;
   }
-  StartSessionRequest._() : super();
-  factory StartSessionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory StartSessionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  StartSessionRequest._();
+
+  factory StartSessionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StartSessionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, StartSessionRequest_Factor>
       _StartSessionRequest_FactorByTag = {
@@ -472,21 +404,19 @@ class StartSessionRequest extends $pb.GeneratedMessage {
         subBuilder: SessionClient.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StartSessionRequest clone() => StartSessionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StartSessionRequest copyWith(void Function(StartSessionRequest) updates) =>
       super.copyWith((message) => updates(message as StartSessionRequest))
           as StartSessionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static StartSessionRequest create() => StartSessionRequest._();
+  @$core.override
   StartSessionRequest createEmptyInstance() => create();
   static $pb.PbList<StartSessionRequest> createRepeated() =>
       $pb.PbList<StartSessionRequest>();
@@ -499,18 +429,15 @@ class StartSessionRequest extends $pb.GeneratedMessage {
       _StartSessionRequest_FactorByTag[$_whichOneof(0)]!;
   void clearFactor() => $_clearField($_whichOneof(0));
 
-  ///  Optional. The parent resource in which the authentication session will be created.
+  /// Optional. The parent resource in which the authentication session will be created.
   ///
-  ///  If not provided, the session will be created in the root service context.
+  /// If not provided, the session will be created in the root service context.
   ///
-  ///  Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`.
+  /// Format: `organizations/{organization}` or `organizations/{organization}/projects/{project}`.
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
-  set parent($core.String v) {
-    $_setString(0, v);
-  }
-
+  set parent($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
@@ -520,10 +447,7 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   AuthenticationFactorEmailOtp get emailOtp => $_getN(1);
   @$pb.TagNumber(2)
-  set emailOtp(AuthenticationFactorEmailOtp v) {
-    $_setField(2, v);
-  }
-
+  set emailOtp(AuthenticationFactorEmailOtp value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasEmailOtp() => $_has(1);
   @$pb.TagNumber(2)
@@ -535,10 +459,7 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   AuthenticationFactorSmsOtp get smsOtp => $_getN(2);
   @$pb.TagNumber(3)
-  set smsOtp(AuthenticationFactorSmsOtp v) {
-    $_setField(3, v);
-  }
-
+  set smsOtp(AuthenticationFactorSmsOtp value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasSmsOtp() => $_has(2);
   @$pb.TagNumber(3)
@@ -550,10 +471,7 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   AuthenticationFactorIdp get idp => $_getN(3);
   @$pb.TagNumber(4)
-  set idp(AuthenticationFactorIdp v) {
-    $_setField(4, v);
-  }
-
+  set idp(AuthenticationFactorIdp value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasIdp() => $_has(3);
   @$pb.TagNumber(4)
@@ -565,10 +483,7 @@ class StartSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   SessionClient get client => $_getN(4);
   @$pb.TagNumber(5)
-  set client(SessionClient v) {
-    $_setField(5, v);
-  }
-
+  set client(SessionClient value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasClient() => $_has(4);
   @$pb.TagNumber(5)
@@ -585,22 +500,21 @@ class AuthenticationStep extends $pb.GeneratedMessage {
     AuthenticationFactor? needsProof,
     AuthenticationPendingConfirmation? pendingConfirmation,
   }) {
-    final $result = create();
-    if (needsProof != null) {
-      $result.needsProof = needsProof;
-    }
-    if (pendingConfirmation != null) {
-      $result.pendingConfirmation = pendingConfirmation;
-    }
-    return $result;
+    final result = create();
+    if (needsProof != null) result.needsProof = needsProof;
+    if (pendingConfirmation != null)
+      result.pendingConfirmation = pendingConfirmation;
+    return result;
   }
-  AuthenticationStep._() : super();
-  factory AuthenticationStep.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationStep.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationStep._();
+
+  factory AuthenticationStep.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationStep.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, AuthenticationStep_Step>
       _AuthenticationStep_StepByTag = {
@@ -621,21 +535,19 @@ class AuthenticationStep extends $pb.GeneratedMessage {
         subBuilder: AuthenticationPendingConfirmation.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationStep clone() => AuthenticationStep()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationStep copyWith(void Function(AuthenticationStep) updates) =>
       super.copyWith((message) => updates(message as AuthenticationStep))
           as AuthenticationStep;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationStep create() => AuthenticationStep._();
+  @$core.override
   AuthenticationStep createEmptyInstance() => create();
   static $pb.PbList<AuthenticationStep> createRepeated() =>
       $pb.PbList<AuthenticationStep>();
@@ -652,10 +564,7 @@ class AuthenticationStep extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   AuthenticationFactor get needsProof => $_getN(0);
   @$pb.TagNumber(3)
-  set needsProof(AuthenticationFactor v) {
-    $_setField(3, v);
-  }
-
+  set needsProof(AuthenticationFactor value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasNeedsProof() => $_has(0);
   @$pb.TagNumber(3)
@@ -663,17 +572,15 @@ class AuthenticationStep extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   AuthenticationFactor ensureNeedsProof() => $_ensure(0);
 
-  ///  The authentication operation needs confirmation.
+  /// The authentication operation needs confirmation.
   ///
-  ///  Typically this happens when no user exists with the provided identity or when the
-  ///  provided identity matches an existing one but they are not yet linked.
+  /// Typically this happens when no user exists with the provided identity or when the
+  /// provided identity matches an existing one but they are not yet linked.
   @$pb.TagNumber(7)
   AuthenticationPendingConfirmation get pendingConfirmation => $_getN(1);
   @$pb.TagNumber(7)
-  set pendingConfirmation(AuthenticationPendingConfirmation v) {
-    $_setField(7, v);
-  }
-
+  set pendingConfirmation(AuthenticationPendingConfirmation value) =>
+      $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasPendingConfirmation() => $_has(1);
   @$pb.TagNumber(7)
@@ -689,22 +596,20 @@ class AuthenticationFactorEmailOtp extends $pb.GeneratedMessage {
     $core.String? email,
     $core.String? code,
   }) {
-    final $result = create();
-    if (email != null) {
-      $result.email = email;
-    }
-    if (code != null) {
-      $result.code = code;
-    }
-    return $result;
+    final result = create();
+    if (email != null) result.email = email;
+    if (code != null) result.code = code;
+    return result;
   }
-  AuthenticationFactorEmailOtp._() : super();
-  factory AuthenticationFactorEmailOtp.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationFactorEmailOtp.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationFactorEmailOtp._();
+
+  factory AuthenticationFactorEmailOtp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationFactorEmailOtp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AuthenticationFactorEmailOtp',
@@ -715,25 +620,23 @@ class AuthenticationFactorEmailOtp extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'code')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorEmailOtp clone() =>
       AuthenticationFactorEmailOtp()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorEmailOtp copyWith(
           void Function(AuthenticationFactorEmailOtp) updates) =>
       super.copyWith(
               (message) => updates(message as AuthenticationFactorEmailOtp))
           as AuthenticationFactorEmailOtp;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationFactorEmailOtp create() =>
       AuthenticationFactorEmailOtp._();
+  @$core.override
   AuthenticationFactorEmailOtp createEmptyInstance() => create();
   static $pb.PbList<AuthenticationFactorEmailOtp> createRepeated() =>
       $pb.PbList<AuthenticationFactorEmailOtp>();
@@ -746,25 +649,19 @@ class AuthenticationFactorEmailOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get email => $_getSZ(0);
   @$pb.TagNumber(1)
-  set email($core.String v) {
-    $_setString(0, v);
-  }
-
+  set email($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasEmail() => $_has(0);
   @$pb.TagNumber(1)
   void clearEmail() => $_clearField(1);
 
-  ///  Optional. The OTP code sent to the provided `email`.
+  /// Optional. The OTP code sent to the provided `email`.
   ///
-  ///  Leave this field empty to send the OTP.
+  /// Leave this field empty to send the OTP.
   @$pb.TagNumber(2)
   $core.String get code => $_getSZ(1);
   @$pb.TagNumber(2)
-  set code($core.String v) {
-    $_setString(1, v);
-  }
-
+  set code($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -778,22 +675,20 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
     $core.String? phoneNumber,
     $core.String? code,
   }) {
-    final $result = create();
-    if (phoneNumber != null) {
-      $result.phoneNumber = phoneNumber;
-    }
-    if (code != null) {
-      $result.code = code;
-    }
-    return $result;
+    final result = create();
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
+    if (code != null) result.code = code;
+    return result;
   }
-  AuthenticationFactorSmsOtp._() : super();
-  factory AuthenticationFactorSmsOtp.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationFactorSmsOtp.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationFactorSmsOtp._();
+
+  factory AuthenticationFactorSmsOtp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationFactorSmsOtp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AuthenticationFactorSmsOtp',
@@ -804,24 +699,22 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'code')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorSmsOtp clone() =>
       AuthenticationFactorSmsOtp()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorSmsOtp copyWith(
           void Function(AuthenticationFactorSmsOtp) updates) =>
       super.copyWith(
               (message) => updates(message as AuthenticationFactorSmsOtp))
           as AuthenticationFactorSmsOtp;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationFactorSmsOtp create() => AuthenticationFactorSmsOtp._();
+  @$core.override
   AuthenticationFactorSmsOtp createEmptyInstance() => create();
   static $pb.PbList<AuthenticationFactorSmsOtp> createRepeated() =>
       $pb.PbList<AuthenticationFactorSmsOtp>();
@@ -834,25 +727,19 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get phoneNumber => $_getSZ(0);
   @$pb.TagNumber(1)
-  set phoneNumber($core.String v) {
-    $_setString(0, v);
-  }
-
+  set phoneNumber($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasPhoneNumber() => $_has(0);
   @$pb.TagNumber(1)
   void clearPhoneNumber() => $_clearField(1);
 
-  ///  Optional. The OTP code sent to the provided `phone_number`.
+  /// Optional. The OTP code sent to the provided `phone_number`.
   ///
-  ///  Leave this field empty to send the OTP.
+  /// Leave this field empty to send the OTP.
   @$pb.TagNumber(2)
   $core.String get code => $_getSZ(1);
   @$pb.TagNumber(2)
-  set code($core.String v) {
-    $_setString(1, v);
-  }
-
+  set code($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -862,57 +749,53 @@ class AuthenticationFactorSmsOtp extends $pb.GeneratedMessage {
 /// An authentication method which uses a social provider like Google or Apple.
 class AuthenticationFactorIdp extends $pb.GeneratedMessage {
   factory AuthenticationFactorIdp({
-    $2.IdentityProviderType? provider,
+    $3.IdentityProviderType? provider,
     $core.String? redirectUri,
   }) {
-    final $result = create();
-    if (provider != null) {
-      $result.provider = provider;
-    }
-    if (redirectUri != null) {
-      $result.redirectUri = redirectUri;
-    }
-    return $result;
+    final result = create();
+    if (provider != null) result.provider = provider;
+    if (redirectUri != null) result.redirectUri = redirectUri;
+    return result;
   }
-  AuthenticationFactorIdp._() : super();
-  factory AuthenticationFactorIdp.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationFactorIdp.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationFactorIdp._();
+
+  factory AuthenticationFactorIdp.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationFactorIdp.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AuthenticationFactorIdp',
       package: const $pb.PackageName(
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
-    ..e<$2.IdentityProviderType>(
+    ..e<$3.IdentityProviderType>(
         1, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OE,
         defaultOrMaker:
-            $2.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
-        valueOf: $2.IdentityProviderType.valueOf,
-        enumValues: $2.IdentityProviderType.values)
+            $3.IdentityProviderType.IDENTITY_PROVIDER_TYPE_UNSPECIFIED,
+        valueOf: $3.IdentityProviderType.valueOf,
+        enumValues: $3.IdentityProviderType.values)
     ..aOS(2, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorIdp clone() =>
       AuthenticationFactorIdp()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactorIdp copyWith(
           void Function(AuthenticationFactorIdp) updates) =>
       super.copyWith((message) => updates(message as AuthenticationFactorIdp))
           as AuthenticationFactorIdp;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationFactorIdp create() => AuthenticationFactorIdp._();
+  @$core.override
   AuthenticationFactorIdp createEmptyInstance() => create();
   static $pb.PbList<AuthenticationFactorIdp> createRepeated() =>
       $pb.PbList<AuthenticationFactorIdp>();
@@ -923,12 +806,9 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
 
   /// Required. The social provider to authenticate with.
   @$pb.TagNumber(1)
-  $2.IdentityProviderType get provider => $_getN(0);
+  $3.IdentityProviderType get provider => $_getN(0);
   @$pb.TagNumber(1)
-  set provider($2.IdentityProviderType v) {
-    $_setField(1, v);
-  }
-
+  set provider($3.IdentityProviderType value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasProvider() => $_has(0);
   @$pb.TagNumber(1)
@@ -938,10 +818,7 @@ class AuthenticationFactorIdp extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get redirectUri => $_getSZ(1);
   @$pb.TagNumber(2)
-  set redirectUri($core.String v) {
-    $_setString(1, v);
-  }
-
+  set redirectUri($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasRedirectUri() => $_has(1);
   @$pb.TagNumber(2)
@@ -957,25 +834,21 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
     AuthenticationFactorSmsOtp? smsOtp,
     AuthenticationFactorIdp? idp,
   }) {
-    final $result = create();
-    if (emailOtp != null) {
-      $result.emailOtp = emailOtp;
-    }
-    if (smsOtp != null) {
-      $result.smsOtp = smsOtp;
-    }
-    if (idp != null) {
-      $result.idp = idp;
-    }
-    return $result;
+    final result = create();
+    if (emailOtp != null) result.emailOtp = emailOtp;
+    if (smsOtp != null) result.smsOtp = smsOtp;
+    if (idp != null) result.idp = idp;
+    return result;
   }
-  AuthenticationFactor._() : super();
-  factory AuthenticationFactor.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationFactor.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationFactor._();
+
+  factory AuthenticationFactor.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationFactor.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, AuthenticationFactor_Factor>
       _AuthenticationFactor_FactorByTag = {
@@ -998,22 +871,20 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
         subBuilder: AuthenticationFactorIdp.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactor clone() =>
       AuthenticationFactor()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationFactor copyWith(void Function(AuthenticationFactor) updates) =>
       super.copyWith((message) => updates(message as AuthenticationFactor))
           as AuthenticationFactor;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationFactor create() => AuthenticationFactor._();
+  @$core.override
   AuthenticationFactor createEmptyInstance() => create();
   static $pb.PbList<AuthenticationFactor> createRepeated() =>
       $pb.PbList<AuthenticationFactor>();
@@ -1030,10 +901,7 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   AuthenticationFactorEmailOtp get emailOtp => $_getN(0);
   @$pb.TagNumber(3)
-  set emailOtp(AuthenticationFactorEmailOtp v) {
-    $_setField(3, v);
-  }
-
+  set emailOtp(AuthenticationFactorEmailOtp value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasEmailOtp() => $_has(0);
   @$pb.TagNumber(3)
@@ -1045,10 +913,7 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   AuthenticationFactorSmsOtp get smsOtp => $_getN(1);
   @$pb.TagNumber(4)
-  set smsOtp(AuthenticationFactorSmsOtp v) {
-    $_setField(4, v);
-  }
-
+  set smsOtp(AuthenticationFactorSmsOtp value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasSmsOtp() => $_has(1);
   @$pb.TagNumber(4)
@@ -1060,10 +925,7 @@ class AuthenticationFactor extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   AuthenticationFactorIdp get idp => $_getN(2);
   @$pb.TagNumber(5)
-  set idp(AuthenticationFactorIdp v) {
-    $_setField(5, v);
-  }
-
+  set idp(AuthenticationFactorIdp value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasIdp() => $_has(2);
   @$pb.TagNumber(5)
@@ -1083,31 +945,23 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
     AuthenticationPendingConfirmation? confirmation,
     AuthenticationFactor? resend,
   }) {
-    final $result = create();
-    if (sessionId != null) {
-      $result.sessionId = sessionId;
-    }
-    if (sessionToken != null) {
-      $result.sessionToken = sessionToken;
-    }
-    if (proof != null) {
-      $result.proof = proof;
-    }
-    if (confirmation != null) {
-      $result.confirmation = confirmation;
-    }
-    if (resend != null) {
-      $result.resend = resend;
-    }
-    return $result;
+    final result = create();
+    if (sessionId != null) result.sessionId = sessionId;
+    if (sessionToken != null) result.sessionToken = sessionToken;
+    if (proof != null) result.proof = proof;
+    if (confirmation != null) result.confirmation = confirmation;
+    if (resend != null) result.resend = resend;
+    return result;
   }
-  ContinueSessionRequest._() : super();
-  factory ContinueSessionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ContinueSessionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ContinueSessionRequest._();
+
+  factory ContinueSessionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ContinueSessionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, ContinueSessionRequest_Update>
       _ContinueSessionRequest_UpdateByTag = {
@@ -1133,23 +987,21 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
         subBuilder: AuthenticationFactor.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ContinueSessionRequest clone() =>
       ContinueSessionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ContinueSessionRequest copyWith(
           void Function(ContinueSessionRequest) updates) =>
       super.copyWith((message) => updates(message as ContinueSessionRequest))
           as ContinueSessionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ContinueSessionRequest create() => ContinueSessionRequest._();
+  @$core.override
   ContinueSessionRequest createEmptyInstance() => create();
   static $pb.PbList<ContinueSessionRequest> createRepeated() =>
       $pb.PbList<ContinueSessionRequest>();
@@ -1166,10 +1018,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get sessionId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set sessionId($core.String v) {
-    $_setString(0, v);
-  }
-
+  set sessionId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
@@ -1180,10 +1029,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get sessionToken => $_getSZ(1);
   @$pb.TagNumber(2)
-  set sessionToken($core.String v) {
-    $_setString(1, v);
-  }
-
+  set sessionToken($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasSessionToken() => $_has(1);
   @$pb.TagNumber(2)
@@ -1193,10 +1039,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   AuthenticationFactor get proof => $_getN(2);
   @$pb.TagNumber(3)
-  set proof(AuthenticationFactor v) {
-    $_setField(3, v);
-  }
-
+  set proof(AuthenticationFactor value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasProof() => $_has(2);
   @$pb.TagNumber(3)
@@ -1208,10 +1051,8 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   AuthenticationPendingConfirmation get confirmation => $_getN(3);
   @$pb.TagNumber(4)
-  set confirmation(AuthenticationPendingConfirmation v) {
-    $_setField(4, v);
-  }
-
+  set confirmation(AuthenticationPendingConfirmation value) =>
+      $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasConfirmation() => $_has(3);
   @$pb.TagNumber(4)
@@ -1223,10 +1064,7 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   AuthenticationFactor get resend => $_getN(4);
   @$pb.TagNumber(5)
-  set resend(AuthenticationFactor v) {
-    $_setField(5, v);
-  }
-
+  set resend(AuthenticationFactor value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasResend() => $_has(4);
   @$pb.TagNumber(5)
@@ -1239,28 +1077,24 @@ class ContinueSessionRequest extends $pb.GeneratedMessage {
 class AuthenticationSuccess extends $pb.GeneratedMessage {
   factory AuthenticationSuccess({
     $core.String? identityToken,
-    $2.User? user,
+    $3.User? user,
     $core.bool? isNewUser,
   }) {
-    final $result = create();
-    if (identityToken != null) {
-      $result.identityToken = identityToken;
-    }
-    if (user != null) {
-      $result.user = user;
-    }
-    if (isNewUser != null) {
-      $result.isNewUser = isNewUser;
-    }
-    return $result;
+    final result = create();
+    if (identityToken != null) result.identityToken = identityToken;
+    if (user != null) result.user = user;
+    if (isNewUser != null) result.isNewUser = isNewUser;
+    return result;
   }
-  AuthenticationSuccess._() : super();
-  factory AuthenticationSuccess.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationSuccess.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationSuccess._();
+
+  factory AuthenticationSuccess.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationSuccess.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AuthenticationSuccess',
@@ -1268,27 +1102,25 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'identityToken')
-    ..aOM<$2.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $2.User.create)
+    ..aOM<$3.User>(2, _omitFieldNames ? '' : 'user', subBuilder: $3.User.create)
     ..aOB(3, _omitFieldNames ? '' : 'isNewUser')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationSuccess clone() =>
       AuthenticationSuccess()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationSuccess copyWith(
           void Function(AuthenticationSuccess) updates) =>
       super.copyWith((message) => updates(message as AuthenticationSuccess))
           as AuthenticationSuccess;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationSuccess create() => AuthenticationSuccess._();
+  @$core.override
   AuthenticationSuccess createEmptyInstance() => create();
   static $pb.PbList<AuthenticationSuccess> createRepeated() =>
       $pb.PbList<AuthenticationSuccess>();
@@ -1301,10 +1133,7 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get identityToken => $_getSZ(0);
   @$pb.TagNumber(1)
-  set identityToken($core.String v) {
-    $_setString(0, v);
-  }
-
+  set identityToken($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasIdentityToken() => $_has(0);
   @$pb.TagNumber(1)
@@ -1312,27 +1141,21 @@ class AuthenticationSuccess extends $pb.GeneratedMessage {
 
   /// The user's information.
   @$pb.TagNumber(2)
-  $2.User get user => $_getN(1);
+  $3.User get user => $_getN(1);
   @$pb.TagNumber(2)
-  set user($2.User v) {
-    $_setField(2, v);
-  }
-
+  set user($3.User value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasUser() => $_has(1);
   @$pb.TagNumber(2)
   void clearUser() => $_clearField(2);
   @$pb.TagNumber(2)
-  $2.User ensureUser() => $_ensure(1);
+  $3.User ensureUser() => $_ensure(1);
 
   /// Whether a new user was created or not.
   @$pb.TagNumber(3)
   $core.bool get isNewUser => $_getBF(2);
   @$pb.TagNumber(3)
-  set isNewUser($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set isNewUser($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasIsNewUser() => $_has(2);
   @$pb.TagNumber(3)
@@ -1348,25 +1171,24 @@ enum AuthenticationPendingConfirmation_Pending {
 /// The authentication operation needs confirmation from the user.
 class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
   factory AuthenticationPendingConfirmation({
-    $2.User? linkExistingUser,
-    $2.User? registerUser,
+    $3.User? linkExistingUser,
+    $3.User? registerUser,
   }) {
-    final $result = create();
-    if (linkExistingUser != null) {
-      $result.linkExistingUser = linkExistingUser;
-    }
-    if (registerUser != null) {
-      $result.registerUser = registerUser;
-    }
-    return $result;
+    final result = create();
+    if (linkExistingUser != null) result.linkExistingUser = linkExistingUser;
+    if (registerUser != null) result.registerUser = registerUser;
+    return result;
   }
-  AuthenticationPendingConfirmation._() : super();
-  factory AuthenticationPendingConfirmation.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AuthenticationPendingConfirmation.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AuthenticationPendingConfirmation._();
+
+  factory AuthenticationPendingConfirmation.fromBuffer(
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AuthenticationPendingConfirmation.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, AuthenticationPendingConfirmation_Pending>
       _AuthenticationPendingConfirmation_PendingByTag = {
@@ -1380,31 +1202,29 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.auth.v1alpha1'),
       createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<$2.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
-        subBuilder: $2.User.create)
-    ..aOM<$2.User>(2, _omitFieldNames ? '' : 'registerUser',
-        subBuilder: $2.User.create)
+    ..aOM<$3.User>(1, _omitFieldNames ? '' : 'linkExistingUser',
+        subBuilder: $3.User.create)
+    ..aOM<$3.User>(2, _omitFieldNames ? '' : 'registerUser',
+        subBuilder: $3.User.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationPendingConfirmation clone() =>
       AuthenticationPendingConfirmation()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AuthenticationPendingConfirmation copyWith(
           void Function(AuthenticationPendingConfirmation) updates) =>
       super.copyWith((message) =>
               updates(message as AuthenticationPendingConfirmation))
           as AuthenticationPendingConfirmation;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AuthenticationPendingConfirmation create() =>
       AuthenticationPendingConfirmation._();
+  @$core.override
   AuthenticationPendingConfirmation createEmptyInstance() => create();
   static $pb.PbList<AuthenticationPendingConfirmation> createRepeated() =>
       $pb.PbList<AuthenticationPendingConfirmation>();
@@ -1420,33 +1240,27 @@ class AuthenticationPendingConfirmation extends $pb.GeneratedMessage {
 
   /// An existing user was found with the provided identity.
   @$pb.TagNumber(1)
-  $2.User get linkExistingUser => $_getN(0);
+  $3.User get linkExistingUser => $_getN(0);
   @$pb.TagNumber(1)
-  set linkExistingUser($2.User v) {
-    $_setField(1, v);
-  }
-
+  set linkExistingUser($3.User value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLinkExistingUser() => $_has(0);
   @$pb.TagNumber(1)
   void clearLinkExistingUser() => $_clearField(1);
   @$pb.TagNumber(1)
-  $2.User ensureLinkExistingUser() => $_ensure(0);
+  $3.User ensureLinkExistingUser() => $_ensure(0);
 
   /// The user to be registered.
   @$pb.TagNumber(2)
-  $2.User get registerUser => $_getN(1);
+  $3.User get registerUser => $_getN(1);
   @$pb.TagNumber(2)
-  set registerUser($2.User v) {
-    $_setField(2, v);
-  }
-
+  set registerUser($3.User value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRegisterUser() => $_has(1);
   @$pb.TagNumber(2)
   void clearRegisterUser() => $_clearField(2);
   @$pb.TagNumber(2)
-  $2.User ensureRegisterUser() => $_ensure(1);
+  $3.User ensureRegisterUser() => $_ensure(1);
 }
 
 /// Request message for `EndSession` method.
@@ -1455,22 +1269,20 @@ class EndSessionRequest extends $pb.GeneratedMessage {
     $core.String? sessionId,
     $core.String? sessionToken,
   }) {
-    final $result = create();
-    if (sessionId != null) {
-      $result.sessionId = sessionId;
-    }
-    if (sessionToken != null) {
-      $result.sessionToken = sessionToken;
-    }
-    return $result;
+    final result = create();
+    if (sessionId != null) result.sessionId = sessionId;
+    if (sessionToken != null) result.sessionToken = sessionToken;
+    return result;
   }
-  EndSessionRequest._() : super();
-  factory EndSessionRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EndSessionRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EndSessionRequest._();
+
+  factory EndSessionRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EndSessionRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EndSessionRequest',
@@ -1481,21 +1293,19 @@ class EndSessionRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'sessionToken')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EndSessionRequest clone() => EndSessionRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EndSessionRequest copyWith(void Function(EndSessionRequest) updates) =>
       super.copyWith((message) => updates(message as EndSessionRequest))
           as EndSessionRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EndSessionRequest create() => EndSessionRequest._();
+  @$core.override
   EndSessionRequest createEmptyInstance() => create();
   static $pb.PbList<EndSessionRequest> createRepeated() =>
       $pb.PbList<EndSessionRequest>();
@@ -1504,32 +1314,26 @@ class EndSessionRequest extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<EndSessionRequest>(create);
   static EndSessionRequest? _defaultInstance;
 
-  ///  Optional. The ID of the authentication session.
+  /// Optional. The ID of the authentication session.
   ///
-  ///  If not provided, the session will be ended for the current authenticated user.
+  /// If not provided, the session will be ended for the current authenticated user.
   @$pb.TagNumber(1)
   $core.String get sessionId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set sessionId($core.String v) {
-    $_setString(0, v);
-  }
-
+  set sessionId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
   void clearSessionId() => $_clearField(1);
 
-  ///  Optional. The session token returned from a previous `StartSession`
-  ///  or `ContinueSession` call.
+  /// Optional. The session token returned from a previous `StartSession`
+  /// or `ContinueSession` call.
   ///
-  ///  If not provided, the session will be ended for the current authenticated user.
+  /// If not provided, the session will be ended for the current authenticated user.
   @$pb.TagNumber(2)
   $core.String get sessionToken => $_getSZ(1);
   @$pb.TagNumber(2)
-  set sessionToken($core.String v) {
-    $_setString(1, v);
-  }
-
+  set sessionToken($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasSessionToken() => $_has(1);
   @$pb.TagNumber(2)
@@ -1545,25 +1349,21 @@ class EndSessionResponse extends $pb.GeneratedMessage {
     $1.Empty? success,
     $core.String? redirectUri,
   }) {
-    final $result = create();
-    if (sessionId != null) {
-      $result.sessionId = sessionId;
-    }
-    if (success != null) {
-      $result.success = success;
-    }
-    if (redirectUri != null) {
-      $result.redirectUri = redirectUri;
-    }
-    return $result;
+    final result = create();
+    if (sessionId != null) result.sessionId = sessionId;
+    if (success != null) result.success = success;
+    if (redirectUri != null) result.redirectUri = redirectUri;
+    return result;
   }
-  EndSessionResponse._() : super();
-  factory EndSessionResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EndSessionResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EndSessionResponse._();
+
+  factory EndSessionResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EndSessionResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, EndSessionResponse_Result>
       _EndSessionResponse_ResultByTag = {
@@ -1583,21 +1383,19 @@ class EndSessionResponse extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'redirectUri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EndSessionResponse clone() => EndSessionResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EndSessionResponse copyWith(void Function(EndSessionResponse) updates) =>
       super.copyWith((message) => updates(message as EndSessionResponse))
           as EndSessionResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EndSessionResponse create() => EndSessionResponse._();
+  @$core.override
   EndSessionResponse createEmptyInstance() => create();
   static $pb.PbList<EndSessionResponse> createRepeated() =>
       $pb.PbList<EndSessionResponse>();
@@ -1614,10 +1412,7 @@ class EndSessionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get sessionId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set sessionId($core.String v) {
-    $_setString(0, v);
-  }
-
+  set sessionId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSessionId() => $_has(0);
   @$pb.TagNumber(1)
@@ -1627,10 +1422,7 @@ class EndSessionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $1.Empty get success => $_getN(1);
   @$pb.TagNumber(2)
-  set success($1.Empty v) {
-    $_setField(2, v);
-  }
-
+  set success($1.Empty value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasSuccess() => $_has(1);
   @$pb.TagNumber(2)
@@ -1638,29 +1430,26 @@ class EndSessionResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $1.Empty ensureSuccess() => $_ensure(1);
 
-  ///  A final redirect URI to send the user to.
+  /// A final redirect URI to send the user to.
   ///
-  ///  Used to clear cookies in social login flows.
+  /// Used to clear cookies in social login flows.
   @$pb.TagNumber(3)
   $core.String get redirectUri => $_getSZ(2);
   @$pb.TagNumber(3)
-  set redirectUri($core.String v) {
-    $_setString(2, v);
-  }
-
+  set redirectUri($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasRedirectUri() => $_has(2);
   @$pb.TagNumber(3)
   void clearRedirectUri() => $_clearField(3);
 }
 
-///  The user info of the current user.
+/// The user info of the current user.
 ///
-///  Structured to match the return value of the OIDC `/userinfo` endpoint:
-///  https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
+/// Structured to match the return value of the OIDC `/userinfo` endpoint:
+/// https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
 ///
-///  (-- api-linter: core::0123::resource-annotation=disabled
-///      aip.dev/not-precedent: Not a resource. --)
+/// (-- api-linter: core::0123::resource-annotation=disabled
+///     aip.dev/not-precedent: Not a resource. --)
 class OpenIdUserinfo extends $pb.GeneratedMessage {
   factory OpenIdUserinfo({
     $core.String? sub,
@@ -1681,79 +1470,42 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     $core.String? locale,
     $core.String? phoneNumber,
     $core.bool? phoneNumberVerified,
-    $11.Value? address,
+    $4.Value? address,
     $core.int? updatedAt,
   }) {
-    final $result = create();
-    if (sub != null) {
-      $result.sub = sub;
-    }
-    if (name != null) {
-      $result.name = name;
-    }
-    if (givenName != null) {
-      $result.givenName = givenName;
-    }
-    if (familyName != null) {
-      $result.familyName = familyName;
-    }
-    if (middleName != null) {
-      $result.middleName = middleName;
-    }
-    if (nickname != null) {
-      $result.nickname = nickname;
-    }
-    if (preferredUsername != null) {
-      $result.preferredUsername = preferredUsername;
-    }
-    if (profile != null) {
-      $result.profile = profile;
-    }
-    if (picture != null) {
-      $result.picture = picture;
-    }
-    if (website != null) {
-      $result.website = website;
-    }
-    if (email != null) {
-      $result.email = email;
-    }
-    if (emailVerified != null) {
-      $result.emailVerified = emailVerified;
-    }
-    if (gender != null) {
-      $result.gender = gender;
-    }
-    if (birthdate != null) {
-      $result.birthdate = birthdate;
-    }
-    if (zoneinfo != null) {
-      $result.zoneinfo = zoneinfo;
-    }
-    if (locale != null) {
-      $result.locale = locale;
-    }
-    if (phoneNumber != null) {
-      $result.phoneNumber = phoneNumber;
-    }
-    if (phoneNumberVerified != null) {
-      $result.phoneNumberVerified = phoneNumberVerified;
-    }
-    if (address != null) {
-      $result.address = address;
-    }
-    if (updatedAt != null) {
-      $result.updatedAt = updatedAt;
-    }
-    return $result;
+    final result = create();
+    if (sub != null) result.sub = sub;
+    if (name != null) result.name = name;
+    if (givenName != null) result.givenName = givenName;
+    if (familyName != null) result.familyName = familyName;
+    if (middleName != null) result.middleName = middleName;
+    if (nickname != null) result.nickname = nickname;
+    if (preferredUsername != null) result.preferredUsername = preferredUsername;
+    if (profile != null) result.profile = profile;
+    if (picture != null) result.picture = picture;
+    if (website != null) result.website = website;
+    if (email != null) result.email = email;
+    if (emailVerified != null) result.emailVerified = emailVerified;
+    if (gender != null) result.gender = gender;
+    if (birthdate != null) result.birthdate = birthdate;
+    if (zoneinfo != null) result.zoneinfo = zoneinfo;
+    if (locale != null) result.locale = locale;
+    if (phoneNumber != null) result.phoneNumber = phoneNumber;
+    if (phoneNumberVerified != null)
+      result.phoneNumberVerified = phoneNumberVerified;
+    if (address != null) result.address = address;
+    if (updatedAt != null) result.updatedAt = updatedAt;
+    return result;
   }
-  OpenIdUserinfo._() : super();
-  factory OpenIdUserinfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory OpenIdUserinfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  OpenIdUserinfo._();
+
+  factory OpenIdUserinfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory OpenIdUserinfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'OpenIdUserinfo',
@@ -1778,26 +1530,24 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
     ..aOS(16, _omitFieldNames ? '' : 'locale')
     ..aOS(17, _omitFieldNames ? '' : 'phone_number')
     ..aOB(18, _omitFieldNames ? '' : 'phone_number_verified')
-    ..aOM<$11.Value>(19, _omitFieldNames ? '' : 'address',
-        subBuilder: $11.Value.create)
+    ..aOM<$4.Value>(19, _omitFieldNames ? '' : 'address',
+        subBuilder: $4.Value.create)
     ..a<$core.int>(20, _omitFieldNames ? '' : 'updated_at', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIdUserinfo clone() => OpenIdUserinfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIdUserinfo copyWith(void Function(OpenIdUserinfo) updates) =>
       super.copyWith((message) => updates(message as OpenIdUserinfo))
           as OpenIdUserinfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static OpenIdUserinfo create() => OpenIdUserinfo._();
+  @$core.override
   OpenIdUserinfo createEmptyInstance() => create();
   static $pb.PbList<OpenIdUserinfo> createRepeated() =>
       $pb.PbList<OpenIdUserinfo>();
@@ -1810,10 +1560,7 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get sub => $_getSZ(0);
   @$pb.TagNumber(1)
-  set sub($core.String v) {
-    $_setString(0, v);
-  }
-
+  set sub($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasSub() => $_has(0);
   @$pb.TagNumber(1)
@@ -1824,324 +1571,267 @@ class OpenIdUserinfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String v) {
-    $_setString(1, v);
-  }
-
+  set name($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => $_clearField(2);
 
-  ///  Optional. Given name(s) or first name(s) of the End-User.
+  /// Optional. Given name(s) or first name(s) of the End-User.
   ///
-  ///  Note that in some cultures, people can have multiple given names; all can be present, with
-  ///  the names being separated by space characters.
+  /// Note that in some cultures, people can have multiple given names; all can be present, with
+  /// the names being separated by space characters.
   @$pb.TagNumber(3)
   $core.String get givenName => $_getSZ(2);
   @$pb.TagNumber(3)
-  set givenName($core.String v) {
-    $_setString(2, v);
-  }
-
+  set givenName($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasGivenName() => $_has(2);
   @$pb.TagNumber(3)
   void clearGivenName() => $_clearField(3);
 
-  ///  Optional. 	Surname(s) or last name(s) of the End-User.
+  /// Optional. 	Surname(s) or last name(s) of the End-User.
   ///
-  ///  Note that in some cultures, people can have multiple family names or no family name;
-  ///  all can be present, with the names being separated by space characters.
+  /// Note that in some cultures, people can have multiple family names or no family name;
+  /// all can be present, with the names being separated by space characters.
   @$pb.TagNumber(4)
   $core.String get familyName => $_getSZ(3);
   @$pb.TagNumber(4)
-  set familyName($core.String v) {
-    $_setString(3, v);
-  }
-
+  set familyName($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasFamilyName() => $_has(3);
   @$pb.TagNumber(4)
   void clearFamilyName() => $_clearField(4);
 
-  ///  Optional. Middle name(s) of the End-User.
+  /// Optional. Middle name(s) of the End-User.
   ///
-  ///  Note that in some cultures, people can have multiple middle names; all can be present,
-  ///  with the names being separated by space characters. Also note that in some cultures, middle
-  ///  names are not used.
-  ///  (-- api-linter: core::0122::name-suffix=disabled --)
+  /// Note that in some cultures, people can have multiple middle names; all can be present,
+  /// with the names being separated by space characters. Also note that in some cultures, middle
+  /// names are not used.
+  /// (-- api-linter: core::0122::name-suffix=disabled --)
   @$pb.TagNumber(5)
   $core.String get middleName => $_getSZ(4);
   @$pb.TagNumber(5)
-  set middleName($core.String v) {
-    $_setString(4, v);
-  }
-
+  set middleName($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasMiddleName() => $_has(4);
   @$pb.TagNumber(5)
   void clearMiddleName() => $_clearField(5);
 
-  ///  Optional. Casual name of the End-User that may or may not be the same as the given_name.
+  /// Optional. Casual name of the End-User that may or may not be the same as the given_name.
   ///
-  ///  For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
+  /// For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
   @$pb.TagNumber(6)
   $core.String get nickname => $_getSZ(5);
   @$pb.TagNumber(6)
-  set nickname($core.String v) {
-    $_setString(5, v);
-  }
-
+  set nickname($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasNickname() => $_has(5);
   @$pb.TagNumber(6)
   void clearNickname() => $_clearField(6);
 
-  ///  Optional. Shorthand name by which the End-User wishes to be referred to at the RP, such as
-  ///  janedoe or j.doe.
+  /// Optional. Shorthand name by which the End-User wishes to be referred to at the RP, such as
+  /// janedoe or j.doe.
   ///
-  ///  This value MAY be any valid JSON string including special characters such as @, /, or whitespace.
-  ///  The RP MUST NOT rely upon this value being unique, as discussed in Section 5.7.
+  /// This value MAY be any valid JSON string including special characters such as @, /, or whitespace.
+  /// The RP MUST NOT rely upon this value being unique, as discussed in Section 5.7.
   @$pb.TagNumber(7)
   $core.String get preferredUsername => $_getSZ(6);
   @$pb.TagNumber(7)
-  set preferredUsername($core.String v) {
-    $_setString(6, v);
-  }
-
+  set preferredUsername($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
   $core.bool hasPreferredUsername() => $_has(6);
   @$pb.TagNumber(7)
   void clearPreferredUsername() => $_clearField(7);
 
-  ///  Optional. URL of the End-User's profile page.
+  /// Optional. URL of the End-User's profile page.
   ///
-  ///  The contents of this Web page SHOULD be about the End-User.
+  /// The contents of this Web page SHOULD be about the End-User.
   @$pb.TagNumber(8)
   $core.String get profile => $_getSZ(7);
   @$pb.TagNumber(8)
-  set profile($core.String v) {
-    $_setString(7, v);
-  }
-
+  set profile($core.String value) => $_setString(7, value);
   @$pb.TagNumber(8)
   $core.bool hasProfile() => $_has(7);
   @$pb.TagNumber(8)
   void clearProfile() => $_clearField(8);
 
-  ///  Optional. URL of the End-User's profile picture.
+  /// Optional. URL of the End-User's profile picture.
   ///
-  ///  This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than
-  ///  to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo
-  ///  of the End-User suitable for displaying when describing the End-User, rather than an arbitrary
-  ///  photo taken by the End-User.
+  /// This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than
+  /// to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo
+  /// of the End-User suitable for displaying when describing the End-User, rather than an arbitrary
+  /// photo taken by the End-User.
   @$pb.TagNumber(9)
   $core.String get picture => $_getSZ(8);
   @$pb.TagNumber(9)
-  set picture($core.String v) {
-    $_setString(8, v);
-  }
-
+  set picture($core.String value) => $_setString(8, value);
   @$pb.TagNumber(9)
   $core.bool hasPicture() => $_has(8);
   @$pb.TagNumber(9)
   void clearPicture() => $_clearField(9);
 
-  ///  Optional. URL of the End-User's Web page or blog.
+  /// Optional. URL of the End-User's Web page or blog.
   ///
-  ///  This Web page SHOULD contain information published by the End-User or an organization that the
-  ///  End-User is affiliated with.
+  /// This Web page SHOULD contain information published by the End-User or an organization that the
+  /// End-User is affiliated with.
   @$pb.TagNumber(10)
   $core.String get website => $_getSZ(9);
   @$pb.TagNumber(10)
-  set website($core.String v) {
-    $_setString(9, v);
-  }
-
+  set website($core.String value) => $_setString(9, value);
   @$pb.TagNumber(10)
   $core.bool hasWebsite() => $_has(9);
   @$pb.TagNumber(10)
   void clearWebsite() => $_clearField(10);
 
-  ///  Optional. End-User's preferred e-mail address.
+  /// Optional. End-User's preferred e-mail address.
   ///
-  ///  Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this
-  ///  value being unique, as discussed in Section 5.7.
+  /// Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this
+  /// value being unique, as discussed in Section 5.7.
   @$pb.TagNumber(11)
   $core.String get email => $_getSZ(10);
   @$pb.TagNumber(11)
-  set email($core.String v) {
-    $_setString(10, v);
-  }
-
+  set email($core.String value) => $_setString(10, value);
   @$pb.TagNumber(11)
   $core.bool hasEmail() => $_has(10);
   @$pb.TagNumber(11)
   void clearEmail() => $_clearField(11);
 
-  ///  Optional. True if the End-User's e-mail address has been verified; otherwise false.
+  /// Optional. True if the End-User's e-mail address has been verified; otherwise false.
   ///
-  ///  When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
-  ///  e-mail address was controlled by the End-User at the time the verification was performed. The means
-  ///  by which an e-mail address is verified is context specific, and dependent upon the trust framework
-  ///  or contractual agreements within which the parties are operating.
+  /// When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
+  /// e-mail address was controlled by the End-User at the time the verification was performed. The means
+  /// by which an e-mail address is verified is context specific, and dependent upon the trust framework
+  /// or contractual agreements within which the parties are operating.
   @$pb.TagNumber(12)
   $core.bool get emailVerified => $_getBF(11);
   @$pb.TagNumber(12)
-  set emailVerified($core.bool v) {
-    $_setBool(11, v);
-  }
-
+  set emailVerified($core.bool value) => $_setBool(11, value);
   @$pb.TagNumber(12)
   $core.bool hasEmailVerified() => $_has(11);
   @$pb.TagNumber(12)
   void clearEmailVerified() => $_clearField(12);
 
-  ///  Optional. End-User's gender.
+  /// Optional. End-User's gender.
   ///
-  ///  Values defined by this specification are female and male. Other values MAY be used when neither
-  ///  of the defined values are applicable.
+  /// Values defined by this specification are female and male. Other values MAY be used when neither
+  /// of the defined values are applicable.
   @$pb.TagNumber(13)
   $core.String get gender => $_getSZ(12);
   @$pb.TagNumber(13)
-  set gender($core.String v) {
-    $_setString(12, v);
-  }
-
+  set gender($core.String value) => $_setString(12, value);
   @$pb.TagNumber(13)
   $core.bool hasGender() => $_has(12);
   @$pb.TagNumber(13)
   void clearGender() => $_clearField(13);
 
-  ///  Optional. End-User's birthday, represented as an ISO 8601-1 [ISO8601‑1] YYYY-MM-DD format.
+  /// Optional. End-User's birthday, represented as an ISO 8601-1 [ISO8601‑1] YYYY-MM-DD format.
   ///
-  ///  The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is
-  ///  allowed. Note that depending on the underlying platform's date related function, providing just
-  ///  year can result in varying month and day, so the implementers need to take this factor into account
-  ///  to correctly process the dates.
+  /// The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is
+  /// allowed. Note that depending on the underlying platform's date related function, providing just
+  /// year can result in varying month and day, so the implementers need to take this factor into account
+  /// to correctly process the dates.
   @$pb.TagNumber(14)
   $core.String get birthdate => $_getSZ(13);
   @$pb.TagNumber(14)
-  set birthdate($core.String v) {
-    $_setString(13, v);
-  }
-
+  set birthdate($core.String value) => $_setString(13, value);
   @$pb.TagNumber(14)
   $core.bool hasBirthdate() => $_has(13);
   @$pb.TagNumber(14)
   void clearBirthdate() => $_clearField(14);
 
-  ///  Optional. String from IANA Time Zone Database [IANA.time‑zones] representing the End-User's time zone.
+  /// Optional. String from IANA Time Zone Database [IANA.time‑zones] representing the End-User's time zone.
   ///
-  ///  For example, Europe/Paris or America/Los_Angeles.
+  /// For example, Europe/Paris or America/Los_Angeles.
   @$pb.TagNumber(15)
   $core.String get zoneinfo => $_getSZ(14);
   @$pb.TagNumber(15)
-  set zoneinfo($core.String v) {
-    $_setString(14, v);
-  }
-
+  set zoneinfo($core.String value) => $_setString(14, value);
   @$pb.TagNumber(15)
   $core.bool hasZoneinfo() => $_has(14);
   @$pb.TagNumber(15)
   void clearZoneinfo() => $_clearField(15);
 
-  ///  Optional. End-User's locale, represented as a BCP47 [RFC5646] language tag.
+  /// Optional. End-User's locale, represented as a BCP47 [RFC5646] language tag.
   ///
-  ///  This is typically an ISO 639 Alpha-2 [ISO639] language code in lowercase and an ISO 3166-1 Alpha-2
-  ///  [ISO3166‑1] country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a
-  ///  compatibility note, some implementations have used an underscore as the separator rather than a dash,
-  ///  for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
+  /// This is typically an ISO 639 Alpha-2 [ISO639] language code in lowercase and an ISO 3166-1 Alpha-2
+  /// [ISO3166‑1] country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a
+  /// compatibility note, some implementations have used an underscore as the separator rather than a dash,
+  /// for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
   @$pb.TagNumber(16)
   $core.String get locale => $_getSZ(15);
   @$pb.TagNumber(16)
-  set locale($core.String v) {
-    $_setString(15, v);
-  }
-
+  set locale($core.String value) => $_setString(15, value);
   @$pb.TagNumber(16)
   $core.bool hasLocale() => $_has(15);
   @$pb.TagNumber(16)
   void clearLocale() => $_clearField(16);
 
-  ///  Optional. End-User's preferred telephone number.
+  /// Optional. End-User's preferred telephone number.
   ///
-  ///  E.164 [E.164] is RECOMMENDED as the format of this Claim, for example, +1 (425) 555-1212 or
-  ///  +56 (2) 687 2400. If the phone number contains an extension, it is RECOMMENDED that the extension be
-  ///  represented using the RFC 3966 [RFC3966] extension syntax, for example, +1 (604) 555-1234;ext=5678.
+  /// E.164 [E.164] is RECOMMENDED as the format of this Claim, for example, +1 (425) 555-1212 or
+  /// +56 (2) 687 2400. If the phone number contains an extension, it is RECOMMENDED that the extension be
+  /// represented using the RFC 3966 [RFC3966] extension syntax, for example, +1 (604) 555-1234;ext=5678.
   @$pb.TagNumber(17)
   $core.String get phoneNumber => $_getSZ(16);
   @$pb.TagNumber(17)
-  set phoneNumber($core.String v) {
-    $_setString(16, v);
-  }
-
+  set phoneNumber($core.String value) => $_setString(16, value);
   @$pb.TagNumber(17)
   $core.bool hasPhoneNumber() => $_has(16);
   @$pb.TagNumber(17)
   void clearPhoneNumber() => $_clearField(17);
 
-  ///  Optional. True if the End-User's phone number has been verified; otherwise false.
+  /// Optional. True if the End-User's phone number has been verified; otherwise false.
   ///
-  ///  When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
-  ///  phone number was controlled by the End-User at the time the verification was performed. The means
-  ///  by which a phone number is verified is context specific, and dependent upon the trust framework or
-  ///  contractual agreements within which the parties are operating. When true, the phone_number Claim MUST
-  ///  be in E.164 format and any extensions MUST be represented in RFC 3966 format.
+  /// When this Claim Value is true, this means that the OP took affirmative steps to ensure that this
+  /// phone number was controlled by the End-User at the time the verification was performed. The means
+  /// by which a phone number is verified is context specific, and dependent upon the trust framework or
+  /// contractual agreements within which the parties are operating. When true, the phone_number Claim MUST
+  /// be in E.164 format and any extensions MUST be represented in RFC 3966 format.
   @$pb.TagNumber(18)
   $core.bool get phoneNumberVerified => $_getBF(17);
   @$pb.TagNumber(18)
-  set phoneNumberVerified($core.bool v) {
-    $_setBool(17, v);
-  }
-
+  set phoneNumberVerified($core.bool value) => $_setBool(17, value);
   @$pb.TagNumber(18)
   $core.bool hasPhoneNumberVerified() => $_has(17);
   @$pb.TagNumber(18)
   void clearPhoneNumberVerified() => $_clearField(18);
 
-  ///  Optional. End-User's preferred postal address.
+  /// Optional. End-User's preferred postal address.
   ///
-  ///  The value of the address member is a JSON [RFC8259] structure containing some or all of the members
-  ///  defined in Section 5.1.1, for example:
+  /// The value of the address member is a JSON [RFC8259] structure containing some or all of the members
+  /// defined in Section 5.1.1, for example:
   ///
-  ///  ```
-  ///  {
-  ///    "formatted": "Mr. John Doe, 123 Main Street, Springfield, IL 62701",
-  ///    "street_address": "123 Main Street",
-  ///    "locality": "Springfield",
-  ///    "region": "IL",
-  ///    "postal_code": "62701",
-  ///    "country": "US"
-  ///  }
-  ///  ```
+  /// ```
+  /// {
+  ///   "formatted": "Mr. John Doe, 123 Main Street, Springfield, IL 62701",
+  ///   "street_address": "123 Main Street",
+  ///   "locality": "Springfield",
+  ///   "region": "IL",
+  ///   "postal_code": "62701",
+  ///   "country": "US"
+  /// }
+  /// ```
   @$pb.TagNumber(19)
-  $11.Value get address => $_getN(18);
+  $4.Value get address => $_getN(18);
   @$pb.TagNumber(19)
-  set address($11.Value v) {
-    $_setField(19, v);
-  }
-
+  set address($4.Value value) => $_setField(19, value);
   @$pb.TagNumber(19)
   $core.bool hasAddress() => $_has(18);
   @$pb.TagNumber(19)
   void clearAddress() => $_clearField(19);
   @$pb.TagNumber(19)
-  $11.Value ensureAddress() => $_ensure(18);
+  $4.Value ensureAddress() => $_ensure(18);
 
-  ///  Optional. Time the End-User's information was last updated.
+  /// Optional. Time the End-User's information was last updated.
   ///
-  ///  Its value is a JSON number representing the number of seconds from 1970-01-01T00:00:00Z as measured
-  ///  in UTC until the date/time.
-  ///  (-- api-linter: core::0140::prepositions=disabled --)
+  /// Its value is a JSON number representing the number of seconds from 1970-01-01T00:00:00Z as measured
+  /// in UTC until the date/time.
+  /// (-- api-linter: core::0140::prepositions=disabled --)
   @$pb.TagNumber(20)
   $core.int get updatedAt => $_getIZ(19);
   @$pb.TagNumber(20)
-  set updatedAt($core.int v) {
-    $_setSignedInt32(19, v);
-  }
-
+  set updatedAt($core.int value) => $_setSignedInt32(19, value);
   @$pb.TagNumber(20)
   $core.bool hasUpdatedAt() => $_has(19);
   @$pb.TagNumber(20)
@@ -2158,34 +1848,24 @@ class OpenIdAddress extends $pb.GeneratedMessage {
     $core.String? postalCode,
     $core.String? country,
   }) {
-    final $result = create();
-    if (formatted != null) {
-      $result.formatted = formatted;
-    }
-    if (streetAddress != null) {
-      $result.streetAddress = streetAddress;
-    }
-    if (locality != null) {
-      $result.locality = locality;
-    }
-    if (region != null) {
-      $result.region = region;
-    }
-    if (postalCode != null) {
-      $result.postalCode = postalCode;
-    }
-    if (country != null) {
-      $result.country = country;
-    }
-    return $result;
+    final result = create();
+    if (formatted != null) result.formatted = formatted;
+    if (streetAddress != null) result.streetAddress = streetAddress;
+    if (locality != null) result.locality = locality;
+    if (region != null) result.region = region;
+    if (postalCode != null) result.postalCode = postalCode;
+    if (country != null) result.country = country;
+    return result;
   }
-  OpenIdAddress._() : super();
-  factory OpenIdAddress.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory OpenIdAddress.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  OpenIdAddress._();
+
+  factory OpenIdAddress.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory OpenIdAddress.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'OpenIdAddress',
@@ -2200,21 +1880,19 @@ class OpenIdAddress extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'country')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIdAddress clone() => OpenIdAddress()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OpenIdAddress copyWith(void Function(OpenIdAddress) updates) =>
       super.copyWith((message) => updates(message as OpenIdAddress))
           as OpenIdAddress;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static OpenIdAddress create() => OpenIdAddress._();
+  @$core.override
   OpenIdAddress createEmptyInstance() => create();
   static $pb.PbList<OpenIdAddress> createRepeated() =>
       $pb.PbList<OpenIdAddress>();
@@ -2227,10 +1905,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get formatted => $_getSZ(0);
   @$pb.TagNumber(1)
-  set formatted($core.String v) {
-    $_setString(0, v);
-  }
-
+  set formatted($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasFormatted() => $_has(0);
   @$pb.TagNumber(1)
@@ -2240,10 +1915,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get streetAddress => $_getSZ(1);
   @$pb.TagNumber(2)
-  set streetAddress($core.String v) {
-    $_setString(1, v);
-  }
-
+  set streetAddress($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasStreetAddress() => $_has(1);
   @$pb.TagNumber(2)
@@ -2253,10 +1925,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get locality => $_getSZ(2);
   @$pb.TagNumber(3)
-  set locality($core.String v) {
-    $_setString(2, v);
-  }
-
+  set locality($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLocality() => $_has(2);
   @$pb.TagNumber(3)
@@ -2266,10 +1935,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get region => $_getSZ(3);
   @$pb.TagNumber(4)
-  set region($core.String v) {
-    $_setString(3, v);
-  }
-
+  set region($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasRegion() => $_has(3);
   @$pb.TagNumber(4)
@@ -2279,10 +1945,7 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get postalCode => $_getSZ(4);
   @$pb.TagNumber(5)
-  set postalCode($core.String v) {
-    $_setString(4, v);
-  }
-
+  set postalCode($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasPostalCode() => $_has(4);
   @$pb.TagNumber(5)
@@ -2293,16 +1956,14 @@ class OpenIdAddress extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get country => $_getSZ(5);
   @$pb.TagNumber(6)
-  set country($core.String v) {
-    $_setString(5, v);
-  }
-
+  set country($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasCountry() => $_has(5);
   @$pb.TagNumber(6)
   void clearCountry() => $_clearField(6);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/descriptor.proto
-//
+// Generated from google/protobuf/descriptor.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -26,19 +27,19 @@ class FileDescriptorSet extends $pb.GeneratedMessage {
   factory FileDescriptorSet({
     $core.Iterable<FileDescriptorProto>? file,
   }) {
-    final $result = create();
-    if (file != null) {
-      $result.file.addAll(file);
-    }
-    return $result;
+    final result = create();
+    if (file != null) result.file.addAll(file);
+    return result;
   }
-  FileDescriptorSet._() : super();
-  factory FileDescriptorSet.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FileDescriptorSet.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FileDescriptorSet._();
+
+  factory FileDescriptorSet.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FileDescriptorSet.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FileDescriptorSet',
@@ -49,21 +50,19 @@ class FileDescriptorSet extends $pb.GeneratedMessage {
         1, _omitFieldNames ? '' : 'file', $pb.PbFieldType.PM,
         subBuilder: FileDescriptorProto.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileDescriptorSet clone() => FileDescriptorSet()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileDescriptorSet copyWith(void Function(FileDescriptorSet) updates) =>
       super.copyWith((message) => updates(message as FileDescriptorSet))
           as FileDescriptorSet;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FileDescriptorSet create() => FileDescriptorSet._();
+  @$core.override
   FileDescriptorSet createEmptyInstance() => create();
   static $pb.PbList<FileDescriptorSet> createRepeated() =>
       $pb.PbList<FileDescriptorSet>();
@@ -93,55 +92,32 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
     $core.String? syntax,
     Edition? edition,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (package != null) {
-      $result.package = package;
-    }
-    if (dependency != null) {
-      $result.dependency.addAll(dependency);
-    }
-    if (messageType != null) {
-      $result.messageType.addAll(messageType);
-    }
-    if (enumType != null) {
-      $result.enumType.addAll(enumType);
-    }
-    if (service != null) {
-      $result.service.addAll(service);
-    }
-    if (extension != null) {
-      $result.extension.addAll(extension);
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    if (sourceCodeInfo != null) {
-      $result.sourceCodeInfo = sourceCodeInfo;
-    }
-    if (publicDependency != null) {
-      $result.publicDependency.addAll(publicDependency);
-    }
-    if (weakDependency != null) {
-      $result.weakDependency.addAll(weakDependency);
-    }
-    if (syntax != null) {
-      $result.syntax = syntax;
-    }
-    if (edition != null) {
-      $result.edition = edition;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (package != null) result.package = package;
+    if (dependency != null) result.dependency.addAll(dependency);
+    if (messageType != null) result.messageType.addAll(messageType);
+    if (enumType != null) result.enumType.addAll(enumType);
+    if (service != null) result.service.addAll(service);
+    if (extension != null) result.extension.addAll(extension);
+    if (options != null) result.options = options;
+    if (sourceCodeInfo != null) result.sourceCodeInfo = sourceCodeInfo;
+    if (publicDependency != null)
+      result.publicDependency.addAll(publicDependency);
+    if (weakDependency != null) result.weakDependency.addAll(weakDependency);
+    if (syntax != null) result.syntax = syntax;
+    if (edition != null) result.edition = edition;
+    return result;
   }
-  FileDescriptorProto._() : super();
-  factory FileDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FileDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FileDescriptorProto._();
+
+  factory FileDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FileDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FileDescriptorProto',
@@ -177,21 +153,19 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
         valueOf: Edition.valueOf,
         enumValues: Edition.values);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileDescriptorProto clone() => FileDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileDescriptorProto copyWith(void Function(FileDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as FileDescriptorProto))
           as FileDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FileDescriptorProto create() => FileDescriptorProto._();
+  @$core.override
   FileDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<FileDescriptorProto> createRepeated() =>
       $pb.PbList<FileDescriptorProto>();
@@ -203,10 +177,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -215,10 +186,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get package => $_getSZ(1);
   @$pb.TagNumber(2)
-  set package($core.String v) {
-    $_setString(1, v);
-  }
-
+  set package($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasPackage() => $_has(1);
   @$pb.TagNumber(2)
@@ -244,10 +212,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   FileOptions get options => $_getN(7);
   @$pb.TagNumber(8)
-  set options(FileOptions v) {
-    $_setField(8, v);
-  }
-
+  set options(FileOptions value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasOptions() => $_has(7);
   @$pb.TagNumber(8)
@@ -262,10 +227,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   SourceCodeInfo get sourceCodeInfo => $_getN(8);
   @$pb.TagNumber(9)
-  set sourceCodeInfo(SourceCodeInfo v) {
-    $_setField(9, v);
-  }
-
+  set sourceCodeInfo(SourceCodeInfo value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasSourceCodeInfo() => $_has(8);
   @$pb.TagNumber(9)
@@ -282,17 +244,14 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $pb.PbList<$core.int> get weakDependency => $_getList(10);
 
-  ///  The syntax of the proto file.
-  ///  The supported values are "proto2", "proto3", and "editions".
+  /// The syntax of the proto file.
+  /// The supported values are "proto2", "proto3", and "editions".
   ///
-  ///  If `edition` is present, this value must be "editions".
+  /// If `edition` is present, this value must be "editions".
   @$pb.TagNumber(12)
   $core.String get syntax => $_getSZ(11);
   @$pb.TagNumber(12)
-  set syntax($core.String v) {
-    $_setString(11, v);
-  }
-
+  set syntax($core.String value) => $_setString(11, value);
   @$pb.TagNumber(12)
   $core.bool hasSyntax() => $_has(11);
   @$pb.TagNumber(12)
@@ -302,10 +261,7 @@ class FileDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(14)
   Edition get edition => $_getN(12);
   @$pb.TagNumber(14)
-  set edition(Edition v) {
-    $_setField(14, v);
-  }
-
+  set edition(Edition value) => $_setField(14, value);
   @$pb.TagNumber(14)
   $core.bool hasEdition() => $_has(12);
   @$pb.TagNumber(14)
@@ -318,25 +274,21 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
     $core.int? end,
     ExtensionRangeOptions? options,
   }) {
-    final $result = create();
-    if (start != null) {
-      $result.start = start;
-    }
-    if (end != null) {
-      $result.end = end;
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    return $result;
+    final result = create();
+    if (start != null) result.start = start;
+    if (end != null) result.end = end;
+    if (options != null) result.options = options;
+    return result;
   }
-  DescriptorProto_ExtensionRange._() : super();
-  factory DescriptorProto_ExtensionRange.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DescriptorProto_ExtensionRange.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DescriptorProto_ExtensionRange._();
+
+  factory DescriptorProto_ExtensionRange.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DescriptorProto_ExtensionRange.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DescriptorProto.ExtensionRange',
@@ -348,25 +300,23 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
     ..aOM<ExtensionRangeOptions>(3, _omitFieldNames ? '' : 'options',
         subBuilder: ExtensionRangeOptions.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto_ExtensionRange clone() =>
       DescriptorProto_ExtensionRange()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto_ExtensionRange copyWith(
           void Function(DescriptorProto_ExtensionRange) updates) =>
       super.copyWith(
               (message) => updates(message as DescriptorProto_ExtensionRange))
           as DescriptorProto_ExtensionRange;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DescriptorProto_ExtensionRange create() =>
       DescriptorProto_ExtensionRange._();
+  @$core.override
   DescriptorProto_ExtensionRange createEmptyInstance() => create();
   static $pb.PbList<DescriptorProto_ExtensionRange> createRepeated() =>
       $pb.PbList<DescriptorProto_ExtensionRange>();
@@ -378,10 +328,7 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.int get start => $_getIZ(0);
   @$pb.TagNumber(1)
-  set start($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set start($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
@@ -390,10 +337,7 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
   @$pb.TagNumber(2)
-  set end($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set end($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
@@ -402,10 +346,7 @@ class DescriptorProto_ExtensionRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   ExtensionRangeOptions get options => $_getN(2);
   @$pb.TagNumber(3)
-  set options(ExtensionRangeOptions v) {
-    $_setField(3, v);
-  }
-
+  set options(ExtensionRangeOptions value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
@@ -422,22 +363,20 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
     $core.int? start,
     $core.int? end,
   }) {
-    final $result = create();
-    if (start != null) {
-      $result.start = start;
-    }
-    if (end != null) {
-      $result.end = end;
-    }
-    return $result;
+    final result = create();
+    if (start != null) result.start = start;
+    if (end != null) result.end = end;
+    return result;
   }
-  DescriptorProto_ReservedRange._() : super();
-  factory DescriptorProto_ReservedRange.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DescriptorProto_ReservedRange.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DescriptorProto_ReservedRange._();
+
+  factory DescriptorProto_ReservedRange.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DescriptorProto_ReservedRange.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DescriptorProto.ReservedRange',
@@ -448,25 +387,23 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
     ..a<$core.int>(2, _omitFieldNames ? '' : 'end', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto_ReservedRange clone() =>
       DescriptorProto_ReservedRange()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto_ReservedRange copyWith(
           void Function(DescriptorProto_ReservedRange) updates) =>
       super.copyWith(
               (message) => updates(message as DescriptorProto_ReservedRange))
           as DescriptorProto_ReservedRange;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DescriptorProto_ReservedRange create() =>
       DescriptorProto_ReservedRange._();
+  @$core.override
   DescriptorProto_ReservedRange createEmptyInstance() => create();
   static $pb.PbList<DescriptorProto_ReservedRange> createRepeated() =>
       $pb.PbList<DescriptorProto_ReservedRange>();
@@ -478,10 +415,7 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.int get start => $_getIZ(0);
   @$pb.TagNumber(1)
-  set start($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set start($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
@@ -490,10 +424,7 @@ class DescriptorProto_ReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
   @$pb.TagNumber(2)
-  set end($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set end($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
@@ -514,46 +445,28 @@ class DescriptorProto extends $pb.GeneratedMessage {
     $core.Iterable<DescriptorProto_ReservedRange>? reservedRange,
     $core.Iterable<$core.String>? reservedName,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (field != null) {
-      $result.field.addAll(field);
-    }
-    if (nestedType != null) {
-      $result.nestedType.addAll(nestedType);
-    }
-    if (enumType != null) {
-      $result.enumType.addAll(enumType);
-    }
-    if (extensionRange != null) {
-      $result.extensionRange.addAll(extensionRange);
-    }
-    if (extension != null) {
-      $result.extension.addAll(extension);
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    if (oneofDecl != null) {
-      $result.oneofDecl.addAll(oneofDecl);
-    }
-    if (reservedRange != null) {
-      $result.reservedRange.addAll(reservedRange);
-    }
-    if (reservedName != null) {
-      $result.reservedName.addAll(reservedName);
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (field != null) result.field.addAll(field);
+    if (nestedType != null) result.nestedType.addAll(nestedType);
+    if (enumType != null) result.enumType.addAll(enumType);
+    if (extensionRange != null) result.extensionRange.addAll(extensionRange);
+    if (extension != null) result.extension.addAll(extension);
+    if (options != null) result.options = options;
+    if (oneofDecl != null) result.oneofDecl.addAll(oneofDecl);
+    if (reservedRange != null) result.reservedRange.addAll(reservedRange);
+    if (reservedName != null) result.reservedName.addAll(reservedName);
+    return result;
   }
-  DescriptorProto._() : super();
-  factory DescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DescriptorProto._();
+
+  factory DescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DescriptorProto',
@@ -586,21 +499,19 @@ class DescriptorProto extends $pb.GeneratedMessage {
         subBuilder: DescriptorProto_ReservedRange.create)
     ..pPS(10, _omitFieldNames ? '' : 'reservedName');
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto clone() => DescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DescriptorProto copyWith(void Function(DescriptorProto) updates) =>
       super.copyWith((message) => updates(message as DescriptorProto))
           as DescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DescriptorProto create() => DescriptorProto._();
+  @$core.override
   DescriptorProto createEmptyInstance() => create();
   static $pb.PbList<DescriptorProto> createRepeated() =>
       $pb.PbList<DescriptorProto>();
@@ -612,10 +523,7 @@ class DescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -639,10 +547,7 @@ class DescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   MessageOptions get options => $_getN(6);
   @$pb.TagNumber(7)
-  set options(MessageOptions v) {
-    $_setField(7, v);
-  }
-
+  set options(MessageOptions value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasOptions() => $_has(6);
   @$pb.TagNumber(7)
@@ -670,31 +575,24 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
     $core.bool? reserved,
     $core.bool? repeated,
   }) {
-    final $result = create();
-    if (number != null) {
-      $result.number = number;
-    }
-    if (fullName != null) {
-      $result.fullName = fullName;
-    }
-    if (type != null) {
-      $result.type = type;
-    }
-    if (reserved != null) {
-      $result.reserved = reserved;
-    }
-    if (repeated != null) {
-      $result.repeated = repeated;
-    }
-    return $result;
+    final result = create();
+    if (number != null) result.number = number;
+    if (fullName != null) result.fullName = fullName;
+    if (type != null) result.type = type;
+    if (reserved != null) result.reserved = reserved;
+    if (repeated != null) result.repeated = repeated;
+    return result;
   }
-  ExtensionRangeOptions_Declaration._() : super();
-  factory ExtensionRangeOptions_Declaration.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExtensionRangeOptions_Declaration.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExtensionRangeOptions_Declaration._();
+
+  factory ExtensionRangeOptions_Declaration.fromBuffer(
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExtensionRangeOptions_Declaration.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExtensionRangeOptions.Declaration',
@@ -708,25 +606,23 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
     ..aOB(6, _omitFieldNames ? '' : 'repeated')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionRangeOptions_Declaration clone() =>
       ExtensionRangeOptions_Declaration()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionRangeOptions_Declaration copyWith(
           void Function(ExtensionRangeOptions_Declaration) updates) =>
       super.copyWith((message) =>
               updates(message as ExtensionRangeOptions_Declaration))
           as ExtensionRangeOptions_Declaration;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExtensionRangeOptions_Declaration create() =>
       ExtensionRangeOptions_Declaration._();
+  @$core.override
   ExtensionRangeOptions_Declaration createEmptyInstance() => create();
   static $pb.PbList<ExtensionRangeOptions_Declaration> createRepeated() =>
       $pb.PbList<ExtensionRangeOptions_Declaration>();
@@ -740,10 +636,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.int get number => $_getIZ(0);
   @$pb.TagNumber(1)
-  set number($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set number($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasNumber() => $_has(0);
   @$pb.TagNumber(1)
@@ -754,10 +647,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get fullName => $_getSZ(1);
   @$pb.TagNumber(2)
-  set fullName($core.String v) {
-    $_setString(1, v);
-  }
-
+  set fullName($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasFullName() => $_has(1);
   @$pb.TagNumber(2)
@@ -769,10 +659,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get type => $_getSZ(2);
   @$pb.TagNumber(3)
-  set type($core.String v) {
-    $_setString(2, v);
-  }
-
+  set type($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasType() => $_has(2);
   @$pb.TagNumber(3)
@@ -784,10 +671,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get reserved => $_getBF(3);
   @$pb.TagNumber(5)
-  set reserved($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set reserved($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(5)
   $core.bool hasReserved() => $_has(3);
   @$pb.TagNumber(5)
@@ -798,10 +682,7 @@ class ExtensionRangeOptions_Declaration extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool get repeated => $_getBF(4);
   @$pb.TagNumber(6)
-  set repeated($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set repeated($core.bool value) => $_setBool(4, value);
   @$pb.TagNumber(6)
   $core.bool hasRepeated() => $_has(4);
   @$pb.TagNumber(6)
@@ -815,28 +696,23 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (declaration != null) {
-      $result.declaration.addAll(declaration);
-    }
-    if (verification != null) {
-      $result.verification = verification;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (declaration != null) result.declaration.addAll(declaration);
+    if (verification != null) result.verification = verification;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  ExtensionRangeOptions._() : super();
-  factory ExtensionRangeOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExtensionRangeOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExtensionRangeOptions._();
+
+  factory ExtensionRangeOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExtensionRangeOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExtensionRangeOptions',
@@ -858,23 +734,21 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionRangeOptions clone() =>
       ExtensionRangeOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionRangeOptions copyWith(
           void Function(ExtensionRangeOptions) updates) =>
       super.copyWith((message) => updates(message as ExtensionRangeOptions))
           as ExtensionRangeOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExtensionRangeOptions create() => ExtensionRangeOptions._();
+  @$core.override
   ExtensionRangeOptions createEmptyInstance() => create();
   static $pb.PbList<ExtensionRangeOptions> createRepeated() =>
       $pb.PbList<ExtensionRangeOptions>();
@@ -895,10 +769,8 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   ExtensionRangeOptions_VerificationState get verification => $_getN(1);
   @$pb.TagNumber(3)
-  set verification(ExtensionRangeOptions_VerificationState v) {
-    $_setField(3, v);
-  }
-
+  set verification(ExtensionRangeOptions_VerificationState value) =>
+      $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasVerification() => $_has(1);
   @$pb.TagNumber(3)
@@ -908,10 +780,7 @@ class ExtensionRangeOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(50)
   FeatureSet get features => $_getN(2);
   @$pb.TagNumber(50)
-  set features(FeatureSet v) {
-    $_setField(50, v);
-  }
-
+  set features(FeatureSet value) => $_setField(50, value);
   @$pb.TagNumber(50)
   $core.bool hasFeatures() => $_has(2);
   @$pb.TagNumber(50)
@@ -939,49 +808,29 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
     $core.String? jsonName,
     $core.bool? proto3Optional,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (extendee != null) {
-      $result.extendee = extendee;
-    }
-    if (number != null) {
-      $result.number = number;
-    }
-    if (label != null) {
-      $result.label = label;
-    }
-    if (type != null) {
-      $result.type = type;
-    }
-    if (typeName != null) {
-      $result.typeName = typeName;
-    }
-    if (defaultValue != null) {
-      $result.defaultValue = defaultValue;
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    if (oneofIndex != null) {
-      $result.oneofIndex = oneofIndex;
-    }
-    if (jsonName != null) {
-      $result.jsonName = jsonName;
-    }
-    if (proto3Optional != null) {
-      $result.proto3Optional = proto3Optional;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (extendee != null) result.extendee = extendee;
+    if (number != null) result.number = number;
+    if (label != null) result.label = label;
+    if (type != null) result.type = type;
+    if (typeName != null) result.typeName = typeName;
+    if (defaultValue != null) result.defaultValue = defaultValue;
+    if (options != null) result.options = options;
+    if (oneofIndex != null) result.oneofIndex = oneofIndex;
+    if (jsonName != null) result.jsonName = jsonName;
+    if (proto3Optional != null) result.proto3Optional = proto3Optional;
+    return result;
   }
-  FieldDescriptorProto._() : super();
-  factory FieldDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldDescriptorProto._();
+
+  factory FieldDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldDescriptorProto',
@@ -1009,22 +858,20 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
     ..aOS(10, _omitFieldNames ? '' : 'jsonName')
     ..aOB(17, _omitFieldNames ? '' : 'proto3Optional');
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldDescriptorProto clone() =>
       FieldDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldDescriptorProto copyWith(void Function(FieldDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as FieldDescriptorProto))
           as FieldDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldDescriptorProto create() => FieldDescriptorProto._();
+  @$core.override
   FieldDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<FieldDescriptorProto> createRepeated() =>
       $pb.PbList<FieldDescriptorProto>();
@@ -1036,10 +883,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1050,10 +894,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get extendee => $_getSZ(1);
   @$pb.TagNumber(2)
-  set extendee($core.String v) {
-    $_setString(1, v);
-  }
-
+  set extendee($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasExtendee() => $_has(1);
   @$pb.TagNumber(2)
@@ -1062,10 +903,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get number => $_getIZ(2);
   @$pb.TagNumber(3)
-  set number($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set number($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasNumber() => $_has(2);
   @$pb.TagNumber(3)
@@ -1074,10 +912,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   FieldDescriptorProto_Label get label => $_getN(3);
   @$pb.TagNumber(4)
-  set label(FieldDescriptorProto_Label v) {
-    $_setField(4, v);
-  }
-
+  set label(FieldDescriptorProto_Label value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasLabel() => $_has(3);
   @$pb.TagNumber(4)
@@ -1088,10 +923,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   FieldDescriptorProto_Type get type => $_getN(4);
   @$pb.TagNumber(5)
-  set type(FieldDescriptorProto_Type v) {
-    $_setField(5, v);
-  }
-
+  set type(FieldDescriptorProto_Type value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasType() => $_has(4);
   @$pb.TagNumber(5)
@@ -1105,10 +937,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get typeName => $_getSZ(5);
   @$pb.TagNumber(6)
-  set typeName($core.String v) {
-    $_setString(5, v);
-  }
-
+  set typeName($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasTypeName() => $_has(5);
   @$pb.TagNumber(6)
@@ -1121,10 +950,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.String get defaultValue => $_getSZ(6);
   @$pb.TagNumber(7)
-  set defaultValue($core.String v) {
-    $_setString(6, v);
-  }
-
+  set defaultValue($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
   $core.bool hasDefaultValue() => $_has(6);
   @$pb.TagNumber(7)
@@ -1133,10 +959,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   FieldOptions get options => $_getN(7);
   @$pb.TagNumber(8)
-  set options(FieldOptions v) {
-    $_setField(8, v);
-  }
-
+  set options(FieldOptions value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasOptions() => $_has(7);
   @$pb.TagNumber(8)
@@ -1149,10 +972,7 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.int get oneofIndex => $_getIZ(8);
   @$pb.TagNumber(9)
-  set oneofIndex($core.int v) {
-    $_setSignedInt32(8, v);
-  }
-
+  set oneofIndex($core.int value) => $_setSignedInt32(8, value);
   @$pb.TagNumber(9)
   $core.bool hasOneofIndex() => $_has(8);
   @$pb.TagNumber(9)
@@ -1165,43 +985,37 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.String get jsonName => $_getSZ(9);
   @$pb.TagNumber(10)
-  set jsonName($core.String v) {
-    $_setString(9, v);
-  }
-
+  set jsonName($core.String value) => $_setString(9, value);
   @$pb.TagNumber(10)
   $core.bool hasJsonName() => $_has(9);
   @$pb.TagNumber(10)
   void clearJsonName() => $_clearField(10);
 
-  ///  If true, this is a proto3 "optional". When a proto3 field is optional, it
-  ///  tracks presence regardless of field type.
+  /// If true, this is a proto3 "optional". When a proto3 field is optional, it
+  /// tracks presence regardless of field type.
   ///
-  ///  When proto3_optional is true, this field must belong to a oneof to signal
-  ///  to old proto3 clients that presence is tracked for this field. This oneof
-  ///  is known as a "synthetic" oneof, and this field must be its sole member
-  ///  (each proto3 optional field gets its own synthetic oneof). Synthetic oneofs
-  ///  exist in the descriptor only, and do not generate any API. Synthetic oneofs
-  ///  must be ordered after all "real" oneofs.
+  /// When proto3_optional is true, this field must belong to a oneof to signal
+  /// to old proto3 clients that presence is tracked for this field. This oneof
+  /// is known as a "synthetic" oneof, and this field must be its sole member
+  /// (each proto3 optional field gets its own synthetic oneof). Synthetic oneofs
+  /// exist in the descriptor only, and do not generate any API. Synthetic oneofs
+  /// must be ordered after all "real" oneofs.
   ///
-  ///  For message fields, proto3_optional doesn't create any semantic change,
-  ///  since non-repeated message fields always track presence. However it still
-  ///  indicates the semantic detail of whether the user wrote "optional" or not.
-  ///  This can be useful for round-tripping the .proto file. For consistency we
-  ///  give message fields a synthetic oneof also, even though it is not required
-  ///  to track presence. This is especially important because the parser can't
-  ///  tell if a field is a message or an enum, so it must always create a
-  ///  synthetic oneof.
+  /// For message fields, proto3_optional doesn't create any semantic change,
+  /// since non-repeated message fields always track presence. However it still
+  /// indicates the semantic detail of whether the user wrote "optional" or not.
+  /// This can be useful for round-tripping the .proto file. For consistency we
+  /// give message fields a synthetic oneof also, even though it is not required
+  /// to track presence. This is especially important because the parser can't
+  /// tell if a field is a message or an enum, so it must always create a
+  /// synthetic oneof.
   ///
-  ///  Proto2 optional fields do not set this flag, because they already indicate
-  ///  optional with `LABEL_OPTIONAL`.
+  /// Proto2 optional fields do not set this flag, because they already indicate
+  /// optional with `LABEL_OPTIONAL`.
   @$pb.TagNumber(17)
   $core.bool get proto3Optional => $_getBF(10);
   @$pb.TagNumber(17)
-  set proto3Optional($core.bool v) {
-    $_setBool(10, v);
-  }
-
+  set proto3Optional($core.bool value) => $_setBool(10, value);
   @$pb.TagNumber(17)
   $core.bool hasProto3Optional() => $_has(10);
   @$pb.TagNumber(17)
@@ -1214,22 +1028,20 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
     $core.String? name,
     OneofOptions? options,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (options != null) result.options = options;
+    return result;
   }
-  OneofDescriptorProto._() : super();
-  factory OneofDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory OneofDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  OneofDescriptorProto._();
+
+  factory OneofDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory OneofDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'OneofDescriptorProto',
@@ -1240,22 +1052,20 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
     ..aOM<OneofOptions>(2, _omitFieldNames ? '' : 'options',
         subBuilder: OneofOptions.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OneofDescriptorProto clone() =>
       OneofDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OneofDescriptorProto copyWith(void Function(OneofDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as OneofDescriptorProto))
           as OneofDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static OneofDescriptorProto create() => OneofDescriptorProto._();
+  @$core.override
   OneofDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<OneofDescriptorProto> createRepeated() =>
       $pb.PbList<OneofDescriptorProto>();
@@ -1267,10 +1077,7 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1279,10 +1086,7 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   OneofOptions get options => $_getN(1);
   @$pb.TagNumber(2)
-  set options(OneofOptions v) {
-    $_setField(2, v);
-  }
-
+  set options(OneofOptions value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasOptions() => $_has(1);
   @$pb.TagNumber(2)
@@ -1291,34 +1095,32 @@ class OneofDescriptorProto extends $pb.GeneratedMessage {
   OneofOptions ensureOptions() => $_ensure(1);
 }
 
-///  Range of reserved numeric values. Reserved values may not be used by
-///  entries in the same enum. Reserved ranges may not overlap.
+/// Range of reserved numeric values. Reserved values may not be used by
+/// entries in the same enum. Reserved ranges may not overlap.
 ///
-///  Note that this is distinct from DescriptorProto.ReservedRange in that it
-///  is inclusive such that it can appropriately represent the entire int32
-///  domain.
+/// Note that this is distinct from DescriptorProto.ReservedRange in that it
+/// is inclusive such that it can appropriately represent the entire int32
+/// domain.
 class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
   factory EnumDescriptorProto_EnumReservedRange({
     $core.int? start,
     $core.int? end,
   }) {
-    final $result = create();
-    if (start != null) {
-      $result.start = start;
-    }
-    if (end != null) {
-      $result.end = end;
-    }
-    return $result;
+    final result = create();
+    if (start != null) result.start = start;
+    if (end != null) result.end = end;
+    return result;
   }
-  EnumDescriptorProto_EnumReservedRange._() : super();
+
+  EnumDescriptorProto_EnumReservedRange._();
+
   factory EnumDescriptorProto_EnumReservedRange.fromBuffer(
-          $core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumDescriptorProto_EnumReservedRange.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumDescriptorProto_EnumReservedRange.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumDescriptorProto.EnumReservedRange',
@@ -1329,25 +1131,23 @@ class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
     ..a<$core.int>(2, _omitFieldNames ? '' : 'end', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumDescriptorProto_EnumReservedRange clone() =>
       EnumDescriptorProto_EnumReservedRange()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumDescriptorProto_EnumReservedRange copyWith(
           void Function(EnumDescriptorProto_EnumReservedRange) updates) =>
       super.copyWith((message) =>
               updates(message as EnumDescriptorProto_EnumReservedRange))
           as EnumDescriptorProto_EnumReservedRange;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumDescriptorProto_EnumReservedRange create() =>
       EnumDescriptorProto_EnumReservedRange._();
+  @$core.override
   EnumDescriptorProto_EnumReservedRange createEmptyInstance() => create();
   static $pb.PbList<EnumDescriptorProto_EnumReservedRange> createRepeated() =>
       $pb.PbList<EnumDescriptorProto_EnumReservedRange>();
@@ -1360,10 +1160,7 @@ class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.int get start => $_getIZ(0);
   @$pb.TagNumber(1)
-  set start($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set start($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasStart() => $_has(0);
   @$pb.TagNumber(1)
@@ -1372,10 +1169,7 @@ class EnumDescriptorProto_EnumReservedRange extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get end => $_getIZ(1);
   @$pb.TagNumber(2)
-  set end($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set end($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasEnd() => $_has(1);
   @$pb.TagNumber(2)
@@ -1391,31 +1185,23 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
     $core.Iterable<EnumDescriptorProto_EnumReservedRange>? reservedRange,
     $core.Iterable<$core.String>? reservedName,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (value != null) {
-      $result.value.addAll(value);
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    if (reservedRange != null) {
-      $result.reservedRange.addAll(reservedRange);
-    }
-    if (reservedName != null) {
-      $result.reservedName.addAll(reservedName);
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (value != null) result.value.addAll(value);
+    if (options != null) result.options = options;
+    if (reservedRange != null) result.reservedRange.addAll(reservedRange);
+    if (reservedName != null) result.reservedName.addAll(reservedName);
+    return result;
   }
-  EnumDescriptorProto._() : super();
-  factory EnumDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnumDescriptorProto._();
+
+  factory EnumDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumDescriptorProto',
@@ -1433,21 +1219,19 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
         subBuilder: EnumDescriptorProto_EnumReservedRange.create)
     ..pPS(5, _omitFieldNames ? '' : 'reservedName');
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumDescriptorProto clone() => EnumDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumDescriptorProto copyWith(void Function(EnumDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as EnumDescriptorProto))
           as EnumDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumDescriptorProto create() => EnumDescriptorProto._();
+  @$core.override
   EnumDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<EnumDescriptorProto> createRepeated() =>
       $pb.PbList<EnumDescriptorProto>();
@@ -1459,10 +1243,7 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1474,10 +1255,7 @@ class EnumDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   EnumOptions get options => $_getN(2);
   @$pb.TagNumber(3)
-  set options(EnumOptions v) {
-    $_setField(3, v);
-  }
-
+  set options(EnumOptions value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
@@ -1505,25 +1283,21 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
     $core.int? number,
     EnumValueOptions? options,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (number != null) {
-      $result.number = number;
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (number != null) result.number = number;
+    if (options != null) result.options = options;
+    return result;
   }
-  EnumValueDescriptorProto._() : super();
-  factory EnumValueDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumValueDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnumValueDescriptorProto._();
+
+  factory EnumValueDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumValueDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumValueDescriptorProto',
@@ -1535,23 +1309,21 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
     ..aOM<EnumValueOptions>(3, _omitFieldNames ? '' : 'options',
         subBuilder: EnumValueOptions.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumValueDescriptorProto clone() =>
       EnumValueDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumValueDescriptorProto copyWith(
           void Function(EnumValueDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as EnumValueDescriptorProto))
           as EnumValueDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumValueDescriptorProto create() => EnumValueDescriptorProto._();
+  @$core.override
   EnumValueDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<EnumValueDescriptorProto> createRepeated() =>
       $pb.PbList<EnumValueDescriptorProto>();
@@ -1563,10 +1335,7 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1575,10 +1344,7 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get number => $_getIZ(1);
   @$pb.TagNumber(2)
-  set number($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set number($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasNumber() => $_has(1);
   @$pb.TagNumber(2)
@@ -1587,10 +1353,7 @@ class EnumValueDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   EnumValueOptions get options => $_getN(2);
   @$pb.TagNumber(3)
-  set options(EnumValueOptions v) {
-    $_setField(3, v);
-  }
-
+  set options(EnumValueOptions value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
@@ -1606,25 +1369,21 @@ class ServiceDescriptorProto extends $pb.GeneratedMessage {
     $core.Iterable<MethodDescriptorProto>? method,
     ServiceOptions? options,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (method != null) {
-      $result.method.addAll(method);
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (method != null) result.method.addAll(method);
+    if (options != null) result.options = options;
+    return result;
   }
-  ServiceDescriptorProto._() : super();
-  factory ServiceDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ServiceDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ServiceDescriptorProto._();
+
+  factory ServiceDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ServiceDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ServiceDescriptorProto',
@@ -1638,23 +1397,21 @@ class ServiceDescriptorProto extends $pb.GeneratedMessage {
     ..aOM<ServiceOptions>(3, _omitFieldNames ? '' : 'options',
         subBuilder: ServiceOptions.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ServiceDescriptorProto clone() =>
       ServiceDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ServiceDescriptorProto copyWith(
           void Function(ServiceDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as ServiceDescriptorProto))
           as ServiceDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ServiceDescriptorProto create() => ServiceDescriptorProto._();
+  @$core.override
   ServiceDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<ServiceDescriptorProto> createRepeated() =>
       $pb.PbList<ServiceDescriptorProto>();
@@ -1666,10 +1423,7 @@ class ServiceDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1681,10 +1435,7 @@ class ServiceDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   ServiceOptions get options => $_getN(2);
   @$pb.TagNumber(3)
-  set options(ServiceOptions v) {
-    $_setField(3, v);
-  }
-
+  set options(ServiceOptions value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasOptions() => $_has(2);
   @$pb.TagNumber(3)
@@ -1703,34 +1454,24 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
     $core.bool? clientStreaming,
     $core.bool? serverStreaming,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (inputType != null) {
-      $result.inputType = inputType;
-    }
-    if (outputType != null) {
-      $result.outputType = outputType;
-    }
-    if (options != null) {
-      $result.options = options;
-    }
-    if (clientStreaming != null) {
-      $result.clientStreaming = clientStreaming;
-    }
-    if (serverStreaming != null) {
-      $result.serverStreaming = serverStreaming;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (inputType != null) result.inputType = inputType;
+    if (outputType != null) result.outputType = outputType;
+    if (options != null) result.options = options;
+    if (clientStreaming != null) result.clientStreaming = clientStreaming;
+    if (serverStreaming != null) result.serverStreaming = serverStreaming;
+    return result;
   }
-  MethodDescriptorProto._() : super();
-  factory MethodDescriptorProto.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory MethodDescriptorProto.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MethodDescriptorProto._();
+
+  factory MethodDescriptorProto.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MethodDescriptorProto.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MethodDescriptorProto',
@@ -1745,23 +1486,21 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
     ..aOB(5, _omitFieldNames ? '' : 'clientStreaming')
     ..aOB(6, _omitFieldNames ? '' : 'serverStreaming');
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MethodDescriptorProto clone() =>
       MethodDescriptorProto()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MethodDescriptorProto copyWith(
           void Function(MethodDescriptorProto) updates) =>
       super.copyWith((message) => updates(message as MethodDescriptorProto))
           as MethodDescriptorProto;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MethodDescriptorProto create() => MethodDescriptorProto._();
+  @$core.override
   MethodDescriptorProto createEmptyInstance() => create();
   static $pb.PbList<MethodDescriptorProto> createRepeated() =>
       $pb.PbList<MethodDescriptorProto>();
@@ -1773,10 +1512,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1787,10 +1523,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get inputType => $_getSZ(1);
   @$pb.TagNumber(2)
-  set inputType($core.String v) {
-    $_setString(1, v);
-  }
-
+  set inputType($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasInputType() => $_has(1);
   @$pb.TagNumber(2)
@@ -1799,10 +1532,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get outputType => $_getSZ(2);
   @$pb.TagNumber(3)
-  set outputType($core.String v) {
-    $_setString(2, v);
-  }
-
+  set outputType($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasOutputType() => $_has(2);
   @$pb.TagNumber(3)
@@ -1811,10 +1541,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   MethodOptions get options => $_getN(3);
   @$pb.TagNumber(4)
-  set options(MethodOptions v) {
-    $_setField(4, v);
-  }
-
+  set options(MethodOptions value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasOptions() => $_has(3);
   @$pb.TagNumber(4)
@@ -1826,10 +1553,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get clientStreaming => $_getBF(4);
   @$pb.TagNumber(5)
-  set clientStreaming($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set clientStreaming($core.bool value) => $_setBool(4, value);
   @$pb.TagNumber(5)
   $core.bool hasClientStreaming() => $_has(4);
   @$pb.TagNumber(5)
@@ -1839,10 +1563,7 @@ class MethodDescriptorProto extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.bool get serverStreaming => $_getBF(5);
   @$pb.TagNumber(6)
-  set serverStreaming($core.bool v) {
-    $_setBool(5, v);
-  }
-
+  set serverStreaming($core.bool value) => $_setBool(5, value);
   @$pb.TagNumber(6)
   $core.bool hasServerStreaming() => $_has(5);
   @$pb.TagNumber(6)
@@ -1874,80 +1595,45 @@ class FileOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (javaPackage != null) {
-      $result.javaPackage = javaPackage;
-    }
-    if (javaOuterClassname != null) {
-      $result.javaOuterClassname = javaOuterClassname;
-    }
-    if (optimizeFor != null) {
-      $result.optimizeFor = optimizeFor;
-    }
-    if (javaMultipleFiles != null) {
-      $result.javaMultipleFiles = javaMultipleFiles;
-    }
-    if (goPackage != null) {
-      $result.goPackage = goPackage;
-    }
-    if (ccGenericServices != null) {
-      $result.ccGenericServices = ccGenericServices;
-    }
-    if (javaGenericServices != null) {
-      $result.javaGenericServices = javaGenericServices;
-    }
-    if (pyGenericServices != null) {
-      $result.pyGenericServices = pyGenericServices;
-    }
-    if (javaGenerateEqualsAndHash != null) {
-      // ignore: deprecated_member_use_from_same_package
-      $result.javaGenerateEqualsAndHash = javaGenerateEqualsAndHash;
-    }
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (javaStringCheckUtf8 != null) {
-      $result.javaStringCheckUtf8 = javaStringCheckUtf8;
-    }
-    if (ccEnableArenas != null) {
-      $result.ccEnableArenas = ccEnableArenas;
-    }
-    if (objcClassPrefix != null) {
-      $result.objcClassPrefix = objcClassPrefix;
-    }
-    if (csharpNamespace != null) {
-      $result.csharpNamespace = csharpNamespace;
-    }
-    if (swiftPrefix != null) {
-      $result.swiftPrefix = swiftPrefix;
-    }
-    if (phpClassPrefix != null) {
-      $result.phpClassPrefix = phpClassPrefix;
-    }
-    if (phpNamespace != null) {
-      $result.phpNamespace = phpNamespace;
-    }
-    if (phpMetadataNamespace != null) {
-      $result.phpMetadataNamespace = phpMetadataNamespace;
-    }
-    if (rubyPackage != null) {
-      $result.rubyPackage = rubyPackage;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (javaPackage != null) result.javaPackage = javaPackage;
+    if (javaOuterClassname != null)
+      result.javaOuterClassname = javaOuterClassname;
+    if (optimizeFor != null) result.optimizeFor = optimizeFor;
+    if (javaMultipleFiles != null) result.javaMultipleFiles = javaMultipleFiles;
+    if (goPackage != null) result.goPackage = goPackage;
+    if (ccGenericServices != null) result.ccGenericServices = ccGenericServices;
+    if (javaGenericServices != null)
+      result.javaGenericServices = javaGenericServices;
+    if (pyGenericServices != null) result.pyGenericServices = pyGenericServices;
+    if (javaGenerateEqualsAndHash != null)
+      result.javaGenerateEqualsAndHash = javaGenerateEqualsAndHash;
+    if (deprecated != null) result.deprecated = deprecated;
+    if (javaStringCheckUtf8 != null)
+      result.javaStringCheckUtf8 = javaStringCheckUtf8;
+    if (ccEnableArenas != null) result.ccEnableArenas = ccEnableArenas;
+    if (objcClassPrefix != null) result.objcClassPrefix = objcClassPrefix;
+    if (csharpNamespace != null) result.csharpNamespace = csharpNamespace;
+    if (swiftPrefix != null) result.swiftPrefix = swiftPrefix;
+    if (phpClassPrefix != null) result.phpClassPrefix = phpClassPrefix;
+    if (phpNamespace != null) result.phpNamespace = phpNamespace;
+    if (phpMetadataNamespace != null)
+      result.phpMetadataNamespace = phpMetadataNamespace;
+    if (rubyPackage != null) result.rubyPackage = rubyPackage;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  FileOptions._() : super();
-  factory FileOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FileOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FileOptions._();
+
+  factory FileOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FileOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FileOptions',
@@ -1986,21 +1672,19 @@ class FileOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileOptions clone() => FileOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FileOptions copyWith(void Function(FileOptions) updates) =>
       super.copyWith((message) => updates(message as FileOptions))
           as FileOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FileOptions create() => FileOptions._();
+  @$core.override
   FileOptions createEmptyInstance() => create();
   static $pb.PbList<FileOptions> createRepeated() => $pb.PbList<FileOptions>();
   @$core.pragma('dart2js:noInline')
@@ -2015,10 +1699,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get javaPackage => $_getSZ(0);
   @$pb.TagNumber(1)
-  set javaPackage($core.String v) {
-    $_setString(0, v);
-  }
-
+  set javaPackage($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasJavaPackage() => $_has(0);
   @$pb.TagNumber(1)
@@ -2032,10 +1713,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.String get javaOuterClassname => $_getSZ(1);
   @$pb.TagNumber(8)
-  set javaOuterClassname($core.String v) {
-    $_setString(1, v);
-  }
-
+  set javaOuterClassname($core.String value) => $_setString(1, value);
   @$pb.TagNumber(8)
   $core.bool hasJavaOuterClassname() => $_has(1);
   @$pb.TagNumber(8)
@@ -2044,10 +1722,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   FileOptions_OptimizeMode get optimizeFor => $_getN(2);
   @$pb.TagNumber(9)
-  set optimizeFor(FileOptions_OptimizeMode v) {
-    $_setField(9, v);
-  }
-
+  set optimizeFor(FileOptions_OptimizeMode value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasOptimizeFor() => $_has(2);
   @$pb.TagNumber(9)
@@ -2062,10 +1737,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool get javaMultipleFiles => $_getBF(3);
   @$pb.TagNumber(10)
-  set javaMultipleFiles($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set javaMultipleFiles($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(10)
   $core.bool hasJavaMultipleFiles() => $_has(3);
   @$pb.TagNumber(10)
@@ -2079,32 +1751,26 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.String get goPackage => $_getSZ(4);
   @$pb.TagNumber(11)
-  set goPackage($core.String v) {
-    $_setString(4, v);
-  }
-
+  set goPackage($core.String value) => $_setString(4, value);
   @$pb.TagNumber(11)
   $core.bool hasGoPackage() => $_has(4);
   @$pb.TagNumber(11)
   void clearGoPackage() => $_clearField(11);
 
-  ///  Should generic services be generated in each language?  "Generic" services
-  ///  are not specific to any particular RPC system.  They are generated by the
-  ///  main code generators in each language (without additional plugins).
-  ///  Generic services were the only kind of service generation supported by
-  ///  early versions of google.protobuf.
+  /// Should generic services be generated in each language?  "Generic" services
+  /// are not specific to any particular RPC system.  They are generated by the
+  /// main code generators in each language (without additional plugins).
+  /// Generic services were the only kind of service generation supported by
+  /// early versions of google.protobuf.
   ///
-  ///  Generic services are now considered deprecated in favor of using plugins
-  ///  that generate code specific to your particular RPC system.  Therefore,
-  ///  these default to false.  Old code which depends on generic services should
-  ///  explicitly set them to true.
+  /// Generic services are now considered deprecated in favor of using plugins
+  /// that generate code specific to your particular RPC system.  Therefore,
+  /// these default to false.  Old code which depends on generic services should
+  /// explicitly set them to true.
   @$pb.TagNumber(16)
   $core.bool get ccGenericServices => $_getBF(5);
   @$pb.TagNumber(16)
-  set ccGenericServices($core.bool v) {
-    $_setBool(5, v);
-  }
-
+  set ccGenericServices($core.bool value) => $_setBool(5, value);
   @$pb.TagNumber(16)
   $core.bool hasCcGenericServices() => $_has(5);
   @$pb.TagNumber(16)
@@ -2113,10 +1779,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   $core.bool get javaGenericServices => $_getBF(6);
   @$pb.TagNumber(17)
-  set javaGenericServices($core.bool v) {
-    $_setBool(6, v);
-  }
-
+  set javaGenericServices($core.bool value) => $_setBool(6, value);
   @$pb.TagNumber(17)
   $core.bool hasJavaGenericServices() => $_has(6);
   @$pb.TagNumber(17)
@@ -2125,10 +1788,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(18)
   $core.bool get pyGenericServices => $_getBF(7);
   @$pb.TagNumber(18)
-  set pyGenericServices($core.bool v) {
-    $_setBool(7, v);
-  }
-
+  set pyGenericServices($core.bool value) => $_setBool(7, value);
   @$pb.TagNumber(18)
   $core.bool hasPyGenericServices() => $_has(7);
   @$pb.TagNumber(18)
@@ -2140,10 +1800,7 @@ class FileOptions extends $pb.GeneratedMessage {
   $core.bool get javaGenerateEqualsAndHash => $_getBF(8);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(20)
-  set javaGenerateEqualsAndHash($core.bool v) {
-    $_setBool(8, v);
-  }
-
+  set javaGenerateEqualsAndHash($core.bool value) => $_setBool(8, value);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(20)
   $core.bool hasJavaGenerateEqualsAndHash() => $_has(8);
@@ -2158,32 +1815,26 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(23)
   $core.bool get deprecated => $_getBF(9);
   @$pb.TagNumber(23)
-  set deprecated($core.bool v) {
-    $_setBool(9, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(9, value);
   @$pb.TagNumber(23)
   $core.bool hasDeprecated() => $_has(9);
   @$pb.TagNumber(23)
   void clearDeprecated() => $_clearField(23);
 
-  ///  A proto2 file can set this to true to opt in to UTF-8 checking for Java,
-  ///  which will throw an exception if invalid UTF-8 is parsed from the wire or
-  ///  assigned to a string field.
+  /// A proto2 file can set this to true to opt in to UTF-8 checking for Java,
+  /// which will throw an exception if invalid UTF-8 is parsed from the wire or
+  /// assigned to a string field.
   ///
-  ///  TODO: clarify exactly what kinds of field types this option
-  ///  applies to, and update these docs accordingly.
+  /// TODO: clarify exactly what kinds of field types this option
+  /// applies to, and update these docs accordingly.
   ///
-  ///  Proto3 files already perform these checks. Setting the option explicitly to
-  ///  false has no effect: it cannot be used to opt proto3 files out of UTF-8
-  ///  checks.
+  /// Proto3 files already perform these checks. Setting the option explicitly to
+  /// false has no effect: it cannot be used to opt proto3 files out of UTF-8
+  /// checks.
   @$pb.TagNumber(27)
   $core.bool get javaStringCheckUtf8 => $_getBF(10);
   @$pb.TagNumber(27)
-  set javaStringCheckUtf8($core.bool v) {
-    $_setBool(10, v);
-  }
-
+  set javaStringCheckUtf8($core.bool value) => $_setBool(10, value);
   @$pb.TagNumber(27)
   $core.bool hasJavaStringCheckUtf8() => $_has(10);
   @$pb.TagNumber(27)
@@ -2194,10 +1845,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(31)
   $core.bool get ccEnableArenas => $_getB(11, true);
   @$pb.TagNumber(31)
-  set ccEnableArenas($core.bool v) {
-    $_setBool(11, v);
-  }
-
+  set ccEnableArenas($core.bool value) => $_setBool(11, value);
   @$pb.TagNumber(31)
   $core.bool hasCcEnableArenas() => $_has(11);
   @$pb.TagNumber(31)
@@ -2208,10 +1856,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(36)
   $core.String get objcClassPrefix => $_getSZ(12);
   @$pb.TagNumber(36)
-  set objcClassPrefix($core.String v) {
-    $_setString(12, v);
-  }
-
+  set objcClassPrefix($core.String value) => $_setString(12, value);
   @$pb.TagNumber(36)
   $core.bool hasObjcClassPrefix() => $_has(12);
   @$pb.TagNumber(36)
@@ -2221,10 +1866,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(37)
   $core.String get csharpNamespace => $_getSZ(13);
   @$pb.TagNumber(37)
-  set csharpNamespace($core.String v) {
-    $_setString(13, v);
-  }
-
+  set csharpNamespace($core.String value) => $_setString(13, value);
   @$pb.TagNumber(37)
   $core.bool hasCsharpNamespace() => $_has(13);
   @$pb.TagNumber(37)
@@ -2237,10 +1879,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(39)
   $core.String get swiftPrefix => $_getSZ(14);
   @$pb.TagNumber(39)
-  set swiftPrefix($core.String v) {
-    $_setString(14, v);
-  }
-
+  set swiftPrefix($core.String value) => $_setString(14, value);
   @$pb.TagNumber(39)
   $core.bool hasSwiftPrefix() => $_has(14);
   @$pb.TagNumber(39)
@@ -2251,10 +1890,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(40)
   $core.String get phpClassPrefix => $_getSZ(15);
   @$pb.TagNumber(40)
-  set phpClassPrefix($core.String v) {
-    $_setString(15, v);
-  }
-
+  set phpClassPrefix($core.String value) => $_setString(15, value);
   @$pb.TagNumber(40)
   $core.bool hasPhpClassPrefix() => $_has(15);
   @$pb.TagNumber(40)
@@ -2266,10 +1902,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(41)
   $core.String get phpNamespace => $_getSZ(16);
   @$pb.TagNumber(41)
-  set phpNamespace($core.String v) {
-    $_setString(16, v);
-  }
-
+  set phpNamespace($core.String value) => $_setString(16, value);
   @$pb.TagNumber(41)
   $core.bool hasPhpNamespace() => $_has(16);
   @$pb.TagNumber(41)
@@ -2281,10 +1914,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(44)
   $core.String get phpMetadataNamespace => $_getSZ(17);
   @$pb.TagNumber(44)
-  set phpMetadataNamespace($core.String v) {
-    $_setString(17, v);
-  }
-
+  set phpMetadataNamespace($core.String value) => $_setString(17, value);
   @$pb.TagNumber(44)
   $core.bool hasPhpMetadataNamespace() => $_has(17);
   @$pb.TagNumber(44)
@@ -2296,10 +1926,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(45)
   $core.String get rubyPackage => $_getSZ(18);
   @$pb.TagNumber(45)
-  set rubyPackage($core.String v) {
-    $_setString(18, v);
-  }
-
+  set rubyPackage($core.String value) => $_setString(18, value);
   @$pb.TagNumber(45)
   $core.bool hasRubyPackage() => $_has(18);
   @$pb.TagNumber(45)
@@ -2309,10 +1936,7 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(50)
   FeatureSet get features => $_getN(19);
   @$pb.TagNumber(50)
-  set features(FeatureSet v) {
-    $_setField(50, v);
-  }
-
+  set features(FeatureSet value) => $_setField(50, value);
   @$pb.TagNumber(50)
   $core.bool hasFeatures() => $_has(19);
   @$pb.TagNumber(50)
@@ -2337,39 +1961,30 @@ class MessageOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (messageSetWireFormat != null) {
-      $result.messageSetWireFormat = messageSetWireFormat;
-    }
-    if (noStandardDescriptorAccessor != null) {
-      $result.noStandardDescriptorAccessor = noStandardDescriptorAccessor;
-    }
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (mapEntry != null) {
-      $result.mapEntry = mapEntry;
-    }
-    if (deprecatedLegacyJsonFieldConflicts != null) {
-      // ignore: deprecated_member_use_from_same_package
-      $result.deprecatedLegacyJsonFieldConflicts =
+    final result = create();
+    if (messageSetWireFormat != null)
+      result.messageSetWireFormat = messageSetWireFormat;
+    if (noStandardDescriptorAccessor != null)
+      result.noStandardDescriptorAccessor = noStandardDescriptorAccessor;
+    if (deprecated != null) result.deprecated = deprecated;
+    if (mapEntry != null) result.mapEntry = mapEntry;
+    if (deprecatedLegacyJsonFieldConflicts != null)
+      result.deprecatedLegacyJsonFieldConflicts =
           deprecatedLegacyJsonFieldConflicts;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  MessageOptions._() : super();
-  factory MessageOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory MessageOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MessageOptions._();
+
+  factory MessageOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MessageOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MessageOptions',
@@ -2388,21 +2003,19 @@ class MessageOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MessageOptions clone() => MessageOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MessageOptions copyWith(void Function(MessageOptions) updates) =>
       super.copyWith((message) => updates(message as MessageOptions))
           as MessageOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MessageOptions create() => MessageOptions._();
+  @$core.override
   MessageOptions createEmptyInstance() => create();
   static $pb.PbList<MessageOptions> createRepeated() =>
       $pb.PbList<MessageOptions>();
@@ -2411,31 +2024,28 @@ class MessageOptions extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<MessageOptions>(create);
   static MessageOptions? _defaultInstance;
 
-  ///  Set true to use the old proto1 MessageSet wire format for extensions.
-  ///  This is provided for backwards-compatibility with the MessageSet wire
-  ///  format.  You should not use this for any other reason:  It's less
-  ///  efficient, has fewer features, and is more complicated.
+  /// Set true to use the old proto1 MessageSet wire format for extensions.
+  /// This is provided for backwards-compatibility with the MessageSet wire
+  /// format.  You should not use this for any other reason:  It's less
+  /// efficient, has fewer features, and is more complicated.
   ///
-  ///  The message must be defined exactly as follows:
-  ///    message Foo {
-  ///      option message_set_wire_format = true;
-  ///      extensions 4 to max;
-  ///    }
-  ///  Note that the message cannot have any defined fields; MessageSets only
-  ///  have extensions.
+  /// The message must be defined exactly as follows:
+  ///   message Foo {
+  ///     option message_set_wire_format = true;
+  ///     extensions 4 to max;
+  ///   }
+  /// Note that the message cannot have any defined fields; MessageSets only
+  /// have extensions.
   ///
-  ///  All extensions of your type must be singular messages; e.g. they cannot
-  ///  be int32s, enums, or repeated messages.
+  /// All extensions of your type must be singular messages; e.g. they cannot
+  /// be int32s, enums, or repeated messages.
   ///
-  ///  Because this is an option, the above two restrictions are not enforced by
-  ///  the protocol compiler.
+  /// Because this is an option, the above two restrictions are not enforced by
+  /// the protocol compiler.
   @$pb.TagNumber(1)
   $core.bool get messageSetWireFormat => $_getBF(0);
   @$pb.TagNumber(1)
-  set messageSetWireFormat($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set messageSetWireFormat($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasMessageSetWireFormat() => $_has(0);
   @$pb.TagNumber(1)
@@ -2447,10 +2057,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool get noStandardDescriptorAccessor => $_getBF(1);
   @$pb.TagNumber(2)
-  set noStandardDescriptorAccessor($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set noStandardDescriptorAccessor($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
   $core.bool hasNoStandardDescriptorAccessor() => $_has(1);
   @$pb.TagNumber(2)
@@ -2463,67 +2070,59 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get deprecated => $_getBF(2);
   @$pb.TagNumber(3)
-  set deprecated($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(2);
   @$pb.TagNumber(3)
   void clearDeprecated() => $_clearField(3);
 
-  ///  Whether the message is an automatically generated map entry type for the
-  ///  maps field.
+  /// Whether the message is an automatically generated map entry type for the
+  /// maps field.
   ///
-  ///  For maps fields:
-  ///      map<KeyType, ValueType> map_field = 1;
-  ///  The parsed descriptor looks like:
-  ///      message MapFieldEntry {
-  ///          option map_entry = true;
-  ///          optional KeyType key = 1;
-  ///          optional ValueType value = 2;
-  ///      }
-  ///      repeated MapFieldEntry map_field = 1;
+  /// For maps fields:
+  ///     map<KeyType, ValueType> map_field = 1;
+  /// The parsed descriptor looks like:
+  ///     message MapFieldEntry {
+  ///         option map_entry = true;
+  ///         optional KeyType key = 1;
+  ///         optional ValueType value = 2;
+  ///     }
+  ///     repeated MapFieldEntry map_field = 1;
   ///
-  ///  Implementations may choose not to generate the map_entry=true message, but
-  ///  use a native map in the target language to hold the keys and values.
-  ///  The reflection APIs in such implementations still need to work as
-  ///  if the field is a repeated message field.
+  /// Implementations may choose not to generate the map_entry=true message, but
+  /// use a native map in the target language to hold the keys and values.
+  /// The reflection APIs in such implementations still need to work as
+  /// if the field is a repeated message field.
   ///
-  ///  NOTE: Do not set the option in .proto files. Always use the maps syntax
-  ///  instead. The option should only be implicitly set by the proto compiler
-  ///  parser.
+  /// NOTE: Do not set the option in .proto files. Always use the maps syntax
+  /// instead. The option should only be implicitly set by the proto compiler
+  /// parser.
   @$pb.TagNumber(7)
   $core.bool get mapEntry => $_getBF(3);
   @$pb.TagNumber(7)
-  set mapEntry($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set mapEntry($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(7)
   $core.bool hasMapEntry() => $_has(3);
   @$pb.TagNumber(7)
   void clearMapEntry() => $_clearField(7);
 
-  ///  Enable the legacy handling of JSON field name conflicts.  This lowercases
-  ///  and strips underscored from the fields before comparison in proto3 only.
-  ///  The new behavior takes `json_name` into account and applies to proto2 as
-  ///  well.
+  /// Enable the legacy handling of JSON field name conflicts.  This lowercases
+  /// and strips underscored from the fields before comparison in proto3 only.
+  /// The new behavior takes `json_name` into account and applies to proto2 as
+  /// well.
   ///
-  ///  This should only be used as a temporary measure against broken builds due
-  ///  to the change in behavior for JSON field name conflicts.
+  /// This should only be used as a temporary measure against broken builds due
+  /// to the change in behavior for JSON field name conflicts.
   ///
-  ///  TODO This is legacy behavior we plan to remove once downstream
-  ///  teams have had time to migrate.
+  /// TODO This is legacy behavior we plan to remove once downstream
+  /// teams have had time to migrate.
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(11)
   $core.bool get deprecatedLegacyJsonFieldConflicts => $_getBF(4);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(11)
-  set deprecatedLegacyJsonFieldConflicts($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set deprecatedLegacyJsonFieldConflicts($core.bool value) =>
+      $_setBool(4, value);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(11)
   $core.bool hasDeprecatedLegacyJsonFieldConflicts() => $_has(4);
@@ -2535,10 +2134,7 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   FeatureSet get features => $_getN(5);
   @$pb.TagNumber(12)
-  set features(FeatureSet v) {
-    $_setField(12, v);
-  }
-
+  set features(FeatureSet value) => $_setField(12, value);
   @$pb.TagNumber(12)
   $core.bool hasFeatures() => $_has(5);
   @$pb.TagNumber(12)
@@ -2556,22 +2152,20 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
     $core.String? value,
     Edition? edition,
   }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    if (edition != null) {
-      $result.edition = edition;
-    }
-    return $result;
+    final result = create();
+    if (value != null) result.value = value;
+    if (edition != null) result.edition = edition;
+    return result;
   }
-  FieldOptions_EditionDefault._() : super();
-  factory FieldOptions_EditionDefault.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldOptions_EditionDefault.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldOptions_EditionDefault._();
+
+  factory FieldOptions_EditionDefault.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldOptions_EditionDefault.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldOptions.EditionDefault',
@@ -2585,25 +2179,23 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
         enumValues: Edition.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions_EditionDefault clone() =>
       FieldOptions_EditionDefault()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions_EditionDefault copyWith(
           void Function(FieldOptions_EditionDefault) updates) =>
       super.copyWith(
               (message) => updates(message as FieldOptions_EditionDefault))
           as FieldOptions_EditionDefault;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldOptions_EditionDefault create() =>
       FieldOptions_EditionDefault._();
+  @$core.override
   FieldOptions_EditionDefault createEmptyInstance() => create();
   static $pb.PbList<FieldOptions_EditionDefault> createRepeated() =>
       $pb.PbList<FieldOptions_EditionDefault>();
@@ -2615,10 +2207,7 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get value => $_getSZ(0);
   @$pb.TagNumber(2)
-  set value($core.String v) {
-    $_setString(0, v);
-  }
-
+  set value($core.String value) => $_setString(0, value);
   @$pb.TagNumber(2)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(2)
@@ -2627,10 +2216,7 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Edition get edition => $_getN(1);
   @$pb.TagNumber(3)
-  set edition(Edition v) {
-    $_setField(3, v);
-  }
-
+  set edition(Edition value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasEdition() => $_has(1);
   @$pb.TagNumber(3)
@@ -2645,28 +2231,23 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
     $core.String? deprecationWarning,
     Edition? editionRemoved,
   }) {
-    final $result = create();
-    if (editionIntroduced != null) {
-      $result.editionIntroduced = editionIntroduced;
-    }
-    if (editionDeprecated != null) {
-      $result.editionDeprecated = editionDeprecated;
-    }
-    if (deprecationWarning != null) {
-      $result.deprecationWarning = deprecationWarning;
-    }
-    if (editionRemoved != null) {
-      $result.editionRemoved = editionRemoved;
-    }
-    return $result;
+    final result = create();
+    if (editionIntroduced != null) result.editionIntroduced = editionIntroduced;
+    if (editionDeprecated != null) result.editionDeprecated = editionDeprecated;
+    if (deprecationWarning != null)
+      result.deprecationWarning = deprecationWarning;
+    if (editionRemoved != null) result.editionRemoved = editionRemoved;
+    return result;
   }
-  FieldOptions_FeatureSupport._() : super();
-  factory FieldOptions_FeatureSupport.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldOptions_FeatureSupport.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldOptions_FeatureSupport._();
+
+  factory FieldOptions_FeatureSupport.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldOptions_FeatureSupport.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldOptions.FeatureSupport',
@@ -2690,25 +2271,23 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
         enumValues: Edition.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions_FeatureSupport clone() =>
       FieldOptions_FeatureSupport()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions_FeatureSupport copyWith(
           void Function(FieldOptions_FeatureSupport) updates) =>
       super.copyWith(
               (message) => updates(message as FieldOptions_FeatureSupport))
           as FieldOptions_FeatureSupport;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldOptions_FeatureSupport create() =>
       FieldOptions_FeatureSupport._();
+  @$core.override
   FieldOptions_FeatureSupport createEmptyInstance() => create();
   static $pb.PbList<FieldOptions_FeatureSupport> createRepeated() =>
       $pb.PbList<FieldOptions_FeatureSupport>();
@@ -2723,10 +2302,7 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Edition get editionIntroduced => $_getN(0);
   @$pb.TagNumber(1)
-  set editionIntroduced(Edition v) {
-    $_setField(1, v);
-  }
-
+  set editionIntroduced(Edition value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasEditionIntroduced() => $_has(0);
   @$pb.TagNumber(1)
@@ -2737,10 +2313,7 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Edition get editionDeprecated => $_getN(1);
   @$pb.TagNumber(2)
-  set editionDeprecated(Edition v) {
-    $_setField(2, v);
-  }
-
+  set editionDeprecated(Edition value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasEditionDeprecated() => $_has(1);
   @$pb.TagNumber(2)
@@ -2751,10 +2324,7 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get deprecationWarning => $_getSZ(2);
   @$pb.TagNumber(3)
-  set deprecationWarning($core.String v) {
-    $_setString(2, v);
-  }
-
+  set deprecationWarning($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasDeprecationWarning() => $_has(2);
   @$pb.TagNumber(3)
@@ -2766,10 +2336,7 @@ class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   Edition get editionRemoved => $_getN(3);
   @$pb.TagNumber(4)
-  set editionRemoved(Edition v) {
-    $_setField(4, v);
-  }
-
+  set editionRemoved(Edition value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasEditionRemoved() => $_has(3);
   @$pb.TagNumber(4)
@@ -2793,58 +2360,33 @@ class FieldOptions extends $pb.GeneratedMessage {
     FieldOptions_FeatureSupport? featureSupport,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (ctype != null) {
-      $result.ctype = ctype;
-    }
-    if (packed != null) {
-      $result.packed = packed;
-    }
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (lazy != null) {
-      $result.lazy = lazy;
-    }
-    if (jstype != null) {
-      $result.jstype = jstype;
-    }
-    if (weak != null) {
-      $result.weak = weak;
-    }
-    if (unverifiedLazy != null) {
-      $result.unverifiedLazy = unverifiedLazy;
-    }
-    if (debugRedact != null) {
-      $result.debugRedact = debugRedact;
-    }
-    if (retention != null) {
-      $result.retention = retention;
-    }
-    if (targets != null) {
-      $result.targets.addAll(targets);
-    }
-    if (editionDefaults != null) {
-      $result.editionDefaults.addAll(editionDefaults);
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (featureSupport != null) {
-      $result.featureSupport = featureSupport;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (ctype != null) result.ctype = ctype;
+    if (packed != null) result.packed = packed;
+    if (deprecated != null) result.deprecated = deprecated;
+    if (lazy != null) result.lazy = lazy;
+    if (jstype != null) result.jstype = jstype;
+    if (weak != null) result.weak = weak;
+    if (unverifiedLazy != null) result.unverifiedLazy = unverifiedLazy;
+    if (debugRedact != null) result.debugRedact = debugRedact;
+    if (retention != null) result.retention = retention;
+    if (targets != null) result.targets.addAll(targets);
+    if (editionDefaults != null) result.editionDefaults.addAll(editionDefaults);
+    if (features != null) result.features = features;
+    if (featureSupport != null) result.featureSupport = featureSupport;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  FieldOptions._() : super();
-  factory FieldOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldOptions._();
+
+  factory FieldOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldOptions',
@@ -2890,21 +2432,19 @@ class FieldOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions clone() => FieldOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldOptions copyWith(void Function(FieldOptions) updates) =>
       super.copyWith((message) => updates(message as FieldOptions))
           as FieldOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldOptions create() => FieldOptions._();
+  @$core.override
   FieldOptions createEmptyInstance() => create();
   static $pb.PbList<FieldOptions> createRepeated() =>
       $pb.PbList<FieldOptions>();
@@ -2922,10 +2462,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   FieldOptions_CType get ctype => $_getN(0);
   @$pb.TagNumber(1)
-  set ctype(FieldOptions_CType v) {
-    $_setField(1, v);
-  }
-
+  set ctype(FieldOptions_CType value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasCtype() => $_has(0);
   @$pb.TagNumber(1)
@@ -2941,10 +2478,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool get packed => $_getBF(1);
   @$pb.TagNumber(2)
-  set packed($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set packed($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
   $core.bool hasPacked() => $_has(1);
   @$pb.TagNumber(2)
@@ -2957,67 +2491,58 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get deprecated => $_getBF(2);
   @$pb.TagNumber(3)
-  set deprecated($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(2);
   @$pb.TagNumber(3)
   void clearDeprecated() => $_clearField(3);
 
-  ///  Should this field be parsed lazily?  Lazy applies only to message-type
-  ///  fields.  It means that when the outer message is initially parsed, the
-  ///  inner message's contents will not be parsed but instead stored in encoded
-  ///  form.  The inner message will actually be parsed when it is first accessed.
+  /// Should this field be parsed lazily?  Lazy applies only to message-type
+  /// fields.  It means that when the outer message is initially parsed, the
+  /// inner message's contents will not be parsed but instead stored in encoded
+  /// form.  The inner message will actually be parsed when it is first accessed.
   ///
-  ///  This is only a hint.  Implementations are free to choose whether to use
-  ///  eager or lazy parsing regardless of the value of this option.  However,
-  ///  setting this option true suggests that the protocol author believes that
-  ///  using lazy parsing on this field is worth the additional bookkeeping
-  ///  overhead typically needed to implement it.
+  /// This is only a hint.  Implementations are free to choose whether to use
+  /// eager or lazy parsing regardless of the value of this option.  However,
+  /// setting this option true suggests that the protocol author believes that
+  /// using lazy parsing on this field is worth the additional bookkeeping
+  /// overhead typically needed to implement it.
   ///
-  ///  This option does not affect the public interface of any generated code;
-  ///  all method signatures remain the same.  Furthermore, thread-safety of the
-  ///  interface is not affected by this option; const methods remain safe to
-  ///  call from multiple threads concurrently, while non-const methods continue
-  ///  to require exclusive access.
+  /// This option does not affect the public interface of any generated code;
+  /// all method signatures remain the same.  Furthermore, thread-safety of the
+  /// interface is not affected by this option; const methods remain safe to
+  /// call from multiple threads concurrently, while non-const methods continue
+  /// to require exclusive access.
   ///
-  ///  Note that lazy message fields are still eagerly verified to check
-  ///  ill-formed wireformat or missing required fields. Calling IsInitialized()
-  ///  on the outer message would fail if the inner message has missing required
-  ///  fields. Failed verification would result in parsing failure (except when
-  ///  uninitialized messages are acceptable).
+  /// Note that lazy message fields are still eagerly verified to check
+  /// ill-formed wireformat or missing required fields. Calling IsInitialized()
+  /// on the outer message would fail if the inner message has missing required
+  /// fields. Failed verification would result in parsing failure (except when
+  /// uninitialized messages are acceptable).
   @$pb.TagNumber(5)
   $core.bool get lazy => $_getBF(3);
   @$pb.TagNumber(5)
-  set lazy($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set lazy($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(5)
   $core.bool hasLazy() => $_has(3);
   @$pb.TagNumber(5)
   void clearLazy() => $_clearField(5);
 
-  ///  The jstype option determines the JavaScript type used for values of the
-  ///  field.  The option is permitted only for 64 bit integral and fixed types
-  ///  (int64, uint64, sint64, fixed64, sfixed64).  A field with jstype JS_STRING
-  ///  is represented as JavaScript string, which avoids loss of precision that
-  ///  can happen when a large value is converted to a floating point JavaScript.
-  ///  Specifying JS_NUMBER for the jstype causes the generated JavaScript code to
-  ///  use the JavaScript "number" type.  The behavior of the default option
-  ///  JS_NORMAL is implementation dependent.
+  /// The jstype option determines the JavaScript type used for values of the
+  /// field.  The option is permitted only for 64 bit integral and fixed types
+  /// (int64, uint64, sint64, fixed64, sfixed64).  A field with jstype JS_STRING
+  /// is represented as JavaScript string, which avoids loss of precision that
+  /// can happen when a large value is converted to a floating point JavaScript.
+  /// Specifying JS_NUMBER for the jstype causes the generated JavaScript code to
+  /// use the JavaScript "number" type.  The behavior of the default option
+  /// JS_NORMAL is implementation dependent.
   ///
-  ///  This option is an enum to permit additional types to be added, e.g.
-  ///  goog.math.Integer.
+  /// This option is an enum to permit additional types to be added, e.g.
+  /// goog.math.Integer.
   @$pb.TagNumber(6)
   FieldOptions_JSType get jstype => $_getN(4);
   @$pb.TagNumber(6)
-  set jstype(FieldOptions_JSType v) {
-    $_setField(6, v);
-  }
-
+  set jstype(FieldOptions_JSType value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasJstype() => $_has(4);
   @$pb.TagNumber(6)
@@ -3027,10 +2552,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.bool get weak => $_getBF(5);
   @$pb.TagNumber(10)
-  set weak($core.bool v) {
-    $_setBool(5, v);
-  }
-
+  set weak($core.bool value) => $_setBool(5, value);
   @$pb.TagNumber(10)
   $core.bool hasWeak() => $_has(5);
   @$pb.TagNumber(10)
@@ -3042,10 +2564,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   $core.bool get unverifiedLazy => $_getBF(6);
   @$pb.TagNumber(15)
-  set unverifiedLazy($core.bool v) {
-    $_setBool(6, v);
-  }
-
+  set unverifiedLazy($core.bool value) => $_setBool(6, value);
   @$pb.TagNumber(15)
   $core.bool hasUnverifiedLazy() => $_has(6);
   @$pb.TagNumber(15)
@@ -3056,10 +2575,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   $core.bool get debugRedact => $_getBF(7);
   @$pb.TagNumber(16)
-  set debugRedact($core.bool v) {
-    $_setBool(7, v);
-  }
-
+  set debugRedact($core.bool value) => $_setBool(7, value);
   @$pb.TagNumber(16)
   $core.bool hasDebugRedact() => $_has(7);
   @$pb.TagNumber(16)
@@ -3068,10 +2584,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   FieldOptions_OptionRetention get retention => $_getN(8);
   @$pb.TagNumber(17)
-  set retention(FieldOptions_OptionRetention v) {
-    $_setField(17, v);
-  }
-
+  set retention(FieldOptions_OptionRetention value) => $_setField(17, value);
   @$pb.TagNumber(17)
   $core.bool hasRetention() => $_has(8);
   @$pb.TagNumber(17)
@@ -3087,10 +2600,7 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(21)
   FeatureSet get features => $_getN(11);
   @$pb.TagNumber(21)
-  set features(FeatureSet v) {
-    $_setField(21, v);
-  }
-
+  set features(FeatureSet value) => $_setField(21, value);
   @$pb.TagNumber(21)
   $core.bool hasFeatures() => $_has(11);
   @$pb.TagNumber(21)
@@ -3101,10 +2611,8 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(22)
   FieldOptions_FeatureSupport get featureSupport => $_getN(12);
   @$pb.TagNumber(22)
-  set featureSupport(FieldOptions_FeatureSupport v) {
-    $_setField(22, v);
-  }
-
+  set featureSupport(FieldOptions_FeatureSupport value) =>
+      $_setField(22, value);
   @$pb.TagNumber(22)
   $core.bool hasFeatureSupport() => $_has(12);
   @$pb.TagNumber(22)
@@ -3122,22 +2630,21 @@ class OneofOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  OneofOptions._() : super();
-  factory OneofOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory OneofOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  OneofOptions._();
+
+  factory OneofOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory OneofOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'OneofOptions',
@@ -3151,21 +2658,19 @@ class OneofOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OneofOptions clone() => OneofOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OneofOptions copyWith(void Function(OneofOptions) updates) =>
       super.copyWith((message) => updates(message as OneofOptions))
           as OneofOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static OneofOptions create() => OneofOptions._();
+  @$core.override
   OneofOptions createEmptyInstance() => create();
   static $pb.PbList<OneofOptions> createRepeated() =>
       $pb.PbList<OneofOptions>();
@@ -3178,10 +2683,7 @@ class OneofOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   FeatureSet get features => $_getN(0);
   @$pb.TagNumber(1)
-  set features(FeatureSet v) {
-    $_setField(1, v);
-  }
-
+  set features(FeatureSet value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasFeatures() => $_has(0);
   @$pb.TagNumber(1)
@@ -3203,33 +2705,26 @@ class EnumOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (allowAlias != null) {
-      $result.allowAlias = allowAlias;
-    }
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (deprecatedLegacyJsonFieldConflicts != null) {
-      // ignore: deprecated_member_use_from_same_package
-      $result.deprecatedLegacyJsonFieldConflicts =
+    final result = create();
+    if (allowAlias != null) result.allowAlias = allowAlias;
+    if (deprecated != null) result.deprecated = deprecated;
+    if (deprecatedLegacyJsonFieldConflicts != null)
+      result.deprecatedLegacyJsonFieldConflicts =
           deprecatedLegacyJsonFieldConflicts;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  EnumOptions._() : super();
-  factory EnumOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnumOptions._();
+
+  factory EnumOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumOptions',
@@ -3246,21 +2741,19 @@ class EnumOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumOptions clone() => EnumOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumOptions copyWith(void Function(EnumOptions) updates) =>
       super.copyWith((message) => updates(message as EnumOptions))
           as EnumOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumOptions create() => EnumOptions._();
+  @$core.override
   EnumOptions createEmptyInstance() => create();
   static $pb.PbList<EnumOptions> createRepeated() => $pb.PbList<EnumOptions>();
   @$core.pragma('dart2js:noInline')
@@ -3273,10 +2766,7 @@ class EnumOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool get allowAlias => $_getBF(0);
   @$pb.TagNumber(2)
-  set allowAlias($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set allowAlias($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(2)
   $core.bool hasAllowAlias() => $_has(0);
   @$pb.TagNumber(2)
@@ -3289,10 +2779,7 @@ class EnumOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get deprecated => $_getBF(1);
   @$pb.TagNumber(3)
-  set deprecated($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(3)
   $core.bool hasDeprecated() => $_has(1);
   @$pb.TagNumber(3)
@@ -3309,10 +2796,8 @@ class EnumOptions extends $pb.GeneratedMessage {
   $core.bool get deprecatedLegacyJsonFieldConflicts => $_getBF(2);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(6)
-  set deprecatedLegacyJsonFieldConflicts($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set deprecatedLegacyJsonFieldConflicts($core.bool value) =>
+      $_setBool(2, value);
   @$core.Deprecated('This field is deprecated.')
   @$pb.TagNumber(6)
   $core.bool hasDeprecatedLegacyJsonFieldConflicts() => $_has(2);
@@ -3324,10 +2809,7 @@ class EnumOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   FeatureSet get features => $_getN(3);
   @$pb.TagNumber(7)
-  set features(FeatureSet v) {
-    $_setField(7, v);
-  }
-
+  set features(FeatureSet value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasFeatures() => $_has(3);
   @$pb.TagNumber(7)
@@ -3348,31 +2830,24 @@ class EnumValueOptions extends $pb.GeneratedMessage {
     FieldOptions_FeatureSupport? featureSupport,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (debugRedact != null) {
-      $result.debugRedact = debugRedact;
-    }
-    if (featureSupport != null) {
-      $result.featureSupport = featureSupport;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (deprecated != null) result.deprecated = deprecated;
+    if (features != null) result.features = features;
+    if (debugRedact != null) result.debugRedact = debugRedact;
+    if (featureSupport != null) result.featureSupport = featureSupport;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  EnumValueOptions._() : super();
-  factory EnumValueOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumValueOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnumValueOptions._();
+
+  factory EnumValueOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumValueOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumValueOptions',
@@ -3391,21 +2866,19 @@ class EnumValueOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumValueOptions clone() => EnumValueOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumValueOptions copyWith(void Function(EnumValueOptions) updates) =>
       super.copyWith((message) => updates(message as EnumValueOptions))
           as EnumValueOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumValueOptions create() => EnumValueOptions._();
+  @$core.override
   EnumValueOptions createEmptyInstance() => create();
   static $pb.PbList<EnumValueOptions> createRepeated() =>
       $pb.PbList<EnumValueOptions>();
@@ -3421,10 +2894,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.bool get deprecated => $_getBF(0);
   @$pb.TagNumber(1)
-  set deprecated($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(1)
@@ -3434,10 +2904,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   FeatureSet get features => $_getN(1);
   @$pb.TagNumber(2)
-  set features(FeatureSet v) {
-    $_setField(2, v);
-  }
-
+  set features(FeatureSet value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasFeatures() => $_has(1);
   @$pb.TagNumber(2)
@@ -3451,10 +2918,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get debugRedact => $_getBF(2);
   @$pb.TagNumber(3)
-  set debugRedact($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set debugRedact($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasDebugRedact() => $_has(2);
   @$pb.TagNumber(3)
@@ -3464,10 +2928,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   FieldOptions_FeatureSupport get featureSupport => $_getN(3);
   @$pb.TagNumber(4)
-  set featureSupport(FieldOptions_FeatureSupport v) {
-    $_setField(4, v);
-  }
-
+  set featureSupport(FieldOptions_FeatureSupport value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasFeatureSupport() => $_has(3);
   @$pb.TagNumber(4)
@@ -3486,25 +2947,22 @@ class ServiceOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (deprecated != null) result.deprecated = deprecated;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  ServiceOptions._() : super();
-  factory ServiceOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ServiceOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ServiceOptions._();
+
+  factory ServiceOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ServiceOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ServiceOptions',
@@ -3519,21 +2977,19 @@ class ServiceOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ServiceOptions clone() => ServiceOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ServiceOptions copyWith(void Function(ServiceOptions) updates) =>
       super.copyWith((message) => updates(message as ServiceOptions))
           as ServiceOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ServiceOptions create() => ServiceOptions._();
+  @$core.override
   ServiceOptions createEmptyInstance() => create();
   static $pb.PbList<ServiceOptions> createRepeated() =>
       $pb.PbList<ServiceOptions>();
@@ -3549,10 +3005,7 @@ class ServiceOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(33)
   $core.bool get deprecated => $_getBF(0);
   @$pb.TagNumber(33)
-  set deprecated($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(33)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(33)
@@ -3562,10 +3015,7 @@ class ServiceOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(34)
   FeatureSet get features => $_getN(1);
   @$pb.TagNumber(34)
-  set features(FeatureSet v) {
-    $_setField(34, v);
-  }
-
+  set features(FeatureSet value) => $_setField(34, value);
   @$pb.TagNumber(34)
   $core.bool hasFeatures() => $_has(1);
   @$pb.TagNumber(34)
@@ -3585,28 +3035,23 @@ class MethodOptions extends $pb.GeneratedMessage {
     FeatureSet? features,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
-    final $result = create();
-    if (deprecated != null) {
-      $result.deprecated = deprecated;
-    }
-    if (idempotencyLevel != null) {
-      $result.idempotencyLevel = idempotencyLevel;
-    }
-    if (features != null) {
-      $result.features = features;
-    }
-    if (uninterpretedOption != null) {
-      $result.uninterpretedOption.addAll(uninterpretedOption);
-    }
-    return $result;
+    final result = create();
+    if (deprecated != null) result.deprecated = deprecated;
+    if (idempotencyLevel != null) result.idempotencyLevel = idempotencyLevel;
+    if (features != null) result.features = features;
+    if (uninterpretedOption != null)
+      result.uninterpretedOption.addAll(uninterpretedOption);
+    return result;
   }
-  MethodOptions._() : super();
-  factory MethodOptions.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory MethodOptions.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MethodOptions._();
+
+  factory MethodOptions.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MethodOptions.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MethodOptions',
@@ -3626,21 +3071,19 @@ class MethodOptions extends $pb.GeneratedMessage {
         subBuilder: UninterpretedOption.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MethodOptions clone() => MethodOptions()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MethodOptions copyWith(void Function(MethodOptions) updates) =>
       super.copyWith((message) => updates(message as MethodOptions))
           as MethodOptions;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MethodOptions create() => MethodOptions._();
+  @$core.override
   MethodOptions createEmptyInstance() => create();
   static $pb.PbList<MethodOptions> createRepeated() =>
       $pb.PbList<MethodOptions>();
@@ -3656,10 +3099,7 @@ class MethodOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(33)
   $core.bool get deprecated => $_getBF(0);
   @$pb.TagNumber(33)
-  set deprecated($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set deprecated($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(33)
   $core.bool hasDeprecated() => $_has(0);
   @$pb.TagNumber(33)
@@ -3668,10 +3108,8 @@ class MethodOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(34)
   MethodOptions_IdempotencyLevel get idempotencyLevel => $_getN(1);
   @$pb.TagNumber(34)
-  set idempotencyLevel(MethodOptions_IdempotencyLevel v) {
-    $_setField(34, v);
-  }
-
+  set idempotencyLevel(MethodOptions_IdempotencyLevel value) =>
+      $_setField(34, value);
   @$pb.TagNumber(34)
   $core.bool hasIdempotencyLevel() => $_has(1);
   @$pb.TagNumber(34)
@@ -3681,10 +3119,7 @@ class MethodOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(35)
   FeatureSet get features => $_getN(2);
   @$pb.TagNumber(35)
-  set features(FeatureSet v) {
-    $_setField(35, v);
-  }
-
+  set features(FeatureSet value) => $_setField(35, value);
   @$pb.TagNumber(35)
   $core.bool hasFeatures() => $_has(2);
   @$pb.TagNumber(35)
@@ -3707,22 +3142,20 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
     $core.String? namePart,
     $core.bool? isExtension,
   }) {
-    final $result = create();
-    if (namePart != null) {
-      $result.namePart = namePart;
-    }
-    if (isExtension != null) {
-      $result.isExtension = isExtension;
-    }
-    return $result;
+    final result = create();
+    if (namePart != null) result.namePart = namePart;
+    if (isExtension != null) result.isExtension = isExtension;
+    return result;
   }
-  UninterpretedOption_NamePart._() : super();
-  factory UninterpretedOption_NamePart.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory UninterpretedOption_NamePart.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  UninterpretedOption_NamePart._();
+
+  factory UninterpretedOption_NamePart.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UninterpretedOption_NamePart.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UninterpretedOption.NamePart',
@@ -3733,25 +3166,23 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
     ..a<$core.bool>(
         2, _omitFieldNames ? '' : 'isExtension', $pb.PbFieldType.QB);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UninterpretedOption_NamePart clone() =>
       UninterpretedOption_NamePart()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UninterpretedOption_NamePart copyWith(
           void Function(UninterpretedOption_NamePart) updates) =>
       super.copyWith(
               (message) => updates(message as UninterpretedOption_NamePart))
           as UninterpretedOption_NamePart;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static UninterpretedOption_NamePart create() =>
       UninterpretedOption_NamePart._();
+  @$core.override
   UninterpretedOption_NamePart createEmptyInstance() => create();
   static $pb.PbList<UninterpretedOption_NamePart> createRepeated() =>
       $pb.PbList<UninterpretedOption_NamePart>();
@@ -3763,10 +3194,7 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get namePart => $_getSZ(0);
   @$pb.TagNumber(1)
-  set namePart($core.String v) {
-    $_setString(0, v);
-  }
-
+  set namePart($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasNamePart() => $_has(0);
   @$pb.TagNumber(1)
@@ -3775,10 +3203,7 @@ class UninterpretedOption_NamePart extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool get isExtension => $_getBF(1);
   @$pb.TagNumber(2)
-  set isExtension($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set isExtension($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
   $core.bool hasIsExtension() => $_has(1);
   @$pb.TagNumber(2)
@@ -3801,37 +3226,25 @@ class UninterpretedOption extends $pb.GeneratedMessage {
     $core.List<$core.int>? stringValue,
     $core.String? aggregateValue,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name.addAll(name);
-    }
-    if (identifierValue != null) {
-      $result.identifierValue = identifierValue;
-    }
-    if (positiveIntValue != null) {
-      $result.positiveIntValue = positiveIntValue;
-    }
-    if (negativeIntValue != null) {
-      $result.negativeIntValue = negativeIntValue;
-    }
-    if (doubleValue != null) {
-      $result.doubleValue = doubleValue;
-    }
-    if (stringValue != null) {
-      $result.stringValue = stringValue;
-    }
-    if (aggregateValue != null) {
-      $result.aggregateValue = aggregateValue;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name.addAll(name);
+    if (identifierValue != null) result.identifierValue = identifierValue;
+    if (positiveIntValue != null) result.positiveIntValue = positiveIntValue;
+    if (negativeIntValue != null) result.negativeIntValue = negativeIntValue;
+    if (doubleValue != null) result.doubleValue = doubleValue;
+    if (stringValue != null) result.stringValue = stringValue;
+    if (aggregateValue != null) result.aggregateValue = aggregateValue;
+    return result;
   }
-  UninterpretedOption._() : super();
-  factory UninterpretedOption.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory UninterpretedOption.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  UninterpretedOption._();
+
+  factory UninterpretedOption.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UninterpretedOption.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UninterpretedOption',
@@ -3852,21 +3265,19 @@ class UninterpretedOption extends $pb.GeneratedMessage {
         7, _omitFieldNames ? '' : 'stringValue', $pb.PbFieldType.OY)
     ..aOS(8, _omitFieldNames ? '' : 'aggregateValue');
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UninterpretedOption clone() => UninterpretedOption()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UninterpretedOption copyWith(void Function(UninterpretedOption) updates) =>
       super.copyWith((message) => updates(message as UninterpretedOption))
           as UninterpretedOption;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static UninterpretedOption create() => UninterpretedOption._();
+  @$core.override
   UninterpretedOption createEmptyInstance() => create();
   static $pb.PbList<UninterpretedOption> createRepeated() =>
       $pb.PbList<UninterpretedOption>();
@@ -3883,10 +3294,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get identifierValue => $_getSZ(1);
   @$pb.TagNumber(3)
-  set identifierValue($core.String v) {
-    $_setString(1, v);
-  }
-
+  set identifierValue($core.String value) => $_setString(1, value);
   @$pb.TagNumber(3)
   $core.bool hasIdentifierValue() => $_has(1);
   @$pb.TagNumber(3)
@@ -3895,10 +3303,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $fixnum.Int64 get positiveIntValue => $_getI64(2);
   @$pb.TagNumber(4)
-  set positiveIntValue($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set positiveIntValue($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(4)
   $core.bool hasPositiveIntValue() => $_has(2);
   @$pb.TagNumber(4)
@@ -3907,10 +3312,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $fixnum.Int64 get negativeIntValue => $_getI64(3);
   @$pb.TagNumber(5)
-  set negativeIntValue($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set negativeIntValue($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(5)
   $core.bool hasNegativeIntValue() => $_has(3);
   @$pb.TagNumber(5)
@@ -3919,10 +3321,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.double get doubleValue => $_getN(4);
   @$pb.TagNumber(6)
-  set doubleValue($core.double v) {
-    $_setDouble(4, v);
-  }
-
+  set doubleValue($core.double value) => $_setDouble(4, value);
   @$pb.TagNumber(6)
   $core.bool hasDoubleValue() => $_has(4);
   @$pb.TagNumber(6)
@@ -3931,10 +3330,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.List<$core.int> get stringValue => $_getN(5);
   @$pb.TagNumber(7)
-  set stringValue($core.List<$core.int> v) {
-    $_setBytes(5, v);
-  }
-
+  set stringValue($core.List<$core.int> value) => $_setBytes(5, value);
   @$pb.TagNumber(7)
   $core.bool hasStringValue() => $_has(5);
   @$pb.TagNumber(7)
@@ -3943,10 +3339,7 @@ class UninterpretedOption extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.String get aggregateValue => $_getSZ(6);
   @$pb.TagNumber(8)
-  set aggregateValue($core.String v) {
-    $_setString(6, v);
-  }
-
+  set aggregateValue($core.String value) => $_setString(6, value);
   @$pb.TagNumber(8)
   $core.bool hasAggregateValue() => $_has(6);
   @$pb.TagNumber(8)
@@ -3968,34 +3361,25 @@ class FeatureSet extends $pb.GeneratedMessage {
     FeatureSet_MessageEncoding? messageEncoding,
     FeatureSet_JsonFormat? jsonFormat,
   }) {
-    final $result = create();
-    if (fieldPresence != null) {
-      $result.fieldPresence = fieldPresence;
-    }
-    if (enumType != null) {
-      $result.enumType = enumType;
-    }
-    if (repeatedFieldEncoding != null) {
-      $result.repeatedFieldEncoding = repeatedFieldEncoding;
-    }
-    if (utf8Validation != null) {
-      $result.utf8Validation = utf8Validation;
-    }
-    if (messageEncoding != null) {
-      $result.messageEncoding = messageEncoding;
-    }
-    if (jsonFormat != null) {
-      $result.jsonFormat = jsonFormat;
-    }
-    return $result;
+    final result = create();
+    if (fieldPresence != null) result.fieldPresence = fieldPresence;
+    if (enumType != null) result.enumType = enumType;
+    if (repeatedFieldEncoding != null)
+      result.repeatedFieldEncoding = repeatedFieldEncoding;
+    if (utf8Validation != null) result.utf8Validation = utf8Validation;
+    if (messageEncoding != null) result.messageEncoding = messageEncoding;
+    if (jsonFormat != null) result.jsonFormat = jsonFormat;
+    return result;
   }
-  FeatureSet._() : super();
-  factory FeatureSet.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FeatureSet.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FeatureSet._();
+
+  factory FeatureSet.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FeatureSet.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FeatureSet',
@@ -4035,20 +3419,18 @@ class FeatureSet extends $pb.GeneratedMessage {
         enumValues: FeatureSet_JsonFormat.values)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSet clone() => FeatureSet()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSet copyWith(void Function(FeatureSet) updates) =>
       super.copyWith((message) => updates(message as FeatureSet)) as FeatureSet;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FeatureSet create() => FeatureSet._();
+  @$core.override
   FeatureSet createEmptyInstance() => create();
   static $pb.PbList<FeatureSet> createRepeated() => $pb.PbList<FeatureSet>();
   @$core.pragma('dart2js:noInline')
@@ -4059,10 +3441,7 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   FeatureSet_FieldPresence get fieldPresence => $_getN(0);
   @$pb.TagNumber(1)
-  set fieldPresence(FeatureSet_FieldPresence v) {
-    $_setField(1, v);
-  }
-
+  set fieldPresence(FeatureSet_FieldPresence value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasFieldPresence() => $_has(0);
   @$pb.TagNumber(1)
@@ -4071,10 +3450,7 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   FeatureSet_EnumType get enumType => $_getN(1);
   @$pb.TagNumber(2)
-  set enumType(FeatureSet_EnumType v) {
-    $_setField(2, v);
-  }
-
+  set enumType(FeatureSet_EnumType value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasEnumType() => $_has(1);
   @$pb.TagNumber(2)
@@ -4083,10 +3459,8 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   FeatureSet_RepeatedFieldEncoding get repeatedFieldEncoding => $_getN(2);
   @$pb.TagNumber(3)
-  set repeatedFieldEncoding(FeatureSet_RepeatedFieldEncoding v) {
-    $_setField(3, v);
-  }
-
+  set repeatedFieldEncoding(FeatureSet_RepeatedFieldEncoding value) =>
+      $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasRepeatedFieldEncoding() => $_has(2);
   @$pb.TagNumber(3)
@@ -4095,10 +3469,7 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   FeatureSet_Utf8Validation get utf8Validation => $_getN(3);
   @$pb.TagNumber(4)
-  set utf8Validation(FeatureSet_Utf8Validation v) {
-    $_setField(4, v);
-  }
-
+  set utf8Validation(FeatureSet_Utf8Validation value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasUtf8Validation() => $_has(3);
   @$pb.TagNumber(4)
@@ -4107,10 +3478,7 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   FeatureSet_MessageEncoding get messageEncoding => $_getN(4);
   @$pb.TagNumber(5)
-  set messageEncoding(FeatureSet_MessageEncoding v) {
-    $_setField(5, v);
-  }
-
+  set messageEncoding(FeatureSet_MessageEncoding value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasMessageEncoding() => $_has(4);
   @$pb.TagNumber(5)
@@ -4119,10 +3487,7 @@ class FeatureSet extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   FeatureSet_JsonFormat get jsonFormat => $_getN(5);
   @$pb.TagNumber(6)
-  set jsonFormat(FeatureSet_JsonFormat v) {
-    $_setField(6, v);
-  }
-
+  set jsonFormat(FeatureSet_JsonFormat value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasJsonFormat() => $_has(5);
   @$pb.TagNumber(6)
@@ -4139,26 +3504,24 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
     FeatureSet? overridableFeatures,
     FeatureSet? fixedFeatures,
   }) {
-    final $result = create();
-    if (edition != null) {
-      $result.edition = edition;
-    }
-    if (overridableFeatures != null) {
-      $result.overridableFeatures = overridableFeatures;
-    }
-    if (fixedFeatures != null) {
-      $result.fixedFeatures = fixedFeatures;
-    }
-    return $result;
+    final result = create();
+    if (edition != null) result.edition = edition;
+    if (overridableFeatures != null)
+      result.overridableFeatures = overridableFeatures;
+    if (fixedFeatures != null) result.fixedFeatures = fixedFeatures;
+    return result;
   }
-  FeatureSetDefaults_FeatureSetEditionDefault._() : super();
+
+  FeatureSetDefaults_FeatureSetEditionDefault._();
+
   factory FeatureSetDefaults_FeatureSetEditionDefault.fromBuffer(
-          $core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FeatureSetDefaults_FeatureSetEditionDefault.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FeatureSetDefaults_FeatureSetEditionDefault.fromJson(
+          $core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FeatureSetDefaults.FeatureSetEditionDefault',
@@ -4174,25 +3537,23 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
     ..aOM<FeatureSet>(5, _omitFieldNames ? '' : 'fixedFeatures',
         subBuilder: FeatureSet.create);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSetDefaults_FeatureSetEditionDefault clone() =>
       FeatureSetDefaults_FeatureSetEditionDefault()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSetDefaults_FeatureSetEditionDefault copyWith(
           void Function(FeatureSetDefaults_FeatureSetEditionDefault) updates) =>
       super.copyWith((message) =>
               updates(message as FeatureSetDefaults_FeatureSetEditionDefault))
           as FeatureSetDefaults_FeatureSetEditionDefault;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FeatureSetDefaults_FeatureSetEditionDefault create() =>
       FeatureSetDefaults_FeatureSetEditionDefault._();
+  @$core.override
   FeatureSetDefaults_FeatureSetEditionDefault createEmptyInstance() => create();
   static $pb.PbList<FeatureSetDefaults_FeatureSetEditionDefault>
       createRepeated() =>
@@ -4206,10 +3567,7 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Edition get edition => $_getN(0);
   @$pb.TagNumber(3)
-  set edition(Edition v) {
-    $_setField(3, v);
-  }
-
+  set edition(Edition value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasEdition() => $_has(0);
   @$pb.TagNumber(3)
@@ -4219,10 +3577,7 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   FeatureSet get overridableFeatures => $_getN(1);
   @$pb.TagNumber(4)
-  set overridableFeatures(FeatureSet v) {
-    $_setField(4, v);
-  }
-
+  set overridableFeatures(FeatureSet value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasOverridableFeatures() => $_has(1);
   @$pb.TagNumber(4)
@@ -4234,10 +3589,7 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   FeatureSet get fixedFeatures => $_getN(2);
   @$pb.TagNumber(5)
-  set fixedFeatures(FeatureSet v) {
-    $_setField(5, v);
-  }
-
+  set fixedFeatures(FeatureSet value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasFixedFeatures() => $_has(2);
   @$pb.TagNumber(5)
@@ -4256,25 +3608,21 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
     Edition? minimumEdition,
     Edition? maximumEdition,
   }) {
-    final $result = create();
-    if (defaults != null) {
-      $result.defaults.addAll(defaults);
-    }
-    if (minimumEdition != null) {
-      $result.minimumEdition = minimumEdition;
-    }
-    if (maximumEdition != null) {
-      $result.maximumEdition = maximumEdition;
-    }
-    return $result;
+    final result = create();
+    if (defaults != null) result.defaults.addAll(defaults);
+    if (minimumEdition != null) result.minimumEdition = minimumEdition;
+    if (maximumEdition != null) result.maximumEdition = maximumEdition;
+    return result;
   }
-  FeatureSetDefaults._() : super();
-  factory FeatureSetDefaults.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FeatureSetDefaults.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FeatureSetDefaults._();
+
+  factory FeatureSetDefaults.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FeatureSetDefaults.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FeatureSetDefaults',
@@ -4293,21 +3641,19 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
         valueOf: Edition.valueOf,
         enumValues: Edition.values);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSetDefaults clone() => FeatureSetDefaults()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FeatureSetDefaults copyWith(void Function(FeatureSetDefaults) updates) =>
       super.copyWith((message) => updates(message as FeatureSetDefaults))
           as FeatureSetDefaults;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FeatureSetDefaults create() => FeatureSetDefaults._();
+  @$core.override
   FeatureSetDefaults createEmptyInstance() => create();
   static $pb.PbList<FeatureSetDefaults> createRepeated() =>
       $pb.PbList<FeatureSetDefaults>();
@@ -4325,10 +3671,7 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   Edition get minimumEdition => $_getN(1);
   @$pb.TagNumber(4)
-  set minimumEdition(Edition v) {
-    $_setField(4, v);
-  }
-
+  set minimumEdition(Edition value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasMinimumEdition() => $_has(1);
   @$pb.TagNumber(4)
@@ -4339,10 +3682,7 @@ class FeatureSetDefaults extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   Edition get maximumEdition => $_getN(2);
   @$pb.TagNumber(5)
-  set maximumEdition(Edition v) {
-    $_setField(5, v);
-  }
-
+  set maximumEdition(Edition value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasMaximumEdition() => $_has(2);
   @$pb.TagNumber(5)
@@ -4357,31 +3697,24 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
     $core.String? trailingComments,
     $core.Iterable<$core.String>? leadingDetachedComments,
   }) {
-    final $result = create();
-    if (path != null) {
-      $result.path.addAll(path);
-    }
-    if (span != null) {
-      $result.span.addAll(span);
-    }
-    if (leadingComments != null) {
-      $result.leadingComments = leadingComments;
-    }
-    if (trailingComments != null) {
-      $result.trailingComments = trailingComments;
-    }
-    if (leadingDetachedComments != null) {
-      $result.leadingDetachedComments.addAll(leadingDetachedComments);
-    }
-    return $result;
+    final result = create();
+    if (path != null) result.path.addAll(path);
+    if (span != null) result.span.addAll(span);
+    if (leadingComments != null) result.leadingComments = leadingComments;
+    if (trailingComments != null) result.trailingComments = trailingComments;
+    if (leadingDetachedComments != null)
+      result.leadingDetachedComments.addAll(leadingDetachedComments);
+    return result;
   }
-  SourceCodeInfo_Location._() : super();
-  factory SourceCodeInfo_Location.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SourceCodeInfo_Location.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SourceCodeInfo_Location._();
+
+  factory SourceCodeInfo_Location.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SourceCodeInfo_Location.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SourceCodeInfo.Location',
@@ -4395,23 +3728,21 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
     ..pPS(6, _omitFieldNames ? '' : 'leadingDetachedComments')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SourceCodeInfo_Location clone() =>
       SourceCodeInfo_Location()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SourceCodeInfo_Location copyWith(
           void Function(SourceCodeInfo_Location) updates) =>
       super.copyWith((message) => updates(message as SourceCodeInfo_Location))
           as SourceCodeInfo_Location;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SourceCodeInfo_Location create() => SourceCodeInfo_Location._();
+  @$core.override
   SourceCodeInfo_Location createEmptyInstance() => create();
   static $pb.PbList<SourceCodeInfo_Location> createRepeated() =>
       $pb.PbList<SourceCodeInfo_Location>();
@@ -4420,29 +3751,29 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<SourceCodeInfo_Location>(create);
   static SourceCodeInfo_Location? _defaultInstance;
 
-  ///  Identifies which part of the FileDescriptorProto was defined at this
-  ///  location.
+  /// Identifies which part of the FileDescriptorProto was defined at this
+  /// location.
   ///
-  ///  Each element is a field number or an index.  They form a path from
-  ///  the root FileDescriptorProto to the place where the definition appears.
-  ///  For example, this path:
-  ///    [ 4, 3, 2, 7, 1 ]
-  ///  refers to:
-  ///    file.message_type(3)  // 4, 3
-  ///        .field(7)         // 2, 7
-  ///        .name()           // 1
-  ///  This is because FileDescriptorProto.message_type has field number 4:
-  ///    repeated DescriptorProto message_type = 4;
-  ///  and DescriptorProto.field has field number 2:
-  ///    repeated FieldDescriptorProto field = 2;
-  ///  and FieldDescriptorProto.name has field number 1:
-  ///    optional string name = 1;
+  /// Each element is a field number or an index.  They form a path from
+  /// the root FileDescriptorProto to the place where the definition appears.
+  /// For example, this path:
+  ///   [ 4, 3, 2, 7, 1 ]
+  /// refers to:
+  ///   file.message_type(3)  // 4, 3
+  ///       .field(7)         // 2, 7
+  ///       .name()           // 1
+  /// This is because FileDescriptorProto.message_type has field number 4:
+  ///   repeated DescriptorProto message_type = 4;
+  /// and DescriptorProto.field has field number 2:
+  ///   repeated FieldDescriptorProto field = 2;
+  /// and FieldDescriptorProto.name has field number 1:
+  ///   optional string name = 1;
   ///
-  ///  Thus, the above path gives the location of a field name.  If we removed
-  ///  the last element:
-  ///    [ 4, 3, 2, 7 ]
-  ///  this path refers to the whole field declaration (from the beginning
-  ///  of the label to the terminating semicolon).
+  /// Thus, the above path gives the location of a field name.  If we removed
+  /// the last element:
+  ///   [ 4, 3, 2, 7 ]
+  /// this path refers to the whole field declaration (from the beginning
+  /// of the label to the terminating semicolon).
   @$pb.TagNumber(1)
   $pb.PbList<$core.int> get path => $_getList(0);
 
@@ -4454,60 +3785,57 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $pb.PbList<$core.int> get span => $_getList(1);
 
-  ///  If this SourceCodeInfo represents a complete declaration, these are any
-  ///  comments appearing before and after the declaration which appear to be
-  ///  attached to the declaration.
+  /// If this SourceCodeInfo represents a complete declaration, these are any
+  /// comments appearing before and after the declaration which appear to be
+  /// attached to the declaration.
   ///
-  ///  A series of line comments appearing on consecutive lines, with no other
-  ///  tokens appearing on those lines, will be treated as a single comment.
+  /// A series of line comments appearing on consecutive lines, with no other
+  /// tokens appearing on those lines, will be treated as a single comment.
   ///
-  ///  leading_detached_comments will keep paragraphs of comments that appear
-  ///  before (but not connected to) the current element. Each paragraph,
-  ///  separated by empty lines, will be one comment element in the repeated
-  ///  field.
+  /// leading_detached_comments will keep paragraphs of comments that appear
+  /// before (but not connected to) the current element. Each paragraph,
+  /// separated by empty lines, will be one comment element in the repeated
+  /// field.
   ///
-  ///  Only the comment content is provided; comment markers (e.g. //) are
-  ///  stripped out.  For block comments, leading whitespace and an asterisk
-  ///  will be stripped from the beginning of each line other than the first.
-  ///  Newlines are included in the output.
+  /// Only the comment content is provided; comment markers (e.g. //) are
+  /// stripped out.  For block comments, leading whitespace and an asterisk
+  /// will be stripped from the beginning of each line other than the first.
+  /// Newlines are included in the output.
   ///
-  ///  Examples:
+  /// Examples:
   ///
-  ///    optional int32 foo = 1;  // Comment attached to foo.
-  ///    // Comment attached to bar.
-  ///    optional int32 bar = 2;
+  ///   optional int32 foo = 1;  // Comment attached to foo.
+  ///   // Comment attached to bar.
+  ///   optional int32 bar = 2;
   ///
-  ///    optional string baz = 3;
-  ///    // Comment attached to baz.
-  ///    // Another line attached to baz.
+  ///   optional string baz = 3;
+  ///   // Comment attached to baz.
+  ///   // Another line attached to baz.
   ///
-  ///    // Comment attached to moo.
-  ///    //
-  ///    // Another line attached to moo.
-  ///    optional double moo = 4;
+  ///   // Comment attached to moo.
+  ///   //
+  ///   // Another line attached to moo.
+  ///   optional double moo = 4;
   ///
-  ///    // Detached comment for corge. This is not leading or trailing comments
-  ///    // to moo or corge because there are blank lines separating it from
-  ///    // both.
+  ///   // Detached comment for corge. This is not leading or trailing comments
+  ///   // to moo or corge because there are blank lines separating it from
+  ///   // both.
   ///
-  ///    // Detached comment for corge paragraph 2.
+  ///   // Detached comment for corge paragraph 2.
   ///
-  ///    optional string corge = 5;
-  ///    /* Block comment attached
-  ///     * to corge.  Leading asterisks
-  ///     * will be removed. */
-  ///    /* Block comment attached to
-  ///     * grault. */
-  ///    optional int32 grault = 6;
+  ///   optional string corge = 5;
+  ///   /* Block comment attached
+  ///    * to corge.  Leading asterisks
+  ///    * will be removed. */
+  ///   /* Block comment attached to
+  ///    * grault. */
+  ///   optional int32 grault = 6;
   ///
-  ///    // ignored detached comments.
+  ///   // ignored detached comments.
   @$pb.TagNumber(3)
   $core.String get leadingComments => $_getSZ(2);
   @$pb.TagNumber(3)
-  set leadingComments($core.String v) {
-    $_setString(2, v);
-  }
-
+  set leadingComments($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLeadingComments() => $_has(2);
   @$pb.TagNumber(3)
@@ -4516,10 +3844,7 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get trailingComments => $_getSZ(3);
   @$pb.TagNumber(4)
-  set trailingComments($core.String v) {
-    $_setString(3, v);
-  }
-
+  set trailingComments($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasTrailingComments() => $_has(3);
   @$pb.TagNumber(4)
@@ -4535,19 +3860,19 @@ class SourceCodeInfo extends $pb.GeneratedMessage {
   factory SourceCodeInfo({
     $core.Iterable<SourceCodeInfo_Location>? location,
   }) {
-    final $result = create();
-    if (location != null) {
-      $result.location.addAll(location);
-    }
-    return $result;
+    final result = create();
+    if (location != null) result.location.addAll(location);
+    return result;
   }
-  SourceCodeInfo._() : super();
-  factory SourceCodeInfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SourceCodeInfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SourceCodeInfo._();
+
+  factory SourceCodeInfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SourceCodeInfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SourceCodeInfo',
@@ -4559,21 +3884,19 @@ class SourceCodeInfo extends $pb.GeneratedMessage {
         subBuilder: SourceCodeInfo_Location.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SourceCodeInfo clone() => SourceCodeInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SourceCodeInfo copyWith(void Function(SourceCodeInfo) updates) =>
       super.copyWith((message) => updates(message as SourceCodeInfo))
           as SourceCodeInfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SourceCodeInfo create() => SourceCodeInfo._();
+  @$core.override
   SourceCodeInfo createEmptyInstance() => create();
   static $pb.PbList<SourceCodeInfo> createRepeated() =>
       $pb.PbList<SourceCodeInfo>();
@@ -4582,49 +3905,49 @@ class SourceCodeInfo extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<SourceCodeInfo>(create);
   static SourceCodeInfo? _defaultInstance;
 
-  ///  A Location identifies a piece of source code in a .proto file which
-  ///  corresponds to a particular definition.  This information is intended
-  ///  to be useful to IDEs, code indexers, documentation generators, and similar
-  ///  tools.
+  /// A Location identifies a piece of source code in a .proto file which
+  /// corresponds to a particular definition.  This information is intended
+  /// to be useful to IDEs, code indexers, documentation generators, and similar
+  /// tools.
   ///
-  ///  For example, say we have a file like:
-  ///    message Foo {
-  ///      optional string foo = 1;
-  ///    }
-  ///  Let's look at just the field definition:
-  ///    optional string foo = 1;
-  ///    ^       ^^     ^^  ^  ^^^
-  ///    a       bc     de  f  ghi
-  ///  We have the following locations:
-  ///    span   path               represents
-  ///    [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
-  ///    [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
-  ///    [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
-  ///    [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
-  ///    [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
+  /// For example, say we have a file like:
+  ///   message Foo {
+  ///     optional string foo = 1;
+  ///   }
+  /// Let's look at just the field definition:
+  ///   optional string foo = 1;
+  ///   ^       ^^     ^^  ^  ^^^
+  ///   a       bc     de  f  ghi
+  /// We have the following locations:
+  ///   span   path               represents
+  ///   [a,i)  [ 4, 0, 2, 0 ]     The whole field definition.
+  ///   [a,b)  [ 4, 0, 2, 0, 4 ]  The label (optional).
+  ///   [c,d)  [ 4, 0, 2, 0, 5 ]  The type (string).
+  ///   [e,f)  [ 4, 0, 2, 0, 1 ]  The name (foo).
+  ///   [g,h)  [ 4, 0, 2, 0, 3 ]  The number (1).
   ///
-  ///  Notes:
-  ///  - A location may refer to a repeated field itself (i.e. not to any
-  ///    particular index within it).  This is used whenever a set of elements are
-  ///    logically enclosed in a single code segment.  For example, an entire
-  ///    extend block (possibly containing multiple extension definitions) will
-  ///    have an outer location whose path refers to the "extensions" repeated
-  ///    field without an index.
-  ///  - Multiple locations may have the same path.  This happens when a single
-  ///    logical declaration is spread out across multiple places.  The most
-  ///    obvious example is the "extend" block again -- there may be multiple
-  ///    extend blocks in the same scope, each of which will have the same path.
-  ///  - A location's span is not always a subset of its parent's span.  For
-  ///    example, the "extendee" of an extension declaration appears at the
-  ///    beginning of the "extend" block and is shared by all extensions within
-  ///    the block.
-  ///  - Just because a location's span is a subset of some other location's span
-  ///    does not mean that it is a descendant.  For example, a "group" defines
-  ///    both a type and a field in a single declaration.  Thus, the locations
-  ///    corresponding to the type and field and their components will overlap.
-  ///  - Code which tries to interpret locations should probably be designed to
-  ///    ignore those that it doesn't understand, as more types of locations could
-  ///    be recorded in the future.
+  /// Notes:
+  /// - A location may refer to a repeated field itself (i.e. not to any
+  ///   particular index within it).  This is used whenever a set of elements are
+  ///   logically enclosed in a single code segment.  For example, an entire
+  ///   extend block (possibly containing multiple extension definitions) will
+  ///   have an outer location whose path refers to the "extensions" repeated
+  ///   field without an index.
+  /// - Multiple locations may have the same path.  This happens when a single
+  ///   logical declaration is spread out across multiple places.  The most
+  ///   obvious example is the "extend" block again -- there may be multiple
+  ///   extend blocks in the same scope, each of which will have the same path.
+  /// - A location's span is not always a subset of its parent's span.  For
+  ///   example, the "extendee" of an extension declaration appears at the
+  ///   beginning of the "extend" block and is shared by all extensions within
+  ///   the block.
+  /// - Just because a location's span is a subset of some other location's span
+  ///   does not mean that it is a descendant.  For example, a "group" defines
+  ///   both a type and a field in a single declaration.  Thus, the locations
+  ///   corresponding to the type and field and their components will overlap.
+  /// - Code which tries to interpret locations should probably be designed to
+  ///   ignore those that it doesn't understand, as more types of locations could
+  ///   be recorded in the future.
   @$pb.TagNumber(1)
   $pb.PbList<SourceCodeInfo_Location> get location => $_getList(0);
 }
@@ -4637,31 +3960,23 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
     $core.int? end,
     GeneratedCodeInfo_Annotation_Semantic? semantic,
   }) {
-    final $result = create();
-    if (path != null) {
-      $result.path.addAll(path);
-    }
-    if (sourceFile != null) {
-      $result.sourceFile = sourceFile;
-    }
-    if (begin != null) {
-      $result.begin = begin;
-    }
-    if (end != null) {
-      $result.end = end;
-    }
-    if (semantic != null) {
-      $result.semantic = semantic;
-    }
-    return $result;
+    final result = create();
+    if (path != null) result.path.addAll(path);
+    if (sourceFile != null) result.sourceFile = sourceFile;
+    if (begin != null) result.begin = begin;
+    if (end != null) result.end = end;
+    if (semantic != null) result.semantic = semantic;
+    return result;
   }
-  GeneratedCodeInfo_Annotation._() : super();
-  factory GeneratedCodeInfo_Annotation.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory GeneratedCodeInfo_Annotation.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  GeneratedCodeInfo_Annotation._();
+
+  factory GeneratedCodeInfo_Annotation.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GeneratedCodeInfo_Annotation.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GeneratedCodeInfo.Annotation',
@@ -4679,25 +3994,23 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
         enumValues: GeneratedCodeInfo_Annotation_Semantic.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GeneratedCodeInfo_Annotation clone() =>
       GeneratedCodeInfo_Annotation()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GeneratedCodeInfo_Annotation copyWith(
           void Function(GeneratedCodeInfo_Annotation) updates) =>
       super.copyWith(
               (message) => updates(message as GeneratedCodeInfo_Annotation))
           as GeneratedCodeInfo_Annotation;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static GeneratedCodeInfo_Annotation create() =>
       GeneratedCodeInfo_Annotation._();
+  @$core.override
   GeneratedCodeInfo_Annotation createEmptyInstance() => create();
   static $pb.PbList<GeneratedCodeInfo_Annotation> createRepeated() =>
       $pb.PbList<GeneratedCodeInfo_Annotation>();
@@ -4715,10 +4028,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get sourceFile => $_getSZ(1);
   @$pb.TagNumber(2)
-  set sourceFile($core.String v) {
-    $_setString(1, v);
-  }
-
+  set sourceFile($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasSourceFile() => $_has(1);
   @$pb.TagNumber(2)
@@ -4729,10 +4039,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get begin => $_getIZ(2);
   @$pb.TagNumber(3)
-  set begin($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set begin($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasBegin() => $_has(2);
   @$pb.TagNumber(3)
@@ -4744,10 +4051,7 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.int get end => $_getIZ(3);
   @$pb.TagNumber(4)
-  set end($core.int v) {
-    $_setSignedInt32(3, v);
-  }
-
+  set end($core.int value) => $_setSignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasEnd() => $_has(3);
   @$pb.TagNumber(4)
@@ -4756,10 +4060,8 @@ class GeneratedCodeInfo_Annotation extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   GeneratedCodeInfo_Annotation_Semantic get semantic => $_getN(4);
   @$pb.TagNumber(5)
-  set semantic(GeneratedCodeInfo_Annotation_Semantic v) {
-    $_setField(5, v);
-  }
-
+  set semantic(GeneratedCodeInfo_Annotation_Semantic value) =>
+      $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasSemantic() => $_has(4);
   @$pb.TagNumber(5)
@@ -4773,19 +4075,19 @@ class GeneratedCodeInfo extends $pb.GeneratedMessage {
   factory GeneratedCodeInfo({
     $core.Iterable<GeneratedCodeInfo_Annotation>? annotation,
   }) {
-    final $result = create();
-    if (annotation != null) {
-      $result.annotation.addAll(annotation);
-    }
-    return $result;
+    final result = create();
+    if (annotation != null) result.annotation.addAll(annotation);
+    return result;
   }
-  GeneratedCodeInfo._() : super();
-  factory GeneratedCodeInfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory GeneratedCodeInfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  GeneratedCodeInfo._();
+
+  factory GeneratedCodeInfo.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GeneratedCodeInfo.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GeneratedCodeInfo',
@@ -4797,21 +4099,19 @@ class GeneratedCodeInfo extends $pb.GeneratedMessage {
         subBuilder: GeneratedCodeInfo_Annotation.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GeneratedCodeInfo clone() => GeneratedCodeInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GeneratedCodeInfo copyWith(void Function(GeneratedCodeInfo) updates) =>
       super.copyWith((message) => updates(message as GeneratedCodeInfo))
           as GeneratedCodeInfo;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static GeneratedCodeInfo create() => GeneratedCodeInfo._();
+  @$core.override
   GeneratedCodeInfo createEmptyInstance() => create();
   static $pb.PbList<GeneratedCodeInfo> createRepeated() =>
       $pb.PbList<GeneratedCodeInfo>();
@@ -4826,6 +4126,7 @@ class GeneratedCodeInfo extends $pb.GeneratedMessage {
   $pb.PbList<GeneratedCodeInfo_Annotation> get annotation => $_getList(0);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

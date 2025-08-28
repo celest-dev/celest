@@ -251,7 +251,7 @@ message AuthenticationFactorEmailOtp {
   optional string code = 2 [
     (google.api.field_behavior) = OPTIONAL,
     (google.api.field_behavior) = INPUT_ONLY,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_otp",
       message: "code must be a valid OTP",
@@ -281,7 +281,7 @@ message AuthenticationFactorSmsOtp {
   optional string code = 2 [
     (google.api.field_behavior) = OPTIONAL,
     (google.api.field_behavior) = INPUT_ONLY,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_otp",
       message: "code must be a valid OTP",
@@ -298,7 +298,7 @@ message AuthenticationFactorIdp {
   // Optional. The URI the client was redirected to.
   optional string redirect_uri = 2 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_uri",
       message: "uri must be a valid URI",
@@ -391,7 +391,7 @@ message EndSessionRequest {
   // If not provided, the session will be ended for the current authenticated user.
   optional string session_id = 1 [
     (google.api.field_behavior) = OPTIONAL,
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_session_id",
       message: "session_id must be a valid session ID",
@@ -419,7 +419,7 @@ message EndSessionResponse {
     //
     // Used to clear cookies in social login flows.
     string redirect_uri = 3 [
-      (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+      (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
       (buf.validate.field).cel = {
         id: "valid_uri",
         message: "uri must be a valid URI",

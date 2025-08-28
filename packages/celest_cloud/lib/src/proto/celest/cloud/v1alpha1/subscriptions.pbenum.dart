@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/v1alpha1/subscriptions.proto
-//
+// Generated from celest/cloud/v1alpha1/subscriptions.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -53,11 +54,12 @@ class Measure extends $pb.ProtobufEnum {
     TERABYTES,
   ];
 
-  static final $core.Map<$core.int, Measure> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static Measure? valueOf($core.int value) => _byValue[value];
+  static final $core.List<Measure?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 6);
+  static Measure? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const Measure._(super.v, super.n);
+  const Measure._(super.value, super.name);
 }
 
 /// The type of instance.
@@ -105,11 +107,12 @@ class InstanceType extends $pb.ProtobufEnum {
     HEXA,
   ];
 
-  static final $core.Map<$core.int, InstanceType> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static InstanceType? valueOf($core.int value) => _byValue[value];
+  static final $core.List<InstanceType?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 7);
+  static InstanceType? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const InstanceType._(super.v, super.n);
+  const InstanceType._(super.value, super.name);
 }
 
 /// The reason for the cancellation.
@@ -142,12 +145,12 @@ class CancelSubscriptionDetails_Reason extends $pb.ProtobufEnum {
     PAYMENT_FAILED,
   ];
 
-  static final $core.Map<$core.int, CancelSubscriptionDetails_Reason> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<CancelSubscriptionDetails_Reason?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
   static CancelSubscriptionDetails_Reason? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const CancelSubscriptionDetails_Reason._(super.v, super.n);
+  const CancelSubscriptionDetails_Reason._(super.value, super.name);
 }
 
 /// The feedback for cancellation.
@@ -208,12 +211,13 @@ class CancelSubscriptionDetails_Feedback extends $pb.ProtobufEnum {
     UNUSED,
   ];
 
-  static final $core.Map<$core.int, CancelSubscriptionDetails_Feedback>
-      _byValue = $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<CancelSubscriptionDetails_Feedback?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 8);
   static CancelSubscriptionDetails_Feedback? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const CancelSubscriptionDetails_Feedback._(super.v, super.n);
+  const CancelSubscriptionDetails_Feedback._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

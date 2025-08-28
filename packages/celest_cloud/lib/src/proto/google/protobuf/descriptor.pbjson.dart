@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/protobuf/descriptor.proto
-//
+// Generated from google/protobuf/descriptor.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -290,8 +291,8 @@ const ExtensionRangeOptions$json = {
       '4': 3,
       '5': 11,
       '6': '.google.protobuf.ExtensionRangeOptions.Declaration',
-      '8': {},
-      '10': 'declaration'
+      '8': {'17': 2},
+      '10': 'declaration',
     },
     {
       '1': 'features',
@@ -308,8 +309,8 @@ const ExtensionRangeOptions$json = {
       '5': 14,
       '6': '.google.protobuf.ExtensionRangeOptions.VerificationState',
       '7': 'UNVERIFIED',
-      '8': {},
-      '10': 'verification'
+      '8': {'17': 2},
+      '10': 'verification',
     },
   ],
   '3': [ExtensionRangeOptions_Declaration$json],
@@ -1436,8 +1437,17 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.FieldPresence',
-      '8': {},
-      '10': 'fieldPresence'
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'EXPLICIT', '3': 998},
+          {'2': 'IMPLICIT', '3': 999},
+          {'2': 'EXPLICIT', '3': 1000},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'fieldPresence',
     },
     {
       '1': 'enum_type',
@@ -1445,8 +1455,16 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.EnumType',
-      '8': {},
-      '10': 'enumType'
+      '8': {
+        '17': 1,
+        '19': [6, 1],
+        '20': [
+          {'2': 'CLOSED', '3': 998},
+          {'2': 'OPEN', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'enumType',
     },
     {
       '1': 'repeated_field_encoding',
@@ -1454,8 +1472,16 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.RepeatedFieldEncoding',
-      '8': {},
-      '10': 'repeatedFieldEncoding'
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'EXPANDED', '3': 998},
+          {'2': 'PACKED', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'repeatedFieldEncoding',
     },
     {
       '1': 'utf8_validation',
@@ -1463,8 +1489,16 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.Utf8Validation',
-      '8': {},
-      '10': 'utf8Validation'
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'NONE', '3': 998},
+          {'2': 'VERIFY', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'utf8Validation',
     },
     {
       '1': 'message_encoding',
@@ -1472,8 +1506,15 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.MessageEncoding',
-      '8': {},
-      '10': 'messageEncoding'
+      '8': {
+        '17': 1,
+        '19': [4, 1],
+        '20': [
+          {'2': 'LENGTH_PREFIXED', '3': 998},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'messageEncoding',
     },
     {
       '1': 'json_format',
@@ -1481,8 +1522,16 @@ const FeatureSet$json = {
       '4': 1,
       '5': 14,
       '6': '.google.protobuf.FeatureSet.JsonFormat',
-      '8': {},
-      '10': 'jsonFormat'
+      '8': {
+        '17': 1,
+        '19': [3, 6, 1],
+        '20': [
+          {'2': 'LEGACY_BEST_EFFORT', '3': 998},
+          {'2': 'ALLOW', '3': 999},
+        ],
+        '22': {'1': 1000},
+      },
+      '10': 'jsonFormat',
     },
   ],
   '4': [

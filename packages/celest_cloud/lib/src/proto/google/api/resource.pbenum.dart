@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: google/api/resource.proto
-//
+// Generated from google/api/resource.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -41,12 +42,12 @@ class ResourceDescriptor_History extends $pb.ProtobufEnum {
     FUTURE_MULTI_PATTERN,
   ];
 
-  static final $core.Map<$core.int, ResourceDescriptor_History> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
+  static final $core.List<ResourceDescriptor_History?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
   static ResourceDescriptor_History? valueOf($core.int value) =>
-      _byValue[value];
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const ResourceDescriptor_History._(super.v, super.n);
+  const ResourceDescriptor_History._(super.value, super.name);
 }
 
 /// A flag representing a specific style that a resource claims to conform to.
@@ -55,14 +56,14 @@ class ResourceDescriptor_Style extends $pb.ProtobufEnum {
   static const ResourceDescriptor_Style STYLE_UNSPECIFIED =
       ResourceDescriptor_Style._(0, _omitEnumNames ? '' : 'STYLE_UNSPECIFIED');
 
-  ///  This resource is intended to be "declarative-friendly".
+  /// This resource is intended to be "declarative-friendly".
   ///
-  ///  Declarative-friendly resources must be more strictly consistent, and
-  ///  setting this to true communicates to tools that this resource should
-  ///  adhere to declarative-friendly expectations.
+  /// Declarative-friendly resources must be more strictly consistent, and
+  /// setting this to true communicates to tools that this resource should
+  /// adhere to declarative-friendly expectations.
   ///
-  ///  Note: This is used by the API linter (linter.aip.dev) to enable
-  ///  additional checks.
+  /// Note: This is used by the API linter (linter.aip.dev) to enable
+  /// additional checks.
   static const ResourceDescriptor_Style DECLARATIVE_FRIENDLY =
       ResourceDescriptor_Style._(
           1, _omitEnumNames ? '' : 'DECLARATIVE_FRIENDLY');
@@ -73,11 +74,13 @@ class ResourceDescriptor_Style extends $pb.ProtobufEnum {
     DECLARATIVE_FRIENDLY,
   ];
 
-  static final $core.Map<$core.int, ResourceDescriptor_Style> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static ResourceDescriptor_Style? valueOf($core.int value) => _byValue[value];
+  static final $core.List<ResourceDescriptor_Style?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 1);
+  static ResourceDescriptor_Style? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const ResourceDescriptor_Style._(super.v, super.n);
+  const ResourceDescriptor_Style._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

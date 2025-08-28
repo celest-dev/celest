@@ -1,23 +1,24 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/v1alpha1/common.proto
-//
+// Generated from celest/cloud/v1alpha1/common.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-///  A region defines the service area of a Celest organization or project.
+/// A region defines the service area of a Celest organization or project.
 ///
-///  Projects deployed to a region are highly available within that region,
-///  services used are within the boundaries of that region, and all data is
-///  persisted within that region.
+/// Projects deployed to a region are highly available within that region,
+/// services used are within the boundaries of that region, and all data is
+/// persisted within that region.
 class Region extends $pb.ProtobufEnum {
   /// The region is not specified.
   static const Region REGION_UNSPECIFIED =
@@ -41,11 +42,12 @@ class Region extends $pb.ProtobufEnum {
     ASIA_PACIFIC,
   ];
 
-  static final $core.Map<$core.int, Region> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static Region? valueOf($core.int value) => _byValue[value];
+  static final $core.List<Region?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 3);
+  static Region? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const Region._(super.v, super.n);
+  const Region._(super.value, super.name);
 }
 
 /// The lifecycle state of a Celest Cloud resource.
@@ -98,11 +100,13 @@ class LifecycleState extends $pb.ProtobufEnum {
     DELETED,
   ];
 
-  static final $core.Map<$core.int, LifecycleState> _byValue =
-      $pb.ProtobufEnum.initByValue(values);
-  static LifecycleState? valueOf($core.int value) => _byValue[value];
+  static final $core.List<LifecycleState?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 8);
+  static LifecycleState? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
 
-  const LifecycleState._(super.v, super.n);
+  const LifecycleState._(super.value, super.name);
 }
 
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
+const $core.bool _omitEnumNames =
+    $core.bool.fromEnvironment('protobuf.omit_enum_names');

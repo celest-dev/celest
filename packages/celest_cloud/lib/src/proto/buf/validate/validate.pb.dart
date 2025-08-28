@@ -1,71 +1,68 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: buf/validate/validate.proto
-//
+// Generated from buf/validate/validate.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../google/protobuf/descriptor.pbenum.dart' as $10;
-import '../../google/protobuf/duration.pb.dart' as $8;
-import '../../google/protobuf/timestamp.pb.dart' as $9;
+import '../../google/protobuf/descriptor.pbenum.dart' as $2;
+import '../../google/protobuf/duration.pb.dart' as $0;
+import '../../google/protobuf/timestamp.pb.dart' as $1;
 import 'validate.pbenum.dart';
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'validate.pbenum.dart';
 
-///  `Constraint` represents a validation rule written in the Common Expression
-///  Language (CEL) syntax. Each Constraint includes a unique identifier, an
-///  optional error message, and the CEL expression to evaluate. For more
-///  information on CEL, [see our documentation](https://github.com/bufbuild/protovalidate/blob/main/docs/cel.md).
+/// `Rule` represents a validation rule written in the Common Expression
+/// Language (CEL) syntax. Each Rule includes a unique identifier, an
+/// optional error message, and the CEL expression to evaluate. For more
+/// information, [see our documentation](https://buf.build/docs/protovalidate/schemas/custom-rules/).
 ///
-///  ```proto
-///  message Foo {
-///    option (buf.validate.message).cel = {
-///      id: "foo.bar"
-///      message: "bar must be greater than 0"
-///      expression: "this.bar > 0"
-///    };
-///    int32 bar = 1;
-///  }
-///  ```
-class Constraint extends $pb.GeneratedMessage {
-  factory Constraint({
+/// ```proto
+/// message Foo {
+///   option (buf.validate.message).cel = {
+///     id: "foo.bar"
+///     message: "bar must be greater than 0"
+///     expression: "this.bar > 0"
+///   };
+///   int32 bar = 1;
+/// }
+/// ```
+class Rule extends $pb.GeneratedMessage {
+  factory Rule({
     $core.String? id,
     $core.String? message,
     $core.String? expression,
   }) {
-    final $result = create();
-    if (id != null) {
-      $result.id = id;
-    }
-    if (message != null) {
-      $result.message = message;
-    }
-    if (expression != null) {
-      $result.expression = expression;
-    }
-    return $result;
+    final result = create();
+    if (id != null) result.id = id;
+    if (message != null) result.message = message;
+    if (expression != null) result.expression = expression;
+    return result;
   }
-  Constraint._() : super();
-  factory Constraint.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Constraint.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Rule._();
+
+  factory Rule.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Rule.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Constraint',
+      _omitMessageNames ? '' : 'Rule',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
@@ -73,52 +70,44 @@ class Constraint extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'expression')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  Constraint clone() => Constraint()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Constraint copyWith(void Function(Constraint) updates) =>
-      super.copyWith((message) => updates(message as Constraint)) as Constraint;
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Rule clone() => Rule()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Rule copyWith(void Function(Rule) updates) =>
+      super.copyWith((message) => updates(message as Rule)) as Rule;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static Constraint create() => Constraint._();
-  Constraint createEmptyInstance() => create();
-  static $pb.PbList<Constraint> createRepeated() => $pb.PbList<Constraint>();
+  static Rule create() => Rule._();
+  @$core.override
+  Rule createEmptyInstance() => create();
+  static $pb.PbList<Rule> createRepeated() => $pb.PbList<Rule>();
   @$core.pragma('dart2js:noInline')
-  static Constraint getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Constraint>(create);
-  static Constraint? _defaultInstance;
+  static Rule getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Rule>(create);
+  static Rule? _defaultInstance;
 
-  /// `id` is a string that serves as a machine-readable name for this Constraint.
+  /// `id` is a string that serves as a machine-readable name for this Rule.
   /// It should be unique within its scope, which could be either a message or a field.
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String v) {
-    $_setString(0, v);
-  }
-
+  set id($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => $_clearField(1);
 
   /// `message` is an optional field that provides a human-readable error message
-  /// for this Constraint when the CEL expression evaluates to false. If a
+  /// for this Rule when the CEL expression evaluates to false. If a
   /// non-empty message is provided, any strings resulting from the CEL
   /// expression evaluation are ignored.
   @$pb.TagNumber(2)
   $core.String get message => $_getSZ(1);
   @$pb.TagNumber(2)
-  set message($core.String v) {
-    $_setString(1, v);
-  }
-
+  set message($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasMessage() => $_has(1);
   @$pb.TagNumber(2)
@@ -131,194 +120,263 @@ class Constraint extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get expression => $_getSZ(2);
   @$pb.TagNumber(3)
-  set expression($core.String v) {
-    $_setString(2, v);
-  }
-
+  set expression($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasExpression() => $_has(2);
   @$pb.TagNumber(3)
   void clearExpression() => $_clearField(3);
 }
 
-/// MessageConstraints represents validation rules that are applied to the entire message.
-/// It includes disabling options and a list of Constraint messages representing Common Expression Language (CEL) validation rules.
-class MessageConstraints extends $pb.GeneratedMessage {
-  factory MessageConstraints({
-    $core.bool? disabled,
-    $core.Iterable<Constraint>? cel,
+/// MessageRules represents validation rules that are applied to the entire message.
+/// It includes disabling options and a list of Rule messages representing Common Expression Language (CEL) validation rules.
+class MessageRules extends $pb.GeneratedMessage {
+  factory MessageRules({
+    $core.Iterable<Rule>? cel,
+    $core.Iterable<MessageOneofRule>? oneof,
   }) {
-    final $result = create();
-    if (disabled != null) {
-      $result.disabled = disabled;
-    }
-    if (cel != null) {
-      $result.cel.addAll(cel);
-    }
-    return $result;
+    final result = create();
+    if (cel != null) result.cel.addAll(cel);
+    if (oneof != null) result.oneof.addAll(oneof);
+    return result;
   }
-  MessageConstraints._() : super();
-  factory MessageConstraints.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory MessageConstraints.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MessageRules._();
+
+  factory MessageRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MessageRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MessageConstraints',
+      _omitMessageNames ? '' : 'MessageRules',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'disabled')
-    ..pc<Constraint>(3, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
-        subBuilder: Constraint.create)
+    ..pc<Rule>(3, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
+        subBuilder: Rule.create)
+    ..pc<MessageOneofRule>(
+        4, _omitFieldNames ? '' : 'oneof', $pb.PbFieldType.PM,
+        subBuilder: MessageOneofRule.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  MessageConstraints clone() => MessageConstraints()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  MessageConstraints copyWith(void Function(MessageConstraints) updates) =>
-      super.copyWith((message) => updates(message as MessageConstraints))
-          as MessageConstraints;
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  MessageRules clone() => MessageRules()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  MessageRules copyWith(void Function(MessageRules) updates) =>
+      super.copyWith((message) => updates(message as MessageRules))
+          as MessageRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MessageConstraints create() => MessageConstraints._();
-  MessageConstraints createEmptyInstance() => create();
-  static $pb.PbList<MessageConstraints> createRepeated() =>
-      $pb.PbList<MessageConstraints>();
+  static MessageRules create() => MessageRules._();
+  @$core.override
+  MessageRules createEmptyInstance() => create();
+  static $pb.PbList<MessageRules> createRepeated() =>
+      $pb.PbList<MessageRules>();
   @$core.pragma('dart2js:noInline')
-  static MessageConstraints getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MessageConstraints>(create);
-  static MessageConstraints? _defaultInstance;
+  static MessageRules getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MessageRules>(create);
+  static MessageRules? _defaultInstance;
 
-  ///  `disabled` is a boolean flag that, when set to true, nullifies any validation rules for this message.
-  ///  This includes any fields within the message that would otherwise support validation.
-  ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // validation will be bypassed for this message
-  ///    option (buf.validate.message).disabled = true;
-  ///  }
-  ///  ```
-  @$pb.TagNumber(1)
-  $core.bool get disabled => $_getBF(0);
-  @$pb.TagNumber(1)
-  set disabled($core.bool v) {
-    $_setBool(0, v);
-  }
-
-  @$pb.TagNumber(1)
-  $core.bool hasDisabled() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearDisabled() => $_clearField(1);
-
-  ///  `cel` is a repeated field of type Constraint. Each Constraint specifies a validation rule to be applied to this message.
-  ///  These constraints are written in Common Expression Language (CEL) syntax. For more information on
-  ///  CEL, [see our documentation](https://github.com/bufbuild/protovalidate/blob/main/docs/cel.md).
+  /// `cel` is a repeated field of type Rule. Each Rule specifies a validation rule to be applied to this message.
+  /// These rules are written in Common Expression Language (CEL) syntax. For more information,
+  /// [see our documentation](https://buf.build/docs/protovalidate/schemas/custom-rules/).
   ///
   ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // The field `foo` must be greater than 42.
-  ///    option (buf.validate.message).cel = {
-  ///      id: "my_message.value",
-  ///      message: "value must be greater than 42",
-  ///      expression: "this.foo > 42",
-  ///    };
-  ///    optional int32 foo = 1;
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMessage {
+  ///   // The field `foo` must be greater than 42.
+  ///   option (buf.validate.message).cel = {
+  ///     id: "my_message.value",
+  ///     message: "value must be greater than 42",
+  ///     expression: "this.foo > 42",
+  ///   };
+  ///   optional int32 foo = 1;
+  /// }
+  /// ```
   @$pb.TagNumber(3)
-  $pb.PbList<Constraint> get cel => $_getList(1);
+  $pb.PbList<Rule> get cel => $_getList(0);
+
+  /// `oneof` is a repeated field of type MessageOneofRule that specifies a list of fields
+  /// of which at most one can be present. If `required` is also specified, then exactly one
+  /// of the specified fields _must_ be present.
+  ///
+  /// This will enforce oneof-like constraints with a few features not provided by
+  /// actual Protobuf oneof declarations:
+  ///   1. Repeated and map fields are allowed in this validation. In a Protobuf oneof,
+  ///      only scalar fields are allowed.
+  ///   2. Fields with implicit presence are allowed. In a Protobuf oneof, all member
+  ///      fields have explicit presence. This means that, for the purpose of determining
+  ///      how many fields are set, explicitly setting such a field to its zero value is
+  ///      effectively the same as not setting it at all.
+  ///   3. This will always generate validation errors for a message unmarshalled from
+  ///      serialized data that sets more than one field. With a Protobuf oneof, when
+  ///      multiple fields are present in the serialized form, earlier values are usually
+  ///      silently ignored when unmarshalling, with only the last field being set when
+  ///      unmarshalling completes.
+  ///
+  /// Note that adding a field to a `oneof` will also set the IGNORE_IF_ZERO_VALUE on the fields. This means
+  /// only the field that is set will be validated and the unset fields are not validated according to the field rules.
+  /// This behavior can be overridden by setting `ignore` against a field.
+  ///
+  /// ```proto
+  /// message MyMessage {
+  ///   // Only one of `field1` or `field2` _can_ be present in this message.
+  ///   option (buf.validate.message).oneof = { fields: ["field1", "field2"] };
+  ///   // Exactly one of `field3` or `field4` _must_ be present in this message.
+  ///   option (buf.validate.message).oneof = { fields: ["field3", "field4"], required: true };
+  ///   string field1 = 1;
+  ///   bytes field2 = 2;
+  ///   bool field3 = 3;
+  ///   int32 field4 = 4;
+  /// }
+  /// ```
+  @$pb.TagNumber(4)
+  $pb.PbList<MessageOneofRule> get oneof => $_getList(1);
 }
 
-/// The `OneofConstraints` message type enables you to manage constraints for
-/// oneof fields in your protobuf messages.
-class OneofConstraints extends $pb.GeneratedMessage {
-  factory OneofConstraints({
+class MessageOneofRule extends $pb.GeneratedMessage {
+  factory MessageOneofRule({
+    $core.Iterable<$core.String>? fields,
     $core.bool? required,
   }) {
-    final $result = create();
-    if (required != null) {
-      $result.required = required;
-    }
-    return $result;
+    final result = create();
+    if (fields != null) result.fields.addAll(fields);
+    if (required != null) result.required = required;
+    return result;
   }
-  OneofConstraints._() : super();
-  factory OneofConstraints.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory OneofConstraints.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MessageOneofRule._();
+
+  factory MessageOneofRule.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MessageOneofRule.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'OneofConstraints',
+      _omitMessageNames ? '' : 'MessageOneofRule',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
+      createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'fields')
+    ..aOB(2, _omitFieldNames ? '' : 'required')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  MessageOneofRule clone() => MessageOneofRule()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  MessageOneofRule copyWith(void Function(MessageOneofRule) updates) =>
+      super.copyWith((message) => updates(message as MessageOneofRule))
+          as MessageOneofRule;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static MessageOneofRule create() => MessageOneofRule._();
+  @$core.override
+  MessageOneofRule createEmptyInstance() => create();
+  static $pb.PbList<MessageOneofRule> createRepeated() =>
+      $pb.PbList<MessageOneofRule>();
+  @$core.pragma('dart2js:noInline')
+  static MessageOneofRule getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MessageOneofRule>(create);
+  static MessageOneofRule? _defaultInstance;
+
+  /// A list of field names to include in the oneof. All field names must be
+  /// defined in the message. At least one field must be specified, and
+  /// duplicates are not permitted.
+  @$pb.TagNumber(1)
+  $pb.PbList<$core.String> get fields => $_getList(0);
+
+  /// If true, one of the fields specified _must_ be set.
+  @$pb.TagNumber(2)
+  $core.bool get required => $_getBF(1);
+  @$pb.TagNumber(2)
+  set required($core.bool value) => $_setBool(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasRequired() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRequired() => $_clearField(2);
+}
+
+/// The `OneofRules` message type enables you to manage rules for
+/// oneof fields in your protobuf messages.
+class OneofRules extends $pb.GeneratedMessage {
+  factory OneofRules({
+    $core.bool? required,
+  }) {
+    final result = create();
+    if (required != null) result.required = required;
+    return result;
+  }
+
+  OneofRules._();
+
+  factory OneofRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory OneofRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'OneofRules',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
     ..aOB(1, _omitFieldNames ? '' : 'required')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  OneofConstraints clone() => OneofConstraints()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  OneofConstraints copyWith(void Function(OneofConstraints) updates) =>
-      super.copyWith((message) => updates(message as OneofConstraints))
-          as OneofConstraints;
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  OneofRules clone() => OneofRules()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  OneofRules copyWith(void Function(OneofRules) updates) =>
+      super.copyWith((message) => updates(message as OneofRules)) as OneofRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static OneofConstraints create() => OneofConstraints._();
-  OneofConstraints createEmptyInstance() => create();
-  static $pb.PbList<OneofConstraints> createRepeated() =>
-      $pb.PbList<OneofConstraints>();
+  static OneofRules create() => OneofRules._();
+  @$core.override
+  OneofRules createEmptyInstance() => create();
+  static $pb.PbList<OneofRules> createRepeated() => $pb.PbList<OneofRules>();
   @$core.pragma('dart2js:noInline')
-  static OneofConstraints getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<OneofConstraints>(create);
-  static OneofConstraints? _defaultInstance;
+  static OneofRules getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<OneofRules>(create);
+  static OneofRules? _defaultInstance;
 
-  ///  If `required` is true, exactly one field of the oneof must be present. A
-  ///  validation error is returned if no fields in the oneof are present. The
-  ///  field itself may still be a default value; further constraints
-  ///  should be placed on the fields themselves to ensure they are valid values,
-  ///  such as `min_len` or `gt`.
+  /// If `required` is true, exactly one field of the oneof must be set. A
+  /// validation error is returned if no fields in the oneof are set. Further rules
+  /// should be placed on the fields themselves to ensure they are valid values,
+  /// such as `min_len` or `gt`.
   ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    oneof value {
-  ///      // Either `a` or `b` must be set. If `a` is set, it must also be
-  ///      // non-empty; whereas if `b` is set, it can still be an empty string.
-  ///      option (buf.validate.oneof).required = true;
-  ///      string a = 1 [(buf.validate.field).string.min_len = 1];
-  ///      string b = 2;
-  ///    }
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMessage {
+  ///   oneof value {
+  ///     // Either `a` or `b` must be set. If `a` is set, it must also be
+  ///     // non-empty; whereas if `b` is set, it can still be an empty string.
+  ///     option (buf.validate.oneof).required = true;
+  ///     string a = 1 [(buf.validate.field).string.min_len = 1];
+  ///     string b = 2;
+  ///   }
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.bool get required => $_getBF(0);
   @$pb.TagNumber(1)
-  set required($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set required($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasRequired() => $_has(0);
   @$pb.TagNumber(1)
   void clearRequired() => $_clearField(1);
 }
 
-enum FieldConstraints_Type {
+enum FieldRules_Type {
   float,
   double_2,
   int32,
@@ -343,10 +401,10 @@ enum FieldConstraints_Type {
   notSet
 }
 
-/// FieldConstraints encapsulates the rules for each type of field. Depending on
+/// FieldRules encapsulates the rules for each type of field. Depending on
 /// the field, the correct set should be used to ensure proper validations.
-class FieldConstraints extends $pb.GeneratedMessage {
-  factory FieldConstraints({
+class FieldRules extends $pb.GeneratedMessage {
+  factory FieldRules({
     FloatRules? float,
     DoubleRules? double_2,
     Int32Rules? int32,
@@ -368,120 +426,73 @@ class FieldConstraints extends $pb.GeneratedMessage {
     AnyRules? any,
     DurationRules? duration,
     TimestampRules? timestamp,
-    $core.Iterable<Constraint>? cel,
+    $core.Iterable<Rule>? cel,
     $core.bool? required,
     Ignore? ignore,
   }) {
-    final $result = create();
-    if (float != null) {
-      $result.float = float;
-    }
-    if (double_2 != null) {
-      $result.double_2 = double_2;
-    }
-    if (int32 != null) {
-      $result.int32 = int32;
-    }
-    if (int64 != null) {
-      $result.int64 = int64;
-    }
-    if (uint32 != null) {
-      $result.uint32 = uint32;
-    }
-    if (uint64 != null) {
-      $result.uint64 = uint64;
-    }
-    if (sint32 != null) {
-      $result.sint32 = sint32;
-    }
-    if (sint64 != null) {
-      $result.sint64 = sint64;
-    }
-    if (fixed32 != null) {
-      $result.fixed32 = fixed32;
-    }
-    if (fixed64 != null) {
-      $result.fixed64 = fixed64;
-    }
-    if (sfixed32 != null) {
-      $result.sfixed32 = sfixed32;
-    }
-    if (sfixed64 != null) {
-      $result.sfixed64 = sfixed64;
-    }
-    if (bool_13 != null) {
-      $result.bool_13 = bool_13;
-    }
-    if (string != null) {
-      $result.string = string;
-    }
-    if (bytes != null) {
-      $result.bytes = bytes;
-    }
-    if (enum_16 != null) {
-      $result.enum_16 = enum_16;
-    }
-    if (repeated != null) {
-      $result.repeated = repeated;
-    }
-    if (map != null) {
-      $result.map = map;
-    }
-    if (any != null) {
-      $result.any = any;
-    }
-    if (duration != null) {
-      $result.duration = duration;
-    }
-    if (timestamp != null) {
-      $result.timestamp = timestamp;
-    }
-    if (cel != null) {
-      $result.cel.addAll(cel);
-    }
-    if (required != null) {
-      $result.required = required;
-    }
-    if (ignore != null) {
-      $result.ignore = ignore;
-    }
-    return $result;
+    final result = create();
+    if (float != null) result.float = float;
+    if (double_2 != null) result.double_2 = double_2;
+    if (int32 != null) result.int32 = int32;
+    if (int64 != null) result.int64 = int64;
+    if (uint32 != null) result.uint32 = uint32;
+    if (uint64 != null) result.uint64 = uint64;
+    if (sint32 != null) result.sint32 = sint32;
+    if (sint64 != null) result.sint64 = sint64;
+    if (fixed32 != null) result.fixed32 = fixed32;
+    if (fixed64 != null) result.fixed64 = fixed64;
+    if (sfixed32 != null) result.sfixed32 = sfixed32;
+    if (sfixed64 != null) result.sfixed64 = sfixed64;
+    if (bool_13 != null) result.bool_13 = bool_13;
+    if (string != null) result.string = string;
+    if (bytes != null) result.bytes = bytes;
+    if (enum_16 != null) result.enum_16 = enum_16;
+    if (repeated != null) result.repeated = repeated;
+    if (map != null) result.map = map;
+    if (any != null) result.any = any;
+    if (duration != null) result.duration = duration;
+    if (timestamp != null) result.timestamp = timestamp;
+    if (cel != null) result.cel.addAll(cel);
+    if (required != null) result.required = required;
+    if (ignore != null) result.ignore = ignore;
+    return result;
   }
-  FieldConstraints._() : super();
-  factory FieldConstraints.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldConstraints.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
 
-  static const $core.Map<$core.int, FieldConstraints_Type>
-      _FieldConstraints_TypeByTag = {
-    1: FieldConstraints_Type.float,
-    2: FieldConstraints_Type.double_2,
-    3: FieldConstraints_Type.int32,
-    4: FieldConstraints_Type.int64,
-    5: FieldConstraints_Type.uint32,
-    6: FieldConstraints_Type.uint64,
-    7: FieldConstraints_Type.sint32,
-    8: FieldConstraints_Type.sint64,
-    9: FieldConstraints_Type.fixed32,
-    10: FieldConstraints_Type.fixed64,
-    11: FieldConstraints_Type.sfixed32,
-    12: FieldConstraints_Type.sfixed64,
-    13: FieldConstraints_Type.bool_13,
-    14: FieldConstraints_Type.string,
-    15: FieldConstraints_Type.bytes,
-    16: FieldConstraints_Type.enum_16,
-    18: FieldConstraints_Type.repeated,
-    19: FieldConstraints_Type.map,
-    20: FieldConstraints_Type.any,
-    21: FieldConstraints_Type.duration,
-    22: FieldConstraints_Type.timestamp,
-    0: FieldConstraints_Type.notSet
+  FieldRules._();
+
+  factory FieldRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static const $core.Map<$core.int, FieldRules_Type> _FieldRules_TypeByTag = {
+    1: FieldRules_Type.float,
+    2: FieldRules_Type.double_2,
+    3: FieldRules_Type.int32,
+    4: FieldRules_Type.int64,
+    5: FieldRules_Type.uint32,
+    6: FieldRules_Type.uint64,
+    7: FieldRules_Type.sint32,
+    8: FieldRules_Type.sint64,
+    9: FieldRules_Type.fixed32,
+    10: FieldRules_Type.fixed64,
+    11: FieldRules_Type.sfixed32,
+    12: FieldRules_Type.sfixed64,
+    13: FieldRules_Type.bool_13,
+    14: FieldRules_Type.string,
+    15: FieldRules_Type.bytes,
+    16: FieldRules_Type.enum_16,
+    18: FieldRules_Type.repeated,
+    19: FieldRules_Type.map,
+    20: FieldRules_Type.any,
+    21: FieldRules_Type.duration,
+    22: FieldRules_Type.timestamp,
+    0: FieldRules_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'FieldConstraints',
+      _omitMessageNames ? '' : 'FieldRules',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
     ..oo(0, [
@@ -549,49 +560,41 @@ class FieldConstraints extends $pb.GeneratedMessage {
         subBuilder: DurationRules.create)
     ..aOM<TimestampRules>(22, _omitFieldNames ? '' : 'timestamp',
         subBuilder: TimestampRules.create)
-    ..pc<Constraint>(23, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
-        subBuilder: Constraint.create)
+    ..pc<Rule>(23, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
+        subBuilder: Rule.create)
     ..aOB(25, _omitFieldNames ? '' : 'required')
     ..e<Ignore>(27, _omitFieldNames ? '' : 'ignore', $pb.PbFieldType.OE,
         defaultOrMaker: Ignore.IGNORE_UNSPECIFIED,
         valueOf: Ignore.valueOf,
         enumValues: Ignore.values);
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  FieldConstraints clone() => FieldConstraints()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  FieldConstraints copyWith(void Function(FieldConstraints) updates) =>
-      super.copyWith((message) => updates(message as FieldConstraints))
-          as FieldConstraints;
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FieldRules clone() => FieldRules()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  FieldRules copyWith(void Function(FieldRules) updates) =>
+      super.copyWith((message) => updates(message as FieldRules)) as FieldRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static FieldConstraints create() => FieldConstraints._();
-  FieldConstraints createEmptyInstance() => create();
-  static $pb.PbList<FieldConstraints> createRepeated() =>
-      $pb.PbList<FieldConstraints>();
+  static FieldRules create() => FieldRules._();
+  @$core.override
+  FieldRules createEmptyInstance() => create();
+  static $pb.PbList<FieldRules> createRepeated() => $pb.PbList<FieldRules>();
   @$core.pragma('dart2js:noInline')
-  static FieldConstraints getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FieldConstraints>(create);
-  static FieldConstraints? _defaultInstance;
+  static FieldRules getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FieldRules>(create);
+  static FieldRules? _defaultInstance;
 
-  FieldConstraints_Type whichType() =>
-      _FieldConstraints_TypeByTag[$_whichOneof(0)]!;
+  FieldRules_Type whichType() => _FieldRules_TypeByTag[$_whichOneof(0)]!;
   void clearType() => $_clearField($_whichOneof(0));
 
   /// Scalar Field Types
   @$pb.TagNumber(1)
   FloatRules get float => $_getN(0);
   @$pb.TagNumber(1)
-  set float(FloatRules v) {
-    $_setField(1, v);
-  }
-
+  set float(FloatRules value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasFloat() => $_has(0);
   @$pb.TagNumber(1)
@@ -602,10 +605,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   DoubleRules get double_2 => $_getN(1);
   @$pb.TagNumber(2)
-  set double_2(DoubleRules v) {
-    $_setField(2, v);
-  }
-
+  set double_2(DoubleRules value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasDouble_2() => $_has(1);
   @$pb.TagNumber(2)
@@ -616,10 +616,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Int32Rules get int32 => $_getN(2);
   @$pb.TagNumber(3)
-  set int32(Int32Rules v) {
-    $_setField(3, v);
-  }
-
+  set int32(Int32Rules value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasInt32() => $_has(2);
   @$pb.TagNumber(3)
@@ -630,10 +627,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   Int64Rules get int64 => $_getN(3);
   @$pb.TagNumber(4)
-  set int64(Int64Rules v) {
-    $_setField(4, v);
-  }
-
+  set int64(Int64Rules value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasInt64() => $_has(3);
   @$pb.TagNumber(4)
@@ -644,10 +638,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   UInt32Rules get uint32 => $_getN(4);
   @$pb.TagNumber(5)
-  set uint32(UInt32Rules v) {
-    $_setField(5, v);
-  }
-
+  set uint32(UInt32Rules value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasUint32() => $_has(4);
   @$pb.TagNumber(5)
@@ -658,10 +649,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   UInt64Rules get uint64 => $_getN(5);
   @$pb.TagNumber(6)
-  set uint64(UInt64Rules v) {
-    $_setField(6, v);
-  }
-
+  set uint64(UInt64Rules value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasUint64() => $_has(5);
   @$pb.TagNumber(6)
@@ -672,10 +660,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   SInt32Rules get sint32 => $_getN(6);
   @$pb.TagNumber(7)
-  set sint32(SInt32Rules v) {
-    $_setField(7, v);
-  }
-
+  set sint32(SInt32Rules value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasSint32() => $_has(6);
   @$pb.TagNumber(7)
@@ -686,10 +671,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   SInt64Rules get sint64 => $_getN(7);
   @$pb.TagNumber(8)
-  set sint64(SInt64Rules v) {
-    $_setField(8, v);
-  }
-
+  set sint64(SInt64Rules value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasSint64() => $_has(7);
   @$pb.TagNumber(8)
@@ -700,10 +682,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   Fixed32Rules get fixed32 => $_getN(8);
   @$pb.TagNumber(9)
-  set fixed32(Fixed32Rules v) {
-    $_setField(9, v);
-  }
-
+  set fixed32(Fixed32Rules value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasFixed32() => $_has(8);
   @$pb.TagNumber(9)
@@ -714,10 +693,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   Fixed64Rules get fixed64 => $_getN(9);
   @$pb.TagNumber(10)
-  set fixed64(Fixed64Rules v) {
-    $_setField(10, v);
-  }
-
+  set fixed64(Fixed64Rules value) => $_setField(10, value);
   @$pb.TagNumber(10)
   $core.bool hasFixed64() => $_has(9);
   @$pb.TagNumber(10)
@@ -728,10 +704,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   SFixed32Rules get sfixed32 => $_getN(10);
   @$pb.TagNumber(11)
-  set sfixed32(SFixed32Rules v) {
-    $_setField(11, v);
-  }
-
+  set sfixed32(SFixed32Rules value) => $_setField(11, value);
   @$pb.TagNumber(11)
   $core.bool hasSfixed32() => $_has(10);
   @$pb.TagNumber(11)
@@ -742,10 +715,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   SFixed64Rules get sfixed64 => $_getN(11);
   @$pb.TagNumber(12)
-  set sfixed64(SFixed64Rules v) {
-    $_setField(12, v);
-  }
-
+  set sfixed64(SFixed64Rules value) => $_setField(12, value);
   @$pb.TagNumber(12)
   $core.bool hasSfixed64() => $_has(11);
   @$pb.TagNumber(12)
@@ -756,10 +726,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   BoolRules get bool_13 => $_getN(12);
   @$pb.TagNumber(13)
-  set bool_13(BoolRules v) {
-    $_setField(13, v);
-  }
-
+  set bool_13(BoolRules value) => $_setField(13, value);
   @$pb.TagNumber(13)
   $core.bool hasBool_13() => $_has(12);
   @$pb.TagNumber(13)
@@ -770,10 +737,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(14)
   StringRules get string => $_getN(13);
   @$pb.TagNumber(14)
-  set string(StringRules v) {
-    $_setField(14, v);
-  }
-
+  set string(StringRules value) => $_setField(14, value);
   @$pb.TagNumber(14)
   $core.bool hasString() => $_has(13);
   @$pb.TagNumber(14)
@@ -784,10 +748,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   BytesRules get bytes => $_getN(14);
   @$pb.TagNumber(15)
-  set bytes(BytesRules v) {
-    $_setField(15, v);
-  }
-
+  set bytes(BytesRules value) => $_setField(15, value);
   @$pb.TagNumber(15)
   $core.bool hasBytes() => $_has(14);
   @$pb.TagNumber(15)
@@ -799,10 +760,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   EnumRules get enum_16 => $_getN(15);
   @$pb.TagNumber(16)
-  set enum_16(EnumRules v) {
-    $_setField(16, v);
-  }
-
+  set enum_16(EnumRules value) => $_setField(16, value);
   @$pb.TagNumber(16)
   $core.bool hasEnum_16() => $_has(15);
   @$pb.TagNumber(16)
@@ -813,10 +771,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(18)
   RepeatedRules get repeated => $_getN(16);
   @$pb.TagNumber(18)
-  set repeated(RepeatedRules v) {
-    $_setField(18, v);
-  }
-
+  set repeated(RepeatedRules value) => $_setField(18, value);
   @$pb.TagNumber(18)
   $core.bool hasRepeated() => $_has(16);
   @$pb.TagNumber(18)
@@ -827,10 +782,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(19)
   MapRules get map => $_getN(17);
   @$pb.TagNumber(19)
-  set map(MapRules v) {
-    $_setField(19, v);
-  }
-
+  set map(MapRules value) => $_setField(19, value);
   @$pb.TagNumber(19)
   $core.bool hasMap() => $_has(17);
   @$pb.TagNumber(19)
@@ -842,10 +794,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(20)
   AnyRules get any => $_getN(18);
   @$pb.TagNumber(20)
-  set any(AnyRules v) {
-    $_setField(20, v);
-  }
-
+  set any(AnyRules value) => $_setField(20, value);
   @$pb.TagNumber(20)
   $core.bool hasAny() => $_has(18);
   @$pb.TagNumber(20)
@@ -856,10 +805,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(21)
   DurationRules get duration => $_getN(19);
   @$pb.TagNumber(21)
-  set duration(DurationRules v) {
-    $_setField(21, v);
-  }
-
+  set duration(DurationRules value) => $_setField(21, value);
   @$pb.TagNumber(21)
   $core.bool hasDuration() => $_has(19);
   @$pb.TagNumber(21)
@@ -870,10 +816,7 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(22)
   TimestampRules get timestamp => $_getN(20);
   @$pb.TagNumber(22)
-  set timestamp(TimestampRules v) {
-    $_setField(22, v);
-  }
-
+  set timestamp(TimestampRules value) => $_setField(22, value);
   @$pb.TagNumber(22)
   $core.bool hasTimestamp() => $_has(20);
   @$pb.TagNumber(22)
@@ -881,154 +824,176 @@ class FieldConstraints extends $pb.GeneratedMessage {
   @$pb.TagNumber(22)
   TimestampRules ensureTimestamp() => $_ensure(20);
 
-  ///  `cel` is a repeated field used to represent a textual expression
-  ///  in the Common Expression Language (CEL) syntax. For more information on
-  ///  CEL, [see our documentation](https://github.com/bufbuild/protovalidate/blob/main/docs/cel.md).
+  /// `cel` is a repeated field used to represent a textual expression
+  /// in the Common Expression Language (CEL) syntax. For more information,
+  /// [see our documentation](https://buf.build/docs/protovalidate/schemas/custom-rules/).
   ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // The field `value` must be greater than 42.
-  ///    optional int32 value = 1 [(buf.validate.field).cel = {
-  ///      id: "my_message.value",
-  ///      message: "value must be greater than 42",
-  ///      expression: "this > 42",
-  ///    }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMessage {
+  ///   // The field `value` must be greater than 42.
+  ///   optional int32 value = 1 [(buf.validate.field).cel = {
+  ///     id: "my_message.value",
+  ///     message: "value must be greater than 42",
+  ///     expression: "this > 42",
+  ///   }];
+  /// }
+  /// ```
   @$pb.TagNumber(23)
-  $pb.PbList<Constraint> get cel => $_getList(21);
+  $pb.PbList<Rule> get cel => $_getList(21);
 
-  ///  If `required` is true, the field must be populated. A populated field can be
-  ///  described as "serialized in the wire format," which includes:
+  /// If `required` is true, the field must be set. A validation error is returned
+  /// if the field is not set.
   ///
-  ///  - the following "nullable" fields must be explicitly set to be considered populated:
-  ///    - singular message fields (whose fields may be unpopulated/default values)
-  ///    - member fields of a oneof (may be their default value)
-  ///    - proto3 optional fields (may be their default value)
-  ///    - proto2 scalar fields (both optional and required)
-  ///  - proto3 scalar fields must be non-zero to be considered populated
-  ///  - repeated and map fields must be non-empty to be considered populated
+  /// ```proto
+  /// syntax="proto3";
   ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // The field `value` must be set to a non-null value.
-  ///    optional MyOtherMessage value = 1 [(buf.validate.field).required = true];
-  ///  }
-  ///  ```
+  /// message FieldsWithPresence {
+  ///   // Requires any string to be set, including the empty string.
+  ///   optional string link = 1 [
+  ///     (buf.validate.field).required = true
+  ///   ];
+  ///   // Requires true or false to be set.
+  ///   optional bool disabled = 2 [
+  ///     (buf.validate.field).required = true
+  ///   ];
+  ///   // Requires a message to be set, including the empty message.
+  ///   SomeMessage msg = 4 [
+  ///     (buf.validate.field).required = true
+  ///   ];
+  /// }
+  /// ```
+  ///
+  /// All fields in the example above track presence. By default, Protovalidate
+  /// ignores rules on those fields if no value is set. `required` ensures that
+  /// the fields are set and valid.
+  ///
+  /// Fields that don't track presence are always validated by Protovalidate,
+  /// whether they are set or not. It is not necessary to add `required`:
+  ///
+  /// ```proto
+  /// syntax="proto3";
+  ///
+  /// message FieldsWithoutPresence {
+  ///   // `string.email` always applies, even to an empty string.
+  ///   string link = 1 [
+  ///     (buf.validate.field).string.email = true
+  ///   ];
+  ///   // `repeated.min_items` always applies, even to an empty list.
+  ///   repeated string labels = 4 [
+  ///     (buf.validate.field).repeated.min_items = 1
+  ///   ];
+  /// }
+  /// ```
+  ///
+  /// To learn which fields track presence, see the
+  /// [Field Presence cheat sheet](https://protobuf.dev/programming-guides/field_presence/#cheat).
+  ///
+  /// Note: While field rules can be applied to repeated items, map keys, and map
+  /// values, the elements are always considered to be set. Consequently,
+  /// specifying `repeated.items.required` is redundant.
   @$pb.TagNumber(25)
   $core.bool get required => $_getBF(22);
   @$pb.TagNumber(25)
-  set required($core.bool v) {
-    $_setBool(22, v);
-  }
-
+  set required($core.bool value) => $_setBool(22, value);
   @$pb.TagNumber(25)
   $core.bool hasRequired() => $_has(22);
   @$pb.TagNumber(25)
   void clearRequired() => $_clearField(25);
 
-  ///  Skip validation on the field if its value matches the specified criteria.
-  ///  See Ignore enum for details.
+  /// Ignore validation rules on the field if its value matches the specified
+  /// criteria. See the `Ignore` enum for details.
   ///
-  ///  ```proto
-  ///  message UpdateRequest {
-  ///    // The uri rule only applies if the field is populated and not an empty
-  ///    // string.
-  ///    optional string url = 1 [
-  ///      (buf.validate.field).ignore = IGNORE_IF_DEFAULT_VALUE,
-  ///      (buf.validate.field).string.uri = true,
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message UpdateRequest {
+  ///   // The uri rule only applies if the field is not an empty string.
+  ///   string url = 1 [
+  ///     (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+  ///     (buf.validate.field).string.uri = true
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(27)
   Ignore get ignore => $_getN(23);
   @$pb.TagNumber(27)
-  set ignore(Ignore v) {
-    $_setField(27, v);
-  }
-
+  set ignore(Ignore value) => $_setField(27, value);
   @$pb.TagNumber(27)
   $core.bool hasIgnore() => $_has(23);
   @$pb.TagNumber(27)
   void clearIgnore() => $_clearField(27);
 }
 
-/// PredefinedConstraints are custom constraints that can be re-used with
+/// PredefinedRules are custom rules that can be re-used with
 /// multiple fields.
-class PredefinedConstraints extends $pb.GeneratedMessage {
-  factory PredefinedConstraints({
-    $core.Iterable<Constraint>? cel,
+class PredefinedRules extends $pb.GeneratedMessage {
+  factory PredefinedRules({
+    $core.Iterable<Rule>? cel,
   }) {
-    final $result = create();
-    if (cel != null) {
-      $result.cel.addAll(cel);
-    }
-    return $result;
+    final result = create();
+    if (cel != null) result.cel.addAll(cel);
+    return result;
   }
-  PredefinedConstraints._() : super();
-  factory PredefinedConstraints.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory PredefinedConstraints.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  PredefinedRules._();
+
+  factory PredefinedRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory PredefinedRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'PredefinedConstraints',
+      _omitMessageNames ? '' : 'PredefinedRules',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
-    ..pc<Constraint>(1, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
-        subBuilder: Constraint.create)
+    ..pc<Rule>(1, _omitFieldNames ? '' : 'cel', $pb.PbFieldType.PM,
+        subBuilder: Rule.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
-  PredefinedConstraints clone() =>
-      PredefinedConstraints()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  PredefinedConstraints copyWith(
-          void Function(PredefinedConstraints) updates) =>
-      super.copyWith((message) => updates(message as PredefinedConstraints))
-          as PredefinedConstraints;
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PredefinedRules clone() => PredefinedRules()..mergeFromMessage(this);
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PredefinedRules copyWith(void Function(PredefinedRules) updates) =>
+      super.copyWith((message) => updates(message as PredefinedRules))
+          as PredefinedRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static PredefinedConstraints create() => PredefinedConstraints._();
-  PredefinedConstraints createEmptyInstance() => create();
-  static $pb.PbList<PredefinedConstraints> createRepeated() =>
-      $pb.PbList<PredefinedConstraints>();
+  static PredefinedRules create() => PredefinedRules._();
+  @$core.override
+  PredefinedRules createEmptyInstance() => create();
+  static $pb.PbList<PredefinedRules> createRepeated() =>
+      $pb.PbList<PredefinedRules>();
   @$core.pragma('dart2js:noInline')
-  static PredefinedConstraints getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PredefinedConstraints>(create);
-  static PredefinedConstraints? _defaultInstance;
+  static PredefinedRules getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PredefinedRules>(create);
+  static PredefinedRules? _defaultInstance;
 
-  ///  `cel` is a repeated field used to represent a textual expression
-  ///  in the Common Expression Language (CEL) syntax. For more information on
-  ///  CEL, [see our documentation](https://github.com/bufbuild/protovalidate/blob/main/docs/cel.md).
+  /// `cel` is a repeated field used to represent a textual expression
+  /// in the Common Expression Language (CEL) syntax. For more information,
+  /// [see our documentation](https://buf.build/docs/protovalidate/schemas/predefined-rules/).
   ///
-  ///  ```proto
-  ///  message MyMessage {
-  ///    // The field `value` must be greater than 42.
-  ///    optional int32 value = 1 [(buf.validate.predefined).cel = {
-  ///      id: "my_message.value",
-  ///      message: "value must be greater than 42",
-  ///      expression: "this > 42",
-  ///    }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMessage {
+  ///   // The field `value` must be greater than 42.
+  ///   optional int32 value = 1 [(buf.validate.predefined).cel = {
+  ///     id: "my_message.value",
+  ///     message: "value must be greater than 42",
+  ///     expression: "this > 42",
+  ///   }];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
-  $pb.PbList<Constraint> get cel => $_getList(0);
+  $pb.PbList<Rule> get cel => $_getList(0);
 }
 
 enum FloatRules_LessThan { lt, lte, notSet }
 
 enum FloatRules_GreaterThan { gt, gte, notSet }
 
-/// FloatRules describes the constraints applied to `float` values. These
+/// FloatRules describes the rules applied to `float` values. These
 /// rules may also be applied to the `google.protobuf.FloatValue` Well-Known-Type.
 class FloatRules extends $pb.GeneratedMessage {
   factory FloatRules({
@@ -1042,43 +1007,27 @@ class FloatRules extends $pb.GeneratedMessage {
     $core.bool? finite,
     $core.Iterable<$core.double>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (finite != null) {
-      $result.finite = finite;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (finite != null) result.finite = finite;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  FloatRules._() : super();
-  factory FloatRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FloatRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FloatRules._();
+
+  factory FloatRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FloatRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, FloatRules_LessThan>
       _FloatRules_LessThanByTag = {
@@ -1109,20 +1058,18 @@ class FloatRules extends $pb.GeneratedMessage {
     ..p<$core.double>(9, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PF)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FloatRules clone() => FloatRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FloatRules copyWith(void Function(FloatRules) updates) =>
       super.copyWith((message) => updates(message as FloatRules)) as FloatRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FloatRules create() => FloatRules._();
+  @$core.override
   FloatRules createEmptyInstance() => create();
   static $pb.PbList<FloatRules> createRepeated() => $pb.PbList<FloatRules>();
   @$core.pragma('dart2js:noInline')
@@ -1138,154 +1085,139 @@ class FloatRules extends $pb.GeneratedMessage {
       _FloatRules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must equal 42.0
-  ///    float value = 1 [(buf.validate.field).float.const = 42.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must equal 42.0
+  ///   float value = 1 [(buf.validate.field).float.const = 42.0];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.double get const_1 => $_getN(0);
   @$pb.TagNumber(1)
-  set const_1($core.double v) {
-    $_setFloat(0, v);
-  }
-
+  set const_1($core.double value) => $_setFloat(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must be less than 10.0
-  ///    float value = 1 [(buf.validate.field).float.lt = 10.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must be less than 10.0
+  ///   float value = 1 [(buf.validate.field).float.lt = 10.0];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.double get lt => $_getN(1);
   @$pb.TagNumber(2)
-  set lt($core.double v) {
-    $_setFloat(1, v);
-  }
-
+  set lt($core.double value) => $_setFloat(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must be less than or equal to 10.0
-  ///    float value = 1 [(buf.validate.field).float.lte = 10.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must be less than or equal to 10.0
+  ///   float value = 1 [(buf.validate.field).float.lte = 10.0];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.double get lte => $_getN(2);
   @$pb.TagNumber(3)
-  set lte($core.double v) {
-    $_setFloat(2, v);
-  }
-
+  set lte($core.double value) => $_setFloat(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must be greater than 5.0 [float.gt]
-  ///    float value = 1 [(buf.validate.field).float.gt = 5.0];
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must be greater than 5.0 [float.gt]
+  ///   float value = 1 [(buf.validate.field).float.gt = 5.0];
   ///
-  ///    // value must be greater than 5 and less than 10.0 [float.gt_lt]
-  ///    float other_value = 2 [(buf.validate.field).float = { gt: 5.0, lt: 10.0 }];
+  ///   // value must be greater than 5 and less than 10.0 [float.gt_lt]
+  ///   float other_value = 2 [(buf.validate.field).float = { gt: 5.0, lt: 10.0 }];
   ///
-  ///    // value must be greater than 10 or less than 5.0 [float.gt_lt_exclusive]
-  ///    float another_value = 3 [(buf.validate.field).float = { gt: 10.0, lt: 5.0 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5.0 [float.gt_lt_exclusive]
+  ///   float another_value = 3 [(buf.validate.field).float = { gt: 10.0, lt: 5.0 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.double get gt => $_getN(3);
   @$pb.TagNumber(4)
-  set gt($core.double v) {
-    $_setFloat(3, v);
-  }
-
+  set gt($core.double value) => $_setFloat(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must be greater than or equal to 5.0 [float.gte]
-  ///    float value = 1 [(buf.validate.field).float.gte = 5.0];
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must be greater than or equal to 5.0 [float.gte]
+  ///   float value = 1 [(buf.validate.field).float.gte = 5.0];
   ///
-  ///    // value must be greater than or equal to 5.0 and less than 10.0 [float.gte_lt]
-  ///    float other_value = 2 [(buf.validate.field).float = { gte: 5.0, lt: 10.0 }];
+  ///   // value must be greater than or equal to 5.0 and less than 10.0 [float.gte_lt]
+  ///   float other_value = 2 [(buf.validate.field).float = { gte: 5.0, lt: 10.0 }];
   ///
-  ///    // value must be greater than or equal to 10.0 or less than 5.0 [float.gte_lt_exclusive]
-  ///    float another_value = 3 [(buf.validate.field).float = { gte: 10.0, lt: 5.0 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10.0 or less than 5.0 [float.gte_lt_exclusive]
+  ///   float another_value = 3 [(buf.validate.field).float = { gte: 10.0, lt: 5.0 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.double get gte => $_getN(4);
   @$pb.TagNumber(5)
-  set gte($core.double v) {
-    $_setFloat(4, v);
-  }
-
+  set gte($core.double value) => $_setFloat(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message
-  ///  is generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message
+  /// is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must be in list [1.0, 2.0, 3.0]
-  ///    float value = 1 [(buf.validate.field).float = { in: [1.0, 2.0, 3.0] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must be in list [1.0, 2.0, 3.0]
+  ///   float value = 1 [(buf.validate.field).float = { in: [1.0, 2.0, 3.0] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.double> get in_6 => $_getList(5);
 
-  ///  `in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    // value must not be in list [1.0, 2.0, 3.0]
-  ///    float value = 1 [(buf.validate.field).float = { not_in: [1.0, 2.0, 3.0] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   // value must not be in list [1.0, 2.0, 3.0]
+  ///   float value = 1 [(buf.validate.field).float = { not_in: [1.0, 2.0, 3.0] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.double> get notIn => $_getList(6);
 
@@ -1294,27 +1226,24 @@ class FloatRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool get finite => $_getBF(7);
   @$pb.TagNumber(8)
-  set finite($core.bool v) {
-    $_setBool(7, v);
-  }
-
+  set finite($core.bool value) => $_setBool(7, value);
   @$pb.TagNumber(8)
   $core.bool hasFinite() => $_has(7);
   @$pb.TagNumber(8)
   void clearFinite() => $_clearField(8);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyFloat {
-  ///    float value = 1 [
-  ///      (buf.validate.field).float.example = 1.0,
-  ///      (buf.validate.field).float.example = "Infinity"
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFloat {
+  ///   float value = 1 [
+  ///     (buf.validate.field).float.example = 1.0,
+  ///     (buf.validate.field).float.example = inf
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
   $pb.PbList<$core.double> get example => $_getList(8);
 }
@@ -1323,7 +1252,7 @@ enum DoubleRules_LessThan { lt, lte, notSet }
 
 enum DoubleRules_GreaterThan { gt, gte, notSet }
 
-/// DoubleRules describes the constraints applied to `double` values. These
+/// DoubleRules describes the rules applied to `double` values. These
 /// rules may also be applied to the `google.protobuf.DoubleValue` Well-Known-Type.
 class DoubleRules extends $pb.GeneratedMessage {
   factory DoubleRules({
@@ -1337,43 +1266,27 @@ class DoubleRules extends $pb.GeneratedMessage {
     $core.bool? finite,
     $core.Iterable<$core.double>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (finite != null) {
-      $result.finite = finite;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (finite != null) result.finite = finite;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  DoubleRules._() : super();
-  factory DoubleRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DoubleRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DoubleRules._();
+
+  factory DoubleRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DoubleRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, DoubleRules_LessThan>
       _DoubleRules_LessThanByTag = {
@@ -1404,21 +1317,19 @@ class DoubleRules extends $pb.GeneratedMessage {
     ..p<$core.double>(9, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PD)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DoubleRules clone() => DoubleRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DoubleRules copyWith(void Function(DoubleRules) updates) =>
       super.copyWith((message) => updates(message as DoubleRules))
           as DoubleRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DoubleRules create() => DoubleRules._();
+  @$core.override
   DoubleRules createEmptyInstance() => create();
   static $pb.PbList<DoubleRules> createRepeated() => $pb.PbList<DoubleRules>();
   @$core.pragma('dart2js:noInline')
@@ -1434,154 +1345,139 @@ class DoubleRules extends $pb.GeneratedMessage {
       _DoubleRules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must equal 42.0
-  ///    double value = 1 [(buf.validate.field).double.const = 42.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must equal 42.0
+  ///   double value = 1 [(buf.validate.field).double.const = 42.0];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.double get const_1 => $_getN(0);
   @$pb.TagNumber(1)
-  set const_1($core.double v) {
-    $_setDouble(0, v);
-  }
-
+  set const_1($core.double value) => $_setDouble(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified
-  ///  value, an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must be less than 10.0
-  ///    double value = 1 [(buf.validate.field).double.lt = 10.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must be less than 10.0
+  ///   double value = 1 [(buf.validate.field).double.lt = 10.0];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.double get lt => $_getN(1);
   @$pb.TagNumber(2)
-  set lt($core.double v) {
-    $_setDouble(1, v);
-  }
-
+  set lt($core.double value) => $_setDouble(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified value
-  ///  (field <= value). If the field value is greater than the specified value,
-  ///  an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified value
+  /// (field <= value). If the field value is greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must be less than or equal to 10.0
-  ///    double value = 1 [(buf.validate.field).double.lte = 10.0];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must be less than or equal to 10.0
+  ///   double value = 1 [(buf.validate.field).double.lte = 10.0];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.double get lte => $_getN(2);
   @$pb.TagNumber(3)
-  set lte($core.double v) {
-    $_setDouble(2, v);
-  }
-
+  set lte($core.double value) => $_setDouble(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or `lte`,
-  ///  the range is reversed, and the field value must be outside the specified
-  ///  range. If the field value doesn't meet the required conditions, an error
-  ///  message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or `lte`,
+  /// the range is reversed, and the field value must be outside the specified
+  /// range. If the field value doesn't meet the required conditions, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must be greater than 5.0 [double.gt]
-  ///    double value = 1 [(buf.validate.field).double.gt = 5.0];
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must be greater than 5.0 [double.gt]
+  ///   double value = 1 [(buf.validate.field).double.gt = 5.0];
   ///
-  ///    // value must be greater than 5 and less than 10.0 [double.gt_lt]
-  ///    double other_value = 2 [(buf.validate.field).double = { gt: 5.0, lt: 10.0 }];
+  ///   // value must be greater than 5 and less than 10.0 [double.gt_lt]
+  ///   double other_value = 2 [(buf.validate.field).double = { gt: 5.0, lt: 10.0 }];
   ///
-  ///    // value must be greater than 10 or less than 5.0 [double.gt_lt_exclusive]
-  ///    double another_value = 3 [(buf.validate.field).double = { gt: 10.0, lt: 5.0 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5.0 [double.gt_lt_exclusive]
+  ///   double another_value = 3 [(buf.validate.field).double = { gt: 10.0, lt: 5.0 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.double get gt => $_getN(3);
   @$pb.TagNumber(4)
-  set gt($core.double v) {
-    $_setDouble(3, v);
-  }
-
+  set gt($core.double value) => $_setDouble(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must be greater than or equal to 5.0 [double.gte]
-  ///    double value = 1 [(buf.validate.field).double.gte = 5.0];
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must be greater than or equal to 5.0 [double.gte]
+  ///   double value = 1 [(buf.validate.field).double.gte = 5.0];
   ///
-  ///    // value must be greater than or equal to 5.0 and less than 10.0 [double.gte_lt]
-  ///    double other_value = 2 [(buf.validate.field).double = { gte: 5.0, lt: 10.0 }];
+  ///   // value must be greater than or equal to 5.0 and less than 10.0 [double.gte_lt]
+  ///   double other_value = 2 [(buf.validate.field).double = { gte: 5.0, lt: 10.0 }];
   ///
-  ///    // value must be greater than or equal to 10.0 or less than 5.0 [double.gte_lt_exclusive]
-  ///    double another_value = 3 [(buf.validate.field).double = { gte: 10.0, lt: 5.0 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10.0 or less than 5.0 [double.gte_lt_exclusive]
+  ///   double another_value = 3 [(buf.validate.field).double = { gte: 10.0, lt: 5.0 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.double get gte => $_getN(4);
   @$pb.TagNumber(5)
-  set gte($core.double v) {
-    $_setDouble(4, v);
-  }
-
+  set gte($core.double value) => $_setDouble(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must be in list [1.0, 2.0, 3.0]
-  ///    double value = 1 [(buf.validate.field).double = { in: [1.0, 2.0, 3.0] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must be in list [1.0, 2.0, 3.0]
+  ///   double value = 1 [(buf.validate.field).double = { in: [1.0, 2.0, 3.0] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.double> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    // value must not be in list [1.0, 2.0, 3.0]
-  ///    double value = 1 [(buf.validate.field).double = { not_in: [1.0, 2.0, 3.0] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   // value must not be in list [1.0, 2.0, 3.0]
+  ///   double value = 1 [(buf.validate.field).double = { not_in: [1.0, 2.0, 3.0] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.double> get notIn => $_getList(6);
 
@@ -1590,27 +1486,24 @@ class DoubleRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.bool get finite => $_getBF(7);
   @$pb.TagNumber(8)
-  set finite($core.bool v) {
-    $_setBool(7, v);
-  }
-
+  set finite($core.bool value) => $_setBool(7, value);
   @$pb.TagNumber(8)
   $core.bool hasFinite() => $_has(7);
   @$pb.TagNumber(8)
   void clearFinite() => $_clearField(8);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyDouble {
-  ///    double value = 1 [
-  ///      (buf.validate.field).double.example = 1.0,
-  ///      (buf.validate.field).double.example = "Infinity"
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDouble {
+  ///   double value = 1 [
+  ///     (buf.validate.field).double.example = 1.0,
+  ///     (buf.validate.field).double.example = inf
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
   $pb.PbList<$core.double> get example => $_getList(8);
 }
@@ -1619,7 +1512,7 @@ enum Int32Rules_LessThan { lt, lte, notSet }
 
 enum Int32Rules_GreaterThan { gt, gte, notSet }
 
-/// Int32Rules describes the constraints applied to `int32` values. These
+/// Int32Rules describes the rules applied to `int32` values. These
 /// rules may also be applied to the `google.protobuf.Int32Value` Well-Known-Type.
 class Int32Rules extends $pb.GeneratedMessage {
   factory Int32Rules({
@@ -1632,40 +1525,26 @@ class Int32Rules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  Int32Rules._() : super();
-  factory Int32Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Int32Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Int32Rules._();
+
+  factory Int32Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Int32Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Int32Rules_LessThan>
       _Int32Rules_LessThanByTag = {
@@ -1695,20 +1574,18 @@ class Int32Rules extends $pb.GeneratedMessage {
     ..p<$core.int>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.P3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int32Rules clone() => Int32Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int32Rules copyWith(void Function(Int32Rules) updates) =>
       super.copyWith((message) => updates(message as Int32Rules)) as Int32Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Int32Rules create() => Int32Rules._();
+  @$core.override
   Int32Rules createEmptyInstance() => create();
   static $pb.PbList<Int32Rules> createRepeated() => $pb.PbList<Int32Rules>();
   @$core.pragma('dart2js:noInline')
@@ -1724,169 +1601,154 @@ class Int32Rules extends $pb.GeneratedMessage {
       _Int32Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must equal 42
-  ///    int32 value = 1 [(buf.validate.field).int32.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must equal 42
+  ///   int32 value = 1 [(buf.validate.field).int32.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field
-  ///  < value). If the field value is equal to or greater than the specified
-  ///  value, an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field
+  /// < value). If the field value is equal to or greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must be less than 10
-  ///    int32 value = 1 [(buf.validate.field).int32.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must be less than 10
+  ///   int32 value = 1 [(buf.validate.field).int32.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.int get lt => $_getIZ(1);
   @$pb.TagNumber(2)
-  set lt($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set lt($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must be less than or equal to 10
-  ///    int32 value = 1 [(buf.validate.field).int32.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must be less than or equal to 10
+  ///   int32 value = 1 [(buf.validate.field).int32.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.int get lte => $_getIZ(2);
   @$pb.TagNumber(3)
-  set lte($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set lte($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must be greater than 5 [int32.gt]
-  ///    int32 value = 1 [(buf.validate.field).int32.gt = 5];
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must be greater than 5 [int32.gt]
+  ///   int32 value = 1 [(buf.validate.field).int32.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [int32.gt_lt]
-  ///    int32 other_value = 2 [(buf.validate.field).int32 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [int32.gt_lt]
+  ///   int32 other_value = 2 [(buf.validate.field).int32 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [int32.gt_lt_exclusive]
-  ///    int32 another_value = 3 [(buf.validate.field).int32 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [int32.gt_lt_exclusive]
+  ///   int32 another_value = 3 [(buf.validate.field).int32 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.int get gt => $_getIZ(3);
   @$pb.TagNumber(4)
-  set gt($core.int v) {
-    $_setSignedInt32(3, v);
-  }
-
+  set gt($core.int value) => $_setSignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified value
-  ///  (exclusive). If the value of `gte` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified value
+  /// (exclusive). If the value of `gte` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must be greater than or equal to 5 [int32.gte]
-  ///    int32 value = 1 [(buf.validate.field).int32.gte = 5];
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must be greater than or equal to 5 [int32.gte]
+  ///   int32 value = 1 [(buf.validate.field).int32.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [int32.gte_lt]
-  ///    int32 other_value = 2 [(buf.validate.field).int32 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [int32.gte_lt]
+  ///   int32 other_value = 2 [(buf.validate.field).int32 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [int32.gte_lt_exclusive]
-  ///    int32 another_value = 3 [(buf.validate.field).int32 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [int32.gte_lt_exclusive]
+  ///   int32 another_value = 3 [(buf.validate.field).int32 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.int get gte => $_getIZ(4);
   @$pb.TagNumber(5)
-  set gte($core.int v) {
-    $_setSignedInt32(4, v);
-  }
-
+  set gte($core.int value) => $_setSignedInt32(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must be in list [1, 2, 3]
-  ///    int32 value = 1 [(buf.validate.field).int32 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must be in list [1, 2, 3]
+  ///   int32 value = 1 [(buf.validate.field).int32 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.int> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error message
-  ///  is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error message
+  /// is generated.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    int32 value = 1 [(buf.validate.field).int32 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   int32 value = 1 [(buf.validate.field).int32 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.int> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyInt32 {
-  ///    int32 value = 1 [
-  ///      (buf.validate.field).int32.example = 1,
-  ///      (buf.validate.field).int32.example = -10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt32 {
+  ///   int32 value = 1 [
+  ///     (buf.validate.field).int32.example = 1,
+  ///     (buf.validate.field).int32.example = -10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get example => $_getList(7);
 }
@@ -1895,7 +1757,7 @@ enum Int64Rules_LessThan { lt, lte, notSet }
 
 enum Int64Rules_GreaterThan { gt, gte, notSet }
 
-/// Int64Rules describes the constraints applied to `int64` values. These
+/// Int64Rules describes the rules applied to `int64` values. These
 /// rules may also be applied to the `google.protobuf.Int64Value` Well-Known-Type.
 class Int64Rules extends $pb.GeneratedMessage {
   factory Int64Rules({
@@ -1908,40 +1770,26 @@ class Int64Rules extends $pb.GeneratedMessage {
     $core.Iterable<$fixnum.Int64>? notIn,
     $core.Iterable<$fixnum.Int64>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  Int64Rules._() : super();
-  factory Int64Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Int64Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Int64Rules._();
+
+  factory Int64Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Int64Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Int64Rules_LessThan>
       _Int64Rules_LessThanByTag = {
@@ -1971,20 +1819,18 @@ class Int64Rules extends $pb.GeneratedMessage {
     ..p<$fixnum.Int64>(9, _omitFieldNames ? '' : 'example', $pb.PbFieldType.P6)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int64Rules clone() => Int64Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int64Rules copyWith(void Function(Int64Rules) updates) =>
       super.copyWith((message) => updates(message as Int64Rules)) as Int64Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Int64Rules create() => Int64Rules._();
+  @$core.override
   Int64Rules createEmptyInstance() => create();
   static $pb.PbList<Int64Rules> createRepeated() => $pb.PbList<Int64Rules>();
   @$core.pragma('dart2js:noInline')
@@ -2000,169 +1846,154 @@ class Int64Rules extends $pb.GeneratedMessage {
       _Int64Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must equal 42
-  ///    int64 value = 1 [(buf.validate.field).int64.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must equal 42
+  ///   int64 value = 1 [(buf.validate.field).int64.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get const_1 => $_getI64(0);
   @$pb.TagNumber(1)
-  set const_1($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set const_1($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must be less than 10
-  ///    int64 value = 1 [(buf.validate.field).int64.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must be less than 10
+  ///   int64 value = 1 [(buf.validate.field).int64.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get lt => $_getI64(1);
   @$pb.TagNumber(2)
-  set lt($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set lt($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must be less than or equal to 10
-  ///    int64 value = 1 [(buf.validate.field).int64.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must be less than or equal to 10
+  ///   int64 value = 1 [(buf.validate.field).int64.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get lte => $_getI64(2);
   @$pb.TagNumber(3)
-  set lte($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set lte($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must be greater than 5 [int64.gt]
-  ///    int64 value = 1 [(buf.validate.field).int64.gt = 5];
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must be greater than 5 [int64.gt]
+  ///   int64 value = 1 [(buf.validate.field).int64.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [int64.gt_lt]
-  ///    int64 other_value = 2 [(buf.validate.field).int64 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [int64.gt_lt]
+  ///   int64 other_value = 2 [(buf.validate.field).int64 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [int64.gt_lt_exclusive]
-  ///    int64 another_value = 3 [(buf.validate.field).int64 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [int64.gt_lt_exclusive]
+  ///   int64 another_value = 3 [(buf.validate.field).int64 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get gt => $_getI64(3);
   @$pb.TagNumber(4)
-  set gt($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set gt($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must be greater than or equal to 5 [int64.gte]
-  ///    int64 value = 1 [(buf.validate.field).int64.gte = 5];
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must be greater than or equal to 5 [int64.gte]
+  ///   int64 value = 1 [(buf.validate.field).int64.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [int64.gte_lt]
-  ///    int64 other_value = 2 [(buf.validate.field).int64 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [int64.gte_lt]
+  ///   int64 other_value = 2 [(buf.validate.field).int64 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [int64.gte_lt_exclusive]
-  ///    int64 another_value = 3 [(buf.validate.field).int64 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [int64.gte_lt_exclusive]
+  ///   int64 another_value = 3 [(buf.validate.field).int64 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $fixnum.Int64 get gte => $_getI64(4);
   @$pb.TagNumber(5)
-  set gte($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set gte($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must be in list [1, 2, 3]
-  ///    int64 value = 1 [(buf.validate.field).int64 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must be in list [1, 2, 3]
+  ///   int64 value = 1 [(buf.validate.field).int64 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$fixnum.Int64> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    int64 value = 1 [(buf.validate.field).int64 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   int64 value = 1 [(buf.validate.field).int64 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$fixnum.Int64> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyInt64 {
-  ///    int64 value = 1 [
-  ///      (buf.validate.field).int64.example = 1,
-  ///      (buf.validate.field).int64.example = -10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyInt64 {
+  ///   int64 value = 1 [
+  ///     (buf.validate.field).int64.example = 1,
+  ///     (buf.validate.field).int64.example = -10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
   $pb.PbList<$fixnum.Int64> get example => $_getList(7);
 }
@@ -2171,7 +2002,7 @@ enum UInt32Rules_LessThan { lt, lte, notSet }
 
 enum UInt32Rules_GreaterThan { gt, gte, notSet }
 
-/// UInt32Rules describes the constraints applied to `uint32` values. These
+/// UInt32Rules describes the rules applied to `uint32` values. These
 /// rules may also be applied to the `google.protobuf.UInt32Value` Well-Known-Type.
 class UInt32Rules extends $pb.GeneratedMessage {
   factory UInt32Rules({
@@ -2184,40 +2015,26 @@ class UInt32Rules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  UInt32Rules._() : super();
-  factory UInt32Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory UInt32Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  UInt32Rules._();
+
+  factory UInt32Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UInt32Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, UInt32Rules_LessThan>
       _UInt32Rules_LessThanByTag = {
@@ -2247,21 +2064,19 @@ class UInt32Rules extends $pb.GeneratedMessage {
     ..p<$core.int>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PU3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt32Rules clone() => UInt32Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt32Rules copyWith(void Function(UInt32Rules) updates) =>
       super.copyWith((message) => updates(message as UInt32Rules))
           as UInt32Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static UInt32Rules create() => UInt32Rules._();
+  @$core.override
   UInt32Rules createEmptyInstance() => create();
   static $pb.PbList<UInt32Rules> createRepeated() => $pb.PbList<UInt32Rules>();
   @$core.pragma('dart2js:noInline')
@@ -2277,169 +2092,154 @@ class UInt32Rules extends $pb.GeneratedMessage {
       _UInt32Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must equal 42
-  ///    uint32 value = 1 [(buf.validate.field).uint32.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must equal 42
+  ///   uint32 value = 1 [(buf.validate.field).uint32.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setUnsignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setUnsignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must be less than 10
-  ///    uint32 value = 1 [(buf.validate.field).uint32.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must be less than 10
+  ///   uint32 value = 1 [(buf.validate.field).uint32.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.int get lt => $_getIZ(1);
   @$pb.TagNumber(2)
-  set lt($core.int v) {
-    $_setUnsignedInt32(1, v);
-  }
-
+  set lt($core.int value) => $_setUnsignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must be less than or equal to 10
-  ///    uint32 value = 1 [(buf.validate.field).uint32.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must be less than or equal to 10
+  ///   uint32 value = 1 [(buf.validate.field).uint32.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.int get lte => $_getIZ(2);
   @$pb.TagNumber(3)
-  set lte($core.int v) {
-    $_setUnsignedInt32(2, v);
-  }
-
+  set lte($core.int value) => $_setUnsignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must be greater than 5 [uint32.gt]
-  ///    uint32 value = 1 [(buf.validate.field).uint32.gt = 5];
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must be greater than 5 [uint32.gt]
+  ///   uint32 value = 1 [(buf.validate.field).uint32.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [uint32.gt_lt]
-  ///    uint32 other_value = 2 [(buf.validate.field).uint32 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [uint32.gt_lt]
+  ///   uint32 other_value = 2 [(buf.validate.field).uint32 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [uint32.gt_lt_exclusive]
-  ///    uint32 another_value = 3 [(buf.validate.field).uint32 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [uint32.gt_lt_exclusive]
+  ///   uint32 another_value = 3 [(buf.validate.field).uint32 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.int get gt => $_getIZ(3);
   @$pb.TagNumber(4)
-  set gt($core.int v) {
-    $_setUnsignedInt32(3, v);
-  }
-
+  set gt($core.int value) => $_setUnsignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must be greater than or equal to 5 [uint32.gte]
-  ///    uint32 value = 1 [(buf.validate.field).uint32.gte = 5];
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must be greater than or equal to 5 [uint32.gte]
+  ///   uint32 value = 1 [(buf.validate.field).uint32.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [uint32.gte_lt]
-  ///    uint32 other_value = 2 [(buf.validate.field).uint32 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [uint32.gte_lt]
+  ///   uint32 other_value = 2 [(buf.validate.field).uint32 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [uint32.gte_lt_exclusive]
-  ///    uint32 another_value = 3 [(buf.validate.field).uint32 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [uint32.gte_lt_exclusive]
+  ///   uint32 another_value = 3 [(buf.validate.field).uint32 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.int get gte => $_getIZ(4);
   @$pb.TagNumber(5)
-  set gte($core.int v) {
-    $_setUnsignedInt32(4, v);
-  }
-
+  set gte($core.int value) => $_setUnsignedInt32(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must be in list [1, 2, 3]
-  ///    uint32 value = 1 [(buf.validate.field).uint32 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must be in list [1, 2, 3]
+  ///   uint32 value = 1 [(buf.validate.field).uint32 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.int> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    uint32 value = 1 [(buf.validate.field).uint32 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   uint32 value = 1 [(buf.validate.field).uint32 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.int> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyUInt32 {
-  ///    uint32 value = 1 [
-  ///      (buf.validate.field).uint32.example = 1,
-  ///      (buf.validate.field).uint32.example = 10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt32 {
+  ///   uint32 value = 1 [
+  ///     (buf.validate.field).uint32.example = 1,
+  ///     (buf.validate.field).uint32.example = 10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get example => $_getList(7);
 }
@@ -2448,7 +2248,7 @@ enum UInt64Rules_LessThan { lt, lte, notSet }
 
 enum UInt64Rules_GreaterThan { gt, gte, notSet }
 
-/// UInt64Rules describes the constraints applied to `uint64` values. These
+/// UInt64Rules describes the rules applied to `uint64` values. These
 /// rules may also be applied to the `google.protobuf.UInt64Value` Well-Known-Type.
 class UInt64Rules extends $pb.GeneratedMessage {
   factory UInt64Rules({
@@ -2461,40 +2261,26 @@ class UInt64Rules extends $pb.GeneratedMessage {
     $core.Iterable<$fixnum.Int64>? notIn,
     $core.Iterable<$fixnum.Int64>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  UInt64Rules._() : super();
-  factory UInt64Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory UInt64Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  UInt64Rules._();
+
+  factory UInt64Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UInt64Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, UInt64Rules_LessThan>
       _UInt64Rules_LessThanByTag = {
@@ -2529,21 +2315,19 @@ class UInt64Rules extends $pb.GeneratedMessage {
     ..p<$fixnum.Int64>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PU6)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt64Rules clone() => UInt64Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt64Rules copyWith(void Function(UInt64Rules) updates) =>
       super.copyWith((message) => updates(message as UInt64Rules))
           as UInt64Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static UInt64Rules create() => UInt64Rules._();
+  @$core.override
   UInt64Rules createEmptyInstance() => create();
   static $pb.PbList<UInt64Rules> createRepeated() => $pb.PbList<UInt64Rules>();
   @$core.pragma('dart2js:noInline')
@@ -2559,169 +2343,154 @@ class UInt64Rules extends $pb.GeneratedMessage {
       _UInt64Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must equal 42
-  ///    uint64 value = 1 [(buf.validate.field).uint64.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must equal 42
+  ///   uint64 value = 1 [(buf.validate.field).uint64.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get const_1 => $_getI64(0);
   @$pb.TagNumber(1)
-  set const_1($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set const_1($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must be less than 10
-  ///    uint64 value = 1 [(buf.validate.field).uint64.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must be less than 10
+  ///   uint64 value = 1 [(buf.validate.field).uint64.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get lt => $_getI64(1);
   @$pb.TagNumber(2)
-  set lt($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set lt($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must be less than or equal to 10
-  ///    uint64 value = 1 [(buf.validate.field).uint64.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must be less than or equal to 10
+  ///   uint64 value = 1 [(buf.validate.field).uint64.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get lte => $_getI64(2);
   @$pb.TagNumber(3)
-  set lte($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set lte($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must be greater than 5 [uint64.gt]
-  ///    uint64 value = 1 [(buf.validate.field).uint64.gt = 5];
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must be greater than 5 [uint64.gt]
+  ///   uint64 value = 1 [(buf.validate.field).uint64.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [uint64.gt_lt]
-  ///    uint64 other_value = 2 [(buf.validate.field).uint64 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [uint64.gt_lt]
+  ///   uint64 other_value = 2 [(buf.validate.field).uint64 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [uint64.gt_lt_exclusive]
-  ///    uint64 another_value = 3 [(buf.validate.field).uint64 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [uint64.gt_lt_exclusive]
+  ///   uint64 another_value = 3 [(buf.validate.field).uint64 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get gt => $_getI64(3);
   @$pb.TagNumber(4)
-  set gt($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set gt($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must be greater than or equal to 5 [uint64.gte]
-  ///    uint64 value = 1 [(buf.validate.field).uint64.gte = 5];
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must be greater than or equal to 5 [uint64.gte]
+  ///   uint64 value = 1 [(buf.validate.field).uint64.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [uint64.gte_lt]
-  ///    uint64 other_value = 2 [(buf.validate.field).uint64 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [uint64.gte_lt]
+  ///   uint64 other_value = 2 [(buf.validate.field).uint64 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [uint64.gte_lt_exclusive]
-  ///    uint64 another_value = 3 [(buf.validate.field).uint64 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [uint64.gte_lt_exclusive]
+  ///   uint64 another_value = 3 [(buf.validate.field).uint64 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $fixnum.Int64 get gte => $_getI64(4);
   @$pb.TagNumber(5)
-  set gte($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set gte($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must be in list [1, 2, 3]
-  ///    uint64 value = 1 [(buf.validate.field).uint64 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must be in list [1, 2, 3]
+  ///   uint64 value = 1 [(buf.validate.field).uint64 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$fixnum.Int64> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    uint64 value = 1 [(buf.validate.field).uint64 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   uint64 value = 1 [(buf.validate.field).uint64 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$fixnum.Int64> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyUInt64 {
-  ///    uint64 value = 1 [
-  ///      (buf.validate.field).uint64.example = 1,
-  ///      (buf.validate.field).uint64.example = -10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyUInt64 {
+  ///   uint64 value = 1 [
+  ///     (buf.validate.field).uint64.example = 1,
+  ///     (buf.validate.field).uint64.example = -10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$fixnum.Int64> get example => $_getList(7);
 }
@@ -2730,7 +2499,7 @@ enum SInt32Rules_LessThan { lt, lte, notSet }
 
 enum SInt32Rules_GreaterThan { gt, gte, notSet }
 
-/// SInt32Rules describes the constraints applied to `sint32` values.
+/// SInt32Rules describes the rules applied to `sint32` values.
 class SInt32Rules extends $pb.GeneratedMessage {
   factory SInt32Rules({
     $core.int? const_1,
@@ -2742,40 +2511,26 @@ class SInt32Rules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  SInt32Rules._() : super();
-  factory SInt32Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SInt32Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SInt32Rules._();
+
+  factory SInt32Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SInt32Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, SInt32Rules_LessThan>
       _SInt32Rules_LessThanByTag = {
@@ -2805,21 +2560,19 @@ class SInt32Rules extends $pb.GeneratedMessage {
     ..p<$core.int>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PS3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SInt32Rules clone() => SInt32Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SInt32Rules copyWith(void Function(SInt32Rules) updates) =>
       super.copyWith((message) => updates(message as SInt32Rules))
           as SInt32Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SInt32Rules create() => SInt32Rules._();
+  @$core.override
   SInt32Rules createEmptyInstance() => create();
   static $pb.PbList<SInt32Rules> createRepeated() => $pb.PbList<SInt32Rules>();
   @$core.pragma('dart2js:noInline')
@@ -2835,169 +2588,154 @@ class SInt32Rules extends $pb.GeneratedMessage {
       _SInt32Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must equal 42
-  ///    sint32 value = 1 [(buf.validate.field).sint32.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must equal 42
+  ///   sint32 value = 1 [(buf.validate.field).sint32.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field
-  ///  < value). If the field value is equal to or greater than the specified
-  ///  value, an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field
+  /// < value). If the field value is equal to or greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must be less than 10
-  ///    sint32 value = 1 [(buf.validate.field).sint32.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must be less than 10
+  ///   sint32 value = 1 [(buf.validate.field).sint32.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.int get lt => $_getIZ(1);
   @$pb.TagNumber(2)
-  set lt($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set lt($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must be less than or equal to 10
-  ///    sint32 value = 1 [(buf.validate.field).sint32.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must be less than or equal to 10
+  ///   sint32 value = 1 [(buf.validate.field).sint32.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.int get lte => $_getIZ(2);
   @$pb.TagNumber(3)
-  set lte($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set lte($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must be greater than 5 [sint32.gt]
-  ///    sint32 value = 1 [(buf.validate.field).sint32.gt = 5];
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must be greater than 5 [sint32.gt]
+  ///   sint32 value = 1 [(buf.validate.field).sint32.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [sint32.gt_lt]
-  ///    sint32 other_value = 2 [(buf.validate.field).sint32 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [sint32.gt_lt]
+  ///   sint32 other_value = 2 [(buf.validate.field).sint32 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [sint32.gt_lt_exclusive]
-  ///    sint32 another_value = 3 [(buf.validate.field).sint32 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [sint32.gt_lt_exclusive]
+  ///   sint32 another_value = 3 [(buf.validate.field).sint32 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.int get gt => $_getIZ(3);
   @$pb.TagNumber(4)
-  set gt($core.int v) {
-    $_setSignedInt32(3, v);
-  }
-
+  set gt($core.int value) => $_setSignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///   // value must be greater than or equal to 5 [sint32.gte]
-  ///   sint32 value = 1 [(buf.validate.field).sint32.gte = 5];
+  /// ```proto
+  /// message MySInt32 {
+  ///  // value must be greater than or equal to 5 [sint32.gte]
+  ///  sint32 value = 1 [(buf.validate.field).sint32.gte = 5];
   ///
-  ///   // value must be greater than or equal to 5 and less than 10 [sint32.gte_lt]
-  ///   sint32 other_value = 2 [(buf.validate.field).sint32 = { gte: 5, lt: 10 }];
+  ///  // value must be greater than or equal to 5 and less than 10 [sint32.gte_lt]
+  ///  sint32 other_value = 2 [(buf.validate.field).sint32 = { gte: 5, lt: 10 }];
   ///
-  ///   // value must be greater than or equal to 10 or less than 5 [sint32.gte_lt_exclusive]
-  ///   sint32 another_value = 3 [(buf.validate.field).sint32 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///  // value must be greater than or equal to 10 or less than 5 [sint32.gte_lt_exclusive]
+  ///  sint32 another_value = 3 [(buf.validate.field).sint32 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.int get gte => $_getIZ(4);
   @$pb.TagNumber(5)
-  set gte($core.int v) {
-    $_setSignedInt32(4, v);
-  }
-
+  set gte($core.int value) => $_setSignedInt32(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must be in list [1, 2, 3]
-  ///    sint32 value = 1 [(buf.validate.field).sint32 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must be in list [1, 2, 3]
+  ///   sint32 value = 1 [(buf.validate.field).sint32 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.int> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    sint32 value = 1 [(buf.validate.field).sint32 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   sint32 value = 1 [(buf.validate.field).sint32 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.int> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MySInt32 {
-  ///    sint32 value = 1 [
-  ///      (buf.validate.field).sint32.example = 1,
-  ///      (buf.validate.field).sint32.example = -10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt32 {
+  ///   sint32 value = 1 [
+  ///     (buf.validate.field).sint32.example = 1,
+  ///     (buf.validate.field).sint32.example = -10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get example => $_getList(7);
 }
@@ -3006,7 +2744,7 @@ enum SInt64Rules_LessThan { lt, lte, notSet }
 
 enum SInt64Rules_GreaterThan { gt, gte, notSet }
 
-/// SInt64Rules describes the constraints applied to `sint64` values.
+/// SInt64Rules describes the rules applied to `sint64` values.
 class SInt64Rules extends $pb.GeneratedMessage {
   factory SInt64Rules({
     $fixnum.Int64? const_1,
@@ -3018,40 +2756,26 @@ class SInt64Rules extends $pb.GeneratedMessage {
     $core.Iterable<$fixnum.Int64>? notIn,
     $core.Iterable<$fixnum.Int64>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  SInt64Rules._() : super();
-  factory SInt64Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SInt64Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SInt64Rules._();
+
+  factory SInt64Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SInt64Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, SInt64Rules_LessThan>
       _SInt64Rules_LessThanByTag = {
@@ -3086,21 +2810,19 @@ class SInt64Rules extends $pb.GeneratedMessage {
     ..p<$fixnum.Int64>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PS6)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SInt64Rules clone() => SInt64Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SInt64Rules copyWith(void Function(SInt64Rules) updates) =>
       super.copyWith((message) => updates(message as SInt64Rules))
           as SInt64Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SInt64Rules create() => SInt64Rules._();
+  @$core.override
   SInt64Rules createEmptyInstance() => create();
   static $pb.PbList<SInt64Rules> createRepeated() => $pb.PbList<SInt64Rules>();
   @$core.pragma('dart2js:noInline')
@@ -3116,169 +2838,154 @@ class SInt64Rules extends $pb.GeneratedMessage {
       _SInt64Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must equal 42
-  ///    sint64 value = 1 [(buf.validate.field).sint64.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must equal 42
+  ///   sint64 value = 1 [(buf.validate.field).sint64.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get const_1 => $_getI64(0);
   @$pb.TagNumber(1)
-  set const_1($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set const_1($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field
-  ///  < value). If the field value is equal to or greater than the specified
-  ///  value, an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field
+  /// < value). If the field value is equal to or greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must be less than 10
-  ///    sint64 value = 1 [(buf.validate.field).sint64.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must be less than 10
+  ///   sint64 value = 1 [(buf.validate.field).sint64.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get lt => $_getI64(1);
   @$pb.TagNumber(2)
-  set lt($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set lt($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must be less than or equal to 10
-  ///    sint64 value = 1 [(buf.validate.field).sint64.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must be less than or equal to 10
+  ///   sint64 value = 1 [(buf.validate.field).sint64.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get lte => $_getI64(2);
   @$pb.TagNumber(3)
-  set lte($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set lte($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must be greater than 5 [sint64.gt]
-  ///    sint64 value = 1 [(buf.validate.field).sint64.gt = 5];
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must be greater than 5 [sint64.gt]
+  ///   sint64 value = 1 [(buf.validate.field).sint64.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [sint64.gt_lt]
-  ///    sint64 other_value = 2 [(buf.validate.field).sint64 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [sint64.gt_lt]
+  ///   sint64 other_value = 2 [(buf.validate.field).sint64 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [sint64.gt_lt_exclusive]
-  ///    sint64 another_value = 3 [(buf.validate.field).sint64 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [sint64.gt_lt_exclusive]
+  ///   sint64 another_value = 3 [(buf.validate.field).sint64 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get gt => $_getI64(3);
   @$pb.TagNumber(4)
-  set gt($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set gt($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must be greater than or equal to 5 [sint64.gte]
-  ///    sint64 value = 1 [(buf.validate.field).sint64.gte = 5];
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must be greater than or equal to 5 [sint64.gte]
+  ///   sint64 value = 1 [(buf.validate.field).sint64.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [sint64.gte_lt]
-  ///    sint64 other_value = 2 [(buf.validate.field).sint64 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [sint64.gte_lt]
+  ///   sint64 other_value = 2 [(buf.validate.field).sint64 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [sint64.gte_lt_exclusive]
-  ///    sint64 another_value = 3 [(buf.validate.field).sint64 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [sint64.gte_lt_exclusive]
+  ///   sint64 another_value = 3 [(buf.validate.field).sint64 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $fixnum.Int64 get gte => $_getI64(4);
   @$pb.TagNumber(5)
-  set gte($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set gte($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message
-  ///  is generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message
+  /// is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must be in list [1, 2, 3]
-  ///    sint64 value = 1 [(buf.validate.field).sint64 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must be in list [1, 2, 3]
+  ///   sint64 value = 1 [(buf.validate.field).sint64 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$fixnum.Int64> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    sint64 value = 1 [(buf.validate.field).sint64 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   sint64 value = 1 [(buf.validate.field).sint64 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$fixnum.Int64> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MySInt64 {
-  ///    sint64 value = 1 [
-  ///      (buf.validate.field).sint64.example = 1,
-  ///      (buf.validate.field).sint64.example = -10
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySInt64 {
+  ///   sint64 value = 1 [
+  ///     (buf.validate.field).sint64.example = 1,
+  ///     (buf.validate.field).sint64.example = -10
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$fixnum.Int64> get example => $_getList(7);
 }
@@ -3287,7 +2994,7 @@ enum Fixed32Rules_LessThan { lt, lte, notSet }
 
 enum Fixed32Rules_GreaterThan { gt, gte, notSet }
 
-/// Fixed32Rules describes the constraints applied to `fixed32` values.
+/// Fixed32Rules describes the rules applied to `fixed32` values.
 class Fixed32Rules extends $pb.GeneratedMessage {
   factory Fixed32Rules({
     $core.int? const_1,
@@ -3299,40 +3006,26 @@ class Fixed32Rules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  Fixed32Rules._() : super();
-  factory Fixed32Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Fixed32Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Fixed32Rules._();
+
+  factory Fixed32Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Fixed32Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Fixed32Rules_LessThan>
       _Fixed32Rules_LessThanByTag = {
@@ -3362,21 +3055,19 @@ class Fixed32Rules extends $pb.GeneratedMessage {
     ..p<$core.int>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PF3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Fixed32Rules clone() => Fixed32Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Fixed32Rules copyWith(void Function(Fixed32Rules) updates) =>
       super.copyWith((message) => updates(message as Fixed32Rules))
           as Fixed32Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Fixed32Rules create() => Fixed32Rules._();
+  @$core.override
   Fixed32Rules createEmptyInstance() => create();
   static $pb.PbList<Fixed32Rules> createRepeated() =>
       $pb.PbList<Fixed32Rules>();
@@ -3393,169 +3084,154 @@ class Fixed32Rules extends $pb.GeneratedMessage {
       _Fixed32Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value.
-  ///  If the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value.
+  /// If the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must equal 42
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must equal 42
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setUnsignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setUnsignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must be less than 10
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must be less than 10
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.int get lt => $_getIZ(1);
   @$pb.TagNumber(2)
-  set lt($core.int v) {
-    $_setUnsignedInt32(1, v);
-  }
-
+  set lt($core.int value) => $_setUnsignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must be less than or equal to 10
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must be less than or equal to 10
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.int get lte => $_getIZ(2);
   @$pb.TagNumber(3)
-  set lte($core.int v) {
-    $_setUnsignedInt32(2, v);
-  }
-
+  set lte($core.int value) => $_setUnsignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must be greater than 5 [fixed32.gt]
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32.gt = 5];
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must be greater than 5 [fixed32.gt]
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [fixed32.gt_lt]
-  ///    fixed32 other_value = 2 [(buf.validate.field).fixed32 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [fixed32.gt_lt]
+  ///   fixed32 other_value = 2 [(buf.validate.field).fixed32 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [fixed32.gt_lt_exclusive]
-  ///    fixed32 another_value = 3 [(buf.validate.field).fixed32 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [fixed32.gt_lt_exclusive]
+  ///   fixed32 another_value = 3 [(buf.validate.field).fixed32 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.int get gt => $_getIZ(3);
   @$pb.TagNumber(4)
-  set gt($core.int v) {
-    $_setUnsignedInt32(3, v);
-  }
-
+  set gt($core.int value) => $_setUnsignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must be greater than or equal to 5 [fixed32.gte]
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32.gte = 5];
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must be greater than or equal to 5 [fixed32.gte]
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [fixed32.gte_lt]
-  ///    fixed32 other_value = 2 [(buf.validate.field).fixed32 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [fixed32.gte_lt]
+  ///   fixed32 other_value = 2 [(buf.validate.field).fixed32 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [fixed32.gte_lt_exclusive]
-  ///    fixed32 another_value = 3 [(buf.validate.field).fixed32 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [fixed32.gte_lt_exclusive]
+  ///   fixed32 another_value = 3 [(buf.validate.field).fixed32 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.int get gte => $_getIZ(4);
   @$pb.TagNumber(5)
-  set gte($core.int v) {
-    $_setUnsignedInt32(4, v);
-  }
-
+  set gte($core.int value) => $_setUnsignedInt32(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message
-  ///  is generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message
+  /// is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must be in list [1, 2, 3]
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must be in list [1, 2, 3]
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.int> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    fixed32 value = 1 [(buf.validate.field).fixed32 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   fixed32 value = 1 [(buf.validate.field).fixed32 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.int> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyFixed32 {
-  ///    fixed32 value = 1 [
-  ///      (buf.validate.field).fixed32.example = 1,
-  ///      (buf.validate.field).fixed32.example = 2
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed32 {
+  ///   fixed32 value = 1 [
+  ///     (buf.validate.field).fixed32.example = 1,
+  ///     (buf.validate.field).fixed32.example = 2
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get example => $_getList(7);
 }
@@ -3564,7 +3240,7 @@ enum Fixed64Rules_LessThan { lt, lte, notSet }
 
 enum Fixed64Rules_GreaterThan { gt, gte, notSet }
 
-/// Fixed64Rules describes the constraints applied to `fixed64` values.
+/// Fixed64Rules describes the rules applied to `fixed64` values.
 class Fixed64Rules extends $pb.GeneratedMessage {
   factory Fixed64Rules({
     $fixnum.Int64? const_1,
@@ -3576,40 +3252,26 @@ class Fixed64Rules extends $pb.GeneratedMessage {
     $core.Iterable<$fixnum.Int64>? notIn,
     $core.Iterable<$fixnum.Int64>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  Fixed64Rules._() : super();
-  factory Fixed64Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Fixed64Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Fixed64Rules._();
+
+  factory Fixed64Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Fixed64Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Fixed64Rules_LessThan>
       _Fixed64Rules_LessThanByTag = {
@@ -3644,21 +3306,19 @@ class Fixed64Rules extends $pb.GeneratedMessage {
     ..p<$fixnum.Int64>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PF6)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Fixed64Rules clone() => Fixed64Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Fixed64Rules copyWith(void Function(Fixed64Rules) updates) =>
       super.copyWith((message) => updates(message as Fixed64Rules))
           as Fixed64Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Fixed64Rules create() => Fixed64Rules._();
+  @$core.override
   Fixed64Rules createEmptyInstance() => create();
   static $pb.PbList<Fixed64Rules> createRepeated() =>
       $pb.PbList<Fixed64Rules>();
@@ -3675,169 +3335,154 @@ class Fixed64Rules extends $pb.GeneratedMessage {
       _Fixed64Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must equal 42
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must equal 42
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get const_1 => $_getI64(0);
   @$pb.TagNumber(1)
-  set const_1($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set const_1($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must be less than 10
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must be less than 10
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get lt => $_getI64(1);
   @$pb.TagNumber(2)
-  set lt($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set lt($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must be less than or equal to 10
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must be less than or equal to 10
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get lte => $_getI64(2);
   @$pb.TagNumber(3)
-  set lte($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set lte($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must be greater than 5 [fixed64.gt]
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64.gt = 5];
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must be greater than 5 [fixed64.gt]
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [fixed64.gt_lt]
-  ///    fixed64 other_value = 2 [(buf.validate.field).fixed64 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [fixed64.gt_lt]
+  ///   fixed64 other_value = 2 [(buf.validate.field).fixed64 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [fixed64.gt_lt_exclusive]
-  ///    fixed64 another_value = 3 [(buf.validate.field).fixed64 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [fixed64.gt_lt_exclusive]
+  ///   fixed64 another_value = 3 [(buf.validate.field).fixed64 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get gt => $_getI64(3);
   @$pb.TagNumber(4)
-  set gt($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set gt($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must be greater than or equal to 5 [fixed64.gte]
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64.gte = 5];
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must be greater than or equal to 5 [fixed64.gte]
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [fixed64.gte_lt]
-  ///    fixed64 other_value = 2 [(buf.validate.field).fixed64 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [fixed64.gte_lt]
+  ///   fixed64 other_value = 2 [(buf.validate.field).fixed64 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [fixed64.gte_lt_exclusive]
-  ///    fixed64 another_value = 3 [(buf.validate.field).fixed64 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [fixed64.gte_lt_exclusive]
+  ///   fixed64 another_value = 3 [(buf.validate.field).fixed64 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $fixnum.Int64 get gte => $_getI64(4);
   @$pb.TagNumber(5)
-  set gte($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set gte($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must be in list [1, 2, 3]
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must be in list [1, 2, 3]
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$fixnum.Int64> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    fixed64 value = 1 [(buf.validate.field).fixed64 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   fixed64 value = 1 [(buf.validate.field).fixed64 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$fixnum.Int64> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyFixed64 {
-  ///    fixed64 value = 1 [
-  ///      (buf.validate.field).fixed64.example = 1,
-  ///      (buf.validate.field).fixed64.example = 2
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyFixed64 {
+  ///   fixed64 value = 1 [
+  ///     (buf.validate.field).fixed64.example = 1,
+  ///     (buf.validate.field).fixed64.example = 2
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$fixnum.Int64> get example => $_getList(7);
 }
@@ -3846,7 +3491,7 @@ enum SFixed32Rules_LessThan { lt, lte, notSet }
 
 enum SFixed32Rules_GreaterThan { gt, gte, notSet }
 
-/// SFixed32Rules describes the constraints applied to `fixed32` values.
+/// SFixed32Rules describes the rules applied to `fixed32` values.
 class SFixed32Rules extends $pb.GeneratedMessage {
   factory SFixed32Rules({
     $core.int? const_1,
@@ -3858,40 +3503,26 @@ class SFixed32Rules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  SFixed32Rules._() : super();
-  factory SFixed32Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SFixed32Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SFixed32Rules._();
+
+  factory SFixed32Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SFixed32Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, SFixed32Rules_LessThan>
       _SFixed32Rules_LessThanByTag = {
@@ -3921,21 +3552,19 @@ class SFixed32Rules extends $pb.GeneratedMessage {
     ..p<$core.int>(8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PSF3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SFixed32Rules clone() => SFixed32Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SFixed32Rules copyWith(void Function(SFixed32Rules) updates) =>
       super.copyWith((message) => updates(message as SFixed32Rules))
           as SFixed32Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SFixed32Rules create() => SFixed32Rules._();
+  @$core.override
   SFixed32Rules createEmptyInstance() => create();
   static $pb.PbList<SFixed32Rules> createRepeated() =>
       $pb.PbList<SFixed32Rules>();
@@ -3952,169 +3581,154 @@ class SFixed32Rules extends $pb.GeneratedMessage {
       _SFixed32Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must equal 42
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must equal 42
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must be less than 10
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must be less than 10
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.int get lt => $_getIZ(1);
   @$pb.TagNumber(2)
-  set lt($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set lt($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must be less than or equal to 10
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must be less than or equal to 10
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.int get lte => $_getIZ(2);
   @$pb.TagNumber(3)
-  set lte($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set lte($core.int value) => $_setSignedInt32(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must be greater than 5 [sfixed32.gt]
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32.gt = 5];
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must be greater than 5 [sfixed32.gt]
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [sfixed32.gt_lt]
-  ///    sfixed32 other_value = 2 [(buf.validate.field).sfixed32 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [sfixed32.gt_lt]
+  ///   sfixed32 other_value = 2 [(buf.validate.field).sfixed32 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [sfixed32.gt_lt_exclusive]
-  ///    sfixed32 another_value = 3 [(buf.validate.field).sfixed32 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [sfixed32.gt_lt_exclusive]
+  ///   sfixed32 another_value = 3 [(buf.validate.field).sfixed32 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.int get gt => $_getIZ(3);
   @$pb.TagNumber(4)
-  set gt($core.int v) {
-    $_setSignedInt32(3, v);
-  }
-
+  set gt($core.int value) => $_setSignedInt32(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must be greater than or equal to 5 [sfixed32.gte]
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32.gte = 5];
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must be greater than or equal to 5 [sfixed32.gte]
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [sfixed32.gte_lt]
-  ///    sfixed32 other_value = 2 [(buf.validate.field).sfixed32 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [sfixed32.gte_lt]
+  ///   sfixed32 other_value = 2 [(buf.validate.field).sfixed32 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [sfixed32.gte_lt_exclusive]
-  ///    sfixed32 another_value = 3 [(buf.validate.field).sfixed32 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [sfixed32.gte_lt_exclusive]
+  ///   sfixed32 another_value = 3 [(buf.validate.field).sfixed32 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.int get gte => $_getIZ(4);
   @$pb.TagNumber(5)
-  set gte($core.int v) {
-    $_setSignedInt32(4, v);
-  }
-
+  set gte($core.int value) => $_setSignedInt32(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must be in list [1, 2, 3]
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must be in list [1, 2, 3]
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$core.int> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    sfixed32 value = 1 [(buf.validate.field).sfixed32 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   sfixed32 value = 1 [(buf.validate.field).sfixed32 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$core.int> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MySFixed32 {
-  ///    sfixed32 value = 1 [
-  ///      (buf.validate.field).sfixed32.example = 1,
-  ///      (buf.validate.field).sfixed32.example = 2
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed32 {
+  ///   sfixed32 value = 1 [
+  ///     (buf.validate.field).sfixed32.example = 1,
+  ///     (buf.validate.field).sfixed32.example = 2
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get example => $_getList(7);
 }
@@ -4123,7 +3737,7 @@ enum SFixed64Rules_LessThan { lt, lte, notSet }
 
 enum SFixed64Rules_GreaterThan { gt, gte, notSet }
 
-/// SFixed64Rules describes the constraints applied to `fixed64` values.
+/// SFixed64Rules describes the rules applied to `fixed64` values.
 class SFixed64Rules extends $pb.GeneratedMessage {
   factory SFixed64Rules({
     $fixnum.Int64? const_1,
@@ -4135,40 +3749,26 @@ class SFixed64Rules extends $pb.GeneratedMessage {
     $core.Iterable<$fixnum.Int64>? notIn,
     $core.Iterable<$fixnum.Int64>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_6 != null) {
-      $result.in_6.addAll(in_6);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_6 != null) result.in_6.addAll(in_6);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  SFixed64Rules._() : super();
-  factory SFixed64Rules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SFixed64Rules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SFixed64Rules._();
+
+  factory SFixed64Rules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SFixed64Rules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, SFixed64Rules_LessThan>
       _SFixed64Rules_LessThanByTag = {
@@ -4204,21 +3804,19 @@ class SFixed64Rules extends $pb.GeneratedMessage {
         8, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PSF6)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SFixed64Rules clone() => SFixed64Rules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SFixed64Rules copyWith(void Function(SFixed64Rules) updates) =>
       super.copyWith((message) => updates(message as SFixed64Rules))
           as SFixed64Rules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SFixed64Rules create() => SFixed64Rules._();
+  @$core.override
   SFixed64Rules createEmptyInstance() => create();
   static $pb.PbList<SFixed64Rules> createRepeated() =>
       $pb.PbList<SFixed64Rules>();
@@ -4235,196 +3833,179 @@ class SFixed64Rules extends $pb.GeneratedMessage {
       _SFixed64Rules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must equal 42
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64.const = 42];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must equal 42
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64.const = 42];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get const_1 => $_getI64(0);
   @$pb.TagNumber(1)
-  set const_1($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set const_1($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `lt` requires the field value to be less than the specified value (field <
-  ///  value). If the field value is equal to or greater than the specified value,
-  ///  an error message is generated.
+  /// `lt` requires the field value to be less than the specified value (field <
+  /// value). If the field value is equal to or greater than the specified value,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must be less than 10
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64.lt = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must be less than 10
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64.lt = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get lt => $_getI64(1);
   @$pb.TagNumber(2)
-  set lt($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set lt($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(2)
   void clearLt() => $_clearField(2);
 
-  ///  `lte` requires the field value to be less than or equal to the specified
-  ///  value (field <= value). If the field value is greater than the specified
-  ///  value, an error message is generated.
+  /// `lte` requires the field value to be less than or equal to the specified
+  /// value (field <= value). If the field value is greater than the specified
+  /// value, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must be less than or equal to 10
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64.lte = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must be less than or equal to 10
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64.lte = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get lte => $_getI64(2);
   @$pb.TagNumber(3)
-  set lte($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set lte($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(3)
   void clearLte() => $_clearField(3);
 
-  ///  `gt` requires the field value to be greater than the specified value
-  ///  (exclusive). If the value of `gt` is larger than a specified `lt` or
-  ///  `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the field value to be greater than the specified value
+  /// (exclusive). If the value of `gt` is larger than a specified `lt` or
+  /// `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must be greater than 5 [sfixed64.gt]
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64.gt = 5];
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must be greater than 5 [sfixed64.gt]
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64.gt = 5];
   ///
-  ///    // value must be greater than 5 and less than 10 [sfixed64.gt_lt]
-  ///    sfixed64 other_value = 2 [(buf.validate.field).sfixed64 = { gt: 5, lt: 10 }];
+  ///   // value must be greater than 5 and less than 10 [sfixed64.gt_lt]
+  ///   sfixed64 other_value = 2 [(buf.validate.field).sfixed64 = { gt: 5, lt: 10 }];
   ///
-  ///    // value must be greater than 10 or less than 5 [sfixed64.gt_lt_exclusive]
-  ///    sfixed64 another_value = 3 [(buf.validate.field).sfixed64 = { gt: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than 10 or less than 5 [sfixed64.gt_lt_exclusive]
+  ///   sfixed64 another_value = 3 [(buf.validate.field).sfixed64 = { gt: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get gt => $_getI64(3);
   @$pb.TagNumber(4)
-  set gt($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set gt($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(4)
   void clearGt() => $_clearField(4);
 
-  ///  `gte` requires the field value to be greater than or equal to the specified
-  ///  value (exclusive). If the value of `gte` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gte` requires the field value to be greater than or equal to the specified
+  /// value (exclusive). If the value of `gte` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must be greater than or equal to 5 [sfixed64.gte]
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64.gte = 5];
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must be greater than or equal to 5 [sfixed64.gte]
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64.gte = 5];
   ///
-  ///    // value must be greater than or equal to 5 and less than 10 [sfixed64.gte_lt]
-  ///    sfixed64 other_value = 2 [(buf.validate.field).sfixed64 = { gte: 5, lt: 10 }];
+  ///   // value must be greater than or equal to 5 and less than 10 [sfixed64.gte_lt]
+  ///   sfixed64 other_value = 2 [(buf.validate.field).sfixed64 = { gte: 5, lt: 10 }];
   ///
-  ///    // value must be greater than or equal to 10 or less than 5 [sfixed64.gte_lt_exclusive]
-  ///    sfixed64 another_value = 3 [(buf.validate.field).sfixed64 = { gte: 10, lt: 5 }];
-  ///  }
-  ///  ```
+  ///   // value must be greater than or equal to 10 or less than 5 [sfixed64.gte_lt_exclusive]
+  ///   sfixed64 another_value = 3 [(buf.validate.field).sfixed64 = { gte: 10, lt: 5 }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $fixnum.Int64 get gte => $_getI64(4);
   @$pb.TagNumber(5)
-  set gte($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set gte($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(5)
   void clearGte() => $_clearField(5);
 
-  ///  `in` requires the field value to be equal to one of the specified values.
-  ///  If the field value isn't one of the specified values, an error message is
-  ///  generated.
+  /// `in` requires the field value to be equal to one of the specified values.
+  /// If the field value isn't one of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must be in list [1, 2, 3]
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64 = { in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must be in list [1, 2, 3]
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64 = { in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $pb.PbList<$fixnum.Int64> get in_6 => $_getList(5);
 
-  ///  `not_in` requires the field value to not be equal to any of the specified
-  ///  values. If the field value is one of the specified values, an error
-  ///  message is generated.
+  /// `not_in` requires the field value to not be equal to any of the specified
+  /// values. If the field value is one of the specified values, an error
+  /// message is generated.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    // value must not be in list [1, 2, 3]
-  ///    sfixed64 value = 1 [(buf.validate.field).sfixed64 = { not_in: [1, 2, 3] }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   // value must not be in list [1, 2, 3]
+  ///   sfixed64 value = 1 [(buf.validate.field).sfixed64 = { not_in: [1, 2, 3] }];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $pb.PbList<$fixnum.Int64> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MySFixed64 {
-  ///    sfixed64 value = 1 [
-  ///      (buf.validate.field).sfixed64.example = 1,
-  ///      (buf.validate.field).sfixed64.example = 2
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MySFixed64 {
+  ///   sfixed64 value = 1 [
+  ///     (buf.validate.field).sfixed64.example = 1,
+  ///     (buf.validate.field).sfixed64.example = 2
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$fixnum.Int64> get example => $_getList(7);
 }
 
-/// BoolRules describes the constraints applied to `bool` values. These rules
+/// BoolRules describes the rules applied to `bool` values. These rules
 /// may also be applied to the `google.protobuf.BoolValue` Well-Known-Type.
 class BoolRules extends $pb.GeneratedMessage {
   factory BoolRules({
     $core.bool? const_1,
     $core.Iterable<$core.bool>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  BoolRules._() : super();
-  factory BoolRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory BoolRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  BoolRules._();
+
+  factory BoolRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory BoolRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'BoolRules',
@@ -4434,20 +4015,18 @@ class BoolRules extends $pb.GeneratedMessage {
     ..p<$core.bool>(2, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PB)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BoolRules clone() => BoolRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BoolRules copyWith(void Function(BoolRules) updates) =>
       super.copyWith((message) => updates(message as BoolRules)) as BoolRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static BoolRules create() => BoolRules._();
+  @$core.override
   BoolRules createEmptyInstance() => create();
   static $pb.PbList<BoolRules> createRepeated() => $pb.PbList<BoolRules>();
   @$core.pragma('dart2js:noInline')
@@ -4455,39 +4034,36 @@ class BoolRules extends $pb.GeneratedMessage {
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BoolRules>(create);
   static BoolRules? _defaultInstance;
 
-  ///  `const` requires the field value to exactly match the specified boolean value.
-  ///  If the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified boolean value.
+  /// If the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBool {
-  ///    // value must equal true
-  ///    bool value = 1 [(buf.validate.field).bool.const = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBool {
+  ///   // value must equal true
+  ///   bool value = 1 [(buf.validate.field).bool.const = true];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.bool get const_1 => $_getBF(0);
   @$pb.TagNumber(1)
-  set const_1($core.bool v) {
-    $_setBool(0, v);
-  }
-
+  set const_1($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyBool {
-  ///    bool value = 1 [
-  ///      (buf.validate.field).bool.example = 1,
-  ///      (buf.validate.field).bool.example = 2
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBool {
+  ///   bool value = 1 [
+  ///     (buf.validate.field).bool.example = 1,
+  ///     (buf.validate.field).bool.example = 2
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $pb.PbList<$core.bool> get example => $_getList(1);
 }
@@ -4514,7 +4090,7 @@ enum StringRules_WellKnown {
   notSet
 }
 
-/// StringRules describes the constraints applied to `string` values These
+/// StringRules describes the rules applied to `string` values These
 /// rules may also be applied to the `google.protobuf.StringValue` Well-Known-Type.
 class StringRules extends $pb.GeneratedMessage {
   factory StringRules({
@@ -4553,118 +4129,52 @@ class StringRules extends $pb.GeneratedMessage {
     $core.bool? tuuid,
     $core.Iterable<$core.String>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (minLen != null) {
-      $result.minLen = minLen;
-    }
-    if (maxLen != null) {
-      $result.maxLen = maxLen;
-    }
-    if (minBytes != null) {
-      $result.minBytes = minBytes;
-    }
-    if (maxBytes != null) {
-      $result.maxBytes = maxBytes;
-    }
-    if (pattern != null) {
-      $result.pattern = pattern;
-    }
-    if (prefix != null) {
-      $result.prefix = prefix;
-    }
-    if (suffix != null) {
-      $result.suffix = suffix;
-    }
-    if (contains != null) {
-      $result.contains = contains;
-    }
-    if (in_10 != null) {
-      $result.in_10.addAll(in_10);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (email != null) {
-      $result.email = email;
-    }
-    if (hostname != null) {
-      $result.hostname = hostname;
-    }
-    if (ip != null) {
-      $result.ip = ip;
-    }
-    if (ipv4 != null) {
-      $result.ipv4 = ipv4;
-    }
-    if (ipv6 != null) {
-      $result.ipv6 = ipv6;
-    }
-    if (uri != null) {
-      $result.uri = uri;
-    }
-    if (uriRef != null) {
-      $result.uriRef = uriRef;
-    }
-    if (len != null) {
-      $result.len = len;
-    }
-    if (lenBytes != null) {
-      $result.lenBytes = lenBytes;
-    }
-    if (address != null) {
-      $result.address = address;
-    }
-    if (uuid != null) {
-      $result.uuid = uuid;
-    }
-    if (notContains != null) {
-      $result.notContains = notContains;
-    }
-    if (wellKnownRegex != null) {
-      $result.wellKnownRegex = wellKnownRegex;
-    }
-    if (strict != null) {
-      $result.strict = strict;
-    }
-    if (ipWithPrefixlen != null) {
-      $result.ipWithPrefixlen = ipWithPrefixlen;
-    }
-    if (ipv4WithPrefixlen != null) {
-      $result.ipv4WithPrefixlen = ipv4WithPrefixlen;
-    }
-    if (ipv6WithPrefixlen != null) {
-      $result.ipv6WithPrefixlen = ipv6WithPrefixlen;
-    }
-    if (ipPrefix != null) {
-      $result.ipPrefix = ipPrefix;
-    }
-    if (ipv4Prefix != null) {
-      $result.ipv4Prefix = ipv4Prefix;
-    }
-    if (ipv6Prefix != null) {
-      $result.ipv6Prefix = ipv6Prefix;
-    }
-    if (hostAndPort != null) {
-      $result.hostAndPort = hostAndPort;
-    }
-    if (tuuid != null) {
-      $result.tuuid = tuuid;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (minLen != null) result.minLen = minLen;
+    if (maxLen != null) result.maxLen = maxLen;
+    if (minBytes != null) result.minBytes = minBytes;
+    if (maxBytes != null) result.maxBytes = maxBytes;
+    if (pattern != null) result.pattern = pattern;
+    if (prefix != null) result.prefix = prefix;
+    if (suffix != null) result.suffix = suffix;
+    if (contains != null) result.contains = contains;
+    if (in_10 != null) result.in_10.addAll(in_10);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (email != null) result.email = email;
+    if (hostname != null) result.hostname = hostname;
+    if (ip != null) result.ip = ip;
+    if (ipv4 != null) result.ipv4 = ipv4;
+    if (ipv6 != null) result.ipv6 = ipv6;
+    if (uri != null) result.uri = uri;
+    if (uriRef != null) result.uriRef = uriRef;
+    if (len != null) result.len = len;
+    if (lenBytes != null) result.lenBytes = lenBytes;
+    if (address != null) result.address = address;
+    if (uuid != null) result.uuid = uuid;
+    if (notContains != null) result.notContains = notContains;
+    if (wellKnownRegex != null) result.wellKnownRegex = wellKnownRegex;
+    if (strict != null) result.strict = strict;
+    if (ipWithPrefixlen != null) result.ipWithPrefixlen = ipWithPrefixlen;
+    if (ipv4WithPrefixlen != null) result.ipv4WithPrefixlen = ipv4WithPrefixlen;
+    if (ipv6WithPrefixlen != null) result.ipv6WithPrefixlen = ipv6WithPrefixlen;
+    if (ipPrefix != null) result.ipPrefix = ipPrefix;
+    if (ipv4Prefix != null) result.ipv4Prefix = ipv4Prefix;
+    if (ipv6Prefix != null) result.ipv6Prefix = ipv6Prefix;
+    if (hostAndPort != null) result.hostAndPort = hostAndPort;
+    if (tuuid != null) result.tuuid = tuuid;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  StringRules._() : super();
-  factory StringRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory StringRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  StringRules._();
+
+  factory StringRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory StringRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, StringRules_WellKnown>
       _StringRules_WellKnownByTag = {
@@ -4761,21 +4271,19 @@ class StringRules extends $pb.GeneratedMessage {
     ..pPS(34, _omitFieldNames ? '' : 'example')
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StringRules clone() => StringRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StringRules copyWith(void Function(StringRules) updates) =>
       super.copyWith((message) => updates(message as StringRules))
           as StringRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static StringRules create() => StringRules._();
+  @$core.override
   StringRules createEmptyInstance() => create();
   static $pb.PbList<StringRules> createRepeated() => $pb.PbList<StringRules>();
   @$core.pragma('dart2js:noInline')
@@ -4787,91 +4295,79 @@ class StringRules extends $pb.GeneratedMessage {
       _StringRules_WellKnownByTag[$_whichOneof(0)]!;
   void clearWellKnown() => $_clearField($_whichOneof(0));
 
-  ///  `const` requires the field value to exactly match the specified value. If
-  ///  the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified value. If
+  /// the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must equal `hello`
-  ///    string value = 1 [(buf.validate.field).string.const = "hello"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must equal `hello`
+  ///   string value = 1 [(buf.validate.field).string.const = "hello"];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.String get const_1 => $_getSZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.String v) {
-    $_setString(0, v);
-  }
-
+  set const_1($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `min_len` specifies that the field value must have at least the specified
-  ///  number of characters (Unicode code points), which may differ from the number
-  ///  of bytes in the string. If the field value contains fewer characters, an error
-  ///  message will be generated.
+  /// `min_len` specifies that the field value must have at least the specified
+  /// number of characters (Unicode code points), which may differ from the number
+  /// of bytes in the string. If the field value contains fewer characters, an error
+  /// message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value length must be at least 3 characters
-  ///    string value = 1 [(buf.validate.field).string.min_len = 3];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value length must be at least 3 characters
+  ///   string value = 1 [(buf.validate.field).string.min_len = 3];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get minLen => $_getI64(1);
   @$pb.TagNumber(2)
-  set minLen($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set minLen($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasMinLen() => $_has(1);
   @$pb.TagNumber(2)
   void clearMinLen() => $_clearField(2);
 
-  ///  `max_len` specifies that the field value must have no more than the specified
-  ///  number of characters (Unicode code points), which may differ from the
-  ///  number of bytes in the string. If the field value contains more characters,
-  ///  an error message will be generated.
+  /// `max_len` specifies that the field value must have no more than the specified
+  /// number of characters (Unicode code points), which may differ from the
+  /// number of bytes in the string. If the field value contains more characters,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value length must be at most 10 characters
-  ///    string value = 1 [(buf.validate.field).string.max_len = 10];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value length must be at most 10 characters
+  ///   string value = 1 [(buf.validate.field).string.max_len = 10];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get maxLen => $_getI64(2);
   @$pb.TagNumber(3)
-  set maxLen($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set maxLen($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasMaxLen() => $_has(2);
   @$pb.TagNumber(3)
   void clearMaxLen() => $_clearField(3);
 
-  ///  `min_bytes` specifies that the field value must have at least the specified
-  ///  number of bytes. If the field value contains fewer bytes, an error message
-  ///  will be generated.
+  /// `min_bytes` specifies that the field value must have at least the specified
+  /// number of bytes. If the field value contains fewer bytes, an error message
+  /// will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value length must be at least 4 bytes
-  ///    string value = 1 [(buf.validate.field).string.min_bytes = 4];
-  ///  }
+  /// ```proto
+  /// message MyString {
+  ///   // value length must be at least 4 bytes
+  ///   string value = 1 [(buf.validate.field).string.min_bytes = 4];
+  /// }
   ///
-  ///  ```
+  /// ```
   @$pb.TagNumber(4)
   $fixnum.Int64 get minBytes => $_getI64(3);
   @$pb.TagNumber(4)
-  set minBytes($fixnum.Int64 v) {
-    $_setInt64(3, v);
-  }
-
+  set minBytes($fixnum.Int64 value) => $_setInt64(3, value);
   @$pb.TagNumber(4)
   $core.bool hasMinBytes() => $_has(3);
   @$pb.TagNumber(4)
@@ -4890,33 +4386,27 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $fixnum.Int64 get maxBytes => $_getI64(4);
   @$pb.TagNumber(5)
-  set maxBytes($fixnum.Int64 v) {
-    $_setInt64(4, v);
-  }
-
+  set maxBytes($fixnum.Int64 value) => $_setInt64(4, value);
   @$pb.TagNumber(5)
   $core.bool hasMaxBytes() => $_has(4);
   @$pb.TagNumber(5)
   void clearMaxBytes() => $_clearField(5);
 
-  ///  `pattern` specifies that the field value must match the specified
-  ///  regular expression (RE2 syntax), with the expression provided without any
-  ///  delimiters. If the field value doesn't match the regular expression, an
-  ///  error message will be generated.
+  /// `pattern` specifies that the field value must match the specified
+  /// regular expression (RE2 syntax), with the expression provided without any
+  /// delimiters. If the field value doesn't match the regular expression, an
+  /// error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value does not match regex pattern `^[a-zA-Z]//$`
-  ///    string value = 1 [(buf.validate.field).string.pattern = "^[a-zA-Z]//$"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value does not match regex pattern `^[a-zA-Z]//$`
+  ///   string value = 1 [(buf.validate.field).string.pattern = "^[a-zA-Z]//$"];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $core.String get pattern => $_getSZ(5);
   @$pb.TagNumber(6)
-  set pattern($core.String v) {
-    $_setString(5, v);
-  }
-
+  set pattern($core.String value) => $_setString(5, value);
   @$pb.TagNumber(6)
   $core.bool hasPattern() => $_has(5);
   @$pb.TagNumber(6)
@@ -4936,10 +4426,7 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.String get prefix => $_getSZ(6);
   @$pb.TagNumber(7)
-  set prefix($core.String v) {
-    $_setString(6, v);
-  }
-
+  set prefix($core.String value) => $_setString(6, value);
   @$pb.TagNumber(7)
   $core.bool hasPrefix() => $_has(6);
   @$pb.TagNumber(7)
@@ -4958,10 +4445,7 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.String get suffix => $_getSZ(7);
   @$pb.TagNumber(8)
-  set suffix($core.String v) {
-    $_setString(7, v);
-  }
-
+  set suffix($core.String value) => $_setString(7, value);
   @$pb.TagNumber(8)
   $core.bool hasSuffix() => $_has(7);
   @$pb.TagNumber(8)
@@ -4980,25 +4464,22 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.String get contains => $_getSZ(8);
   @$pb.TagNumber(9)
-  set contains($core.String v) {
-    $_setString(8, v);
-  }
-
+  set contains($core.String value) => $_setString(8, value);
   @$pb.TagNumber(9)
   $core.bool hasContains() => $_has(8);
   @$pb.TagNumber(9)
   void clearContains() => $_clearField(9);
 
-  ///  `in` specifies that the field value must be equal to one of the specified
-  ///  values. If the field value isn't one of the specified values, an error
-  ///  message will be generated.
+  /// `in` specifies that the field value must be equal to one of the specified
+  /// values. If the field value isn't one of the specified values, an error
+  /// message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be in list ["apple", "banana"]
-  ///    string value = 1 [(buf.validate.field).string.in = "apple", (buf.validate.field).string.in = "banana"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be in list ["apple", "banana"]
+  ///   string value = 1 [(buf.validate.field).string.in = "apple", (buf.validate.field).string.in = "banana"];
+  /// }
+  /// ```
   @$pb.TagNumber(10)
   $pb.PbList<$core.String> get in_10 => $_getList(9);
 
@@ -5014,254 +4495,246 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $pb.PbList<$core.String> get notIn => $_getList(10);
 
-  ///  `email` specifies that the field value must be a valid email address
-  ///  (addr-spec only) as defined by [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322#section-3.4.1).
-  ///  If the field value isn't a valid email address, an error message will be generated.
+  /// `email` specifies that the field value must be a valid email address, for
+  /// example "foo@example.com".
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid email address
-  ///    string value = 1 [(buf.validate.field).string.email = true];
-  ///  }
-  ///  ```
+  /// Conforms to the definition for a valid email address from the [HTML standard](https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address).
+  /// Note that this standard willfully deviates from [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322),
+  /// which allows many unexpected forms of email addresses and will easily match
+  /// a typographical error.
+  ///
+  /// If the field value isn't a valid email address, an error message will be generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid email address
+  ///   string value = 1 [(buf.validate.field).string.email = true];
+  /// }
+  /// ```
   @$pb.TagNumber(12)
   $core.bool get email => $_getBF(11);
   @$pb.TagNumber(12)
-  set email($core.bool v) {
-    $_setBool(11, v);
-  }
-
+  set email($core.bool value) => $_setBool(11, value);
   @$pb.TagNumber(12)
   $core.bool hasEmail() => $_has(11);
   @$pb.TagNumber(12)
   void clearEmail() => $_clearField(12);
 
-  ///  `hostname` specifies that the field value must be a valid
-  ///  hostname as defined by [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034#section-3.5). This constraint doesn't support
-  ///  internationalized domain names (IDNs). If the field value isn't a
-  ///  valid hostname, an error message will be generated.
+  /// `hostname` specifies that the field value must be a valid hostname, for
+  /// example "foo.example.com".
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid hostname
-  ///    string value = 1 [(buf.validate.field).string.hostname = true];
-  ///  }
-  ///  ```
+  /// A valid hostname follows the rules below:
+  /// - The name consists of one or more labels, separated by a dot (".").
+  /// - Each label can be 1 to 63 alphanumeric characters.
+  /// - A label can contain hyphens ("-"), but must not start or end with a hyphen.
+  /// - The right-most label must not be digits only.
+  /// - The name can have a trailing dot—for example, "foo.example.com.".
+  /// - The name can be 253 characters at most, excluding the optional trailing dot.
+  ///
+  /// If the field value isn't a valid hostname, an error message will be generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid hostname
+  ///   string value = 1 [(buf.validate.field).string.hostname = true];
+  /// }
+  /// ```
   @$pb.TagNumber(13)
   $core.bool get hostname => $_getBF(12);
   @$pb.TagNumber(13)
-  set hostname($core.bool v) {
-    $_setBool(12, v);
-  }
-
+  set hostname($core.bool value) => $_setBool(12, value);
   @$pb.TagNumber(13)
   $core.bool hasHostname() => $_has(12);
   @$pb.TagNumber(13)
   void clearHostname() => $_clearField(13);
 
-  ///  `ip` specifies that the field value must be a valid IP
-  ///  (v4 or v6) address, without surrounding square brackets for IPv6 addresses.
-  ///  If the field value isn't a valid IP address, an error message will be
-  ///  generated.
+  /// `ip` specifies that the field value must be a valid IP (v4 or v6) address.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IP address
-  ///    string value = 1 [(buf.validate.field).string.ip = true];
-  ///  }
-  ///  ```
+  /// IPv4 addresses are expected in the dotted decimal format—for example, "192.168.5.21".
+  /// IPv6 addresses are expected in their text representation—for example, "::1",
+  /// or "2001:0DB8:ABCD:0012::0".
+  ///
+  /// Both formats are well-defined in the internet standard [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986).
+  /// Zone identifiers for IPv6 addresses (for example, "fe80::a%en1") are supported.
+  ///
+  /// If the field value isn't a valid IP address, an error message will be
+  /// generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IP address
+  ///   string value = 1 [(buf.validate.field).string.ip = true];
+  /// }
+  /// ```
   @$pb.TagNumber(14)
   $core.bool get ip => $_getBF(13);
   @$pb.TagNumber(14)
-  set ip($core.bool v) {
-    $_setBool(13, v);
-  }
-
+  set ip($core.bool value) => $_setBool(13, value);
   @$pb.TagNumber(14)
   $core.bool hasIp() => $_has(13);
   @$pb.TagNumber(14)
   void clearIp() => $_clearField(14);
 
-  ///  `ipv4` specifies that the field value must be a valid IPv4
-  ///  address. If the field value isn't a valid IPv4 address, an error message
-  ///  will be generated.
+  /// `ipv4` specifies that the field value must be a valid IPv4 address—for
+  /// example "192.168.5.21". If the field value isn't a valid IPv4 address, an
+  /// error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv4 address
-  ///    string value = 1 [(buf.validate.field).string.ipv4 = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv4 address
+  ///   string value = 1 [(buf.validate.field).string.ipv4 = true];
+  /// }
+  /// ```
   @$pb.TagNumber(15)
   $core.bool get ipv4 => $_getBF(14);
   @$pb.TagNumber(15)
-  set ipv4($core.bool v) {
-    $_setBool(14, v);
-  }
-
+  set ipv4($core.bool value) => $_setBool(14, value);
   @$pb.TagNumber(15)
   $core.bool hasIpv4() => $_has(14);
   @$pb.TagNumber(15)
   void clearIpv4() => $_clearField(15);
 
-  ///  `ipv6` specifies that the field value must be a valid
-  ///  IPv6 address, without surrounding square brackets. If the field value is
-  ///  not a valid IPv6 address, an error message will be generated.
+  /// `ipv6` specifies that the field value must be a valid IPv6 address—for
+  /// example "::1", or "d7a:115c:a1e0:ab12:4843:cd96:626b:430b". If the field
+  /// value is not a valid IPv6 address, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv6 address
-  ///    string value = 1 [(buf.validate.field).string.ipv6 = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv6 address
+  ///   string value = 1 [(buf.validate.field).string.ipv6 = true];
+  /// }
+  /// ```
   @$pb.TagNumber(16)
   $core.bool get ipv6 => $_getBF(15);
   @$pb.TagNumber(16)
-  set ipv6($core.bool v) {
-    $_setBool(15, v);
-  }
-
+  set ipv6($core.bool value) => $_setBool(15, value);
   @$pb.TagNumber(16)
   $core.bool hasIpv6() => $_has(15);
   @$pb.TagNumber(16)
   void clearIpv6() => $_clearField(16);
 
-  ///  `uri` specifies that the field value must be a valid URI as defined by
-  ///  [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-3).
+  /// `uri` specifies that the field value must be a valid URI, for example
+  /// "https://example.com/foo/bar?baz=quux#frag".
   ///
-  ///  If the field value isn't a valid URI, an error message will be generated.
+  /// URI is defined in the internet standard [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986).
+  /// Zone Identifiers in IPv6 address literals are supported ([RFC 6874](https://datatracker.ietf.org/doc/html/rfc6874)).
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid URI
-  ///    string value = 1 [(buf.validate.field).string.uri = true];
-  ///  }
-  ///  ```
+  /// If the field value isn't a valid URI, an error message will be generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid URI
+  ///   string value = 1 [(buf.validate.field).string.uri = true];
+  /// }
+  /// ```
   @$pb.TagNumber(17)
   $core.bool get uri => $_getBF(16);
   @$pb.TagNumber(17)
-  set uri($core.bool v) {
-    $_setBool(16, v);
-  }
-
+  set uri($core.bool value) => $_setBool(16, value);
   @$pb.TagNumber(17)
   $core.bool hasUri() => $_has(16);
   @$pb.TagNumber(17)
   void clearUri() => $_clearField(17);
 
-  ///  `uri_ref` specifies that the field value must be a valid URI Reference as
-  ///  defined by [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986#section-4.1).
+  /// `uri_ref` specifies that the field value must be a valid URI Reference—either
+  /// a URI such as "https://example.com/foo/bar?baz=quux#frag", or a Relative
+  /// Reference such as "./foo/bar?query".
   ///
-  ///  A URI Reference is either a [URI](https://datatracker.ietf.org/doc/html/rfc3986#section-3),
-  ///  or a [Relative Reference](https://datatracker.ietf.org/doc/html/rfc3986#section-4.2).
+  /// URI, URI Reference, and Relative Reference are defined in the internet
+  /// standard [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986). Zone
+  /// Identifiers in IPv6 address literals are supported ([RFC 6874](https://datatracker.ietf.org/doc/html/rfc6874)).
   ///
-  ///  If the field value isn't a valid URI Reference, an error message will be
-  ///  generated.
+  /// If the field value isn't a valid URI Reference, an error message will be
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid URI Reference
-  ///    string value = 1 [(buf.validate.field).string.uri_ref = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid URI Reference
+  ///   string value = 1 [(buf.validate.field).string.uri_ref = true];
+  /// }
+  /// ```
   @$pb.TagNumber(18)
   $core.bool get uriRef => $_getBF(17);
   @$pb.TagNumber(18)
-  set uriRef($core.bool v) {
-    $_setBool(17, v);
-  }
-
+  set uriRef($core.bool value) => $_setBool(17, value);
   @$pb.TagNumber(18)
   $core.bool hasUriRef() => $_has(17);
   @$pb.TagNumber(18)
   void clearUriRef() => $_clearField(18);
 
-  ///  `len` dictates that the field value must have the specified
-  ///  number of characters (Unicode code points), which may differ from the number
-  ///  of bytes in the string. If the field value does not meet the specified
-  ///  length, an error message will be generated.
+  /// `len` dictates that the field value must have the specified
+  /// number of characters (Unicode code points), which may differ from the number
+  /// of bytes in the string. If the field value does not meet the specified
+  /// length, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value length must be 5 characters
-  ///    string value = 1 [(buf.validate.field).string.len = 5];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value length must be 5 characters
+  ///   string value = 1 [(buf.validate.field).string.len = 5];
+  /// }
+  /// ```
   @$pb.TagNumber(19)
   $fixnum.Int64 get len => $_getI64(18);
   @$pb.TagNumber(19)
-  set len($fixnum.Int64 v) {
-    $_setInt64(18, v);
-  }
-
+  set len($fixnum.Int64 value) => $_setInt64(18, value);
   @$pb.TagNumber(19)
   $core.bool hasLen() => $_has(18);
   @$pb.TagNumber(19)
   void clearLen() => $_clearField(19);
 
-  ///  `len_bytes` dictates that the field value must have the specified number of
-  ///  bytes. If the field value does not match the specified length in bytes,
-  ///  an error message will be generated.
+  /// `len_bytes` dictates that the field value must have the specified number of
+  /// bytes. If the field value does not match the specified length in bytes,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value length must be 6 bytes
-  ///    string value = 1 [(buf.validate.field).string.len_bytes = 6];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value length must be 6 bytes
+  ///   string value = 1 [(buf.validate.field).string.len_bytes = 6];
+  /// }
+  /// ```
   @$pb.TagNumber(20)
   $fixnum.Int64 get lenBytes => $_getI64(19);
   @$pb.TagNumber(20)
-  set lenBytes($fixnum.Int64 v) {
-    $_setInt64(19, v);
-  }
-
+  set lenBytes($fixnum.Int64 value) => $_setInt64(19, value);
   @$pb.TagNumber(20)
   $core.bool hasLenBytes() => $_has(19);
   @$pb.TagNumber(20)
   void clearLenBytes() => $_clearField(20);
 
-  ///  `address` specifies that the field value must be either a valid hostname
-  ///  as defined by [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034#section-3.5)
-  ///  (which doesn't support internationalized domain names or IDNs) or a valid
-  ///  IP (v4 or v6). If the field value isn't a valid hostname or IP, an error
-  ///  message will be generated.
+  /// `address` specifies that the field value must be either a valid hostname
+  /// (for example, "example.com"), or a valid IP (v4 or v6) address (for example,
+  /// "192.168.0.1", or "::1"). If the field value isn't a valid hostname or IP,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid hostname, or ip address
-  ///    string value = 1 [(buf.validate.field).string.address = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid hostname, or ip address
+  ///   string value = 1 [(buf.validate.field).string.address = true];
+  /// }
+  /// ```
   @$pb.TagNumber(21)
   $core.bool get address => $_getBF(20);
   @$pb.TagNumber(21)
-  set address($core.bool v) {
-    $_setBool(20, v);
-  }
-
+  set address($core.bool value) => $_setBool(20, value);
   @$pb.TagNumber(21)
   $core.bool hasAddress() => $_has(20);
   @$pb.TagNumber(21)
   void clearAddress() => $_clearField(21);
 
-  ///  `uuid` specifies that the field value must be a valid UUID as defined by
-  ///  [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2). If the
-  ///  field value isn't a valid UUID, an error message will be generated.
+  /// `uuid` specifies that the field value must be a valid UUID as defined by
+  /// [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2). If the
+  /// field value isn't a valid UUID, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid UUID
-  ///    string value = 1 [(buf.validate.field).string.uuid = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid UUID
+  ///   string value = 1 [(buf.validate.field).string.uuid = true];
+  /// }
+  /// ```
   @$pb.TagNumber(22)
   $core.bool get uuid => $_getBF(21);
   @$pb.TagNumber(22)
-  set uuid($core.bool v) {
-    $_setBool(21, v);
-  }
-
+  set uuid($core.bool value) => $_setBool(21, value);
   @$pb.TagNumber(22)
   $core.bool hasUuid() => $_has(21);
   @$pb.TagNumber(22)
@@ -5280,267 +4753,255 @@ class StringRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(23)
   $core.String get notContains => $_getSZ(22);
   @$pb.TagNumber(23)
-  set notContains($core.String v) {
-    $_setString(22, v);
-  }
-
+  set notContains($core.String value) => $_setString(22, value);
   @$pb.TagNumber(23)
   $core.bool hasNotContains() => $_has(22);
   @$pb.TagNumber(23)
   void clearNotContains() => $_clearField(23);
 
-  ///  `well_known_regex` specifies a common well-known pattern
-  ///  defined as a regex. If the field value doesn't match the well-known
-  ///  regex, an error message will be generated.
+  /// `well_known_regex` specifies a common well-known pattern
+  /// defined as a regex. If the field value doesn't match the well-known
+  /// regex, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid HTTP header value
-  ///    string value = 1 [(buf.validate.field).string.well_known_regex = KNOWN_REGEX_HTTP_HEADER_VALUE];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid HTTP header value
+  ///   string value = 1 [(buf.validate.field).string.well_known_regex = KNOWN_REGEX_HTTP_HEADER_VALUE];
+  /// }
+  /// ```
   ///
-  ///  #### KnownRegex
+  /// #### KnownRegex
   ///
-  ///  `well_known_regex` contains some well-known patterns.
+  /// `well_known_regex` contains some well-known patterns.
   ///
-  ///  | Name                          | Number | Description                               |
-  ///  |-------------------------------|--------|-------------------------------------------|
-  ///  | KNOWN_REGEX_UNSPECIFIED       | 0      |                                           |
-  ///  | KNOWN_REGEX_HTTP_HEADER_NAME  | 1      | HTTP header name as defined by [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2)  |
-  ///  | KNOWN_REGEX_HTTP_HEADER_VALUE | 2      | HTTP header value as defined by [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.4) |
+  /// | Name                          | Number | Description                               |
+  /// |-------------------------------|--------|-------------------------------------------|
+  /// | KNOWN_REGEX_UNSPECIFIED       | 0      |                                           |
+  /// | KNOWN_REGEX_HTTP_HEADER_NAME  | 1      | HTTP header name as defined by [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2)  |
+  /// | KNOWN_REGEX_HTTP_HEADER_VALUE | 2      | HTTP header value as defined by [RFC 7230](https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.4) |
   @$pb.TagNumber(24)
   KnownRegex get wellKnownRegex => $_getN(23);
   @$pb.TagNumber(24)
-  set wellKnownRegex(KnownRegex v) {
-    $_setField(24, v);
-  }
-
+  set wellKnownRegex(KnownRegex value) => $_setField(24, value);
   @$pb.TagNumber(24)
   $core.bool hasWellKnownRegex() => $_has(23);
   @$pb.TagNumber(24)
   void clearWellKnownRegex() => $_clearField(24);
 
-  ///  This applies to regexes `HTTP_HEADER_NAME` and `HTTP_HEADER_VALUE` to
-  ///  enable strict header validation. By default, this is true, and HTTP header
-  ///  validations are [RFC-compliant](https://datatracker.ietf.org/doc/html/rfc7230#section-3). Setting to false will enable looser
-  ///  validations that only disallow `\r\n\0` characters, which can be used to
-  ///  bypass header matching rules.
+  /// This applies to regexes `HTTP_HEADER_NAME` and `HTTP_HEADER_VALUE` to
+  /// enable strict header validation. By default, this is true, and HTTP header
+  /// validations are [RFC-compliant](https://datatracker.ietf.org/doc/html/rfc7230#section-3). Setting to false will enable looser
+  /// validations that only disallow `\r\n\0` characters, which can be used to
+  /// bypass header matching rules.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // The field `value` must have be a valid HTTP headers, but not enforced with strict rules.
-  ///    string value = 1 [(buf.validate.field).string.strict = false];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // The field `value` must have be a valid HTTP headers, but not enforced with strict rules.
+  ///   string value = 1 [(buf.validate.field).string.strict = false];
+  /// }
+  /// ```
   @$pb.TagNumber(25)
   $core.bool get strict => $_getBF(24);
   @$pb.TagNumber(25)
-  set strict($core.bool v) {
-    $_setBool(24, v);
-  }
-
+  set strict($core.bool value) => $_setBool(24, value);
   @$pb.TagNumber(25)
   $core.bool hasStrict() => $_has(24);
   @$pb.TagNumber(25)
   void clearStrict() => $_clearField(25);
 
-  ///  `ip_with_prefixlen` specifies that the field value must be a valid IP (v4 or v6)
-  ///  address with prefix length. If the field value isn't a valid IP with prefix
-  ///  length, an error message will be generated.
+  /// `ip_with_prefixlen` specifies that the field value must be a valid IP
+  /// (v4 or v6) address with prefix length—for example, "192.168.5.21/16" or
+  /// "2001:0DB8:ABCD:0012::F1/64". If the field value isn't a valid IP with
+  /// prefix length, an error message will be generated.
   ///
-  ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IP with prefix length
-  ///     string value = 1 [(buf.validate.field).string.ip_with_prefixlen = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IP with prefix length
+  ///    string value = 1 [(buf.validate.field).string.ip_with_prefixlen = true];
+  /// }
+  /// ```
   @$pb.TagNumber(26)
   $core.bool get ipWithPrefixlen => $_getBF(25);
   @$pb.TagNumber(26)
-  set ipWithPrefixlen($core.bool v) {
-    $_setBool(25, v);
-  }
-
+  set ipWithPrefixlen($core.bool value) => $_setBool(25, value);
   @$pb.TagNumber(26)
   $core.bool hasIpWithPrefixlen() => $_has(25);
   @$pb.TagNumber(26)
   void clearIpWithPrefixlen() => $_clearField(26);
 
-  ///  `ipv4_with_prefixlen` specifies that the field value must be a valid
-  ///  IPv4 address with prefix.
-  ///  If the field value isn't a valid IPv4 address with prefix length,
-  ///  an error message will be generated.
+  /// `ipv4_with_prefixlen` specifies that the field value must be a valid
+  /// IPv4 address with prefix length—for example, "192.168.5.21/16". If the
+  /// field value isn't a valid IPv4 address with prefix length, an error
+  /// message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv4 address with prefix length
-  ///     string value = 1 [(buf.validate.field).string.ipv4_with_prefixlen = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv4 address with prefix length
+  ///    string value = 1 [(buf.validate.field).string.ipv4_with_prefixlen = true];
+  /// }
+  /// ```
   @$pb.TagNumber(27)
   $core.bool get ipv4WithPrefixlen => $_getBF(26);
   @$pb.TagNumber(27)
-  set ipv4WithPrefixlen($core.bool v) {
-    $_setBool(26, v);
-  }
-
+  set ipv4WithPrefixlen($core.bool value) => $_setBool(26, value);
   @$pb.TagNumber(27)
   $core.bool hasIpv4WithPrefixlen() => $_has(26);
   @$pb.TagNumber(27)
   void clearIpv4WithPrefixlen() => $_clearField(27);
 
-  ///  `ipv6_with_prefixlen` specifies that the field value must be a valid
-  ///  IPv6 address with prefix length.
-  ///  If the field value is not a valid IPv6 address with prefix length,
-  ///  an error message will be generated.
+  /// `ipv6_with_prefixlen` specifies that the field value must be a valid
+  /// IPv6 address with prefix length—for example, "2001:0DB8:ABCD:0012::F1/64".
+  /// If the field value is not a valid IPv6 address with prefix length,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv6 address prefix length
-  ///     string value = 1 [(buf.validate.field).string.ipv6_with_prefixlen = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv6 address prefix length
+  ///    string value = 1 [(buf.validate.field).string.ipv6_with_prefixlen = true];
+  /// }
+  /// ```
   @$pb.TagNumber(28)
   $core.bool get ipv6WithPrefixlen => $_getBF(27);
   @$pb.TagNumber(28)
-  set ipv6WithPrefixlen($core.bool v) {
-    $_setBool(27, v);
-  }
-
+  set ipv6WithPrefixlen($core.bool value) => $_setBool(27, value);
   @$pb.TagNumber(28)
   $core.bool hasIpv6WithPrefixlen() => $_has(27);
   @$pb.TagNumber(28)
   void clearIpv6WithPrefixlen() => $_clearField(28);
 
-  ///  `ip_prefix` specifies that the field value must be a valid IP (v4 or v6) prefix.
-  ///  If the field value isn't a valid IP prefix, an error message will be
-  ///  generated. The prefix must have all zeros for the masked bits of the prefix (e.g.,
-  ///  `127.0.0.0/16`, not `127.0.0.1/16`).
+  /// `ip_prefix` specifies that the field value must be a valid IP (v4 or v6)
+  /// prefix—for example, "192.168.0.0/16" or "2001:0DB8:ABCD:0012::0/64".
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IP prefix
-  ///     string value = 1 [(buf.validate.field).string.ip_prefix = true];
-  ///  }
-  ///  ```
+  /// The prefix must have all zeros for the unmasked bits. For example,
+  /// "2001:0DB8:ABCD:0012::0/64" designates the left-most 64 bits for the
+  /// prefix, and the remaining 64 bits must be zero.
+  ///
+  /// If the field value isn't a valid IP prefix, an error message will be
+  /// generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IP prefix
+  ///    string value = 1 [(buf.validate.field).string.ip_prefix = true];
+  /// }
+  /// ```
   @$pb.TagNumber(29)
   $core.bool get ipPrefix => $_getBF(28);
   @$pb.TagNumber(29)
-  set ipPrefix($core.bool v) {
-    $_setBool(28, v);
-  }
-
+  set ipPrefix($core.bool value) => $_setBool(28, value);
   @$pb.TagNumber(29)
   $core.bool hasIpPrefix() => $_has(28);
   @$pb.TagNumber(29)
   void clearIpPrefix() => $_clearField(29);
 
-  ///  `ipv4_prefix` specifies that the field value must be a valid IPv4
-  ///  prefix. If the field value isn't a valid IPv4 prefix, an error message
-  ///  will be generated. The prefix must have all zeros for the masked bits of
-  ///  the prefix (e.g., `127.0.0.0/16`, not `127.0.0.1/16`).
+  /// `ipv4_prefix` specifies that the field value must be a valid IPv4
+  /// prefix, for example "192.168.0.0/16".
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv4 prefix
-  ///     string value = 1 [(buf.validate.field).string.ipv4_prefix = true];
-  ///  }
-  ///  ```
+  /// The prefix must have all zeros for the unmasked bits. For example,
+  /// "192.168.0.0/16" designates the left-most 16 bits for the prefix,
+  /// and the remaining 16 bits must be zero.
+  ///
+  /// If the field value isn't a valid IPv4 prefix, an error message
+  /// will be generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv4 prefix
+  ///    string value = 1 [(buf.validate.field).string.ipv4_prefix = true];
+  /// }
+  /// ```
   @$pb.TagNumber(30)
   $core.bool get ipv4Prefix => $_getBF(29);
   @$pb.TagNumber(30)
-  set ipv4Prefix($core.bool v) {
-    $_setBool(29, v);
-  }
-
+  set ipv4Prefix($core.bool value) => $_setBool(29, value);
   @$pb.TagNumber(30)
   $core.bool hasIpv4Prefix() => $_has(29);
   @$pb.TagNumber(30)
   void clearIpv4Prefix() => $_clearField(30);
 
-  ///  `ipv6_prefix` specifies that the field value must be a valid IPv6 prefix.
-  ///  If the field value is not a valid IPv6 prefix, an error message will be
-  ///  generated. The prefix must have all zeros for the masked bits of the prefix
-  ///  (e.g., `2001:db8::/48`, not `2001:db8::1/48`).
+  /// `ipv6_prefix` specifies that the field value must be a valid IPv6 prefix—for
+  /// example, "2001:0DB8:ABCD:0012::0/64".
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid IPv6 prefix
-  ///     string value = 1 [(buf.validate.field).string.ipv6_prefix = true];
-  ///  }
-  ///  ```
+  /// The prefix must have all zeros for the unmasked bits. For example,
+  /// "2001:0DB8:ABCD:0012::0/64" designates the left-most 64 bits for the
+  /// prefix, and the remaining 64 bits must be zero.
+  ///
+  /// If the field value is not a valid IPv6 prefix, an error message will be
+  /// generated.
+  ///
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid IPv6 prefix
+  ///    string value = 1 [(buf.validate.field).string.ipv6_prefix = true];
+  /// }
+  /// ```
   @$pb.TagNumber(31)
   $core.bool get ipv6Prefix => $_getBF(30);
   @$pb.TagNumber(31)
-  set ipv6Prefix($core.bool v) {
-    $_setBool(30, v);
-  }
-
+  set ipv6Prefix($core.bool value) => $_setBool(30, value);
   @$pb.TagNumber(31)
   $core.bool hasIpv6Prefix() => $_has(30);
   @$pb.TagNumber(31)
   void clearIpv6Prefix() => $_clearField(31);
 
-  /// `host_and_port` specifies the field value must be a valid host and port
-  /// pair. The host must be a valid hostname or IP address while the port
-  /// must be in the range of 0-65535, inclusive. IPv6 addresses must be delimited
-  /// with square brackets (e.g., `[::1]:1234`).
+  ///  `host_and_port` specifies that the field value must be valid host/port
+  ///  pair—for example, "example.com:8080".
+  ///
+  ///  The host can be one of:
+  /// - An IPv4 address in dotted decimal format—for example, "192.168.5.21".
+  /// - An IPv6 address enclosed in square brackets—for example, "[2001:0DB8:ABCD:0012::F1]".
+  /// - A hostname—for example, "example.com".
+  ///
+  ///  The port is separated by a colon. It must be non-empty, with a decimal number
+  ///  in the range of 0-65535, inclusive.
   @$pb.TagNumber(32)
   $core.bool get hostAndPort => $_getBF(31);
   @$pb.TagNumber(32)
-  set hostAndPort($core.bool v) {
-    $_setBool(31, v);
-  }
-
+  set hostAndPort($core.bool value) => $_setBool(31, value);
   @$pb.TagNumber(32)
   $core.bool hasHostAndPort() => $_has(31);
   @$pb.TagNumber(32)
   void clearHostAndPort() => $_clearField(32);
 
-  ///  `tuuid` (trimmed UUID) specifies that the field value must be a valid UUID as
-  ///  defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2) with all dashes
-  ///  omitted. If the field value isn't a valid UUID without dashes, an error message
-  ///  will be generated.
+  /// `tuuid` (trimmed UUID) specifies that the field value must be a valid UUID as
+  /// defined by [RFC 4122](https://datatracker.ietf.org/doc/html/rfc4122#section-4.1.2) with all dashes
+  /// omitted. If the field value isn't a valid UUID without dashes, an error message
+  /// will be generated.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    // value must be a valid trimmed UUID
-  ///    string value = 1 [(buf.validate.field).string.tuuid = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   // value must be a valid trimmed UUID
+  ///   string value = 1 [(buf.validate.field).string.tuuid = true];
+  /// }
+  /// ```
   @$pb.TagNumber(33)
   $core.bool get tuuid => $_getBF(32);
   @$pb.TagNumber(33)
-  set tuuid($core.bool v) {
-    $_setBool(32, v);
-  }
-
+  set tuuid($core.bool value) => $_setBool(32, value);
   @$pb.TagNumber(33)
   $core.bool hasTuuid() => $_has(32);
   @$pb.TagNumber(33)
   void clearTuuid() => $_clearField(33);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyString {
-  ///    string value = 1 [
-  ///      (buf.validate.field).string.example = "hello",
-  ///      (buf.validate.field).string.example = "world"
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyString {
+  ///   string value = 1 [
+  ///     (buf.validate.field).string.example = "hello",
+  ///     (buf.validate.field).string.example = "world"
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(34)
   $pb.PbList<$core.String> get example => $_getList(33);
 }
 
 enum BytesRules_WellKnown { ip, ipv4, ipv6, notSet }
 
-/// BytesRules describe the constraints applied to `bytes` values. These rules
+/// BytesRules describe the rules applied to `bytes` values. These rules
 /// may also be applied to the `google.protobuf.BytesValue` Well-Known-Type.
 class BytesRules extends $pb.GeneratedMessage {
   factory BytesRules({
@@ -5559,58 +5020,32 @@ class BytesRules extends $pb.GeneratedMessage {
     $fixnum.Int64? len,
     $core.Iterable<$core.List<$core.int>>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (minLen != null) {
-      $result.minLen = minLen;
-    }
-    if (maxLen != null) {
-      $result.maxLen = maxLen;
-    }
-    if (pattern != null) {
-      $result.pattern = pattern;
-    }
-    if (prefix != null) {
-      $result.prefix = prefix;
-    }
-    if (suffix != null) {
-      $result.suffix = suffix;
-    }
-    if (contains != null) {
-      $result.contains = contains;
-    }
-    if (in_8 != null) {
-      $result.in_8.addAll(in_8);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (ip != null) {
-      $result.ip = ip;
-    }
-    if (ipv4 != null) {
-      $result.ipv4 = ipv4;
-    }
-    if (ipv6 != null) {
-      $result.ipv6 = ipv6;
-    }
-    if (len != null) {
-      $result.len = len;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (minLen != null) result.minLen = minLen;
+    if (maxLen != null) result.maxLen = maxLen;
+    if (pattern != null) result.pattern = pattern;
+    if (prefix != null) result.prefix = prefix;
+    if (suffix != null) result.suffix = suffix;
+    if (contains != null) result.contains = contains;
+    if (in_8 != null) result.in_8.addAll(in_8);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (ip != null) result.ip = ip;
+    if (ipv4 != null) result.ipv4 = ipv4;
+    if (ipv6 != null) result.ipv6 = ipv6;
+    if (len != null) result.len = len;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  BytesRules._() : super();
-  factory BytesRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory BytesRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  BytesRules._();
+
+  factory BytesRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory BytesRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, BytesRules_WellKnown>
       _BytesRules_WellKnownByTag = {
@@ -5650,20 +5085,18 @@ class BytesRules extends $pb.GeneratedMessage {
         14, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PY)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BytesRules clone() => BytesRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BytesRules copyWith(void Function(BytesRules) updates) =>
       super.copyWith((message) => updates(message as BytesRules)) as BytesRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static BytesRules create() => BytesRules._();
+  @$core.override
   BytesRules createEmptyInstance() => create();
   static $pb.PbList<BytesRules> createRepeated() => $pb.PbList<BytesRules>();
   @$core.pragma('dart2js:noInline')
@@ -5675,232 +5108,205 @@ class BytesRules extends $pb.GeneratedMessage {
       _BytesRules_WellKnownByTag[$_whichOneof(0)]!;
   void clearWellKnown() => $_clearField($_whichOneof(0));
 
-  ///  `const` requires the field value to exactly match the specified bytes
-  ///  value. If the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified bytes
+  /// value. If the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must be "\x01\x02\x03\x04"
-  ///    bytes value = 1 [(buf.validate.field).bytes.const = "\x01\x02\x03\x04"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must be "\x01\x02\x03\x04"
+  ///   bytes value = 1 [(buf.validate.field).bytes.const = "\x01\x02\x03\x04"];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.List<$core.int> get const_1 => $_getN(0);
   @$pb.TagNumber(1)
-  set const_1($core.List<$core.int> v) {
-    $_setBytes(0, v);
-  }
-
+  set const_1($core.List<$core.int> value) => $_setBytes(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `min_len` requires the field value to have at least the specified minimum
-  ///  length in bytes.
-  ///  If the field value doesn't meet the requirement, an error message is generated.
+  /// `min_len` requires the field value to have at least the specified minimum
+  /// length in bytes.
+  /// If the field value doesn't meet the requirement, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value length must be at least 2 bytes.
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.min_len = 2];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value length must be at least 2 bytes.
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.min_len = 2];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get minLen => $_getI64(1);
   @$pb.TagNumber(2)
-  set minLen($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set minLen($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasMinLen() => $_has(1);
   @$pb.TagNumber(2)
   void clearMinLen() => $_clearField(2);
 
-  ///  `max_len` requires the field value to have at most the specified maximum
-  ///  length in bytes.
-  ///  If the field value exceeds the requirement, an error message is generated.
+  /// `max_len` requires the field value to have at most the specified maximum
+  /// length in bytes.
+  /// If the field value exceeds the requirement, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must be at most 6 bytes.
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.max_len = 6];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must be at most 6 bytes.
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.max_len = 6];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $fixnum.Int64 get maxLen => $_getI64(2);
   @$pb.TagNumber(3)
-  set maxLen($fixnum.Int64 v) {
-    $_setInt64(2, v);
-  }
-
+  set maxLen($fixnum.Int64 value) => $_setInt64(2, value);
   @$pb.TagNumber(3)
   $core.bool hasMaxLen() => $_has(2);
   @$pb.TagNumber(3)
   void clearMaxLen() => $_clearField(3);
 
-  ///  `pattern` requires the field value to match the specified regular
-  ///  expression ([RE2 syntax](https://github.com/google/re2/wiki/Syntax)).
-  ///  The value of the field must be valid UTF-8 or validation will fail with a
-  ///  runtime error.
-  ///  If the field value doesn't match the pattern, an error message is generated.
+  /// `pattern` requires the field value to match the specified regular
+  /// expression ([RE2 syntax](https://github.com/google/re2/wiki/Syntax)).
+  /// The value of the field must be valid UTF-8 or validation will fail with a
+  /// runtime error.
+  /// If the field value doesn't match the pattern, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must match regex pattern "^[a-zA-Z0-9]+$".
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.pattern = "^[a-zA-Z0-9]+$"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must match regex pattern "^[a-zA-Z0-9]+$".
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.pattern = "^[a-zA-Z0-9]+$"];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
   $core.String get pattern => $_getSZ(3);
   @$pb.TagNumber(4)
-  set pattern($core.String v) {
-    $_setString(3, v);
-  }
-
+  set pattern($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasPattern() => $_has(3);
   @$pb.TagNumber(4)
   void clearPattern() => $_clearField(4);
 
-  ///  `prefix` requires the field value to have the specified bytes at the
-  ///  beginning of the string.
-  ///  If the field value doesn't meet the requirement, an error message is generated.
+  /// `prefix` requires the field value to have the specified bytes at the
+  /// beginning of the string.
+  /// If the field value doesn't meet the requirement, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value does not have prefix \x01\x02
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.prefix = "\x01\x02"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value does not have prefix \x01\x02
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.prefix = "\x01\x02"];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $core.List<$core.int> get prefix => $_getN(4);
   @$pb.TagNumber(5)
-  set prefix($core.List<$core.int> v) {
-    $_setBytes(4, v);
-  }
-
+  set prefix($core.List<$core.int> value) => $_setBytes(4, value);
   @$pb.TagNumber(5)
   $core.bool hasPrefix() => $_has(4);
   @$pb.TagNumber(5)
   void clearPrefix() => $_clearField(5);
 
-  ///  `suffix` requires the field value to have the specified bytes at the end
-  ///  of the string.
-  ///  If the field value doesn't meet the requirement, an error message is generated.
+  /// `suffix` requires the field value to have the specified bytes at the end
+  /// of the string.
+  /// If the field value doesn't meet the requirement, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value does not have suffix \x03\x04
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.suffix = "\x03\x04"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value does not have suffix \x03\x04
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.suffix = "\x03\x04"];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   $core.List<$core.int> get suffix => $_getN(5);
   @$pb.TagNumber(6)
-  set suffix($core.List<$core.int> v) {
-    $_setBytes(5, v);
-  }
-
+  set suffix($core.List<$core.int> value) => $_setBytes(5, value);
   @$pb.TagNumber(6)
   $core.bool hasSuffix() => $_has(5);
   @$pb.TagNumber(6)
   void clearSuffix() => $_clearField(6);
 
-  ///  `contains` requires the field value to have the specified bytes anywhere in
-  ///  the string.
-  ///  If the field value doesn't meet the requirement, an error message is generated.
+  /// `contains` requires the field value to have the specified bytes anywhere in
+  /// the string.
+  /// If the field value doesn't meet the requirement, an error message is generated.
   ///
-  ///  ```protobuf
-  ///  message MyBytes {
-  ///    // value does not contain \x02\x03
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.contains = "\x02\x03"];
-  ///  }
-  ///  ```
+  /// ```protobuf
+  /// message MyBytes {
+  ///   // value does not contain \x02\x03
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.contains = "\x02\x03"];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $core.List<$core.int> get contains => $_getN(6);
   @$pb.TagNumber(7)
-  set contains($core.List<$core.int> v) {
-    $_setBytes(6, v);
-  }
-
+  set contains($core.List<$core.int> value) => $_setBytes(6, value);
   @$pb.TagNumber(7)
   $core.bool hasContains() => $_has(6);
   @$pb.TagNumber(7)
   void clearContains() => $_clearField(7);
 
-  ///  `in` requires the field value to be equal to one of the specified
-  ///  values. If the field value doesn't match any of the specified values, an
-  ///  error message is generated.
+  /// `in` requires the field value to be equal to one of the specified
+  /// values. If the field value doesn't match any of the specified values, an
+  /// error message is generated.
   ///
-  ///  ```protobuf
-  ///  message MyBytes {
-  ///    // value must in ["\x01\x02", "\x02\x03", "\x03\x04"]
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.in = {"\x01\x02", "\x02\x03", "\x03\x04"}];
-  ///  }
-  ///  ```
+  /// ```protobuf
+  /// message MyBytes {
+  ///   // value must in ["\x01\x02", "\x02\x03", "\x03\x04"]
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.in = {"\x01\x02", "\x02\x03", "\x03\x04"}];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $pb.PbList<$core.List<$core.int>> get in_8 => $_getList(7);
 
-  ///  `not_in` requires the field value to be not equal to any of the specified
-  ///  values.
-  ///  If the field value matches any of the specified values, an error message is
-  ///  generated.
+  /// `not_in` requires the field value to be not equal to any of the specified
+  /// values.
+  /// If the field value matches any of the specified values, an error message is
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must not in ["\x01\x02", "\x02\x03", "\x03\x04"]
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.not_in = {"\x01\x02", "\x02\x03", "\x03\x04"}];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must not in ["\x01\x02", "\x02\x03", "\x03\x04"]
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.not_in = {"\x01\x02", "\x02\x03", "\x03\x04"}];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
   $pb.PbList<$core.List<$core.int>> get notIn => $_getList(8);
 
-  ///  `ip` ensures that the field `value` is a valid IP address (v4 or v6) in byte format.
-  ///  If the field value doesn't meet this constraint, an error message is generated.
+  /// `ip` ensures that the field `value` is a valid IP address (v4 or v6) in byte format.
+  /// If the field value doesn't meet this rule, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must be a valid IP address
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.ip = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must be a valid IP address
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.ip = true];
+  /// }
+  /// ```
   @$pb.TagNumber(10)
   $core.bool get ip => $_getBF(9);
   @$pb.TagNumber(10)
-  set ip($core.bool v) {
-    $_setBool(9, v);
-  }
-
+  set ip($core.bool value) => $_setBool(9, value);
   @$pb.TagNumber(10)
   $core.bool hasIp() => $_has(9);
   @$pb.TagNumber(10)
   void clearIp() => $_clearField(10);
 
-  ///  `ipv4` ensures that the field `value` is a valid IPv4 address in byte format.
-  ///  If the field value doesn't meet this constraint, an error message is generated.
+  /// `ipv4` ensures that the field `value` is a valid IPv4 address in byte format.
+  /// If the field value doesn't meet this rule, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value must be a valid IPv4 address
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.ipv4 = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value must be a valid IPv4 address
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.ipv4 = true];
+  /// }
+  /// ```
   @$pb.TagNumber(11)
   $core.bool get ipv4 => $_getBF(10);
   @$pb.TagNumber(11)
-  set ipv4($core.bool v) {
-    $_setBool(10, v);
-  }
-
+  set ipv4($core.bool value) => $_setBool(10, value);
   @$pb.TagNumber(11)
   $core.bool hasIpv4() => $_has(10);
   @$pb.TagNumber(11)
   void clearIpv4() => $_clearField(11);
 
   /// `ipv6` ensures that the field `value` is a valid IPv6 address in byte format.
-  /// If the field value doesn't meet this constraint, an error message is generated.
+  /// If the field value doesn't meet this rule, an error message is generated.
   /// ```proto
   /// message MyBytes {
   ///   // value must be a valid IPv6 address
@@ -5910,53 +5316,47 @@ class BytesRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   $core.bool get ipv6 => $_getBF(11);
   @$pb.TagNumber(12)
-  set ipv6($core.bool v) {
-    $_setBool(11, v);
-  }
-
+  set ipv6($core.bool value) => $_setBool(11, value);
   @$pb.TagNumber(12)
   $core.bool hasIpv6() => $_has(11);
   @$pb.TagNumber(12)
   void clearIpv6() => $_clearField(12);
 
-  ///  `len` requires the field value to have the specified length in bytes.
-  ///  If the field value doesn't match, an error message is generated.
+  /// `len` requires the field value to have the specified length in bytes.
+  /// If the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    // value length must be 4 bytes.
-  ///    optional bytes value = 1 [(buf.validate.field).bytes.len = 4];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   // value length must be 4 bytes.
+  ///   optional bytes value = 1 [(buf.validate.field).bytes.len = 4];
+  /// }
+  /// ```
   @$pb.TagNumber(13)
   $fixnum.Int64 get len => $_getI64(12);
   @$pb.TagNumber(13)
-  set len($fixnum.Int64 v) {
-    $_setInt64(12, v);
-  }
-
+  set len($fixnum.Int64 value) => $_setInt64(12, value);
   @$pb.TagNumber(13)
   $core.bool hasLen() => $_has(12);
   @$pb.TagNumber(13)
   void clearLen() => $_clearField(13);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyBytes {
-  ///    bytes value = 1 [
-  ///      (buf.validate.field).bytes.example = "\x01\x02",
-  ///      (buf.validate.field).bytes.example = "\x02\x03"
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyBytes {
+  ///   bytes value = 1 [
+  ///     (buf.validate.field).bytes.example = "\x01\x02",
+  ///     (buf.validate.field).bytes.example = "\x02\x03"
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(14)
   $pb.PbList<$core.List<$core.int>> get example => $_getList(13);
 }
 
-/// EnumRules describe the constraints applied to `enum` values.
+/// EnumRules describe the rules applied to `enum` values.
 class EnumRules extends $pb.GeneratedMessage {
   factory EnumRules({
     $core.int? const_1,
@@ -5965,31 +5365,23 @@ class EnumRules extends $pb.GeneratedMessage {
     $core.Iterable<$core.int>? notIn,
     $core.Iterable<$core.int>? example,
   }) {
-    final $result = create();
-    if (const_1 != null) {
-      $result.const_1 = const_1;
-    }
-    if (definedOnly != null) {
-      $result.definedOnly = definedOnly;
-    }
-    if (in_3 != null) {
-      $result.in_3.addAll(in_3);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_1 != null) result.const_1 = const_1;
+    if (definedOnly != null) result.definedOnly = definedOnly;
+    if (in_3 != null) result.in_3.addAll(in_3);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  EnumRules._() : super();
-  factory EnumRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EnumRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EnumRules._();
+
+  factory EnumRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EnumRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EnumRules',
@@ -6002,20 +5394,18 @@ class EnumRules extends $pb.GeneratedMessage {
     ..p<$core.int>(5, _omitFieldNames ? '' : 'example', $pb.PbFieldType.P3)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumRules clone() => EnumRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EnumRules copyWith(void Function(EnumRules) updates) =>
       super.copyWith((message) => updates(message as EnumRules)) as EnumRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EnumRules create() => EnumRules._();
+  @$core.override
   EnumRules createEmptyInstance() => create();
   static $pb.PbList<EnumRules> createRepeated() => $pb.PbList<EnumRules>();
   @$core.pragma('dart2js:noInline')
@@ -6023,55 +5413,49 @@ class EnumRules extends $pb.GeneratedMessage {
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EnumRules>(create);
   static EnumRules? _defaultInstance;
 
-  ///  `const` requires the field value to exactly match the specified enum value.
-  ///  If the field value doesn't match, an error message is generated.
+  /// `const` requires the field value to exactly match the specified enum value.
+  /// If the field value doesn't match, an error message is generated.
   ///
-  ///  ```proto
-  ///  enum MyEnum {
-  ///    MY_ENUM_UNSPECIFIED = 0;
-  ///    MY_ENUM_VALUE1 = 1;
-  ///    MY_ENUM_VALUE2 = 2;
-  ///  }
+  /// ```proto
+  /// enum MyEnum {
+  ///   MY_ENUM_UNSPECIFIED = 0;
+  ///   MY_ENUM_VALUE1 = 1;
+  ///   MY_ENUM_VALUE2 = 2;
+  /// }
   ///
-  ///  message MyMessage {
-  ///    // The field `value` must be exactly MY_ENUM_VALUE1.
-  ///    MyEnum value = 1 [(buf.validate.field).enum.const = 1];
-  ///  }
-  ///  ```
+  /// message MyMessage {
+  ///   // The field `value` must be exactly MY_ENUM_VALUE1.
+  ///   MyEnum value = 1 [(buf.validate.field).enum.const = 1];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $core.int get const_1 => $_getIZ(0);
   @$pb.TagNumber(1)
-  set const_1($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set const_1($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasConst_1() => $_has(0);
   @$pb.TagNumber(1)
   void clearConst_1() => $_clearField(1);
 
-  ///  `defined_only` requires the field value to be one of the defined values for
-  ///  this enum, failing on any undefined value.
+  /// `defined_only` requires the field value to be one of the defined values for
+  /// this enum, failing on any undefined value.
   ///
-  ///  ```proto
-  ///  enum MyEnum {
-  ///    MY_ENUM_UNSPECIFIED = 0;
-  ///    MY_ENUM_VALUE1 = 1;
-  ///    MY_ENUM_VALUE2 = 2;
-  ///  }
+  /// ```proto
+  /// enum MyEnum {
+  ///   MY_ENUM_UNSPECIFIED = 0;
+  ///   MY_ENUM_VALUE1 = 1;
+  ///   MY_ENUM_VALUE2 = 2;
+  /// }
   ///
-  ///  message MyMessage {
-  ///    // The field `value` must be a defined value of MyEnum.
-  ///    MyEnum value = 1 [(buf.validate.field).enum.defined_only = true];
-  ///  }
-  ///  ```
+  /// message MyMessage {
+  ///   // The field `value` must be a defined value of MyEnum.
+  ///   MyEnum value = 1 [(buf.validate.field).enum.defined_only = true];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $core.bool get definedOnly => $_getBF(1);
   @$pb.TagNumber(2)
-  set definedOnly($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set definedOnly($core.bool value) => $_setBool(1, value);
   @$pb.TagNumber(2)
   $core.bool hasDefinedOnly() => $_has(1);
   @$pb.TagNumber(2)
@@ -6115,56 +5499,50 @@ class EnumRules extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $pb.PbList<$core.int> get notIn => $_getList(3);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  enum MyEnum {
-  ///    MY_ENUM_UNSPECIFIED = 0;
-  ///    MY_ENUM_VALUE1 = 1;
-  ///    MY_ENUM_VALUE2 = 2;
-  ///  }
+  /// ```proto
+  /// enum MyEnum {
+  ///   MY_ENUM_UNSPECIFIED = 0;
+  ///   MY_ENUM_VALUE1 = 1;
+  ///   MY_ENUM_VALUE2 = 2;
+  /// }
   ///
-  ///  message MyMessage {
-  ///      (buf.validate.field).enum.example = 1,
-  ///      (buf.validate.field).enum.example = 2
-  ///  }
-  ///  ```
+  /// message MyMessage {
+  ///     (buf.validate.field).enum.example = 1,
+  ///     (buf.validate.field).enum.example = 2
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   $pb.PbList<$core.int> get example => $_getList(4);
 }
 
-/// RepeatedRules describe the constraints applied to `repeated` values.
+/// RepeatedRules describe the rules applied to `repeated` values.
 class RepeatedRules extends $pb.GeneratedMessage {
   factory RepeatedRules({
     $fixnum.Int64? minItems,
     $fixnum.Int64? maxItems,
     $core.bool? unique,
-    FieldConstraints? items,
+    FieldRules? items,
   }) {
-    final $result = create();
-    if (minItems != null) {
-      $result.minItems = minItems;
-    }
-    if (maxItems != null) {
-      $result.maxItems = maxItems;
-    }
-    if (unique != null) {
-      $result.unique = unique;
-    }
-    if (items != null) {
-      $result.items = items;
-    }
-    return $result;
+    final result = create();
+    if (minItems != null) result.minItems = minItems;
+    if (maxItems != null) result.maxItems = maxItems;
+    if (unique != null) result.unique = unique;
+    if (items != null) result.items = items;
+    return result;
   }
-  RepeatedRules._() : super();
-  factory RepeatedRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory RepeatedRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  RepeatedRules._();
+
+  factory RepeatedRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RepeatedRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'RepeatedRules',
@@ -6177,25 +5555,23 @@ class RepeatedRules extends $pb.GeneratedMessage {
         2, _omitFieldNames ? '' : 'maxItems', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOB(3, _omitFieldNames ? '' : 'unique')
-    ..aOM<FieldConstraints>(4, _omitFieldNames ? '' : 'items',
-        subBuilder: FieldConstraints.create)
+    ..aOM<FieldRules>(4, _omitFieldNames ? '' : 'items',
+        subBuilder: FieldRules.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RepeatedRules clone() => RepeatedRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RepeatedRules copyWith(void Function(RepeatedRules) updates) =>
       super.copyWith((message) => updates(message as RepeatedRules))
           as RepeatedRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static RepeatedRules create() => RepeatedRules._();
+  @$core.override
   RepeatedRules createEmptyInstance() => create();
   static $pb.PbList<RepeatedRules> createRepeated() =>
       $pb.PbList<RepeatedRules>();
@@ -6204,134 +5580,119 @@ class RepeatedRules extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<RepeatedRules>(create);
   static RepeatedRules? _defaultInstance;
 
-  ///  `min_items` requires that this field must contain at least the specified
-  ///  minimum number of items.
+  /// `min_items` requires that this field must contain at least the specified
+  /// minimum number of items.
   ///
-  ///  Note that `min_items = 1` is equivalent to setting a field as `required`.
+  /// Note that `min_items = 1` is equivalent to setting a field as `required`.
   ///
-  ///  ```proto
-  ///  message MyRepeated {
-  ///    // value must contain at least  2 items
-  ///    repeated string value = 1 [(buf.validate.field).repeated.min_items = 2];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyRepeated {
+  ///   // value must contain at least  2 items
+  ///   repeated string value = 1 [(buf.validate.field).repeated.min_items = 2];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get minItems => $_getI64(0);
   @$pb.TagNumber(1)
-  set minItems($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set minItems($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasMinItems() => $_has(0);
   @$pb.TagNumber(1)
   void clearMinItems() => $_clearField(1);
 
-  ///  `max_items` denotes that this field must not exceed a
-  ///  certain number of items as the upper limit. If the field contains more
-  ///  items than specified, an error message will be generated, requiring the
-  ///  field to maintain no more than the specified number of items.
+  /// `max_items` denotes that this field must not exceed a
+  /// certain number of items as the upper limit. If the field contains more
+  /// items than specified, an error message will be generated, requiring the
+  /// field to maintain no more than the specified number of items.
   ///
-  ///  ```proto
-  ///  message MyRepeated {
-  ///    // value must contain no more than 3 item(s)
-  ///    repeated string value = 1 [(buf.validate.field).repeated.max_items = 3];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyRepeated {
+  ///   // value must contain no more than 3 item(s)
+  ///   repeated string value = 1 [(buf.validate.field).repeated.max_items = 3];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get maxItems => $_getI64(1);
   @$pb.TagNumber(2)
-  set maxItems($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set maxItems($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasMaxItems() => $_has(1);
   @$pb.TagNumber(2)
   void clearMaxItems() => $_clearField(2);
 
-  ///  `unique` indicates that all elements in this field must
-  ///  be unique. This constraint is strictly applicable to scalar and enum
-  ///  types, with message types not being supported.
+  /// `unique` indicates that all elements in this field must
+  /// be unique. This rule is strictly applicable to scalar and enum
+  /// types, with message types not being supported.
   ///
-  ///  ```proto
-  ///  message MyRepeated {
-  ///    // repeated value must contain unique items
-  ///    repeated string value = 1 [(buf.validate.field).repeated.unique = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyRepeated {
+  ///   // repeated value must contain unique items
+  ///   repeated string value = 1 [(buf.validate.field).repeated.unique = true];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $core.bool get unique => $_getBF(2);
   @$pb.TagNumber(3)
-  set unique($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set unique($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasUnique() => $_has(2);
   @$pb.TagNumber(3)
   void clearUnique() => $_clearField(3);
 
-  ///  `items` details the constraints to be applied to each item
-  ///  in the field. Even for repeated message fields, validation is executed
-  ///  against each item unless skip is explicitly specified.
+  /// `items` details the rules to be applied to each item
+  /// in the field. Even for repeated message fields, validation is executed
+  /// against each item unless `ignore` is specified.
   ///
-  ///  ```proto
-  ///  message MyRepeated {
-  ///    // The items in the field `value` must follow the specified constraints.
-  ///    repeated string value = 1 [(buf.validate.field).repeated.items = {
-  ///      string: {
-  ///        min_len: 3
-  ///        max_len: 10
-  ///      }
-  ///    }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyRepeated {
+  ///   // The items in the field `value` must follow the specified rules.
+  ///   repeated string value = 1 [(buf.validate.field).repeated.items = {
+  ///     string: {
+  ///       min_len: 3
+  ///       max_len: 10
+  ///     }
+  ///   }];
+  /// }
+  /// ```
+  ///
+  /// Note that the `required` rule does not apply. Repeated items
+  /// cannot be unset.
   @$pb.TagNumber(4)
-  FieldConstraints get items => $_getN(3);
+  FieldRules get items => $_getN(3);
   @$pb.TagNumber(4)
-  set items(FieldConstraints v) {
-    $_setField(4, v);
-  }
-
+  set items(FieldRules value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasItems() => $_has(3);
   @$pb.TagNumber(4)
   void clearItems() => $_clearField(4);
   @$pb.TagNumber(4)
-  FieldConstraints ensureItems() => $_ensure(3);
+  FieldRules ensureItems() => $_ensure(3);
 }
 
-/// MapRules describe the constraints applied to `map` values.
+/// MapRules describe the rules applied to `map` values.
 class MapRules extends $pb.GeneratedMessage {
   factory MapRules({
     $fixnum.Int64? minPairs,
     $fixnum.Int64? maxPairs,
-    FieldConstraints? keys,
-    FieldConstraints? values,
+    FieldRules? keys,
+    FieldRules? values,
   }) {
-    final $result = create();
-    if (minPairs != null) {
-      $result.minPairs = minPairs;
-    }
-    if (maxPairs != null) {
-      $result.maxPairs = maxPairs;
-    }
-    if (keys != null) {
-      $result.keys = keys;
-    }
-    if (values != null) {
-      $result.values = values;
-    }
-    return $result;
+    final result = create();
+    if (minPairs != null) result.minPairs = minPairs;
+    if (maxPairs != null) result.maxPairs = maxPairs;
+    if (keys != null) result.keys = keys;
+    if (values != null) result.values = values;
+    return result;
   }
-  MapRules._() : super();
-  factory MapRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory MapRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  MapRules._();
+
+  factory MapRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory MapRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MapRules',
@@ -6343,26 +5704,24 @@ class MapRules extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(
         2, _omitFieldNames ? '' : 'maxPairs', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOM<FieldConstraints>(4, _omitFieldNames ? '' : 'keys',
-        subBuilder: FieldConstraints.create)
-    ..aOM<FieldConstraints>(5, _omitFieldNames ? '' : 'values',
-        subBuilder: FieldConstraints.create)
+    ..aOM<FieldRules>(4, _omitFieldNames ? '' : 'keys',
+        subBuilder: FieldRules.create)
+    ..aOM<FieldRules>(5, _omitFieldNames ? '' : 'values',
+        subBuilder: FieldRules.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MapRules clone() => MapRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MapRules copyWith(void Function(MapRules) updates) =>
       super.copyWith((message) => updates(message as MapRules)) as MapRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MapRules create() => MapRules._();
+  @$core.override
   MapRules createEmptyInstance() => create();
   static $pb.PbList<MapRules> createRepeated() => $pb.PbList<MapRules>();
   @$core.pragma('dart2js:noInline')
@@ -6371,126 +5730,115 @@ class MapRules extends $pb.GeneratedMessage {
   static MapRules? _defaultInstance;
 
   /// Specifies the minimum number of key-value pairs allowed. If the field has
-  ///  fewer key-value pairs than specified, an error message is generated.
+  /// fewer key-value pairs than specified, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyMap {
-  ///    // The field `value` must have at least 2 key-value pairs.
-  ///    map<string, string> value = 1 [(buf.validate.field).map.min_pairs = 2];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMap {
+  ///   // The field `value` must have at least 2 key-value pairs.
+  ///   map<string, string> value = 1 [(buf.validate.field).map.min_pairs = 2];
+  /// }
+  /// ```
   @$pb.TagNumber(1)
   $fixnum.Int64 get minPairs => $_getI64(0);
   @$pb.TagNumber(1)
-  set minPairs($fixnum.Int64 v) {
-    $_setInt64(0, v);
-  }
-
+  set minPairs($fixnum.Int64 value) => $_setInt64(0, value);
   @$pb.TagNumber(1)
   $core.bool hasMinPairs() => $_has(0);
   @$pb.TagNumber(1)
   void clearMinPairs() => $_clearField(1);
 
   /// Specifies the maximum number of key-value pairs allowed. If the field has
-  ///  more key-value pairs than specified, an error message is generated.
+  /// more key-value pairs than specified, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyMap {
-  ///    // The field `value` must have at most 3 key-value pairs.
-  ///    map<string, string> value = 1 [(buf.validate.field).map.max_pairs = 3];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMap {
+  ///   // The field `value` must have at most 3 key-value pairs.
+  ///   map<string, string> value = 1 [(buf.validate.field).map.max_pairs = 3];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
   $fixnum.Int64 get maxPairs => $_getI64(1);
   @$pb.TagNumber(2)
-  set maxPairs($fixnum.Int64 v) {
-    $_setInt64(1, v);
-  }
-
+  set maxPairs($fixnum.Int64 value) => $_setInt64(1, value);
   @$pb.TagNumber(2)
   $core.bool hasMaxPairs() => $_has(1);
   @$pb.TagNumber(2)
   void clearMaxPairs() => $_clearField(2);
 
-  /// Specifies the constraints to be applied to each key in the field.
+  /// Specifies the rules to be applied to each key in the field.
   ///
-  ///  ```proto
-  ///  message MyMap {
-  ///    // The keys in the field `value` must follow the specified constraints.
-  ///    map<string, string> value = 1 [(buf.validate.field).map.keys = {
-  ///      string: {
-  ///        min_len: 3
-  ///        max_len: 10
-  ///      }
-  ///    }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMap {
+  ///   // The keys in the field `value` must follow the specified rules.
+  ///   map<string, string> value = 1 [(buf.validate.field).map.keys = {
+  ///     string: {
+  ///       min_len: 3
+  ///       max_len: 10
+  ///     }
+  ///   }];
+  /// }
+  /// ```
+  ///
+  /// Note that the `required` rule does not apply. Map keys cannot be unset.
   @$pb.TagNumber(4)
-  FieldConstraints get keys => $_getN(2);
+  FieldRules get keys => $_getN(2);
   @$pb.TagNumber(4)
-  set keys(FieldConstraints v) {
-    $_setField(4, v);
-  }
-
+  set keys(FieldRules value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasKeys() => $_has(2);
   @$pb.TagNumber(4)
   void clearKeys() => $_clearField(4);
   @$pb.TagNumber(4)
-  FieldConstraints ensureKeys() => $_ensure(2);
+  FieldRules ensureKeys() => $_ensure(2);
 
-  /// Specifies the constraints to be applied to the value of each key in the
-  ///  field. Message values will still have their validations evaluated unless
-  /// skip is specified here.
+  /// Specifies the rules to be applied to the value of each key in the
+  /// field. Message values will still have their validations evaluated unless
+  /// `ignore` is specified.
   ///
-  ///  ```proto
-  ///  message MyMap {
-  ///    // The values in the field `value` must follow the specified constraints.
-  ///    map<string, string> value = 1 [(buf.validate.field).map.values = {
-  ///      string: {
-  ///        min_len: 5
-  ///        max_len: 20
-  ///      }
-  ///    }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyMap {
+  ///   // The values in the field `value` must follow the specified rules.
+  ///   map<string, string> value = 1 [(buf.validate.field).map.values = {
+  ///     string: {
+  ///       min_len: 5
+  ///       max_len: 20
+  ///     }
+  ///   }];
+  /// }
+  /// ```
+  /// Note that the `required` rule does not apply. Map values cannot be unset.
   @$pb.TagNumber(5)
-  FieldConstraints get values => $_getN(3);
+  FieldRules get values => $_getN(3);
   @$pb.TagNumber(5)
-  set values(FieldConstraints v) {
-    $_setField(5, v);
-  }
-
+  set values(FieldRules value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasValues() => $_has(3);
   @$pb.TagNumber(5)
   void clearValues() => $_clearField(5);
   @$pb.TagNumber(5)
-  FieldConstraints ensureValues() => $_ensure(3);
+  FieldRules ensureValues() => $_ensure(3);
 }
 
-/// AnyRules describe constraints applied exclusively to the `google.protobuf.Any` well-known type.
+/// AnyRules describe rules applied exclusively to the `google.protobuf.Any` well-known type.
 class AnyRules extends $pb.GeneratedMessage {
   factory AnyRules({
     $core.Iterable<$core.String>? in_2,
     $core.Iterable<$core.String>? notIn,
   }) {
-    final $result = create();
-    if (in_2 != null) {
-      $result.in_2.addAll(in_2);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    return $result;
+    final result = create();
+    if (in_2 != null) result.in_2.addAll(in_2);
+    if (notIn != null) result.notIn.addAll(notIn);
+    return result;
   }
-  AnyRules._() : super();
-  factory AnyRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory AnyRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  AnyRules._();
+
+  factory AnyRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AnyRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'AnyRules',
@@ -6500,20 +5848,18 @@ class AnyRules extends $pb.GeneratedMessage {
     ..pPS(3, _omitFieldNames ? '' : 'notIn')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AnyRules clone() => AnyRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AnyRules copyWith(void Function(AnyRules) updates) =>
       super.copyWith((message) => updates(message as AnyRules)) as AnyRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static AnyRules create() => AnyRules._();
+  @$core.override
   AnyRules createEmptyInstance() => create();
   static $pb.PbList<AnyRules> createRepeated() => $pb.PbList<AnyRules>();
   @$core.pragma('dart2js:noInline')
@@ -6528,20 +5874,24 @@ class AnyRules extends $pb.GeneratedMessage {
   ///  ```proto
   ///  message MyAny {
   ///    //  The `value` field must have a `type_url` equal to one of the specified values.
-  ///    google.protobuf.Any value = 1 [(buf.validate.field).any.in = ["type.googleapis.com/MyType1", "type.googleapis.com/MyType2"]];
+  ///    google.protobuf.Any value = 1 [(buf.validate.field).any = {
+  ///        in: ["type.googleapis.com/MyType1", "type.googleapis.com/MyType2"]
+  ///    }];
   ///  }
   ///  ```
   @$pb.TagNumber(2)
   $pb.PbList<$core.String> get in_2 => $_getList(0);
 
-  ///  requires the field's type_url to be not equal to any of the specified values. If it matches any of the specified values, an error message is generated.
+  /// requires the field's type_url to be not equal to any of the specified values. If it matches any of the specified values, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyAny {
-  ///    // The field `value` must not have a `type_url` equal to any of the specified values.
-  ///    google.protobuf.Any value = 1 [(buf.validate.field).any.not_in = ["type.googleapis.com/ForbiddenType1", "type.googleapis.com/ForbiddenType2"]];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyAny {
+  ///   //  The `value` field must not have a `type_url` equal to any of the specified values.
+  ///   google.protobuf.Any value = 1 [(buf.validate.field).any = {
+  ///       not_in: ["type.googleapis.com/ForbiddenType1", "type.googleapis.com/ForbiddenType2"]
+  ///   }];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
   $pb.PbList<$core.String> get notIn => $_getList(1);
 }
@@ -6550,52 +5900,38 @@ enum DurationRules_LessThan { lt, lte, notSet }
 
 enum DurationRules_GreaterThan { gt, gte, notSet }
 
-/// DurationRules describe the constraints applied exclusively to the `google.protobuf.Duration` well-known type.
+/// DurationRules describe the rules applied exclusively to the `google.protobuf.Duration` well-known type.
 class DurationRules extends $pb.GeneratedMessage {
   factory DurationRules({
-    $8.Duration? const_2,
-    $8.Duration? lt,
-    $8.Duration? lte,
-    $8.Duration? gt,
-    $8.Duration? gte,
-    $core.Iterable<$8.Duration>? in_7,
-    $core.Iterable<$8.Duration>? notIn,
-    $core.Iterable<$8.Duration>? example,
+    $0.Duration? const_2,
+    $0.Duration? lt,
+    $0.Duration? lte,
+    $0.Duration? gt,
+    $0.Duration? gte,
+    $core.Iterable<$0.Duration>? in_7,
+    $core.Iterable<$0.Duration>? notIn,
+    $core.Iterable<$0.Duration>? example,
   }) {
-    final $result = create();
-    if (const_2 != null) {
-      $result.const_2 = const_2;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (in_7 != null) {
-      $result.in_7.addAll(in_7);
-    }
-    if (notIn != null) {
-      $result.notIn.addAll(notIn);
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_2 != null) result.const_2 = const_2;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (in_7 != null) result.in_7.addAll(in_7);
+    if (notIn != null) result.notIn.addAll(notIn);
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  DurationRules._() : super();
-  factory DurationRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DurationRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DurationRules._();
+
+  factory DurationRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DurationRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, DurationRules_LessThan>
       _DurationRules_LessThanByTag = {
@@ -6615,39 +5951,37 @@ class DurationRules extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [3, 4])
     ..oo(1, [5, 6])
-    ..aOM<$8.Duration>(2, _omitFieldNames ? '' : 'const',
-        subBuilder: $8.Duration.create)
-    ..aOM<$8.Duration>(3, _omitFieldNames ? '' : 'lt',
-        subBuilder: $8.Duration.create)
-    ..aOM<$8.Duration>(4, _omitFieldNames ? '' : 'lte',
-        subBuilder: $8.Duration.create)
-    ..aOM<$8.Duration>(5, _omitFieldNames ? '' : 'gt',
-        subBuilder: $8.Duration.create)
-    ..aOM<$8.Duration>(6, _omitFieldNames ? '' : 'gte',
-        subBuilder: $8.Duration.create)
-    ..pc<$8.Duration>(7, _omitFieldNames ? '' : 'in', $pb.PbFieldType.PM,
-        subBuilder: $8.Duration.create)
-    ..pc<$8.Duration>(8, _omitFieldNames ? '' : 'notIn', $pb.PbFieldType.PM,
-        subBuilder: $8.Duration.create)
-    ..pc<$8.Duration>(9, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PM,
-        subBuilder: $8.Duration.create)
+    ..aOM<$0.Duration>(2, _omitFieldNames ? '' : 'const',
+        subBuilder: $0.Duration.create)
+    ..aOM<$0.Duration>(3, _omitFieldNames ? '' : 'lt',
+        subBuilder: $0.Duration.create)
+    ..aOM<$0.Duration>(4, _omitFieldNames ? '' : 'lte',
+        subBuilder: $0.Duration.create)
+    ..aOM<$0.Duration>(5, _omitFieldNames ? '' : 'gt',
+        subBuilder: $0.Duration.create)
+    ..aOM<$0.Duration>(6, _omitFieldNames ? '' : 'gte',
+        subBuilder: $0.Duration.create)
+    ..pc<$0.Duration>(7, _omitFieldNames ? '' : 'in', $pb.PbFieldType.PM,
+        subBuilder: $0.Duration.create)
+    ..pc<$0.Duration>(8, _omitFieldNames ? '' : 'notIn', $pb.PbFieldType.PM,
+        subBuilder: $0.Duration.create)
+    ..pc<$0.Duration>(9, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PM,
+        subBuilder: $0.Duration.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DurationRules clone() => DurationRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DurationRules copyWith(void Function(DurationRules) updates) =>
       super.copyWith((message) => updates(message as DurationRules))
           as DurationRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DurationRules create() => DurationRules._();
+  @$core.override
   DurationRules createEmptyInstance() => create();
   static $pb.PbList<DurationRules> createRepeated() =>
       $pb.PbList<DurationRules>();
@@ -6664,239 +5998,208 @@ class DurationRules extends $pb.GeneratedMessage {
       _DurationRules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` dictates that the field must match the specified value of the `google.protobuf.Duration` type exactly.
-  ///  If the field's value deviates from the specified value, an error message
-  ///  will be generated.
+  /// `const` dictates that the field must match the specified value of the `google.protobuf.Duration` type exactly.
+  /// If the field's value deviates from the specified value, an error message
+  /// will be generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // value must equal 5s
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.const = "5s"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // value must equal 5s
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.const = "5s"];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
-  $8.Duration get const_2 => $_getN(0);
+  $0.Duration get const_2 => $_getN(0);
   @$pb.TagNumber(2)
-  set const_2($8.Duration v) {
-    $_setField(2, v);
-  }
-
+  set const_2($0.Duration value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasConst_2() => $_has(0);
   @$pb.TagNumber(2)
   void clearConst_2() => $_clearField(2);
   @$pb.TagNumber(2)
-  $8.Duration ensureConst_2() => $_ensure(0);
+  $0.Duration ensureConst_2() => $_ensure(0);
 
-  ///  `lt` stipulates that the field must be less than the specified value of the `google.protobuf.Duration` type,
-  ///  exclusive. If the field's value is greater than or equal to the specified
-  ///  value, an error message will be generated.
+  /// `lt` stipulates that the field must be less than the specified value of the `google.protobuf.Duration` type,
+  /// exclusive. If the field's value is greater than or equal to the specified
+  /// value, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // value must be less than 5s
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.lt = "5s"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // value must be less than 5s
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.lt = "5s"];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
-  $8.Duration get lt => $_getN(1);
+  $0.Duration get lt => $_getN(1);
   @$pb.TagNumber(3)
-  set lt($8.Duration v) {
-    $_setField(3, v);
-  }
-
+  set lt($0.Duration value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(3)
   void clearLt() => $_clearField(3);
   @$pb.TagNumber(3)
-  $8.Duration ensureLt() => $_ensure(1);
+  $0.Duration ensureLt() => $_ensure(1);
 
-  ///  `lte` indicates that the field must be less than or equal to the specified
-  ///  value of the `google.protobuf.Duration` type, inclusive. If the field's value is greater than the specified value,
-  ///  an error message will be generated.
+  /// `lte` indicates that the field must be less than or equal to the specified
+  /// value of the `google.protobuf.Duration` type, inclusive. If the field's value is greater than the specified value,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // value must be less than or equal to 10s
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.lte = "10s"];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // value must be less than or equal to 10s
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.lte = "10s"];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
-  $8.Duration get lte => $_getN(2);
+  $0.Duration get lte => $_getN(2);
   @$pb.TagNumber(4)
-  set lte($8.Duration v) {
-    $_setField(4, v);
-  }
-
+  set lte($0.Duration value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(4)
   void clearLte() => $_clearField(4);
   @$pb.TagNumber(4)
-  $8.Duration ensureLte() => $_ensure(2);
+  $0.Duration ensureLte() => $_ensure(2);
 
-  ///  `gt` requires the duration field value to be greater than the specified
-  ///  value (exclusive). If the value of `gt` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the duration field value to be greater than the specified
+  /// value (exclusive). If the value of `gt` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // duration must be greater than 5s [duration.gt]
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.gt = { seconds: 5 }];
+  /// ```proto
+  /// message MyDuration {
+  ///   // duration must be greater than 5s [duration.gt]
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.gt = { seconds: 5 }];
   ///
-  ///    // duration must be greater than 5s and less than 10s [duration.gt_lt]
-  ///    google.protobuf.Duration another_value = 2 [(buf.validate.field).duration = { gt: { seconds: 5 }, lt: { seconds: 10 } }];
+  ///   // duration must be greater than 5s and less than 10s [duration.gt_lt]
+  ///   google.protobuf.Duration another_value = 2 [(buf.validate.field).duration = { gt: { seconds: 5 }, lt: { seconds: 10 } }];
   ///
-  ///    // duration must be greater than 10s or less than 5s [duration.gt_lt_exclusive]
-  ///    google.protobuf.Duration other_value = 3 [(buf.validate.field).duration = { gt: { seconds: 10 }, lt: { seconds: 5 } }];
-  ///  }
-  ///  ```
+  ///   // duration must be greater than 10s or less than 5s [duration.gt_lt_exclusive]
+  ///   google.protobuf.Duration other_value = 3 [(buf.validate.field).duration = { gt: { seconds: 10 }, lt: { seconds: 5 } }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
-  $8.Duration get gt => $_getN(3);
+  $0.Duration get gt => $_getN(3);
   @$pb.TagNumber(5)
-  set gt($8.Duration v) {
-    $_setField(5, v);
-  }
-
+  set gt($0.Duration value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(5)
   void clearGt() => $_clearField(5);
   @$pb.TagNumber(5)
-  $8.Duration ensureGt() => $_ensure(3);
+  $0.Duration ensureGt() => $_ensure(3);
 
-  ///  `gte` requires the duration field value to be greater than or equal to the
-  ///  specified value (exclusive). If the value of `gte` is larger than a
-  ///  specified `lt` or `lte`, the range is reversed, and the field value must
-  ///  be outside the specified range. If the field value doesn't meet the
-  ///  required conditions, an error message is generated.
+  /// `gte` requires the duration field value to be greater than or equal to the
+  /// specified value (exclusive). If the value of `gte` is larger than a
+  /// specified `lt` or `lte`, the range is reversed, and the field value must
+  /// be outside the specified range. If the field value doesn't meet the
+  /// required conditions, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///   // duration must be greater than or equal to 5s [duration.gte]
-  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.gte = { seconds: 5 }];
+  /// ```proto
+  /// message MyDuration {
+  ///  // duration must be greater than or equal to 5s [duration.gte]
+  ///  google.protobuf.Duration value = 1 [(buf.validate.field).duration.gte = { seconds: 5 }];
   ///
-  ///   // duration must be greater than or equal to 5s and less than 10s [duration.gte_lt]
-  ///   google.protobuf.Duration another_value = 2 [(buf.validate.field).duration = { gte: { seconds: 5 }, lt: { seconds: 10 } }];
+  ///  // duration must be greater than or equal to 5s and less than 10s [duration.gte_lt]
+  ///  google.protobuf.Duration another_value = 2 [(buf.validate.field).duration = { gte: { seconds: 5 }, lt: { seconds: 10 } }];
   ///
-  ///   // duration must be greater than or equal to 10s or less than 5s [duration.gte_lt_exclusive]
-  ///   google.protobuf.Duration other_value = 3 [(buf.validate.field).duration = { gte: { seconds: 10 }, lt: { seconds: 5 } }];
-  ///  }
-  ///  ```
+  ///  // duration must be greater than or equal to 10s or less than 5s [duration.gte_lt_exclusive]
+  ///  google.protobuf.Duration other_value = 3 [(buf.validate.field).duration = { gte: { seconds: 10 }, lt: { seconds: 5 } }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
-  $8.Duration get gte => $_getN(4);
+  $0.Duration get gte => $_getN(4);
   @$pb.TagNumber(6)
-  set gte($8.Duration v) {
-    $_setField(6, v);
-  }
-
+  set gte($0.Duration value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(6)
   void clearGte() => $_clearField(6);
   @$pb.TagNumber(6)
-  $8.Duration ensureGte() => $_ensure(4);
+  $0.Duration ensureGte() => $_ensure(4);
 
-  ///  `in` asserts that the field must be equal to one of the specified values of the `google.protobuf.Duration` type.
-  ///  If the field's value doesn't correspond to any of the specified values,
-  ///  an error message will be generated.
+  /// `in` asserts that the field must be equal to one of the specified values of the `google.protobuf.Duration` type.
+  /// If the field's value doesn't correspond to any of the specified values,
+  /// an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // value must be in list [1s, 2s, 3s]
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.in = ["1s", "2s", "3s"]];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // value must be in list [1s, 2s, 3s]
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.in = ["1s", "2s", "3s"]];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
-  $pb.PbList<$8.Duration> get in_7 => $_getList(5);
+  $pb.PbList<$0.Duration> get in_7 => $_getList(5);
 
-  ///  `not_in` denotes that the field must not be equal to
-  ///  any of the specified values of the `google.protobuf.Duration` type.
-  ///  If the field's value matches any of these values, an error message will be
-  ///  generated.
+  /// `not_in` denotes that the field must not be equal to
+  /// any of the specified values of the `google.protobuf.Duration` type.
+  /// If the field's value matches any of these values, an error message will be
+  /// generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // value must not be in list [1s, 2s, 3s]
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.not_in = ["1s", "2s", "3s"]];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // value must not be in list [1s, 2s, 3s]
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.not_in = ["1s", "2s", "3s"]];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
-  $pb.PbList<$8.Duration> get notIn => $_getList(6);
+  $pb.PbList<$0.Duration> get notIn => $_getList(6);
 
-  ///  `example` specifies values that the field may have. These values SHOULD
-  ///  conform to other constraints. `example` values will not impact validation
-  ///  but may be used as helpful guidance on how to populate the given field.
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    google.protobuf.Duration value = 1 [
-  ///      (buf.validate.field).duration.example = { seconds: 1 },
-  ///      (buf.validate.field).duration.example = { seconds: 2 },
-  ///    ];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   google.protobuf.Duration value = 1 [
+  ///     (buf.validate.field).duration.example = { seconds: 1 },
+  ///     (buf.validate.field).duration.example = { seconds: 2 },
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
-  $pb.PbList<$8.Duration> get example => $_getList(7);
+  $pb.PbList<$0.Duration> get example => $_getList(7);
 }
 
 enum TimestampRules_LessThan { lt, lte, ltNow, notSet }
 
 enum TimestampRules_GreaterThan { gt, gte, gtNow, notSet }
 
-/// TimestampRules describe the constraints applied exclusively to the `google.protobuf.Timestamp` well-known type.
+/// TimestampRules describe the rules applied exclusively to the `google.protobuf.Timestamp` well-known type.
 class TimestampRules extends $pb.GeneratedMessage {
   factory TimestampRules({
-    $9.Timestamp? const_2,
-    $9.Timestamp? lt,
-    $9.Timestamp? lte,
-    $9.Timestamp? gt,
-    $9.Timestamp? gte,
+    $1.Timestamp? const_2,
+    $1.Timestamp? lt,
+    $1.Timestamp? lte,
+    $1.Timestamp? gt,
+    $1.Timestamp? gte,
     $core.bool? ltNow,
     $core.bool? gtNow,
-    $8.Duration? within,
-    $core.Iterable<$9.Timestamp>? example,
+    $0.Duration? within,
+    $core.Iterable<$1.Timestamp>? example,
   }) {
-    final $result = create();
-    if (const_2 != null) {
-      $result.const_2 = const_2;
-    }
-    if (lt != null) {
-      $result.lt = lt;
-    }
-    if (lte != null) {
-      $result.lte = lte;
-    }
-    if (gt != null) {
-      $result.gt = gt;
-    }
-    if (gte != null) {
-      $result.gte = gte;
-    }
-    if (ltNow != null) {
-      $result.ltNow = ltNow;
-    }
-    if (gtNow != null) {
-      $result.gtNow = gtNow;
-    }
-    if (within != null) {
-      $result.within = within;
-    }
-    if (example != null) {
-      $result.example.addAll(example);
-    }
-    return $result;
+    final result = create();
+    if (const_2 != null) result.const_2 = const_2;
+    if (lt != null) result.lt = lt;
+    if (lte != null) result.lte = lte;
+    if (gt != null) result.gt = gt;
+    if (gte != null) result.gte = gte;
+    if (ltNow != null) result.ltNow = ltNow;
+    if (gtNow != null) result.gtNow = gtNow;
+    if (within != null) result.within = within;
+    if (example != null) result.example.addAll(example);
+    return result;
   }
-  TimestampRules._() : super();
-  factory TimestampRules.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory TimestampRules.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  TimestampRules._();
+
+  factory TimestampRules.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory TimestampRules.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, TimestampRules_LessThan>
       _TimestampRules_LessThanByTag = {
@@ -6918,39 +6221,37 @@ class TimestampRules extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..oo(0, [3, 4, 7])
     ..oo(1, [5, 6, 8])
-    ..aOM<$9.Timestamp>(2, _omitFieldNames ? '' : 'const',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(3, _omitFieldNames ? '' : 'lt',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(4, _omitFieldNames ? '' : 'lte',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(5, _omitFieldNames ? '' : 'gt',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(6, _omitFieldNames ? '' : 'gte',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$1.Timestamp>(2, _omitFieldNames ? '' : 'const',
+        subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(3, _omitFieldNames ? '' : 'lt',
+        subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(4, _omitFieldNames ? '' : 'lte',
+        subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(5, _omitFieldNames ? '' : 'gt',
+        subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(6, _omitFieldNames ? '' : 'gte',
+        subBuilder: $1.Timestamp.create)
     ..aOB(7, _omitFieldNames ? '' : 'ltNow')
     ..aOB(8, _omitFieldNames ? '' : 'gtNow')
-    ..aOM<$8.Duration>(9, _omitFieldNames ? '' : 'within',
-        subBuilder: $8.Duration.create)
-    ..pc<$9.Timestamp>(10, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PM,
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$0.Duration>(9, _omitFieldNames ? '' : 'within',
+        subBuilder: $0.Duration.create)
+    ..pc<$1.Timestamp>(10, _omitFieldNames ? '' : 'example', $pb.PbFieldType.PM,
+        subBuilder: $1.Timestamp.create)
     ..hasExtensions = true;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TimestampRules clone() => TimestampRules()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TimestampRules copyWith(void Function(TimestampRules) updates) =>
       super.copyWith((message) => updates(message as TimestampRules))
           as TimestampRules;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TimestampRules create() => TimestampRules._();
+  @$core.override
   TimestampRules createEmptyInstance() => create();
   static $pb.PbList<TimestampRules> createRepeated() =>
       $pb.PbList<TimestampRules>();
@@ -6967,222 +6268,210 @@ class TimestampRules extends $pb.GeneratedMessage {
       _TimestampRules_GreaterThanByTag[$_whichOneof(1)]!;
   void clearGreaterThan() => $_clearField($_whichOneof(1));
 
-  ///  `const` dictates that this field, of the `google.protobuf.Timestamp` type, must exactly match the specified value. If the field value doesn't correspond to the specified timestamp, an error message will be generated.
+  /// `const` dictates that this field, of the `google.protobuf.Timestamp` type, must exactly match the specified value. If the field value doesn't correspond to the specified timestamp, an error message will be generated.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // value must equal 2023-05-03T10:00:00Z
-  ///    google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.const = {seconds: 1727998800}];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // value must equal 2023-05-03T10:00:00Z
+  ///   google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.const = {seconds: 1727998800}];
+  /// }
+  /// ```
   @$pb.TagNumber(2)
-  $9.Timestamp get const_2 => $_getN(0);
+  $1.Timestamp get const_2 => $_getN(0);
   @$pb.TagNumber(2)
-  set const_2($9.Timestamp v) {
-    $_setField(2, v);
-  }
-
+  set const_2($1.Timestamp value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasConst_2() => $_has(0);
   @$pb.TagNumber(2)
   void clearConst_2() => $_clearField(2);
   @$pb.TagNumber(2)
-  $9.Timestamp ensureConst_2() => $_ensure(0);
+  $1.Timestamp ensureConst_2() => $_ensure(0);
 
-  ///  requires the duration field value to be less than the specified value (field < value). If the field value doesn't meet the required conditions, an error message is generated.
+  /// requires the duration field value to be less than the specified value (field < value). If the field value doesn't meet the required conditions, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyDuration {
-  ///    // duration must be less than 'P3D' [duration.lt]
-  ///    google.protobuf.Duration value = 1 [(buf.validate.field).duration.lt = { seconds: 259200 }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyDuration {
+  ///   // duration must be less than 'P3D' [duration.lt]
+  ///   google.protobuf.Duration value = 1 [(buf.validate.field).duration.lt = { seconds: 259200 }];
+  /// }
+  /// ```
   @$pb.TagNumber(3)
-  $9.Timestamp get lt => $_getN(1);
+  $1.Timestamp get lt => $_getN(1);
   @$pb.TagNumber(3)
-  set lt($9.Timestamp v) {
-    $_setField(3, v);
-  }
-
+  set lt($1.Timestamp value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasLt() => $_has(1);
   @$pb.TagNumber(3)
   void clearLt() => $_clearField(3);
   @$pb.TagNumber(3)
-  $9.Timestamp ensureLt() => $_ensure(1);
+  $1.Timestamp ensureLt() => $_ensure(1);
 
-  ///  requires the timestamp field value to be less than or equal to the specified value (field <= value). If the field value doesn't meet the required conditions, an error message is generated.
+  /// requires the timestamp field value to be less than or equal to the specified value (field <= value). If the field value doesn't meet the required conditions, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // timestamp must be less than or equal to '2023-05-14T00:00:00Z' [timestamp.lte]
-  ///    google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.lte = { seconds: 1678867200 }];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // timestamp must be less than or equal to '2023-05-14T00:00:00Z' [timestamp.lte]
+  ///   google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.lte = { seconds: 1678867200 }];
+  /// }
+  /// ```
   @$pb.TagNumber(4)
-  $9.Timestamp get lte => $_getN(2);
+  $1.Timestamp get lte => $_getN(2);
   @$pb.TagNumber(4)
-  set lte($9.Timestamp v) {
-    $_setField(4, v);
-  }
-
+  set lte($1.Timestamp value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasLte() => $_has(2);
   @$pb.TagNumber(4)
   void clearLte() => $_clearField(4);
   @$pb.TagNumber(4)
-  $9.Timestamp ensureLte() => $_ensure(2);
+  $1.Timestamp ensureLte() => $_ensure(2);
 
-  ///  `gt` requires the timestamp field value to be greater than the specified
-  ///  value (exclusive). If the value of `gt` is larger than a specified `lt`
-  ///  or `lte`, the range is reversed, and the field value must be outside the
-  ///  specified range. If the field value doesn't meet the required conditions,
-  ///  an error message is generated.
+  /// `gt` requires the timestamp field value to be greater than the specified
+  /// value (exclusive). If the value of `gt` is larger than a specified `lt`
+  /// or `lte`, the range is reversed, and the field value must be outside the
+  /// specified range. If the field value doesn't meet the required conditions,
+  /// an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // timestamp must be greater than '2023-01-01T00:00:00Z' [timestamp.gt]
-  ///    google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.gt = { seconds: 1672444800 }];
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // timestamp must be greater than '2023-01-01T00:00:00Z' [timestamp.gt]
+  ///   google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.gt = { seconds: 1672444800 }];
   ///
-  ///    // timestamp must be greater than '2023-01-01T00:00:00Z' and less than '2023-01-02T00:00:00Z' [timestamp.gt_lt]
-  ///    google.protobuf.Timestamp another_value = 2 [(buf.validate.field).timestamp = { gt: { seconds: 1672444800 }, lt: { seconds: 1672531200 } }];
+  ///   // timestamp must be greater than '2023-01-01T00:00:00Z' and less than '2023-01-02T00:00:00Z' [timestamp.gt_lt]
+  ///   google.protobuf.Timestamp another_value = 2 [(buf.validate.field).timestamp = { gt: { seconds: 1672444800 }, lt: { seconds: 1672531200 } }];
   ///
-  ///    // timestamp must be greater than '2023-01-02T00:00:00Z' or less than '2023-01-01T00:00:00Z' [timestamp.gt_lt_exclusive]
-  ///    google.protobuf.Timestamp other_value = 3 [(buf.validate.field).timestamp = { gt: { seconds: 1672531200 }, lt: { seconds: 1672444800 } }];
-  ///  }
-  ///  ```
+  ///   // timestamp must be greater than '2023-01-02T00:00:00Z' or less than '2023-01-01T00:00:00Z' [timestamp.gt_lt_exclusive]
+  ///   google.protobuf.Timestamp other_value = 3 [(buf.validate.field).timestamp = { gt: { seconds: 1672531200 }, lt: { seconds: 1672444800 } }];
+  /// }
+  /// ```
   @$pb.TagNumber(5)
-  $9.Timestamp get gt => $_getN(3);
+  $1.Timestamp get gt => $_getN(3);
   @$pb.TagNumber(5)
-  set gt($9.Timestamp v) {
-    $_setField(5, v);
-  }
-
+  set gt($1.Timestamp value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasGt() => $_has(3);
   @$pb.TagNumber(5)
   void clearGt() => $_clearField(5);
   @$pb.TagNumber(5)
-  $9.Timestamp ensureGt() => $_ensure(3);
+  $1.Timestamp ensureGt() => $_ensure(3);
 
-  ///  `gte` requires the timestamp field value to be greater than or equal to the
-  ///  specified value (exclusive). If the value of `gte` is larger than a
-  ///  specified `lt` or `lte`, the range is reversed, and the field value
-  ///  must be outside the specified range. If the field value doesn't meet
-  ///  the required conditions, an error message is generated.
+  /// `gte` requires the timestamp field value to be greater than or equal to the
+  /// specified value (exclusive). If the value of `gte` is larger than a
+  /// specified `lt` or `lte`, the range is reversed, and the field value
+  /// must be outside the specified range. If the field value doesn't meet
+  /// the required conditions, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // timestamp must be greater than or equal to '2023-01-01T00:00:00Z' [timestamp.gte]
-  ///    google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.gte = { seconds: 1672444800 }];
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // timestamp must be greater than or equal to '2023-01-01T00:00:00Z' [timestamp.gte]
+  ///   google.protobuf.Timestamp value = 1 [(buf.validate.field).timestamp.gte = { seconds: 1672444800 }];
   ///
-  ///    // timestamp must be greater than or equal to '2023-01-01T00:00:00Z' and less than '2023-01-02T00:00:00Z' [timestamp.gte_lt]
-  ///    google.protobuf.Timestamp another_value = 2 [(buf.validate.field).timestamp = { gte: { seconds: 1672444800 }, lt: { seconds: 1672531200 } }];
+  ///   // timestamp must be greater than or equal to '2023-01-01T00:00:00Z' and less than '2023-01-02T00:00:00Z' [timestamp.gte_lt]
+  ///   google.protobuf.Timestamp another_value = 2 [(buf.validate.field).timestamp = { gte: { seconds: 1672444800 }, lt: { seconds: 1672531200 } }];
   ///
-  ///    // timestamp must be greater than or equal to '2023-01-02T00:00:00Z' or less than '2023-01-01T00:00:00Z' [timestamp.gte_lt_exclusive]
-  ///    google.protobuf.Timestamp other_value = 3 [(buf.validate.field).timestamp = { gte: { seconds: 1672531200 }, lt: { seconds: 1672444800 } }];
-  ///  }
-  ///  ```
+  ///   // timestamp must be greater than or equal to '2023-01-02T00:00:00Z' or less than '2023-01-01T00:00:00Z' [timestamp.gte_lt_exclusive]
+  ///   google.protobuf.Timestamp other_value = 3 [(buf.validate.field).timestamp = { gte: { seconds: 1672531200 }, lt: { seconds: 1672444800 } }];
+  /// }
+  /// ```
   @$pb.TagNumber(6)
-  $9.Timestamp get gte => $_getN(4);
+  $1.Timestamp get gte => $_getN(4);
   @$pb.TagNumber(6)
-  set gte($9.Timestamp v) {
-    $_setField(6, v);
-  }
-
+  set gte($1.Timestamp value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasGte() => $_has(4);
   @$pb.TagNumber(6)
   void clearGte() => $_clearField(6);
   @$pb.TagNumber(6)
-  $9.Timestamp ensureGte() => $_ensure(4);
+  $1.Timestamp ensureGte() => $_ensure(4);
 
-  ///  `lt_now` specifies that this field, of the `google.protobuf.Timestamp` type, must be less than the current time. `lt_now` can only be used with the `within` rule.
+  /// `lt_now` specifies that this field, of the `google.protobuf.Timestamp` type, must be less than the current time. `lt_now` can only be used with the `within` rule.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///   // value must be less than now
-  ///    google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.lt_now = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyTimestamp {
+  ///  // value must be less than now
+  ///   google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.lt_now = true];
+  /// }
+  /// ```
   @$pb.TagNumber(7)
   $core.bool get ltNow => $_getBF(5);
   @$pb.TagNumber(7)
-  set ltNow($core.bool v) {
-    $_setBool(5, v);
-  }
-
+  set ltNow($core.bool value) => $_setBool(5, value);
   @$pb.TagNumber(7)
   $core.bool hasLtNow() => $_has(5);
   @$pb.TagNumber(7)
   void clearLtNow() => $_clearField(7);
 
-  ///  `gt_now` specifies that this field, of the `google.protobuf.Timestamp` type, must be greater than the current time. `gt_now` can only be used with the `within` rule.
+  /// `gt_now` specifies that this field, of the `google.protobuf.Timestamp` type, must be greater than the current time. `gt_now` can only be used with the `within` rule.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // value must be greater than now
-  ///    google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.gt_now = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // value must be greater than now
+  ///   google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.gt_now = true];
+  /// }
+  /// ```
   @$pb.TagNumber(8)
   $core.bool get gtNow => $_getBF(6);
   @$pb.TagNumber(8)
-  set gtNow($core.bool v) {
-    $_setBool(6, v);
-  }
-
+  set gtNow($core.bool value) => $_setBool(6, value);
   @$pb.TagNumber(8)
   $core.bool hasGtNow() => $_has(6);
   @$pb.TagNumber(8)
   void clearGtNow() => $_clearField(8);
 
-  ///  `within` specifies that this field, of the `google.protobuf.Timestamp` type, must be within the specified duration of the current time. If the field value isn't within the duration, an error message is generated.
+  /// `within` specifies that this field, of the `google.protobuf.Timestamp` type, must be within the specified duration of the current time. If the field value isn't within the duration, an error message is generated.
   ///
-  ///  ```proto
-  ///  message MyTimestamp {
-  ///    // value must be within 1 hour of now
-  ///    google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.within = {seconds: 3600}];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message MyTimestamp {
+  ///   // value must be within 1 hour of now
+  ///   google.protobuf.Timestamp created_at = 1 [(buf.validate.field).timestamp.within = {seconds: 3600}];
+  /// }
+  /// ```
   @$pb.TagNumber(9)
-  $8.Duration get within => $_getN(7);
+  $0.Duration get within => $_getN(7);
   @$pb.TagNumber(9)
-  set within($8.Duration v) {
-    $_setField(9, v);
-  }
-
+  set within($0.Duration value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasWithin() => $_has(7);
   @$pb.TagNumber(9)
   void clearWithin() => $_clearField(9);
   @$pb.TagNumber(9)
-  $8.Duration ensureWithin() => $_ensure(7);
+  $0.Duration ensureWithin() => $_ensure(7);
 
+  /// `example` specifies values that the field may have. These values SHOULD
+  /// conform to other rules. `example` values will not impact validation
+  /// but may be used as helpful guidance on how to populate the given field.
+  ///
+  /// ```proto
+  /// message MyTimestamp {
+  ///   google.protobuf.Timestamp value = 1 [
+  ///     (buf.validate.field).timestamp.example = { seconds: 1672444800 },
+  ///     (buf.validate.field).timestamp.example = { seconds: 1672531200 },
+  ///   ];
+  /// }
+  /// ```
   @$pb.TagNumber(10)
-  $pb.PbList<$9.Timestamp> get example => $_getList(8);
+  $pb.PbList<$1.Timestamp> get example => $_getList(8);
 }
 
 /// `Violations` is a collection of `Violation` messages. This message type is returned by
-/// protovalidate when a proto message fails to meet the requirements set by the `Constraint` validation rules.
+/// Protovalidate when a proto message fails to meet the requirements set by the `Rule` validation rules.
 /// Each individual violation is represented by a `Violation` message.
 class Violations extends $pb.GeneratedMessage {
   factory Violations({
     $core.Iterable<Violation>? violations,
   }) {
-    final $result = create();
-    if (violations != null) {
-      $result.violations.addAll(violations);
-    }
-    return $result;
+    final result = create();
+    if (violations != null) result.violations.addAll(violations);
+    return result;
   }
-  Violations._() : super();
-  factory Violations.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Violations.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Violations._();
+
+  factory Violations.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Violations.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Violations',
@@ -7192,20 +6481,18 @@ class Violations extends $pb.GeneratedMessage {
         subBuilder: Violation.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Violations clone() => Violations()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Violations copyWith(void Function(Violations) updates) =>
       super.copyWith((message) => updates(message as Violations)) as Violations;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Violations create() => Violations._();
+  @$core.override
   Violations createEmptyInstance() => create();
   static $pb.PbList<Violations> createRepeated() => $pb.PbList<Violations>();
   @$core.pragma('dart2js:noInline')
@@ -7218,57 +6505,80 @@ class Violations extends $pb.GeneratedMessage {
   $pb.PbList<Violation> get violations => $_getList(0);
 }
 
-///  `Violation` represents a single instance where a validation rule, expressed
-///  as a `Constraint`, was not met. It provides information about the field that
-///  caused the violation, the specific constraint that wasn't fulfilled, and a
-///  human-readable error message.
+/// `Violation` represents a single instance where a validation rule, expressed
+/// as a `Rule`, was not met. It provides information about the field that
+/// caused the violation, the specific rule that wasn't fulfilled, and a
+/// human-readable error message.
 ///
-///  ```json
-///  {
-///    "fieldPath": "bar",
-///    "constraintId": "foo.bar",
-///    "message": "bar must be greater than 0"
-///  }
-///  ```
+/// For example, consider the following message:
+///
+/// ```proto
+/// message User {
+///     int32 age = 1 [(buf.validate.field).cel = {
+///         id: "user.age",
+///         expression: "this < 18 ? 'User must be at least 18 years old' : ''",
+///     }];
+/// }
+/// ```
+///
+/// It could produce the following violation:
+///
+/// ```json
+/// {
+///   "ruleId": "user.age",
+///   "message": "User must be at least 18 years old",
+///   "field": {
+///     "elements": [
+///       {
+///         "fieldNumber": 1,
+///         "fieldName": "age",
+///         "fieldType": "TYPE_INT32"
+///       }
+///     ]
+///   },
+///   "rule": {
+///     "elements": [
+///       {
+///         "fieldNumber": 23,
+///         "fieldName": "cel",
+///         "fieldType": "TYPE_MESSAGE",
+///         "index": "0"
+///       }
+///     ]
+///   }
+/// }
+/// ```
 class Violation extends $pb.GeneratedMessage {
   factory Violation({
-    $core.String? constraintId,
+    $core.String? ruleId,
     $core.String? message,
     $core.bool? forKey,
     FieldPath? field_5,
     FieldPath? rule,
   }) {
-    final $result = create();
-    if (constraintId != null) {
-      $result.constraintId = constraintId;
-    }
-    if (message != null) {
-      $result.message = message;
-    }
-    if (forKey != null) {
-      $result.forKey = forKey;
-    }
-    if (field_5 != null) {
-      $result.field_5 = field_5;
-    }
-    if (rule != null) {
-      $result.rule = rule;
-    }
-    return $result;
+    final result = create();
+    if (ruleId != null) result.ruleId = ruleId;
+    if (message != null) result.message = message;
+    if (forKey != null) result.forKey = forKey;
+    if (field_5 != null) result.field_5 = field_5;
+    if (rule != null) result.rule = rule;
+    return result;
   }
-  Violation._() : super();
-  factory Violation.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Violation.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Violation._();
+
+  factory Violation.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Violation.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Violation',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'buf.validate'),
       createEmptyInstance: create)
-    ..aOS(2, _omitFieldNames ? '' : 'constraintId')
+    ..aOS(2, _omitFieldNames ? '' : 'ruleId')
     ..aOS(3, _omitFieldNames ? '' : 'message')
     ..aOB(4, _omitFieldNames ? '' : 'forKey')
     ..aOM<FieldPath>(5, _omitFieldNames ? '' : 'field',
@@ -7277,20 +6587,18 @@ class Violation extends $pb.GeneratedMessage {
         subBuilder: FieldPath.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Violation clone() => Violation()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Violation copyWith(void Function(Violation) updates) =>
       super.copyWith((message) => updates(message as Violation)) as Violation;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Violation create() => Violation._();
+  @$core.override
   Violation createEmptyInstance() => create();
   static $pb.PbList<Violation> createRepeated() => $pb.PbList<Violation>();
   @$core.pragma('dart2js:noInline')
@@ -7298,29 +6606,23 @@ class Violation extends $pb.GeneratedMessage {
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Violation>(create);
   static Violation? _defaultInstance;
 
-  /// `constraint_id` is the unique identifier of the `Constraint` that was not fulfilled.
-  /// This is the same `id` that was specified in the `Constraint` message, allowing easy tracing of which rule was violated.
+  /// `rule_id` is the unique identifier of the `Rule` that was not fulfilled.
+  /// This is the same `id` that was specified in the `Rule` message, allowing easy tracing of which rule was violated.
   @$pb.TagNumber(2)
-  $core.String get constraintId => $_getSZ(0);
+  $core.String get ruleId => $_getSZ(0);
   @$pb.TagNumber(2)
-  set constraintId($core.String v) {
-    $_setString(0, v);
-  }
-
+  set ruleId($core.String value) => $_setString(0, value);
   @$pb.TagNumber(2)
-  $core.bool hasConstraintId() => $_has(0);
+  $core.bool hasRuleId() => $_has(0);
   @$pb.TagNumber(2)
-  void clearConstraintId() => $_clearField(2);
+  void clearRuleId() => $_clearField(2);
 
   /// `message` is a human-readable error message that describes the nature of the violation.
-  /// This can be the default error message from the violated `Constraint`, or it can be a custom message that gives more context about the violation.
+  /// This can be the default error message from the violated `Rule`, or it can be a custom message that gives more context about the violation.
   @$pb.TagNumber(3)
   $core.String get message => $_getSZ(1);
   @$pb.TagNumber(3)
-  set message($core.String v) {
-    $_setString(1, v);
-  }
-
+  set message($core.String value) => $_setString(1, value);
   @$pb.TagNumber(3)
   $core.bool hasMessage() => $_has(1);
   @$pb.TagNumber(3)
@@ -7330,41 +6632,35 @@ class Violation extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool get forKey => $_getBF(2);
   @$pb.TagNumber(4)
-  set forKey($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set forKey($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(4)
   $core.bool hasForKey() => $_has(2);
   @$pb.TagNumber(4)
   void clearForKey() => $_clearField(4);
 
-  ///  `field` is a machine-readable path to the field that failed validation.
-  ///  This could be a nested field, in which case the path will include all the parent fields leading to the actual field that caused the violation.
+  /// `field` is a machine-readable path to the field that failed validation.
+  /// This could be a nested field, in which case the path will include all the parent fields leading to the actual field that caused the violation.
   ///
-  ///  For example, consider the following message:
+  /// For example, consider the following message:
   ///
-  ///  ```proto
-  ///  message Message {
-  ///    bool a = 1 [(buf.validate.field).required = true];
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message Message {
+  ///   bool a = 1 [(buf.validate.field).required = true];
+  /// }
+  /// ```
   ///
-  ///  It could produce the following violation:
+  /// It could produce the following violation:
   ///
-  ///  ```textproto
-  ///  violation {
-  ///    field { element { field_number: 1, field_name: "a", field_type: 8 } }
-  ///    ...
-  ///  }
-  ///  ```
+  /// ```textproto
+  /// violation {
+  ///   field { element { field_number: 1, field_name: "a", field_type: 8 } }
+  ///   ...
+  /// }
+  /// ```
   @$pb.TagNumber(5)
   FieldPath get field_5 => $_getN(3);
   @$pb.TagNumber(5)
-  set field_5(FieldPath v) {
-    $_setField(5, v);
-  }
-
+  set field_5(FieldPath value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasField_5() => $_has(3);
   @$pb.TagNumber(5)
@@ -7372,41 +6668,38 @@ class Violation extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   FieldPath ensureField_5() => $_ensure(3);
 
-  ///  `rule` is a machine-readable path that points to the specific constraint rule that failed validation.
-  ///  This will be a nested field starting from the FieldConstraints of the field that failed validation.
-  ///  For custom constraints, this will provide the path of the constraint, e.g. `cel[0]`.
+  /// `rule` is a machine-readable path that points to the specific rule that failed validation.
+  /// This will be a nested field starting from the FieldRules of the field that failed validation.
+  /// For custom rules, this will provide the path of the rule, e.g. `cel[0]`.
   ///
-  ///  For example, consider the following message:
+  /// For example, consider the following message:
   ///
-  ///  ```proto
-  ///  message Message {
-  ///    bool a = 1 [(buf.validate.field).required = true];
-  ///    bool b = 2 [(buf.validate.field).cel = {
-  ///      id: "custom_constraint",
-  ///      expression: "!this ? 'b must be true': ''"
-  ///    }]
-  ///  }
-  ///  ```
+  /// ```proto
+  /// message Message {
+  ///   bool a = 1 [(buf.validate.field).required = true];
+  ///   bool b = 2 [(buf.validate.field).cel = {
+  ///     id: "custom_rule",
+  ///     expression: "!this ? 'b must be true': ''"
+  ///   }]
+  /// }
+  /// ```
   ///
-  ///  It could produce the following violations:
+  /// It could produce the following violations:
   ///
-  ///  ```textproto
-  ///  violation {
-  ///    rule { element { field_number: 25, field_name: "required", field_type: 8 } }
-  ///    ...
-  ///  }
-  ///  violation {
-  ///    rule { element { field_number: 23, field_name: "cel", field_type: 11, index: 0 } }
-  ///    ...
-  ///  }
-  ///  ```
+  /// ```textproto
+  /// violation {
+  ///   rule { element { field_number: 25, field_name: "required", field_type: 8 } }
+  ///   ...
+  /// }
+  /// violation {
+  ///   rule { element { field_number: 23, field_name: "cel", field_type: 11, index: 0 } }
+  ///   ...
+  /// }
+  /// ```
   @$pb.TagNumber(6)
   FieldPath get rule => $_getN(4);
   @$pb.TagNumber(6)
-  set rule(FieldPath v) {
-    $_setField(6, v);
-  }
-
+  set rule(FieldPath value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasRule() => $_has(4);
   @$pb.TagNumber(6)
@@ -7415,27 +6708,27 @@ class Violation extends $pb.GeneratedMessage {
   FieldPath ensureRule() => $_ensure(4);
 }
 
-///  `FieldPath` provides a path to a nested protobuf field.
+/// `FieldPath` provides a path to a nested protobuf field.
 ///
-///  This message provides enough information to render a dotted field path even without protobuf descriptors.
-///  It also provides enough information to resolve a nested field through unknown wire data.
+/// This message provides enough information to render a dotted field path even without protobuf descriptors.
+/// It also provides enough information to resolve a nested field through unknown wire data.
 class FieldPath extends $pb.GeneratedMessage {
   factory FieldPath({
     $core.Iterable<FieldPathElement>? elements,
   }) {
-    final $result = create();
-    if (elements != null) {
-      $result.elements.addAll(elements);
-    }
-    return $result;
+    final result = create();
+    if (elements != null) result.elements.addAll(elements);
+    return result;
   }
-  FieldPath._() : super();
-  factory FieldPath.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldPath.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldPath._();
+
+  factory FieldPath.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldPath.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FieldPath',
@@ -7446,20 +6739,18 @@ class FieldPath extends $pb.GeneratedMessage {
         subBuilder: FieldPathElement.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldPath clone() => FieldPath()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldPath copyWith(void Function(FieldPath) updates) =>
       super.copyWith((message) => updates(message as FieldPath)) as FieldPath;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldPath create() => FieldPath._();
+  @$core.override
   FieldPath createEmptyInstance() => create();
   static $pb.PbList<FieldPath> createRepeated() => $pb.PbList<FieldPath>();
   @$core.pragma('dart2js:noInline')
@@ -7481,64 +6772,46 @@ enum FieldPathElement_Subscript {
   notSet
 }
 
-///  `FieldPathElement` provides enough information to nest through a single protobuf field.
+/// `FieldPathElement` provides enough information to nest through a single protobuf field.
 ///
-///  If the selected field is a map or repeated field, the `subscript` value selects a specific element from it.
-///  A path that refers to a value nested under a map key or repeated field index will have a `subscript` value.
-///  The `field_type` field allows unambiguous resolution of a field even if descriptors are not available.
+/// If the selected field is a map or repeated field, the `subscript` value selects a specific element from it.
+/// A path that refers to a value nested under a map key or repeated field index will have a `subscript` value.
+/// The `field_type` field allows unambiguous resolution of a field even if descriptors are not available.
 class FieldPathElement extends $pb.GeneratedMessage {
   factory FieldPathElement({
     $core.int? fieldNumber,
     $core.String? fieldName,
-    $10.FieldDescriptorProto_Type? fieldType,
-    $10.FieldDescriptorProto_Type? keyType,
-    $10.FieldDescriptorProto_Type? valueType,
+    $2.FieldDescriptorProto_Type? fieldType,
+    $2.FieldDescriptorProto_Type? keyType,
+    $2.FieldDescriptorProto_Type? valueType,
     $fixnum.Int64? index,
     $core.bool? boolKey,
     $fixnum.Int64? intKey,
     $fixnum.Int64? uintKey,
     $core.String? stringKey,
   }) {
-    final $result = create();
-    if (fieldNumber != null) {
-      $result.fieldNumber = fieldNumber;
-    }
-    if (fieldName != null) {
-      $result.fieldName = fieldName;
-    }
-    if (fieldType != null) {
-      $result.fieldType = fieldType;
-    }
-    if (keyType != null) {
-      $result.keyType = keyType;
-    }
-    if (valueType != null) {
-      $result.valueType = valueType;
-    }
-    if (index != null) {
-      $result.index = index;
-    }
-    if (boolKey != null) {
-      $result.boolKey = boolKey;
-    }
-    if (intKey != null) {
-      $result.intKey = intKey;
-    }
-    if (uintKey != null) {
-      $result.uintKey = uintKey;
-    }
-    if (stringKey != null) {
-      $result.stringKey = stringKey;
-    }
-    return $result;
+    final result = create();
+    if (fieldNumber != null) result.fieldNumber = fieldNumber;
+    if (fieldName != null) result.fieldName = fieldName;
+    if (fieldType != null) result.fieldType = fieldType;
+    if (keyType != null) result.keyType = keyType;
+    if (valueType != null) result.valueType = valueType;
+    if (index != null) result.index = index;
+    if (boolKey != null) result.boolKey = boolKey;
+    if (intKey != null) result.intKey = intKey;
+    if (uintKey != null) result.uintKey = uintKey;
+    if (stringKey != null) result.stringKey = stringKey;
+    return result;
   }
-  FieldPathElement._() : super();
-  factory FieldPathElement.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory FieldPathElement.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  FieldPathElement._();
+
+  factory FieldPathElement.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory FieldPathElement.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, FieldPathElement_Subscript>
       _FieldPathElement_SubscriptByTag = {
@@ -7556,21 +6829,21 @@ class FieldPathElement extends $pb.GeneratedMessage {
     ..oo(0, [6, 7, 8, 9, 10])
     ..a<$core.int>(1, _omitFieldNames ? '' : 'fieldNumber', $pb.PbFieldType.O3)
     ..aOS(2, _omitFieldNames ? '' : 'fieldName')
-    ..e<$10.FieldDescriptorProto_Type>(
+    ..e<$2.FieldDescriptorProto_Type>(
         3, _omitFieldNames ? '' : 'fieldType', $pb.PbFieldType.OE,
-        defaultOrMaker: $10.FieldDescriptorProto_Type.TYPE_DOUBLE,
-        valueOf: $10.FieldDescriptorProto_Type.valueOf,
-        enumValues: $10.FieldDescriptorProto_Type.values)
-    ..e<$10.FieldDescriptorProto_Type>(
+        defaultOrMaker: $2.FieldDescriptorProto_Type.TYPE_DOUBLE,
+        valueOf: $2.FieldDescriptorProto_Type.valueOf,
+        enumValues: $2.FieldDescriptorProto_Type.values)
+    ..e<$2.FieldDescriptorProto_Type>(
         4, _omitFieldNames ? '' : 'keyType', $pb.PbFieldType.OE,
-        defaultOrMaker: $10.FieldDescriptorProto_Type.TYPE_DOUBLE,
-        valueOf: $10.FieldDescriptorProto_Type.valueOf,
-        enumValues: $10.FieldDescriptorProto_Type.values)
-    ..e<$10.FieldDescriptorProto_Type>(
+        defaultOrMaker: $2.FieldDescriptorProto_Type.TYPE_DOUBLE,
+        valueOf: $2.FieldDescriptorProto_Type.valueOf,
+        enumValues: $2.FieldDescriptorProto_Type.values)
+    ..e<$2.FieldDescriptorProto_Type>(
         5, _omitFieldNames ? '' : 'valueType', $pb.PbFieldType.OE,
-        defaultOrMaker: $10.FieldDescriptorProto_Type.TYPE_DOUBLE,
-        valueOf: $10.FieldDescriptorProto_Type.valueOf,
-        enumValues: $10.FieldDescriptorProto_Type.values)
+        defaultOrMaker: $2.FieldDescriptorProto_Type.TYPE_DOUBLE,
+        valueOf: $2.FieldDescriptorProto_Type.valueOf,
+        enumValues: $2.FieldDescriptorProto_Type.values)
     ..a<$fixnum.Int64>(6, _omitFieldNames ? '' : 'index', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOB(7, _omitFieldNames ? '' : 'boolKey')
@@ -7580,21 +6853,19 @@ class FieldPathElement extends $pb.GeneratedMessage {
     ..aOS(10, _omitFieldNames ? '' : 'stringKey')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldPathElement clone() => FieldPathElement()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FieldPathElement copyWith(void Function(FieldPathElement) updates) =>
       super.copyWith((message) => updates(message as FieldPathElement))
           as FieldPathElement;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static FieldPathElement create() => FieldPathElement._();
+  @$core.override
   FieldPathElement createEmptyInstance() => create();
   static $pb.PbList<FieldPathElement> createRepeated() =>
       $pb.PbList<FieldPathElement>();
@@ -7611,10 +6882,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.int get fieldNumber => $_getIZ(0);
   @$pb.TagNumber(1)
-  set fieldNumber($core.int v) {
-    $_setSignedInt32(0, v);
-  }
-
+  set fieldNumber($core.int value) => $_setSignedInt32(0, value);
   @$pb.TagNumber(1)
   $core.bool hasFieldNumber() => $_has(0);
   @$pb.TagNumber(1)
@@ -7625,32 +6893,26 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get fieldName => $_getSZ(1);
   @$pb.TagNumber(2)
-  set fieldName($core.String v) {
-    $_setString(1, v);
-  }
-
+  set fieldName($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasFieldName() => $_has(1);
   @$pb.TagNumber(2)
   void clearFieldName() => $_clearField(2);
 
-  ///  `field_type` specifies the type of this field. When using reflection, this value is not needed.
+  /// `field_type` specifies the type of this field. When using reflection, this value is not needed.
   ///
-  ///  This value is provided to make it possible to traverse unknown fields through wire data.
-  ///  When traversing wire data, be mindful of both packed[1] and delimited[2] encoding schemes.
+  /// This value is provided to make it possible to traverse unknown fields through wire data.
+  /// When traversing wire data, be mindful of both packed[1] and delimited[2] encoding schemes.
   ///
-  ///  [1]: https://protobuf.dev/programming-guides/encoding/#packed
-  ///  [2]: https://protobuf.dev/programming-guides/encoding/#groups
+  /// [1]: https://protobuf.dev/programming-guides/encoding/#packed
+  /// [2]: https://protobuf.dev/programming-guides/encoding/#groups
   ///
-  ///  N.B.: Although groups are deprecated, the corresponding delimited encoding scheme is not, and
-  ///  can be explicitly used in Protocol Buffers 2023 Edition.
+  /// N.B.: Although groups are deprecated, the corresponding delimited encoding scheme is not, and
+  /// can be explicitly used in Protocol Buffers 2023 Edition.
   @$pb.TagNumber(3)
-  $10.FieldDescriptorProto_Type get fieldType => $_getN(2);
+  $2.FieldDescriptorProto_Type get fieldType => $_getN(2);
   @$pb.TagNumber(3)
-  set fieldType($10.FieldDescriptorProto_Type v) {
-    $_setField(3, v);
-  }
-
+  set fieldType($2.FieldDescriptorProto_Type value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasFieldType() => $_has(2);
   @$pb.TagNumber(3)
@@ -7660,12 +6922,9 @@ class FieldPathElement extends $pb.GeneratedMessage {
   /// unknown fields through wire data: specifically, it allows handling the differences between
   /// different integer encodings.
   @$pb.TagNumber(4)
-  $10.FieldDescriptorProto_Type get keyType => $_getN(3);
+  $2.FieldDescriptorProto_Type get keyType => $_getN(3);
   @$pb.TagNumber(4)
-  set keyType($10.FieldDescriptorProto_Type v) {
-    $_setField(4, v);
-  }
-
+  set keyType($2.FieldDescriptorProto_Type value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasKeyType() => $_has(3);
   @$pb.TagNumber(4)
@@ -7674,12 +6933,9 @@ class FieldPathElement extends $pb.GeneratedMessage {
   /// `value_type` specifies map value type of this field. This is useful if you want to display a
   /// value inside unknown fields through wire data.
   @$pb.TagNumber(5)
-  $10.FieldDescriptorProto_Type get valueType => $_getN(4);
+  $2.FieldDescriptorProto_Type get valueType => $_getN(4);
   @$pb.TagNumber(5)
-  set valueType($10.FieldDescriptorProto_Type v) {
-    $_setField(5, v);
-  }
-
+  set valueType($2.FieldDescriptorProto_Type value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasValueType() => $_has(4);
   @$pb.TagNumber(5)
@@ -7689,10 +6945,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $fixnum.Int64 get index => $_getI64(5);
   @$pb.TagNumber(6)
-  set index($fixnum.Int64 v) {
-    $_setInt64(5, v);
-  }
-
+  set index($fixnum.Int64 value) => $_setInt64(5, value);
   @$pb.TagNumber(6)
   $core.bool hasIndex() => $_has(5);
   @$pb.TagNumber(6)
@@ -7702,10 +6955,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.bool get boolKey => $_getBF(6);
   @$pb.TagNumber(7)
-  set boolKey($core.bool v) {
-    $_setBool(6, v);
-  }
-
+  set boolKey($core.bool value) => $_setBool(6, value);
   @$pb.TagNumber(7)
   $core.bool hasBoolKey() => $_has(6);
   @$pb.TagNumber(7)
@@ -7715,10 +6965,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $fixnum.Int64 get intKey => $_getI64(7);
   @$pb.TagNumber(8)
-  set intKey($fixnum.Int64 v) {
-    $_setInt64(7, v);
-  }
-
+  set intKey($fixnum.Int64 value) => $_setInt64(7, value);
   @$pb.TagNumber(8)
   $core.bool hasIntKey() => $_has(7);
   @$pb.TagNumber(8)
@@ -7728,10 +6975,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $fixnum.Int64 get uintKey => $_getI64(8);
   @$pb.TagNumber(9)
-  set uintKey($fixnum.Int64 v) {
-    $_setInt64(8, v);
-  }
-
+  set uintKey($fixnum.Int64 value) => $_setInt64(8, value);
   @$pb.TagNumber(9)
   $core.bool hasUintKey() => $_has(8);
   @$pb.TagNumber(9)
@@ -7741,10 +6985,7 @@ class FieldPathElement extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.String get stringKey => $_getSZ(9);
   @$pb.TagNumber(10)
-  set stringKey($core.String v) {
-    $_setString(9, v);
-  }
-
+  set stringKey($core.String value) => $_setString(9, value);
   @$pb.TagNumber(10)
   $core.bool hasStringKey() => $_has(9);
   @$pb.TagNumber(10)
@@ -7752,34 +6993,34 @@ class FieldPathElement extends $pb.GeneratedMessage {
 }
 
 class Validate {
-  static final message = $pb.Extension<MessageConstraints>(
+  static final message = $pb.Extension<MessageRules>(
       _omitMessageNames ? '' : 'google.protobuf.MessageOptions',
       _omitFieldNames ? '' : 'message',
       1159,
       $pb.PbFieldType.OM,
-      defaultOrMaker: MessageConstraints.getDefault,
-      subBuilder: MessageConstraints.create);
-  static final oneof = $pb.Extension<OneofConstraints>(
+      defaultOrMaker: MessageRules.getDefault,
+      subBuilder: MessageRules.create);
+  static final oneof = $pb.Extension<OneofRules>(
       _omitMessageNames ? '' : 'google.protobuf.OneofOptions',
       _omitFieldNames ? '' : 'oneof',
       1159,
       $pb.PbFieldType.OM,
-      defaultOrMaker: OneofConstraints.getDefault,
-      subBuilder: OneofConstraints.create);
-  static final field_1159 = $pb.Extension<FieldConstraints>(
+      defaultOrMaker: OneofRules.getDefault,
+      subBuilder: OneofRules.create);
+  static final field_1159 = $pb.Extension<FieldRules>(
       _omitMessageNames ? '' : 'google.protobuf.FieldOptions',
       _omitFieldNames ? '' : 'field_1159',
       1159,
       $pb.PbFieldType.OM,
-      defaultOrMaker: FieldConstraints.getDefault,
-      subBuilder: FieldConstraints.create);
-  static final predefined = $pb.Extension<PredefinedConstraints>(
+      defaultOrMaker: FieldRules.getDefault,
+      subBuilder: FieldRules.create);
+  static final predefined = $pb.Extension<PredefinedRules>(
       _omitMessageNames ? '' : 'google.protobuf.FieldOptions',
       _omitFieldNames ? '' : 'predefined',
       1160,
       $pb.PbFieldType.OM,
-      defaultOrMaker: PredefinedConstraints.getDefault,
-      subBuilder: PredefinedConstraints.create);
+      defaultOrMaker: PredefinedRules.getDefault,
+      subBuilder: PredefinedRules.create);
   static void registerAllExtensions($pb.ExtensionRegistry registry) {
     registry.add(message);
     registry.add(oneof);
@@ -7788,6 +7029,7 @@ class Validate {
   }
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

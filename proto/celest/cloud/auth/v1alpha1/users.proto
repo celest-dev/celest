@@ -228,7 +228,7 @@ message ListUsersRequest {
     (google.api.field_behavior) = REQUIRED,
     (google.api.resource_reference) = { child_type: "cloud.celest.dev/User" },
     // The `/auth/users` endpoint is a special case where the parent is not required.
-    (buf.validate.field).ignore = IGNORE_IF_UNPOPULATED,
+    (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
     (buf.validate.field).cel = {
       id: "valid_parent",
       message: "parent must be a valid parent",

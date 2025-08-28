@@ -1,22 +1,23 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: celest/cloud/v1alpha1/project_environments.proto
-//
+// Generated from celest/cloud/v1alpha1/project_environments.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../../google/protobuf/any.pb.dart' as $13;
-import '../../../google/protobuf/field_mask.pb.dart' as $12;
-import '../../../google/protobuf/timestamp.pb.dart' as $9;
-import 'common.pbenum.dart' as $14;
+import '../../../google/protobuf/any.pb.dart' as $4;
+import '../../../google/protobuf/field_mask.pb.dart' as $3;
+import '../../../google/protobuf/timestamp.pb.dart' as $2;
+import 'common.pbenum.dart' as $5;
 import 'project_environments.pbenum.dart';
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -31,64 +32,41 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     $core.String? parent,
     $core.String? projectEnvironmentId,
     $core.String? displayName,
-    $9.Timestamp? createTime,
-    $9.Timestamp? updateTime,
-    $9.Timestamp? deleteTime,
+    $2.Timestamp? createTime,
+    $2.Timestamp? updateTime,
+    $2.Timestamp? deleteTime,
     $core.String? etag,
     $core.Iterable<$core.MapEntry<$core.String, $core.String>>? annotations,
     $core.bool? reconciling,
-    $14.LifecycleState? state,
+    $5.LifecycleState? state,
     $core.String? uri,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (uid != null) {
-      $result.uid = uid;
-    }
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (projectEnvironmentId != null) {
-      $result.projectEnvironmentId = projectEnvironmentId;
-    }
-    if (displayName != null) {
-      $result.displayName = displayName;
-    }
-    if (createTime != null) {
-      $result.createTime = createTime;
-    }
-    if (updateTime != null) {
-      $result.updateTime = updateTime;
-    }
-    if (deleteTime != null) {
-      $result.deleteTime = deleteTime;
-    }
-    if (etag != null) {
-      $result.etag = etag;
-    }
-    if (annotations != null) {
-      $result.annotations.addEntries(annotations);
-    }
-    if (reconciling != null) {
-      $result.reconciling = reconciling;
-    }
-    if (state != null) {
-      $result.state = state;
-    }
-    if (uri != null) {
-      $result.uri = uri;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (uid != null) result.uid = uid;
+    if (parent != null) result.parent = parent;
+    if (projectEnvironmentId != null)
+      result.projectEnvironmentId = projectEnvironmentId;
+    if (displayName != null) result.displayName = displayName;
+    if (createTime != null) result.createTime = createTime;
+    if (updateTime != null) result.updateTime = updateTime;
+    if (deleteTime != null) result.deleteTime = deleteTime;
+    if (etag != null) result.etag = etag;
+    if (annotations != null) result.annotations.addEntries(annotations);
+    if (reconciling != null) result.reconciling = reconciling;
+    if (state != null) result.state = state;
+    if (uri != null) result.uri = uri;
+    return result;
   }
-  ProjectEnvironment._() : super();
-  factory ProjectEnvironment.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ProjectEnvironment.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ProjectEnvironment._();
+
+  factory ProjectEnvironment.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ProjectEnvironment.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ProjectEnvironment',
@@ -100,12 +78,12 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..aOS(4, _omitFieldNames ? '' : 'projectEnvironmentId')
     ..aOS(5, _omitFieldNames ? '' : 'displayName')
-    ..aOM<$9.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
-        subBuilder: $9.Timestamp.create)
-    ..aOM<$9.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
-        subBuilder: $9.Timestamp.create)
+    ..aOM<$2.Timestamp>(6, _omitFieldNames ? '' : 'createTime',
+        subBuilder: $2.Timestamp.create)
+    ..aOM<$2.Timestamp>(7, _omitFieldNames ? '' : 'updateTime',
+        subBuilder: $2.Timestamp.create)
+    ..aOM<$2.Timestamp>(8, _omitFieldNames ? '' : 'deleteTime',
+        subBuilder: $2.Timestamp.create)
     ..aOS(9, _omitFieldNames ? '' : 'etag')
     ..m<$core.String, $core.String>(10, _omitFieldNames ? '' : 'annotations',
         entryClassName: 'ProjectEnvironment.AnnotationsEntry',
@@ -113,29 +91,27 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
         valueFieldType: $pb.PbFieldType.OS,
         packageName: const $pb.PackageName('celest.cloud.v1alpha1'))
     ..aOB(11, _omitFieldNames ? '' : 'reconciling')
-    ..e<$14.LifecycleState>(
+    ..e<$5.LifecycleState>(
         12, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
-        defaultOrMaker: $14.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
-        valueOf: $14.LifecycleState.valueOf,
-        enumValues: $14.LifecycleState.values)
+        defaultOrMaker: $5.LifecycleState.LIFECYCLE_STATE_UNSPECIFIED,
+        valueOf: $5.LifecycleState.valueOf,
+        enumValues: $5.LifecycleState.values)
     ..aOS(13, _omitFieldNames ? '' : 'uri')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectEnvironment clone() => ProjectEnvironment()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectEnvironment copyWith(void Function(ProjectEnvironment) updates) =>
       super.copyWith((message) => updates(message as ProjectEnvironment))
           as ProjectEnvironment;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ProjectEnvironment create() => ProjectEnvironment._();
+  @$core.override
   ProjectEnvironment createEmptyInstance() => create();
   static $pb.PbList<ProjectEnvironment> createRepeated() =>
       $pb.PbList<ProjectEnvironment>();
@@ -149,10 +125,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -162,10 +135,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get uid => $_getSZ(1);
   @$pb.TagNumber(2)
-  set uid($core.String v) {
-    $_setString(1, v);
-  }
-
+  set uid($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasUid() => $_has(1);
   @$pb.TagNumber(2)
@@ -175,10 +145,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get parent => $_getSZ(2);
   @$pb.TagNumber(3)
-  set parent($core.String v) {
-    $_setString(2, v);
-  }
-
+  set parent($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasParent() => $_has(2);
   @$pb.TagNumber(3)
@@ -189,10 +156,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get projectEnvironmentId => $_getSZ(3);
   @$pb.TagNumber(4)
-  set projectEnvironmentId($core.String v) {
-    $_setString(3, v);
-  }
-
+  set projectEnvironmentId($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasProjectEnvironmentId() => $_has(3);
   @$pb.TagNumber(4)
@@ -202,10 +166,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get displayName => $_getSZ(4);
   @$pb.TagNumber(5)
-  set displayName($core.String v) {
-    $_setString(4, v);
-  }
-
+  set displayName($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasDisplayName() => $_has(4);
   @$pb.TagNumber(5)
@@ -213,48 +174,39 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
 
   /// Output only. The time the environment was created.
   @$pb.TagNumber(6)
-  $9.Timestamp get createTime => $_getN(5);
+  $2.Timestamp get createTime => $_getN(5);
   @$pb.TagNumber(6)
-  set createTime($9.Timestamp v) {
-    $_setField(6, v);
-  }
-
+  set createTime($2.Timestamp value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasCreateTime() => $_has(5);
   @$pb.TagNumber(6)
   void clearCreateTime() => $_clearField(6);
   @$pb.TagNumber(6)
-  $9.Timestamp ensureCreateTime() => $_ensure(5);
+  $2.Timestamp ensureCreateTime() => $_ensure(5);
 
   /// Output only. The time the environment was last updated.
   @$pb.TagNumber(7)
-  $9.Timestamp get updateTime => $_getN(6);
+  $2.Timestamp get updateTime => $_getN(6);
   @$pb.TagNumber(7)
-  set updateTime($9.Timestamp v) {
-    $_setField(7, v);
-  }
-
+  set updateTime($2.Timestamp value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasUpdateTime() => $_has(6);
   @$pb.TagNumber(7)
   void clearUpdateTime() => $_clearField(7);
   @$pb.TagNumber(7)
-  $9.Timestamp ensureUpdateTime() => $_ensure(6);
+  $2.Timestamp ensureUpdateTime() => $_ensure(6);
 
   /// Output only. The time the environment was deleted.
   @$pb.TagNumber(8)
-  $9.Timestamp get deleteTime => $_getN(7);
+  $2.Timestamp get deleteTime => $_getN(7);
   @$pb.TagNumber(8)
-  set deleteTime($9.Timestamp v) {
-    $_setField(8, v);
-  }
-
+  set deleteTime($2.Timestamp value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasDeleteTime() => $_has(7);
   @$pb.TagNumber(8)
   void clearDeleteTime() => $_clearField(8);
   @$pb.TagNumber(8)
-  $9.Timestamp ensureDeleteTime() => $_ensure(7);
+  $2.Timestamp ensureDeleteTime() => $_ensure(7);
 
   /// Output only. A checksum computed by the server based on the current value
   /// of the ProjectEnvironment resource. This may be sent on update and delete requests to
@@ -262,10 +214,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.String get etag => $_getSZ(8);
   @$pb.TagNumber(9)
-  set etag($core.String v) {
-    $_setString(8, v);
-  }
-
+  set etag($core.String value) => $_setString(8, value);
   @$pb.TagNumber(9)
   $core.bool hasEtag() => $_has(8);
   @$pb.TagNumber(9)
@@ -279,10 +228,7 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.bool get reconciling => $_getBF(10);
   @$pb.TagNumber(11)
-  set reconciling($core.bool v) {
-    $_setBool(10, v);
-  }
-
+  set reconciling($core.bool value) => $_setBool(10, value);
   @$pb.TagNumber(11)
   $core.bool hasReconciling() => $_has(10);
   @$pb.TagNumber(11)
@@ -290,27 +236,21 @@ class ProjectEnvironment extends $pb.GeneratedMessage {
 
   /// Output only. The current state of the environment.
   @$pb.TagNumber(12)
-  $14.LifecycleState get state => $_getN(11);
+  $5.LifecycleState get state => $_getN(11);
   @$pb.TagNumber(12)
-  set state($14.LifecycleState v) {
-    $_setField(12, v);
-  }
-
+  set state($5.LifecycleState value) => $_setField(12, value);
   @$pb.TagNumber(12)
   $core.bool hasState() => $_has(11);
   @$pb.TagNumber(12)
   void clearState() => $_clearField(12);
 
-  ///  Output only. The hosted URI of the environment.
+  /// Output only. The hosted URI of the environment.
   ///
-  ///  Will be empty if the environment is not yet deployed.
+  /// Will be empty if the environment is not yet deployed.
   @$pb.TagNumber(13)
   $core.String get uri => $_getSZ(12);
   @$pb.TagNumber(13)
-  set uri($core.String v) {
-    $_setString(12, v);
-  }
-
+  set uri($core.String value) => $_setString(12, value);
   @$pb.TagNumber(13)
   $core.bool hasUri() => $_has(12);
   @$pb.TagNumber(13)
@@ -326,31 +266,25 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.String? requestId,
     $core.bool? validateOnly,
   }) {
-    final $result = create();
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (projectEnvironment != null) {
-      $result.projectEnvironment = projectEnvironment;
-    }
-    if (projectEnvironmentId != null) {
-      $result.projectEnvironmentId = projectEnvironmentId;
-    }
-    if (requestId != null) {
-      $result.requestId = requestId;
-    }
-    if (validateOnly != null) {
-      $result.validateOnly = validateOnly;
-    }
-    return $result;
+    final result = create();
+    if (parent != null) result.parent = parent;
+    if (projectEnvironment != null)
+      result.projectEnvironment = projectEnvironment;
+    if (projectEnvironmentId != null)
+      result.projectEnvironmentId = projectEnvironmentId;
+    if (requestId != null) result.requestId = requestId;
+    if (validateOnly != null) result.validateOnly = validateOnly;
+    return result;
   }
-  CreateProjectEnvironmentRequest._() : super();
-  factory CreateProjectEnvironmentRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory CreateProjectEnvironmentRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  CreateProjectEnvironmentRequest._();
+
+  factory CreateProjectEnvironmentRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CreateProjectEnvironmentRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CreateProjectEnvironmentRequest',
@@ -365,25 +299,23 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOB(5, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CreateProjectEnvironmentRequest clone() =>
       CreateProjectEnvironmentRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CreateProjectEnvironmentRequest copyWith(
           void Function(CreateProjectEnvironmentRequest) updates) =>
       super.copyWith(
               (message) => updates(message as CreateProjectEnvironmentRequest))
           as CreateProjectEnvironmentRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static CreateProjectEnvironmentRequest create() =>
       CreateProjectEnvironmentRequest._();
+  @$core.override
   CreateProjectEnvironmentRequest createEmptyInstance() => create();
   static $pb.PbList<CreateProjectEnvironmentRequest> createRepeated() =>
       $pb.PbList<CreateProjectEnvironmentRequest>();
@@ -397,10 +329,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
-  set parent($core.String v) {
-    $_setString(0, v);
-  }
-
+  set parent($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
@@ -410,10 +339,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ProjectEnvironment get projectEnvironment => $_getN(1);
   @$pb.TagNumber(2)
-  set projectEnvironment(ProjectEnvironment v) {
-    $_setField(2, v);
-  }
-
+  set projectEnvironment(ProjectEnvironment value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasProjectEnvironment() => $_has(1);
   @$pb.TagNumber(2)
@@ -421,16 +347,13 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ProjectEnvironment ensureProjectEnvironment() => $_ensure(1);
 
-  ///  Required. The identifier to use for the environment.
+  /// Required. The identifier to use for the environment.
   ///
-  ///  It must be 3 to 30 lowercase ASCII letters, digits, or hyphens.
+  /// It must be 3 to 30 lowercase ASCII letters, digits, or hyphens.
   @$pb.TagNumber(3)
   $core.String get projectEnvironmentId => $_getSZ(2);
   @$pb.TagNumber(3)
-  set projectEnvironmentId($core.String v) {
-    $_setString(2, v);
-  }
-
+  set projectEnvironmentId($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasProjectEnvironmentId() => $_has(2);
   @$pb.TagNumber(3)
@@ -441,10 +364,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get requestId => $_getSZ(3);
   @$pb.TagNumber(4)
-  set requestId($core.String v) {
-    $_setString(3, v);
-  }
-
+  set requestId($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasRequestId() => $_has(3);
   @$pb.TagNumber(4)
@@ -455,10 +375,7 @@ class CreateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get validateOnly => $_getBF(4);
   @$pb.TagNumber(5)
-  set validateOnly($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set validateOnly($core.bool value) => $_setBool(4, value);
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
@@ -470,19 +387,19 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
   factory GetProjectEnvironmentRequest({
     $core.String? name,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    return result;
   }
-  GetProjectEnvironmentRequest._() : super();
-  factory GetProjectEnvironmentRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory GetProjectEnvironmentRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  GetProjectEnvironmentRequest._();
+
+  factory GetProjectEnvironmentRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetProjectEnvironmentRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GetProjectEnvironmentRequest',
@@ -492,25 +409,23 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetProjectEnvironmentRequest clone() =>
       GetProjectEnvironmentRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetProjectEnvironmentRequest copyWith(
           void Function(GetProjectEnvironmentRequest) updates) =>
       super.copyWith(
               (message) => updates(message as GetProjectEnvironmentRequest))
           as GetProjectEnvironmentRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static GetProjectEnvironmentRequest create() =>
       GetProjectEnvironmentRequest._();
+  @$core.override
   GetProjectEnvironmentRequest createEmptyInstance() => create();
   static $pb.PbList<GetProjectEnvironmentRequest> createRepeated() =>
       $pb.PbList<GetProjectEnvironmentRequest>();
@@ -523,10 +438,7 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -537,36 +449,29 @@ class GetProjectEnvironmentRequest extends $pb.GeneratedMessage {
 class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   factory UpdateProjectEnvironmentRequest({
     ProjectEnvironment? projectEnvironment,
-    $12.FieldMask? updateMask,
+    $3.FieldMask? updateMask,
     $core.String? requestId,
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
-    final $result = create();
-    if (projectEnvironment != null) {
-      $result.projectEnvironment = projectEnvironment;
-    }
-    if (updateMask != null) {
-      $result.updateMask = updateMask;
-    }
-    if (requestId != null) {
-      $result.requestId = requestId;
-    }
-    if (allowMissing != null) {
-      $result.allowMissing = allowMissing;
-    }
-    if (validateOnly != null) {
-      $result.validateOnly = validateOnly;
-    }
-    return $result;
+    final result = create();
+    if (projectEnvironment != null)
+      result.projectEnvironment = projectEnvironment;
+    if (updateMask != null) result.updateMask = updateMask;
+    if (requestId != null) result.requestId = requestId;
+    if (allowMissing != null) result.allowMissing = allowMissing;
+    if (validateOnly != null) result.validateOnly = validateOnly;
+    return result;
   }
-  UpdateProjectEnvironmentRequest._() : super();
-  factory UpdateProjectEnvironmentRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory UpdateProjectEnvironmentRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  UpdateProjectEnvironmentRequest._();
+
+  factory UpdateProjectEnvironmentRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UpdateProjectEnvironmentRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UpdateProjectEnvironmentRequest',
@@ -575,32 +480,30 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOM<ProjectEnvironment>(1, _omitFieldNames ? '' : 'projectEnvironment',
         subBuilder: ProjectEnvironment.create)
-    ..aOM<$12.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $12.FieldMask.create)
+    ..aOM<$3.FieldMask>(2, _omitFieldNames ? '' : 'updateMask',
+        subBuilder: $3.FieldMask.create)
     ..aOS(3, _omitFieldNames ? '' : 'requestId')
     ..aOB(4, _omitFieldNames ? '' : 'allowMissing')
     ..aOB(5, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UpdateProjectEnvironmentRequest clone() =>
       UpdateProjectEnvironmentRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UpdateProjectEnvironmentRequest copyWith(
           void Function(UpdateProjectEnvironmentRequest) updates) =>
       super.copyWith(
               (message) => updates(message as UpdateProjectEnvironmentRequest))
           as UpdateProjectEnvironmentRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static UpdateProjectEnvironmentRequest create() =>
       UpdateProjectEnvironmentRequest._();
+  @$core.override
   UpdateProjectEnvironmentRequest createEmptyInstance() => create();
   static $pb.PbList<UpdateProjectEnvironmentRequest> createRepeated() =>
       $pb.PbList<UpdateProjectEnvironmentRequest>();
@@ -614,10 +517,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ProjectEnvironment get projectEnvironment => $_getN(0);
   @$pb.TagNumber(1)
-  set projectEnvironment(ProjectEnvironment v) {
-    $_setField(1, v);
-  }
-
+  set projectEnvironment(ProjectEnvironment value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasProjectEnvironment() => $_has(0);
   @$pb.TagNumber(1)
@@ -627,28 +527,22 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
 
   /// Optional. The update mask to apply to the environment.
   @$pb.TagNumber(2)
-  $12.FieldMask get updateMask => $_getN(1);
+  $3.FieldMask get updateMask => $_getN(1);
   @$pb.TagNumber(2)
-  set updateMask($12.FieldMask v) {
-    $_setField(2, v);
-  }
-
+  set updateMask($3.FieldMask value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasUpdateMask() => $_has(1);
   @$pb.TagNumber(2)
   void clearUpdateMask() => $_clearField(2);
   @$pb.TagNumber(2)
-  $12.FieldMask ensureUpdateMask() => $_ensure(1);
+  $3.FieldMask ensureUpdateMask() => $_ensure(1);
 
   /// Optional. The request ID to use for the update request. If provided, ensures this
   /// request is idempotent.
   @$pb.TagNumber(3)
   $core.String get requestId => $_getSZ(2);
   @$pb.TagNumber(3)
-  set requestId($core.String v) {
-    $_setString(2, v);
-  }
-
+  set requestId($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasRequestId() => $_has(2);
   @$pb.TagNumber(3)
@@ -659,10 +553,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool get allowMissing => $_getBF(3);
   @$pb.TagNumber(4)
-  set allowMissing($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set allowMissing($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
@@ -673,10 +564,7 @@ class UpdateProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get validateOnly => $_getBF(4);
   @$pb.TagNumber(5)
-  set validateOnly($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set validateOnly($core.bool value) => $_setBool(4, value);
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
@@ -692,31 +580,23 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
     $core.String? filter,
     $core.String? orderBy,
   }) {
-    final $result = create();
-    if (parent != null) {
-      $result.parent = parent;
-    }
-    if (pageSize != null) {
-      $result.pageSize = pageSize;
-    }
-    if (pageToken != null) {
-      $result.pageToken = pageToken;
-    }
-    if (filter != null) {
-      $result.filter = filter;
-    }
-    if (orderBy != null) {
-      $result.orderBy = orderBy;
-    }
-    return $result;
+    final result = create();
+    if (parent != null) result.parent = parent;
+    if (pageSize != null) result.pageSize = pageSize;
+    if (pageToken != null) result.pageToken = pageToken;
+    if (filter != null) result.filter = filter;
+    if (orderBy != null) result.orderBy = orderBy;
+    return result;
   }
-  ListProjectEnvironmentsRequest._() : super();
-  factory ListProjectEnvironmentsRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ListProjectEnvironmentsRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ListProjectEnvironmentsRequest._();
+
+  factory ListProjectEnvironmentsRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListProjectEnvironmentsRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ListProjectEnvironmentsRequest',
@@ -730,25 +610,23 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'orderBy')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListProjectEnvironmentsRequest clone() =>
       ListProjectEnvironmentsRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListProjectEnvironmentsRequest copyWith(
           void Function(ListProjectEnvironmentsRequest) updates) =>
       super.copyWith(
               (message) => updates(message as ListProjectEnvironmentsRequest))
           as ListProjectEnvironmentsRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ListProjectEnvironmentsRequest create() =>
       ListProjectEnvironmentsRequest._();
+  @$core.override
   ListProjectEnvironmentsRequest createEmptyInstance() => create();
   static $pb.PbList<ListProjectEnvironmentsRequest> createRepeated() =>
       $pb.PbList<ListProjectEnvironmentsRequest>();
@@ -761,10 +639,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get parent => $_getSZ(0);
   @$pb.TagNumber(1)
-  set parent($core.String v) {
-    $_setString(0, v);
-  }
-
+  set parent($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasParent() => $_has(0);
   @$pb.TagNumber(1)
@@ -775,10 +650,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get pageSize => $_getIZ(1);
   @$pb.TagNumber(2)
-  set pageSize($core.int v) {
-    $_setSignedInt32(1, v);
-  }
-
+  set pageSize($core.int value) => $_setSignedInt32(1, value);
   @$pb.TagNumber(2)
   $core.bool hasPageSize() => $_has(1);
   @$pb.TagNumber(2)
@@ -791,10 +663,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get pageToken => $_getSZ(2);
   @$pb.TagNumber(3)
-  set pageToken($core.String v) {
-    $_setString(2, v);
-  }
-
+  set pageToken($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasPageToken() => $_has(2);
   @$pb.TagNumber(3)
@@ -804,10 +673,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get filter => $_getSZ(3);
   @$pb.TagNumber(4)
-  set filter($core.String v) {
-    $_setString(3, v);
-  }
-
+  set filter($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasFilter() => $_has(3);
   @$pb.TagNumber(4)
@@ -817,10 +683,7 @@ class ListProjectEnvironmentsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get orderBy => $_getSZ(4);
   @$pb.TagNumber(5)
-  set orderBy($core.String v) {
-    $_setString(4, v);
-  }
-
+  set orderBy($core.String value) => $_setString(4, value);
   @$pb.TagNumber(5)
   $core.bool hasOrderBy() => $_has(4);
   @$pb.TagNumber(5)
@@ -833,22 +696,21 @@ class ListProjectEnvironmentsResponse extends $pb.GeneratedMessage {
     $core.Iterable<ProjectEnvironment>? projectEnvironments,
     $core.String? nextPageToken,
   }) {
-    final $result = create();
-    if (projectEnvironments != null) {
-      $result.projectEnvironments.addAll(projectEnvironments);
-    }
-    if (nextPageToken != null) {
-      $result.nextPageToken = nextPageToken;
-    }
-    return $result;
+    final result = create();
+    if (projectEnvironments != null)
+      result.projectEnvironments.addAll(projectEnvironments);
+    if (nextPageToken != null) result.nextPageToken = nextPageToken;
+    return result;
   }
-  ListProjectEnvironmentsResponse._() : super();
-  factory ListProjectEnvironmentsResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ListProjectEnvironmentsResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ListProjectEnvironmentsResponse._();
+
+  factory ListProjectEnvironmentsResponse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ListProjectEnvironmentsResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ListProjectEnvironmentsResponse',
@@ -861,25 +723,23 @@ class ListProjectEnvironmentsResponse extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'nextPageToken')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListProjectEnvironmentsResponse clone() =>
       ListProjectEnvironmentsResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListProjectEnvironmentsResponse copyWith(
           void Function(ListProjectEnvironmentsResponse) updates) =>
       super.copyWith(
               (message) => updates(message as ListProjectEnvironmentsResponse))
           as ListProjectEnvironmentsResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ListProjectEnvironmentsResponse create() =>
       ListProjectEnvironmentsResponse._();
+  @$core.override
   ListProjectEnvironmentsResponse createEmptyInstance() => create();
   static $pb.PbList<ListProjectEnvironmentsResponse> createRepeated() =>
       $pb.PbList<ListProjectEnvironmentsResponse>();
@@ -899,10 +759,7 @@ class ListProjectEnvironmentsResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get nextPageToken => $_getSZ(1);
   @$pb.TagNumber(2)
-  set nextPageToken($core.String v) {
-    $_setString(1, v);
-  }
-
+  set nextPageToken($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasNextPageToken() => $_has(1);
   @$pb.TagNumber(2)
@@ -918,31 +775,23 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.bool? allowMissing,
     $core.bool? validateOnly,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (requestId != null) {
-      $result.requestId = requestId;
-    }
-    if (etag != null) {
-      $result.etag = etag;
-    }
-    if (allowMissing != null) {
-      $result.allowMissing = allowMissing;
-    }
-    if (validateOnly != null) {
-      $result.validateOnly = validateOnly;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (requestId != null) result.requestId = requestId;
+    if (etag != null) result.etag = etag;
+    if (allowMissing != null) result.allowMissing = allowMissing;
+    if (validateOnly != null) result.validateOnly = validateOnly;
+    return result;
   }
-  DeleteProjectEnvironmentRequest._() : super();
-  factory DeleteProjectEnvironmentRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DeleteProjectEnvironmentRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DeleteProjectEnvironmentRequest._();
+
+  factory DeleteProjectEnvironmentRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DeleteProjectEnvironmentRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DeleteProjectEnvironmentRequest',
@@ -956,25 +805,23 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOB(5, _omitFieldNames ? '' : 'validateOnly')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeleteProjectEnvironmentRequest clone() =>
       DeleteProjectEnvironmentRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeleteProjectEnvironmentRequest copyWith(
           void Function(DeleteProjectEnvironmentRequest) updates) =>
       super.copyWith(
               (message) => updates(message as DeleteProjectEnvironmentRequest))
           as DeleteProjectEnvironmentRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DeleteProjectEnvironmentRequest create() =>
       DeleteProjectEnvironmentRequest._();
+  @$core.override
   DeleteProjectEnvironmentRequest createEmptyInstance() => create();
   static $pb.PbList<DeleteProjectEnvironmentRequest> createRepeated() =>
       $pb.PbList<DeleteProjectEnvironmentRequest>();
@@ -988,10 +835,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1002,10 +846,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get requestId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set requestId($core.String v) {
-    $_setString(1, v);
-  }
-
+  set requestId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasRequestId() => $_has(1);
   @$pb.TagNumber(2)
@@ -1016,10 +857,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get etag => $_getSZ(2);
   @$pb.TagNumber(3)
-  set etag($core.String v) {
-    $_setString(2, v);
-  }
-
+  set etag($core.String value) => $_setString(2, value);
   @$pb.TagNumber(3)
   $core.bool hasEtag() => $_has(2);
   @$pb.TagNumber(3)
@@ -1030,10 +868,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool get allowMissing => $_getBF(3);
   @$pb.TagNumber(4)
-  set allowMissing($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set allowMissing($core.bool value) => $_setBool(3, value);
   @$pb.TagNumber(4)
   $core.bool hasAllowMissing() => $_has(3);
   @$pb.TagNumber(4)
@@ -1043,10 +878,7 @@ class DeleteProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get validateOnly => $_getBF(4);
   @$pb.TagNumber(5)
-  set validateOnly($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set validateOnly($core.bool value) => $_setBool(4, value);
   @$pb.TagNumber(5)
   $core.bool hasValidateOnly() => $_has(4);
   @$pb.TagNumber(5)
@@ -1063,28 +895,22 @@ class ProjectAsset extends $pb.GeneratedMessage {
     $core.List<$core.int>? inline,
     $core.String? etag,
   }) {
-    final $result = create();
-    if (type != null) {
-      $result.type = type;
-    }
-    if (filename != null) {
-      $result.filename = filename;
-    }
-    if (inline != null) {
-      $result.inline = inline;
-    }
-    if (etag != null) {
-      $result.etag = etag;
-    }
-    return $result;
+    final result = create();
+    if (type != null) result.type = type;
+    if (filename != null) result.filename = filename;
+    if (inline != null) result.inline = inline;
+    if (etag != null) result.etag = etag;
+    return result;
   }
-  ProjectAsset._() : super();
-  factory ProjectAsset.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ProjectAsset.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ProjectAsset._();
+
+  factory ProjectAsset.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ProjectAsset.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, ProjectAsset_Asset>
       _ProjectAsset_AssetByTag = {
@@ -1107,21 +933,19 @@ class ProjectAsset extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'etag')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectAsset clone() => ProjectAsset()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectAsset copyWith(void Function(ProjectAsset) updates) =>
       super.copyWith((message) => updates(message as ProjectAsset))
           as ProjectAsset;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ProjectAsset create() => ProjectAsset._();
+  @$core.override
   ProjectAsset createEmptyInstance() => create();
   static $pb.PbList<ProjectAsset> createRepeated() =>
       $pb.PbList<ProjectAsset>();
@@ -1137,10 +961,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ProjectAsset_Type get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(ProjectAsset_Type v) {
-    $_setField(1, v);
-  }
-
+  set type(ProjectAsset_Type value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -1150,10 +971,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get filename => $_getSZ(1);
   @$pb.TagNumber(2)
-  set filename($core.String v) {
-    $_setString(1, v);
-  }
-
+  set filename($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasFilename() => $_has(1);
   @$pb.TagNumber(2)
@@ -1163,10 +981,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.List<$core.int> get inline => $_getN(2);
   @$pb.TagNumber(3)
-  set inline($core.List<$core.int> v) {
-    $_setBytes(2, v);
-  }
-
+  set inline($core.List<$core.int> value) => $_setBytes(2, value);
   @$pb.TagNumber(3)
   $core.bool hasInline() => $_has(2);
   @$pb.TagNumber(3)
@@ -1177,10 +992,7 @@ class ProjectAsset extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get etag => $_getSZ(3);
   @$pb.TagNumber(4)
-  set etag($core.String v) {
-    $_setString(3, v);
-  }
-
+  set etag($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasEtag() => $_has(3);
   @$pb.TagNumber(4)
@@ -1194,37 +1006,28 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     $core.String? requestId,
     $core.bool? validateOnly,
     $core.String? etag,
-    $13.Any? resolvedProjectAst,
+    $4.Any? resolvedProjectAst,
     $core.Iterable<ProjectAsset>? assets,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    if (requestId != null) {
-      $result.requestId = requestId;
-    }
-    if (validateOnly != null) {
-      $result.validateOnly = validateOnly;
-    }
-    if (etag != null) {
-      $result.etag = etag;
-    }
-    if (resolvedProjectAst != null) {
-      $result.resolvedProjectAst = resolvedProjectAst;
-    }
-    if (assets != null) {
-      $result.assets.addAll(assets);
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    if (requestId != null) result.requestId = requestId;
+    if (validateOnly != null) result.validateOnly = validateOnly;
+    if (etag != null) result.etag = etag;
+    if (resolvedProjectAst != null)
+      result.resolvedProjectAst = resolvedProjectAst;
+    if (assets != null) result.assets.addAll(assets);
+    return result;
   }
-  DeployProjectEnvironmentRequest._() : super();
-  factory DeployProjectEnvironmentRequest.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DeployProjectEnvironmentRequest.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DeployProjectEnvironmentRequest._();
+
+  factory DeployProjectEnvironmentRequest.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DeployProjectEnvironmentRequest.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DeployProjectEnvironmentRequest',
@@ -1235,31 +1038,29 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'requestId')
     ..aOB(3, _omitFieldNames ? '' : 'validateOnly')
     ..aOS(4, _omitFieldNames ? '' : 'etag')
-    ..aOM<$13.Any>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
-        subBuilder: $13.Any.create)
+    ..aOM<$4.Any>(5, _omitFieldNames ? '' : 'resolvedProjectAst',
+        subBuilder: $4.Any.create)
     ..pc<ProjectAsset>(6, _omitFieldNames ? '' : 'assets', $pb.PbFieldType.PM,
         subBuilder: ProjectAsset.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeployProjectEnvironmentRequest clone() =>
       DeployProjectEnvironmentRequest()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeployProjectEnvironmentRequest copyWith(
           void Function(DeployProjectEnvironmentRequest) updates) =>
       super.copyWith(
               (message) => updates(message as DeployProjectEnvironmentRequest))
           as DeployProjectEnvironmentRequest;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DeployProjectEnvironmentRequest create() =>
       DeployProjectEnvironmentRequest._();
+  @$core.override
   DeployProjectEnvironmentRequest createEmptyInstance() => create();
   static $pb.PbList<DeployProjectEnvironmentRequest> createRepeated() =>
       $pb.PbList<DeployProjectEnvironmentRequest>();
@@ -1273,10 +1074,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -1287,10 +1085,7 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get requestId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set requestId($core.String v) {
-    $_setString(1, v);
-  }
-
+  set requestId($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasRequestId() => $_has(1);
   @$pb.TagNumber(2)
@@ -1300,51 +1095,42 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get validateOnly => $_getBF(2);
   @$pb.TagNumber(3)
-  set validateOnly($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set validateOnly($core.bool value) => $_setBool(2, value);
   @$pb.TagNumber(3)
   $core.bool hasValidateOnly() => $_has(2);
   @$pb.TagNumber(3)
   void clearValidateOnly() => $_clearField(3);
 
-  ///  Optional. The etag of the environment.
+  /// Optional. The etag of the environment.
   ///
-  ///  If provided, it must match the server's etag.
+  /// If provided, it must match the server's etag.
   @$pb.TagNumber(4)
   $core.String get etag => $_getSZ(3);
   @$pb.TagNumber(4)
-  set etag($core.String v) {
-    $_setString(3, v);
-  }
-
+  set etag($core.String value) => $_setString(3, value);
   @$pb.TagNumber(4)
   $core.bool hasEtag() => $_has(3);
   @$pb.TagNumber(4)
   void clearEtag() => $_clearField(4);
 
-  ///  Input only. The environment's project AST.
+  /// Input only. The environment's project AST.
   ///
-  ///  Supported types:
-  ///  - [celest.ast.v1.ResolvedProject]
+  /// Supported types:
+  /// - [celest.ast.v1.ResolvedProject]
   ///
-  ///  (-- api-linter: core::0146::any=disabled
-  ///      aip.dev/not-precedent: Since AST protos are maintained separately, this allows
-  ///                             independent versioning and publishing of protobuf/Dart code. --)
+  /// (-- api-linter: core::0146::any=disabled
+  ///     aip.dev/not-precedent: Since AST protos are maintained separately, this allows
+  ///                            independent versioning and publishing of protobuf/Dart code. --)
   @$pb.TagNumber(5)
-  $13.Any get resolvedProjectAst => $_getN(4);
+  $4.Any get resolvedProjectAst => $_getN(4);
   @$pb.TagNumber(5)
-  set resolvedProjectAst($13.Any v) {
-    $_setField(5, v);
-  }
-
+  set resolvedProjectAst($4.Any value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasResolvedProjectAst() => $_has(4);
   @$pb.TagNumber(5)
   void clearResolvedProjectAst() => $_clearField(5);
   @$pb.TagNumber(5)
-  $13.Any ensureResolvedProjectAst() => $_ensure(4);
+  $4.Any ensureResolvedProjectAst() => $_ensure(4);
 
   /// Input only. The assets of the environment.
   @$pb.TagNumber(6)
@@ -1355,24 +1141,23 @@ class DeployProjectEnvironmentRequest extends $pb.GeneratedMessage {
 class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   factory DeployProjectEnvironmentResponse({
     $core.String? uri,
-    $13.Any? project,
+    $4.Any? project,
   }) {
-    final $result = create();
-    if (uri != null) {
-      $result.uri = uri;
-    }
-    if (project != null) {
-      $result.project = project;
-    }
-    return $result;
+    final result = create();
+    if (uri != null) result.uri = uri;
+    if (project != null) result.project = project;
+    return result;
   }
-  DeployProjectEnvironmentResponse._() : super();
-  factory DeployProjectEnvironmentResponse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DeployProjectEnvironmentResponse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DeployProjectEnvironmentResponse._();
+
+  factory DeployProjectEnvironmentResponse.fromBuffer(
+          $core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DeployProjectEnvironmentResponse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DeployProjectEnvironmentResponse',
@@ -1380,29 +1165,27 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
           _omitMessageNames ? '' : 'celest.cloud.v1alpha1'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'uri')
-    ..aOM<$13.Any>(2, _omitFieldNames ? '' : 'project',
-        subBuilder: $13.Any.create)
+    ..aOM<$4.Any>(2, _omitFieldNames ? '' : 'project',
+        subBuilder: $4.Any.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeployProjectEnvironmentResponse clone() =>
       DeployProjectEnvironmentResponse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeployProjectEnvironmentResponse copyWith(
           void Function(DeployProjectEnvironmentResponse) updates) =>
       super.copyWith(
               (message) => updates(message as DeployProjectEnvironmentResponse))
           as DeployProjectEnvironmentResponse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DeployProjectEnvironmentResponse create() =>
       DeployProjectEnvironmentResponse._();
+  @$core.override
   DeployProjectEnvironmentResponse createEmptyInstance() => create();
   static $pb.PbList<DeployProjectEnvironmentResponse> createRepeated() =>
       $pb.PbList<DeployProjectEnvironmentResponse>();
@@ -1416,37 +1199,32 @@ class DeployProjectEnvironmentResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get uri => $_getSZ(0);
   @$pb.TagNumber(1)
-  set uri($core.String v) {
-    $_setString(0, v);
-  }
-
+  set uri($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasUri() => $_has(0);
   @$pb.TagNumber(1)
   void clearUri() => $_clearField(1);
 
-  ///  The resolved project of the deployed environment, with any missing values filled in.
+  /// The resolved project of the deployed environment, with any missing values filled in.
   ///
-  ///  Will be the same type passed in via [celest.cloud.v1alpha1.ProjectEnvironments.DeployProjectEnvironment].
+  /// Will be the same type passed in via [celest.cloud.v1alpha1.ProjectEnvironments.DeployProjectEnvironment].
   ///
-  ///  (-- api-linter: core::0146::any=disabled
-  ///      aip.dev/not-precedent: Since AST protos are maintained separately, this allows
-  ///                             independent versioning and publishing of protobuf/Dart code. --)
+  /// (-- api-linter: core::0146::any=disabled
+  ///     aip.dev/not-precedent: Since AST protos are maintained separately, this allows
+  ///                            independent versioning and publishing of protobuf/Dart code. --)
   @$pb.TagNumber(2)
-  $13.Any get project => $_getN(1);
+  $4.Any get project => $_getN(1);
   @$pb.TagNumber(2)
-  set project($13.Any v) {
-    $_setField(2, v);
-  }
-
+  set project($4.Any value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasProject() => $_has(1);
   @$pb.TagNumber(2)
   void clearProject() => $_clearField(2);
   @$pb.TagNumber(2)
-  $13.Any ensureProject() => $_ensure(1);
+  $4.Any ensureProject() => $_ensure(1);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');
