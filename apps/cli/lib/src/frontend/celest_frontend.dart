@@ -11,6 +11,7 @@ import 'package:celest_ast/celest_ast.dart' hide Sdk;
 import 'package:celest_cli/src/analyzer/analysis_error.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
 import 'package:celest_cli/src/analyzer/celest_analyzer.dart';
+import 'package:celest_cli/src/analyzer/project_parser.dart';
 import 'package:celest_cli/src/ast/project_diff.dart';
 import 'package:celest_cli/src/cli/stop_signal.dart';
 import 'package:celest_cli/src/codegen/api/dockerfile_generator.dart';
@@ -333,6 +334,8 @@ final class CelestFrontend with CloudRepository {
           currentProgress = null;
           _logErrors(errors);
         }
+
+        await _updateDependencies();
 
         final analysisResult = await _analyzeProject(
           migrateProject: migrateProject,
@@ -756,6 +759,24 @@ final class CelestFrontend with CloudRepository {
       await close();
     }
   }
+
+  /// Parses the project to look for any required analysis dependencies.
+  Future<void> _updateDependencies() =>
+      performance.trace('CelestFrontend', 'updateDependencies', () async {
+        logger.fine('Parsing project...');
+        final parser = CelestProjectParser(
+          projectRoot: projectPaths.projectRoot,
+          projectDart: projectPaths.projectDart,
+          analysisContext: celestProject.analysisContext,
+        );
+        final dependencies = parser.parseDependencies();
+        if (dependencies.isNotEmpty) {
+          if (await dependencies.save()) {
+            celestProject.invalidatePubspec();
+          }
+        }
+        stopSignal.check();
+      });
 
   /// Analyzes the project and reports if there are any errors.
   Future<CelestAnalysisResult> _analyzeProject({
