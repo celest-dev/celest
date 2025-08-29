@@ -137,7 +137,7 @@ final class CelestProject {
   AnalysisOptions get analysisOptions => _analysisOptions;
 
   final ByteStore _byteStore;
-  late final _analysisContextCollection = AnalysisContextCollectionImpl(
+  late var _analysisContextCollection = AnalysisContextCollectionImpl(
     includedPaths: [projectPaths.projectRoot],
     sdkPath: Sdk.current.sdkPath,
     // Needed for collecting subtypes.
@@ -170,8 +170,8 @@ final class CelestProject {
   final ParentProject? parentProject;
 
   /// The [AnalysisContext] for the current project.
-  late final DriverBasedAnalysisContext analysisContext =
-      _analysisContextCollection.contextFor(projectPaths.projectDart);
+  late DriverBasedAnalysisContext analysisContext = _analysisContextCollection
+      .contextFor(projectPaths.projectDart);
 
   /// The [CelestConfig] for the current project.
   final CelestConfig config;
@@ -219,6 +219,19 @@ final class CelestProject {
       'Changed files: ${changedFiles.join(Platform.lineTerminator)}',
     );
     return changedFiles.toSet();
+  }
+
+  void invalidatePubspec() {
+    _analysisContextCollection = AnalysisContextCollectionImpl(
+      includedPaths: [projectPaths.projectRoot],
+      sdkPath: Sdk.current.sdkPath,
+      // Needed for collecting subtypes.
+      enableIndex: true,
+      byteStore: _byteStore,
+    );
+    analysisContext = _analysisContextCollection.contextFor(
+      projectPaths.projectDart,
+    );
   }
 
   /// The name of the project as declared in the `project.dart` file.

@@ -1,6 +1,7 @@
 ## NEXT
 
 - fix: Improved reload handling
+- fix: Ensure all dependencies are correctly resolved
 
 ## 1.0.14
 
