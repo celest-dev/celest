@@ -391,10 +391,14 @@ final class CelestFrontend with CloudRepository {
                     )).port,
               );
             } on CompilationException catch (e, st) {
+              currentProgress!.fail();
               cliLogger.err(
                 'Project has errors. Please fix them and save the '
                 'corresponding files.',
               );
+              for (final compilerLine in e.compilerOutput) {
+                cliLogger.err(compilerLine);
+              }
               performance.captureError(e, stackTrace: st);
               break;
             }
@@ -453,8 +457,8 @@ final class CelestFrontend with CloudRepository {
         // there is one.
         final exitCode = await Future.any<int?>([
           _nextChangeSet().then((_) => null),
-          if (childProcess case final childProcess?)
-            Future.value(childProcess.exitCode),
+          if (childProcess case final childProcess? when childProcess.isStarted)
+            childProcess.exitCode,
         ]);
         if (exitCode != null) {
           return exitCode;

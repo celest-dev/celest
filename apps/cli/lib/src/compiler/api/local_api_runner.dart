@@ -11,7 +11,6 @@ import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/json.dart';
 import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/run.dart';
-import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:vm_service/vm_service.dart';
@@ -39,7 +38,6 @@ final class LocalApiRunner {
   final FrontendServerClient _client;
   final Process _localApiProcess;
   VmService? _vmService;
-  late final String _vmIsolateId;
 
   /// The WebSocket URI of the running Celest server.
   String get wsUri => _vmService!.wsUri!;
@@ -53,7 +51,6 @@ final class LocalApiRunner {
     required String environmentId,
     required Map<String, String> configValues,
     required bool verbose,
-    List<String> additionalSources = const [],
     int? port,
     @visibleForTesting Duration? vmServiceTimeout,
     @visibleForTesting StringSink? stdoutPipe,
@@ -269,7 +266,7 @@ final class LocalApiRunner {
   );
 
   /// Waits for the main Isolate to be available, resume it, then return its ID.
-  static Future<String> _waitForIsolatesAndResume(VmService vmService) async {
+  static Future<void> _waitForIsolatesAndResume(VmService vmService) async {
     var vm = await vmService.getVM();
     var isolates = vm.isolates;
     final stopwatch = Stopwatch()..start();
@@ -288,14 +285,6 @@ final class LocalApiRunner {
       'VM started in ${stopwatch.elapsedMilliseconds}ms. '
       'Isolates: $isolates',
     );
-    var isolateRef = isolates.firstWhereOrNull(
-      (isolate) => isolate.isSystemIsolate ?? false,
-    );
-    isolateRef ??= isolates.firstOrNull;
-    if (isolateRef == null) {
-      throw StateError('Could not determine main isolate ID.');
-    }
-    return isolateRef.id!;
   }
 
   // Doesn't seem that we need pause-on-start anymore, but keeping code around
@@ -447,7 +436,7 @@ final class LocalApiRunner {
       });
       await _vmService!.streamListen(EventStreams.kLogging);
 
-      _vmIsolateId = await _waitForIsolatesAndResume(_vmService!);
+      await _waitForIsolatesAndResume(_vmService!);
 
       await Future.any([
         serverStartedCompleter.future,
@@ -480,7 +469,11 @@ final class LocalApiRunner {
     ]);
     final dillOutput = _client.expectOutput(result);
     _logger.fine('Hot reloading local API with entrypoint: $dillOutput');
-    await _vmService!.reloadSources(_vmIsolateId, rootLibUri: dillOutput);
+
+    final isolates = await _vmService!.getVM().then((vm) => vm.isolates!);
+    for (final isolate in isolates) {
+      await _vmService!.reloadSources(isolate.id!, rootLibUri: dillOutput);
+    }
   }
 
   // Copied from `package:flutter_tools/src/run_hot.dart`
@@ -546,9 +539,10 @@ final class LocalApiRunner {
 }
 
 final class CompilationException implements Exception {
-  CompilationException(this.message);
+  CompilationException(this.message, [this.compilerOutput = const []]);
 
   final String message;
+  final List<String> compilerOutput;
 
   @override
   String toString() => message;
@@ -563,8 +557,10 @@ extension on FrontendServerClient {
     switch (result) {
       case CompileResult(errorCount: > 0):
         _logger.finest('Error compiling local API', result.debugResult);
+        accept(); // Always accept so we can call `compile` again.
         throw CompilationException(
           'Error compiling local API: ${result.debugResult}',
+          result.compilerOutputLines.toList(),
         );
       case CompileResult(:final dillOutput?):
         accept();
