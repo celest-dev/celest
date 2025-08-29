@@ -1,3 +1,7 @@
+## NEXT
+
+- fix: Improved reload handling
+
 ## 1.0.14
 
 - feat: Allow overriding client environment with Dart define
