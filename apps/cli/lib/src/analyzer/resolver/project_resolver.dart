@@ -220,6 +220,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
   /// Finds the project in the current workspace.
   Future<ast.Project?> resolveProject({
     required ParsedLibraryResult projectLibrary,
+    required String environmentId,
   }) async {
     final declarations = projectLibrary.units
         .expand((unit) => unit.unit.declarations)
@@ -305,7 +306,9 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
 
     return ast.Project(
       name: projectName,
-      environment: 'local', // TODO(dnys1): Pass in from CLI
+      environment: environmentId,
+      // Environment is provided by the CLI flag so resolved projects target
+      // the correct configuration bundle.
       displayName: projectDisplayName,
       primaryRegion: projectRegion,
       reference: refer(

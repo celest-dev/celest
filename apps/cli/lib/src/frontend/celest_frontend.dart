@@ -352,6 +352,7 @@ final class CelestFrontend with CloudRepository {
 
         final analysisResult = await _analyzeProject(
           migrateProject: migrateProject,
+          environmentId: 'local',
         );
         migrateProject = false;
 
@@ -616,6 +617,7 @@ final class CelestFrontend with CloudRepository {
 
       final analysisResult = await _analyzeProject(
         migrateProject: migrateProject,
+        environmentId: environmentId,
       );
       migrateProject = false;
 
@@ -691,6 +693,7 @@ final class CelestFrontend with CloudRepository {
 
         final analysisResult = await _analyzeProject(
           migrateProject: migrateProject,
+          environmentId: 'production',
         );
         migrateProject = false;
 
@@ -793,10 +796,12 @@ final class CelestFrontend with CloudRepository {
   /// Analyzes the project and reports if there are any errors.
   Future<CelestAnalysisResult> _analyzeProject({
     required bool migrateProject,
+    String environmentId = 'local',
   }) => performance.trace('CelestFrontend', 'analyzeProject', () async {
     logger.fine('Analyzing project...');
     final result = await analyzer.analyzeProject(
       migrateProject: migrateProject,
+      environmentId: environmentId,
     );
     stopSignal.check();
     return result;

@@ -306,6 +306,7 @@ const project = Project(name: 'cache_warmup');
   Future<CelestAnalysisResult> analyzeProject({
     bool migrateProject = false,
     bool updateResources = true,
+    String environmentId = 'local',
   }) async {
     await performance.trace(
       'CelestAnalyzer',
@@ -323,7 +324,7 @@ const project = Project(name: 'cache_warmup');
     final project = await performance.trace(
       'CelestAnalyzer',
       'findProject',
-      _findProject,
+      () => _findProject(environmentId: environmentId),
     );
     if (project == null || _errors.isNotEmpty) {
       return CelestAnalysisResult.failure(
@@ -429,7 +430,7 @@ const project = Project(name: 'cache_warmup');
     );
   }
 
-  Future<ast.Project?> _findProject() async {
+  Future<ast.Project?> _findProject({required String environmentId}) async {
     _logger.fine('Analyzing project...');
     final projectFilePath = projectPaths.projectDart;
     if (!fileSystem.file(projectFilePath).existsSync()) {
@@ -478,7 +479,10 @@ const project = Project(name: 'cache_warmup');
     //     ),
     //   );
     // }
-    return resolver.resolveProject(projectLibrary: projectLibrary);
+    return resolver.resolveProject(
+      projectLibrary: projectLibrary,
+      environmentId: environmentId,
+    );
   }
 
   Future<void> _collectApis({

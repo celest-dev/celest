@@ -299,6 +299,15 @@ void main() {
       await celestProject.close();
     });
 
+    test('analyzeProject assigns provided environment', () async {
+      celestProject = await newProject(name: 'env_override_project');
+      final analyzer = CelestAnalyzer();
+      final result = await analyzer.analyzeProject(environmentId: 'staging');
+      expect(result, isA<AnalysisSuccessResult>());
+      final project = (result as AnalysisSuccessResult).project;
+      expect(project.environment, 'staging');
+    });
+
     group('part files', () {
       testNoErrors(
         name: 'can_resolve_part_files',
