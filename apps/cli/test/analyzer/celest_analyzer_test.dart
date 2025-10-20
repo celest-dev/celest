@@ -1,5 +1,10 @@
 import 'dart:io';
 
+import 'package:_fe_analyzer_shared/src/base/errors.dart'
+    show DiagnosticCode, DiagnosticSeverity, DiagnosticType;
+import 'package:analyzer/diagnostic/diagnostic.dart';
+import 'package:analyzer/error/error.dart';
+import 'package:analyzer/src/string_source.dart';
 import 'package:celest/http.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cli/src/analyzer/analysis_result.dart';
@@ -188,6 +193,21 @@ Iterable<d.Descriptor> _nestedDescriptor(
   }
 }
 
+class _TestErrorCode extends DiagnosticCode {
+  const _TestErrorCode()
+    : super(
+        name: 'TEST_ERROR',
+        problemMessage: 'Test diagnostic message',
+        uniqueName: 'celest.test.TEST_ERROR',
+      );
+
+  @override
+  DiagnosticSeverity get severity => DiagnosticSeverity.ERROR;
+
+  @override
+  DiagnosticType get type => DiagnosticType.COMPILE_TIME_ERROR;
+}
+
 void testNoErrors({
   required String name,
   String? analysisOptions,
@@ -306,6 +326,31 @@ void main() {
       expect(result, isA<AnalysisSuccessResult>());
       final project = (result as AnalysisSuccessResult).project;
       expect(project.environment, 'staging');
+    });
+
+    test('onDiagnostic records analyzer diagnostics', () async {
+      celestProject = await newProject(
+        name: 'on_diagnostic_records_analyzer_diagnostics',
+      );
+      final analyzer = CelestAnalyzer();
+      await analyzer.init(migrateProject: false);
+      const contents = 'void myFunction() => unknownSymbol();';
+      final source = StringSource(contents, 'test.dart');
+      const errorCode = _TestErrorCode();
+      final diagnostic = Diagnostic.forValues(
+        source: source,
+        offset: contents.indexOf('unknownSymbol'),
+        length: 'unknownSymbol'.length,
+        diagnosticCode: errorCode,
+        message: errorCode.problemMessage,
+      );
+
+      analyzer.onDiagnostic(diagnostic);
+
+      expect(analyzer.errors, hasLength(1));
+      final error = analyzer.errors.single;
+      expect(error.message, contains('Test diagnostic message'));
+      expect(error.location, isNotNull);
     });
 
     group('part files', () {

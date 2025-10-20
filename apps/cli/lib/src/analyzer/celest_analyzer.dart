@@ -5,6 +5,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/listener.dart';
+import 'package:analyzer/source/source.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:analyzer/src/error/codes.dart';
@@ -27,6 +28,7 @@ import 'package:celest_cli/src/types/type_helper.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
 import 'package:celest_cli/src/utils/reference.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -107,6 +109,15 @@ const project = Project(name: 'cache_warmup');
   final List<CelestAnalysisError> _infos = [];
   final List<CelestAnalysisError> _debugs = [];
 
+  @visibleForTesting
+  List<CelestAnalysisError> get errors => List.unmodifiable(_errors);
+
+  @visibleForTesting
+  List<CelestAnalysisError> get warnings => List.unmodifiable(_warnings);
+
+  @visibleForTesting
+  List<CelestAnalysisError> get infos => List.unmodifiable(_infos);
+
   late _ScopedWidgetCollector _widgetCollector;
   late ast.ProjectBuilder _project;
   CelestProjectResolver? _resolver;
@@ -180,7 +191,14 @@ const project = Project(name: 'cache_warmup');
 
   @override
   void onDiagnostic(Diagnostic error) {
-    // TODO(dnys1): Implement
+    final severity = _severityFrom(error.severity);
+    final message = _formatDiagnosticMessage(error);
+    final location = _spanForDiagnostic(error);
+    final highlight = location?.debugHighlight(message) ?? message;
+
+    _logger.log(_logLevelFor(severity), highlight);
+
+    reportError(message, severity: severity, location: location);
   }
 
   @override
@@ -474,7 +492,7 @@ const project = Project(name: 'cache_warmup');
       return null;
     }
     _logger.finer('Resolved project file');
-    // TODO(dnys1): Some errors are okay, for example if `resources.dart` hasn't
+    // TODO(dnys1): Some errors are okay, for example if generated files haven't
     // been updated yet and references a resource that doesn't exist yet.
     // if (projectFile.errors.isNotEmpty) {
     //   reportError(
@@ -629,6 +647,61 @@ const project = Project(name: 'cache_warmup');
   Future<void> _applyMigrations() async {
     await SourceEditApplier(resolver.pendingEdits).apply();
     resolver.pendingEdits.clear();
+  }
+
+  AnalysisErrorSeverity _severityFrom(Severity severity) {
+    if (severity == Severity.error) {
+      return AnalysisErrorSeverity.error;
+    }
+    if (severity == Severity.warning) {
+      return AnalysisErrorSeverity.warning;
+    }
+    if (severity == Severity.info) {
+      return AnalysisErrorSeverity.info;
+    }
+    return AnalysisErrorSeverity.debug;
+  }
+
+  Level _logLevelFor(AnalysisErrorSeverity severity) {
+    return switch (severity) {
+      AnalysisErrorSeverity.error => Level.SEVERE,
+      AnalysisErrorSeverity.warning => Level.WARNING,
+      AnalysisErrorSeverity.info => Level.INFO,
+      AnalysisErrorSeverity.debug => Level.FINE,
+    };
+  }
+
+  String _formatDiagnosticMessage(Diagnostic diagnostic) {
+    final correction = diagnostic.correctionMessage;
+    if (correction == null || correction.isEmpty) {
+      return diagnostic.message;
+    }
+    return '${diagnostic.message}\n$correction';
+  }
+
+  SourceSpan? _spanForDiagnostic(Diagnostic diagnostic) {
+    final source = diagnostic.source;
+    final primary = diagnostic.problemMessage;
+    final offset = primary.offset;
+    final length = primary.length;
+    return _spanFromSource(source, offset, length);
+  }
+
+  SourceSpan? _spanFromSource(Source? source, int? offset, int? length) {
+    if (source == null || offset == null || offset < 0) {
+      return null;
+    }
+    final end = length != null && length > 0 ? offset + length : null;
+    try {
+      return source.toSpan(offset, end);
+    } on RangeError catch (error, stackTrace) {
+      _logger.finer(
+        'Failed to compute diagnostic span for ${source.fullName}',
+        error,
+        stackTrace,
+      );
+      return null;
+    }
   }
 }
 

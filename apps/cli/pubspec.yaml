@@ -86,6 +86,7 @@ dependencies:
   yaml_edit: 2.2.1
 
 dev_dependencies:
+  _fe_analyzer_shared: ^91.0.0
   benchmark_harness: ^2.2.2
   build: ^4.0.1
   build_runner: ^2.7.0
