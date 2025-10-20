@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
-import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
@@ -34,7 +33,7 @@ import 'package:stream_transform/stream_transform.dart';
 
 final class CelestAnalyzer
     with CelestAnalysisHelpers
-    implements AnalysisErrorListener {
+    implements DiagnosticListener {
   CelestAnalyzer._();
 
   factory CelestAnalyzer() => _instance ??= CelestAnalyzer._();
@@ -115,9 +114,9 @@ const project = Project(name: 'cache_warmup');
 
   /// Whether [code] and [message] represent a possible false-positive for
   /// missing code generation.
-  bool _missingCodegenError(AnalysisError error) {
-    switch (error.errorCode) {
-      case CompileTimeErrorCode.URI_DOES_NOT_EXIST:
+  bool _missingCodegenError(Diagnostic error) {
+    switch (error.diagnosticCode) {
+      case CompileTimeErrorCode.uriDoesNotExist:
         final regex = RegExp(r'''Target of URI doesn't exist: '(.+?)'\.''');
         final match = regex.firstMatch(error.message);
         final uri = match?.group(1);
@@ -180,8 +179,8 @@ const project = Project(name: 'cache_warmup');
   }
 
   @override
-  void onError(AnalysisError error) {
-    // TODO:
+  void onDiagnostic(Diagnostic error) {
+    // TODO(dnys1): Implement
   }
 
   @override
@@ -218,27 +217,27 @@ const project = Project(name: 'cache_warmup');
       celestConfigValues,
       jsonAnnotation,
     ) = await (
-          context.currentSession.getLibraryByUri('dart:core'),
-          context.currentSession.getLibraryByUri('dart:typed_data'),
+      context.currentSession.getLibraryByUri('dart:core'),
+      context.currentSession.getLibraryByUri('dart:typed_data'),
 
-          // Resolve the specific URIs instead of resolving the whole package
-          // (which takes much much longer).
-          context.currentSession.getLibraryByUri(
-            'package:celest_core/src/exception/cloud_exception.dart',
-          ),
-          context.currentSession.getLibraryByUri(
-            'package:celest_core/src/auth/user.dart',
-          ),
-          context.currentSession.getLibraryByUri(
-            'package:celest/src/config/config_values.dart',
-          ),
+      // Resolve the specific URIs instead of resolving the whole package
+      // (which takes much much longer).
+      context.currentSession.getLibraryByUri(
+        'package:celest_core/src/exception/cloud_exception.dart',
+      ),
+      context.currentSession.getLibraryByUri(
+        'package:celest_core/src/auth/user.dart',
+      ),
+      context.currentSession.getLibraryByUri(
+        'package:celest/src/config/config_values.dart',
+      ),
 
-          // `package:json_annotation/json_annotation.dart` is used in the
-          // generated code when serializing/deserializing models.
-          context.currentSession.getLibraryByUri(
-            'package:json_annotation/src/json_key.dart',
-          ),
-        ).wait;
+      // `package:json_annotation/json_annotation.dart` is used in the
+      // generated code when serializing/deserializing models.
+      context.currentSession.getLibraryByUri(
+        'package:json_annotation/src/json_key.dart',
+      ),
+    ).wait;
     if (celestCoreExceptions is! LibraryElementResult ||
         celestCoreUser is! LibraryElementResult) {
       await dumpPackageConfig();
@@ -265,7 +264,7 @@ const project = Project(name: 'cache_warmup');
     final secretElement = celestConfigValues.getClassElement('secret');
     typeHelper
       ..coreTypes = CoreTypes(
-        typeProvider: dartCore.element2.typeProvider,
+        typeProvider: dartCore.element.typeProvider,
         coreExceptionType: dartCore.getClassType('Exception'),
         coreErrorType: dartCore.getClassType('Error'),
         coreBigIntType: dartCore.getClassType('BigInt'),
@@ -290,18 +289,18 @@ const project = Project(name: 'cache_warmup');
         celestSecretElement: secretElement,
         jsonKeyElement: jsonAnnotationLib?.getClassElement('JsonKey'),
       )
-      ..typeSystem = dartCore.element2.typeSystem
-      ..typeProvider = dartCore.element2.typeProvider;
+      ..typeSystem = dartCore.element.typeSystem
+      ..typeProvider = dartCore.element.typeProvider;
 
     typeHelper.init();
   }
 
   @override
-  Set<InterfaceElement2> get customModelTypes =>
+  Set<InterfaceElement> get customModelTypes =>
       _resolver?.customModelTypes ?? const {};
 
   @override
-  Set<InterfaceElement2> get customExceptionTypes =>
+  Set<InterfaceElement> get customExceptionTypes =>
       _resolver?.customExceptionTypes ?? const {};
 
   Future<CelestAnalysisResult> analyzeProject({
@@ -391,8 +390,9 @@ const project = Project(name: 'cache_warmup');
         name: 'CloudAuthDatabase',
         dartName: 'cloudAuth',
         schema: ast.DriftDatabaseSchema(
-          declaration:
-              typeHelper.toReference(cloudAuthElement.thisType).toTypeReference,
+          declaration: typeHelper
+              .toReference(cloudAuthElement.thisType)
+              .toTypeReference,
           version: await resolveSchemaVersion(cloudAuthElement),
           location: cloudAuthElement.sourceLocation!,
         ),
@@ -444,16 +444,15 @@ const project = Project(name: 'cache_warmup');
       reportError('Failed to parse project.dart file');
       return null;
     }
-    final projectErrors =
-        projectLibrary.units
-            .expand((unit) => unit.errors)
-            .where((error) => error.severity == Severity.error)
-            .toList();
+    final projectErrors = projectLibrary.units
+        .expand((unit) => unit.diagnostics)
+        .where((error) => error.severity == Severity.error)
+        .toList();
     if (projectErrors.isNotEmpty) {
       for (final projectError in projectErrors) {
         _logger.finest(
-          'ERROR (project.dart): type=${projectError.errorCode.type} '
-          'name=${projectError.errorCode.name}',
+          'ERROR (project.dart): type=${projectError.diagnosticCode.type} '
+          'name=${projectError.diagnosticCode.name}',
         );
         reportError(
           projectError.message,
@@ -492,13 +491,12 @@ const project = Project(name: 'cache_warmup');
       return;
     }
 
-    final apiFiles =
-        await apiDir
-            .list(followLinks: true)
-            .whereType<File>()
-            .map((file) => file.path)
-            .where((path) => path.endsWith('.dart'))
-            .toList();
+    final apiFiles = await apiDir
+        .list(followLinks: true)
+        .whereType<File>()
+        .map((file) => file.path)
+        .where((path) => path.endsWith('.dart'))
+        .toList();
     final apiDeclarations = _widgetCollector.collect(
       apiFiles,
       scope: 'API',
@@ -520,11 +518,10 @@ const project = Project(name: 'cache_warmup');
       }
 
       final apiLibraryResult = await resolveLibrary(apiPath);
-      final apiErrors =
-          apiLibraryResult.units
-              .expand((unit) => unit.errors)
-              .where((error) => error.severity == Severity.error)
-              .toList();
+      final apiErrors = apiLibraryResult.units
+          .expand((unit) => unit.diagnostics)
+          .where((error) => error.severity == Severity.error)
+          .toList();
 
       // If there's a false positive from missing generated code, which can
       // happen for example when starting from a template proejct, then skip
@@ -570,12 +567,11 @@ const project = Project(name: 'cache_warmup');
           .where((it) => fileSystem.file(it).existsSync())
           .map(resolveLibrary),
     );
-    final authErrors =
-        authLibraries
-            .expand((library) => library.units)
-            .expand((unit) => unit.errors)
-            .where((error) => error.severity == Severity.error)
-            .toList();
+    final authErrors = authLibraries
+        .expand((library) => library.units)
+        .expand((unit) => unit.diagnostics)
+        .where((error) => error.severity == Severity.error)
+        .toList();
     if (authErrors.isNotEmpty) {
       for (final authError in authErrors) {
         reportError(
@@ -591,10 +587,9 @@ const project = Project(name: 'cache_warmup');
 
     for (final library in authLibraries) {
       final auth = await resolver.resolveAuth(
-        authFilepath:
-            context.currentSession.uriConverter.uriToPath(
-              library.element.source.uri,
-            )!,
+        authFilepath: context.currentSession.uriConverter.uriToPath(
+          library.element.uri,
+        )!,
         authLibrary: library,
       );
       if (auth != null) {

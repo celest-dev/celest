@@ -24,17 +24,18 @@ abstract base class CelestCommand extends Command<int> {
   CelestCommand() {
     // Initialize immediately instead of lazily since _stopSub is never accessed
     // directly until `close`.
-    _stopSub ??= StreamGroup.merge([
-      ProcessSignal.sigint.watch(),
-      // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
-      // handler raises an exception.
-      if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
-    ]).listen((signal) {
-      Logger.root.fine('Got exit signal: $signal');
-      if (!_stopSignal.isStopped) {
-        _stopSignal.complete(signal);
-      }
-    });
+    _stopSub ??=
+        StreamGroup.merge([
+          ProcessSignal.sigint.watch(),
+          // SIGTERM is not supported on Windows. Attempting to register a SIGTERM
+          // handler raises an exception.
+          if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+        ]).listen((signal) {
+          Logger.root.fine('Got exit signal: $signal');
+          if (!_stopSignal.isStopped) {
+            _stopSignal.complete(signal);
+          }
+        });
   }
 
   late final Logger logger = Logger(name);

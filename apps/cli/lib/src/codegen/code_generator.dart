@@ -51,16 +51,15 @@ abstract final class CodeGenerator {
     required String forFile,
     PrefixingStrategy prefixingStrategy = PrefixingStrategy.indexed,
     required PathStrategy pathStrategy,
-  }) =>
-      spec
-          .accept(
-            _emitter(
-              forFile: forFile,
-              prefixingStrategy: prefixingStrategy,
-              pathStrategy: pathStrategy,
-            ),
-          )
-          .toString();
+  }) => spec
+      .accept(
+        _emitter(
+          forFile: forFile,
+          prefixingStrategy: prefixingStrategy,
+          pathStrategy: pathStrategy,
+        ),
+      )
+      .toString();
 
   static String emit(
     Spec spec, {

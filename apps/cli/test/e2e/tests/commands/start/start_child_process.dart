@@ -12,16 +12,15 @@ final class StartChildProcessTest extends E2ETest {
   Future<void> run() async {
     // The child process succeeds
     {
-      final command =
-          platform.isWindows
-              ? celestCommand(
-                'start',
-                '--',
-                'powershell.exe',
-                '-c',
-                "Write-Output 'hello'",
-              )
-              : celestCommand('start', '--', 'echo', 'hello');
+      final command = platform.isWindows
+          ? celestCommand(
+              'start',
+              '--',
+              'powershell.exe',
+              '-c',
+              "Write-Output 'hello'",
+            )
+          : celestCommand('start', '--', 'echo', 'hello');
       await command
           .workingDirectory(tempDir.path)
           .start()
@@ -35,10 +34,9 @@ final class StartChildProcessTest extends E2ETest {
 
     // The child process fails
     {
-      final command =
-          platform.isWindows
-              ? celestCommand('start', '--', 'powershell.exe', '-c', 'exit 123')
-              : celestCommand('start', '--', 'sh', '-c', 'exit 123');
+      final command = platform.isWindows
+          ? celestCommand('start', '--', 'powershell.exe', '-c', 'exit 123')
+          : celestCommand('start', '--', 'sh', '-c', 'exit 123');
       await command
           // Use the already created project
           .workingDirectory(p.join(tempDir.path, 'my_project'))

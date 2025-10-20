@@ -176,7 +176,7 @@ final class ProjectDependency {
     'native_storage',
     DependencyType.dependency,
     HostedDependency(
-      version: VersionConstraint.compatibleWith(Version.parse('0.3.0')),
+      version: VersionConstraint.compatibleWith(Version.parse('0.4.0')),
     ),
   );
 

@@ -109,23 +109,21 @@ extension type WordGroup(List<String> _group) implements List<String> {
   static const List<String> _maintainCase = [];
 
   /// The `camelCase` version of `this`.
-  String get camelCase =>
-      mapIndexed((index, word) {
-        if (index == 0) return word.toLowerCase();
-        return word.capitalized;
-      }).join();
+  String get camelCase => mapIndexed((index, word) {
+    if (index == 0) return word.toLowerCase();
+    return word.capitalized;
+  }).join();
 
   /// The `param-case` version of `this`.
   String get paramCase => map((word) => word.toLowerCase()).join('-');
 
   /// The `PascalCase` version of `this`.
-  String get pascalCase =>
-      map((word) {
-        if (_maintainCase.contains(word)) {
-          return word;
-        }
-        return word.capitalized;
-      }).join();
+  String get pascalCase => map((word) {
+    if (_maintainCase.contains(word)) {
+      return word;
+    }
+    return word.capitalized;
+  }).join();
 
   /// The `snake_case` version of `this`.
   String get snakeCase => map((word) => word.toLowerCase()).join('_');

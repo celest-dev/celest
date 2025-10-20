@@ -17,8 +17,9 @@ extension DependencyToYaml on Dependency {
     PathDependency(:final path) => _map({
       'path': YamlScalar.wrap(
         path,
-        style:
-            path.contains(' ') ? ScalarStyle.SINGLE_QUOTED : ScalarStyle.PLAIN,
+        style: path.contains(' ')
+            ? ScalarStyle.SINGLE_QUOTED
+            : ScalarStyle.PLAIN,
       ),
     }),
     SdkDependency(:final sdk) => _map({'sdk': sdk}),

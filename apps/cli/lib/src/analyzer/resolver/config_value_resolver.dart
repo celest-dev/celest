@@ -4,7 +4,7 @@ import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/resolver/project_resolver.dart';
 import 'package:celest_cli/src/context.dart';
@@ -68,7 +68,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
   });
 
   final AnalysisContext context;
-  final InterfaceElement2 configValueElement;
+  final InterfaceElement configValueElement;
   final CelestErrorReporter errorReporter;
   final ConfigValueFactory<T> factory;
 
@@ -85,10 +85,9 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
       );
     }
 
-    final topLevelDefinitions =
-        references
-            .map((ref) => ref.enclosingFragment.element)
-            .whereType<TopLevelVariableElement2>();
+    final topLevelDefinitions = references
+        .map((ref) => ref.enclosingFragment.element)
+        .whereType<TopLevelVariableElement>();
     final topLevelResolutions =
         <
           (
@@ -99,7 +98,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         >[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add((
-        variable.name3!,
+        variable.name!,
         variable.docLines,
         resolveVariable(
           variable: variable,
@@ -125,21 +124,20 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
       }),
     );
 
-    final parameters =
-        references
-            .map((ref) => ref.enclosingFragment.element)
-            .whereType<FormalParameterElement>();
+    final parameters = references
+        .map((ref) => ref.enclosingFragment.element)
+        .whereType<FormalParameterElement>();
     final parameterResolutions = <Future<(String, String?, FileSpan?)?>>[];
     for (final parameter in parameters) {
-      for (final metadata in parameter.metadata2.annotations) {
+      for (final metadata in parameter.metadata.annotations) {
         _logger.finer(
-          'Resolving parameter: name=${parameter.name3}, '
-          'type=${metadata.element2?.runtimeType}',
+          'Resolving parameter: name=${parameter.name}, '
+          'type=${metadata.element?.runtimeType}',
         );
-        final element = metadata.element2;
+        final element = metadata.element;
         final location = parameter.sourceLocation;
         switch (element) {
-          case ConstructorElement2(enclosingElement2: final enclosingElement)
+          case ConstructorElement(enclosingElement: final enclosingElement)
               when enclosingElement == configValueElement:
             parameterResolutions.add(
               resolveVariable(
@@ -148,7 +146,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
                 location: location,
               ),
             );
-          case PropertyAccessorElement2(:final returnType)
+          case PropertyAccessorElement(:final returnType)
               when returnType == configValueElement.thisType:
             parameterResolutions.add(
               resolveVariable(
@@ -202,7 +200,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
 
   Future<(String name, String? staticValue, FileSpan? location)?>
   resolveVariable({
-    required Element2 variable,
+    required Element variable,
     required DartObject? value,
     required FileSpan? location,
   }) async {
@@ -219,7 +217,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
                   value.getField('(super)')?.getField('value'))
               ?.toStringValue();
       _logger.finest('Resolved name: $name ($staticValue)');
-    } else if (variable.library2 case final libraryElement?) {
+    } else if (variable.library case final libraryElement?) {
       // Only resolve variables in the project backend
       if (libraryElement.firstFragment.source.uri case Uri(
         scheme: 'package',
@@ -228,7 +226,7 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         _logger.finest('Skipping: $variable');
         return null;
       }
-      final library = await context.currentSession.getResolvedLibraryByElement2(
+      final library = await context.currentSession.getResolvedLibraryByElement(
         libraryElement,
       );
       FragmentDeclarationResult? declaration;
@@ -287,19 +285,14 @@ extension ResolveConfigurationVariable on ast.ConfigurationVariable {
     ) async {
       switch (this) {
         case ast.Variable(:final name):
-          final value =
-              await db.projectDrift
-                  .getEnvironmentVariable(
-                    environmentId: environment.id,
-                    name: name,
-                  )
-                  .get();
+          final value = await db.projectDrift
+              .getEnvironmentVariable(environmentId: environment.id, name: name)
+              .get();
           return value.singleOrNull;
         case ast.Secret(:final name):
-          final value =
-              await db.projectDrift
-                  .getSecret(environmentId: environment.id, name: name)
-                  .get();
+          final value = await db.projectDrift
+              .getSecret(environmentId: environment.id, name: name)
+              .get();
           final ref = value.singleOrNull;
           if (ref == null) {
             return null;
@@ -327,24 +320,19 @@ extension ResolveConfigurationVariables<T extends ast.ConfigurationVariable>
       final values = <String, String>{};
       switch (first) {
         case ast.Variable():
-          final dbValues =
-              await db.projectDrift
-                  .getEnvironmentVariables(
-                    environmentId: environment.id,
-                    names: variableNames,
-                  )
-                  .get();
+          final dbValues = await db.projectDrift
+              .getEnvironmentVariables(
+                environmentId: environment.id,
+                names: variableNames,
+              )
+              .get();
           for (final value in dbValues) {
             values[value.name] = value.value;
           }
         case ast.Secret():
-          final dbValues =
-              await db.projectDrift
-                  .getSecrets(
-                    environmentId: environment.id,
-                    names: variableNames,
-                  )
-                  .get();
+          final dbValues = await db.projectDrift
+              .getSecrets(environmentId: environment.id, names: variableNames)
+              .get();
           for (final secret in dbValues) {
             final [...scope, key] = secret.valueRef.split('/');
             final value = secureStorage.scoped(scope.join('/')).read(key);

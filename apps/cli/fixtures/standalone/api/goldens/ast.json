@@ -809,6 +809,13 @@
                   "column": 26
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -890,6 +897,13 @@
                   "column": 39
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -979,6 +993,13 @@
                   "column": 52
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1060,6 +1081,13 @@
                   "column": 65
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1398,6 +1426,13 @@
                   "column": 23
                 },
                 "text": "shape"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1475,16 +1510,16 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 358,
+                  "offset": 355,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 11,
-                  "column": 23
+                  "line": 10,
+                  "column": 46
                 },
                 "end": {
-                  "offset": 364,
+                  "offset": 361,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 11,
-                  "column": 29
+                  "line": 10,
+                  "column": 52
                 },
                 "text": "shapes"
               }
@@ -1572,18 +1607,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 474,
+                  "offset": 469,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 18,
+                  "line": 16,
                   "column": 30
                 },
                 "end": {
-                  "offset": 483,
+                  "offset": 478,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 18,
+                  "line": 16,
                   "column": 39
                 },
                 "text": "rectangle"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1621,15 +1663,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 454,
+              "offset": 449,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 18,
+              "line": 16,
               "column": 10
             },
             "end": {
-              "offset": 463,
+              "offset": 458,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 18,
+              "line": 16,
               "column": 19
             },
             "text": "rectangle"
@@ -1653,18 +1695,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 527,
+                  "offset": 522,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 20,
+                  "line": 18,
                   "column": 21
                 },
                 "end": {
-                  "offset": 533,
+                  "offset": 528,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 20,
+                  "line": 18,
                   "column": 27
                 },
                 "text": "circle"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1702,15 +1751,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 513,
+              "offset": 508,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 20,
+              "line": 18,
               "column": 7
             },
             "end": {
-              "offset": 519,
+              "offset": 514,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 20,
+              "line": 18,
               "column": 13
             },
             "text": "circle"
@@ -1742,15 +1791,15 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 732,
+                  "offset": 727,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 25,
+                  "line": 23,
                   "column": 46
                 },
                 "end": {
-                  "offset": 738,
+                  "offset": 733,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 25,
+                  "line": 23,
                   "column": 52
                 },
                 "text": "shapes"
@@ -1807,15 +1856,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 649,
+              "offset": 644,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 24,
+              "line": 22,
               "column": 35
             },
             "end": {
-              "offset": 683,
+              "offset": 678,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 24,
+              "line": 22,
               "column": 69
             },
             "text": "sealedClassWithInheritedCustomJson"
@@ -1847,15 +1896,15 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 933,
+                  "offset": 928,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 33,
+                  "line": 31,
                   "column": 37
                 },
                 "end": {
-                  "offset": 939,
+                  "offset": 934,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 33,
+                  "line": 31,
                   "column": 43
                 },
                 "text": "shapes"
@@ -1912,15 +1961,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 868,
+              "offset": 863,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 32,
+              "line": 30,
               "column": 26
             },
             "end": {
-              "offset": 893,
+              "offset": 888,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 32,
+              "line": 30,
               "column": 51
             },
             "text": "sealedClassWithCustomJson"
@@ -1944,15 +1993,15 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1156,
+                  "offset": 1151,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 41,
+                  "line": 39,
                   "column": 42
                 },
                 "end": {
-                  "offset": 1162,
+                  "offset": 1157,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 41,
+                  "line": 39,
                   "column": 48
                 },
                 "text": "circle"
@@ -1971,15 +2020,15 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1209,
+                  "offset": 1204,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 42,
+                  "line": 40,
                   "column": 45
                 },
                 "end": {
-                  "offset": 1218,
+                  "offset": 1213,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 42,
+                  "line": 40,
                   "column": 54
                 },
                 "text": "rectangle"
@@ -2006,15 +2055,15 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1267,
+                  "offset": 1262,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 43,
+                  "line": 41,
                   "column": 47
                 },
                 "end": {
-                  "offset": 1272,
+                  "offset": 1267,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 43,
+                  "line": 41,
                   "column": 52
                 },
                 "text": "other"
@@ -2071,15 +2120,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1076,
+              "offset": 1071,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 40,
+              "line": 38,
               "column": 36
             },
             "end": {
-              "offset": 1111,
+              "offset": 1106,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 40,
+              "line": 38,
               "column": 71
             },
             "text": "sealedClassWithOverriddenCustomJson"
@@ -2103,18 +2152,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1447,
+                  "offset": 1425,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 54,
+                  "line": 48,
                   "column": 36
                 },
                 "end": {
-                  "offset": 1456,
+                  "offset": 1434,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 54,
+                  "line": 48,
                   "column": 45
                 },
                 "text": "rectangle"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2152,15 +2208,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1376,
+              "offset": 1354,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 53,
+              "line": 47,
               "column": 30
             },
             "end": {
-              "offset": 1409,
+              "offset": 1387,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 53,
+              "line": 47,
               "column": 63
             },
             "text": "rectangleWithOverriddenCustomJson"
@@ -2184,18 +2240,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1587,
+                  "offset": 1565,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 61,
+                  "line": 55,
                   "column": 32
                 },
                 "end": {
-                  "offset": 1593,
+                  "offset": 1571,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 61,
+                  "line": 55,
                   "column": 38
                 },
                 "text": "circle"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2233,15 +2296,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1523,
+              "offset": 1501,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 60,
+              "line": 54,
               "column": 31
             },
             "end": {
-              "offset": 1553,
+              "offset": 1531,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 60,
+              "line": 54,
               "column": 61
             },
             "text": "circleWithOverriddenCustomJson"
@@ -2273,18 +2336,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1709,
+                  "offset": 1687,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 67,
+                  "line": 61,
                   "column": 49
                 },
                 "end": {
-                  "offset": 1715,
+                  "offset": 1693,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 67,
+                  "line": 61,
                   "column": 55
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2354,15 +2424,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1682,
+              "offset": 1660,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 67,
+              "line": 61,
               "column": 22
             },
             "end": {
-              "offset": 1696,
+              "offset": 1674,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 67,
+              "line": 61,
               "column": 36
             },
             "text": "okShapeResults"
@@ -2394,18 +2464,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1830,
+                  "offset": 1809,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 70,
+                  "line": 65,
                   "column": 52
                 },
                 "end": {
-                  "offset": 1836,
+                  "offset": 1815,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 70,
+                  "line": 65,
                   "column": 58
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2475,15 +2552,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1802,
+              "offset": 1781,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 70,
+              "line": 65,
               "column": 24
             },
             "end": {
-              "offset": 1817,
+              "offset": 1796,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 70,
+              "line": 65,
               "column": 39
             },
             "text": "errShapeResults"
@@ -2515,18 +2592,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 1969,
+                  "offset": 1949,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 73,
+                  "line": 69,
                   "column": 53
                 },
                 "end": {
-                  "offset": 1975,
+                  "offset": 1955,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 73,
+                  "line": 69,
                   "column": 59
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2608,15 +2692,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 1944,
+              "offset": 1924,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 73,
+              "line": 69,
               "column": 28
             },
             "end": {
-              "offset": 1956,
+              "offset": 1936,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 73,
+              "line": 69,
               "column": 40
             },
             "text": "shapeResults"
@@ -2648,18 +2732,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2179,
+                  "offset": 2147,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 80,
+                  "line": 76,
                   "column": 60
                 },
                 "end": {
-                  "offset": 2185,
+                  "offset": 2153,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 80,
+                  "line": 76,
                   "column": 66
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2741,15 +2832,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2145,
+              "offset": 2113,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 80,
+              "line": 76,
               "column": 26
             },
             "end": {
-              "offset": 2166,
+              "offset": 2134,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 80,
+              "line": 76,
               "column": 47
             },
             "text": "aliasedOkShapeResults"
@@ -2781,18 +2872,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2309,
+                  "offset": 2278,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 83,
+                  "line": 80,
                   "column": 61
                 },
                 "end": {
-                  "offset": 2315,
+                  "offset": 2284,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 83,
+                  "line": 80,
                   "column": 67
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -2874,15 +2972,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2274,
+              "offset": 2243,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 83,
+              "line": 80,
               "column": 26
             },
             "end": {
-              "offset": 2296,
+              "offset": 2265,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 83,
+              "line": 80,
               "column": 48
             },
             "text": "aliasedErrShapeResults"
@@ -2914,18 +3012,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2453,
+                  "offset": 2423,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 86,
+                  "line": 84,
                   "column": 58
                 },
                 "end": {
-                  "offset": 2459,
+                  "offset": 2429,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 86,
+                  "line": 84,
                   "column": 64
                 },
                 "text": "shapes"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -3007,15 +3112,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2421,
+              "offset": 2391,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 86,
+              "line": 84,
               "column": 26
             },
             "end": {
-              "offset": 2440,
+              "offset": 2410,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 86,
+              "line": 84,
               "column": 45
             },
             "text": "aliasedShapeResults"
@@ -3053,18 +3158,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2613,
+                  "offset": 2571,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 92,
+                  "line": 90,
                   "column": 65
                 },
                 "end": {
-                  "offset": 2619,
+                  "offset": 2577,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 92,
+                  "line": 90,
                   "column": 71
                 },
                 "text": "result"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -3130,15 +3242,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2577,
+              "offset": 2535,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 92,
+              "line": 90,
               "column": 29
             },
             "end": {
-              "offset": 2590,
+              "offset": 2548,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 92,
+              "line": 90,
               "column": 42
             },
             "text": "swappedResult"
@@ -3177,18 +3289,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2704,
+                  "offset": 2662,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 96,
+                  "line": 94,
                   "column": 45
                 },
                 "end": {
-                  "offset": 2708,
+                  "offset": 2666,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 96,
+                  "line": 94,
                   "column": 49
                 },
                 "text": "data"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -3250,15 +3369,15 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2671,
+              "offset": 2629,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 96,
+              "line": 94,
               "column": 12
             },
             "end": {
-              "offset": 2684,
+              "offset": 2642,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 96,
+              "line": 94,
               "column": 25
             },
             "text": "genericResult"
@@ -3307,18 +3426,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2829,
+                  "offset": 2786,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 100,
+                  "line": 99,
                   "column": 4
                 },
                 "end": {
-                  "offset": 2833,
+                  "offset": 2790,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 100,
+                  "line": 99,
                   "column": 8
                 },
                 "text": "data"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3338,18 +3464,25 @@
               "annotations": [],
               "location": {
                 "start": {
-                  "offset": 2839,
+                  "offset": 2794,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 101,
-                  "column": 4
+                  "line": 99,
+                  "column": 12
                 },
                 "end": {
-                  "offset": 2844,
+                  "offset": 2799,
                   "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 101,
-                  "column": 9
+                  "line": 99,
+                  "column": 17
                 },
                 "text": "error"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -3447,99 +3580,18 @@
           "docs": [],
           "location": {
             "start": {
-              "offset": 2759,
+              "offset": 2713,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 99,
-              "column": 4
+              "line": 96,
+              "column": 19
             },
             "end": {
-              "offset": 2780,
+              "offset": 2734,
               "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 99,
-              "column": 25
+              "line": 96,
+              "column": 40
             },
             "text": "multipleGenericResult"
-          }
-        },
-        "okShapeResult": {
-          "name": "okShapeResult",
-          "apiName": "sealed_classes",
-          "typeParameters": [],
-          "parameters": [
-            {
-              "name": "shape",
-              "type": {
-                "$": "TypeReference",
-                "symbol": "Shape",
-                "url": "package:celest_backend/models/sealed_classes.dart",
-                "isNullable": false
-              },
-              "required": true,
-              "named": false,
-              "annotations": [],
-              "location": {
-                "start": {
-                  "offset": 3150,
-                  "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 109,
-                  "column": 34
-                },
-                "end": {
-                  "offset": 3155,
-                  "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-                  "line": 109,
-                  "column": 39
-                },
-                "text": "shape"
-              }
-            }
-          ],
-          "returnType": {
-            "$": "TypeReference",
-            "symbol": "OkShapeResult",
-            "url": "package:celest_backend/models/sealed_classes.dart",
-            "isNullable": false
-          },
-          "flattenedReturnType": {
-            "$": "TypeReference",
-            "symbol": "OkShapeResult",
-            "url": "package:celest_backend/models/sealed_classes.dart",
-            "isNullable": false
-          },
-          "metadata": [],
-          "annotations": [
-            {
-              "$": "DartInstance",
-              "classRef": {
-                "symbol": "_Cloud",
-                "url": "package:celest/src/core/annotations.dart",
-                "isNullable": false
-              },
-              "constructor": "new",
-              "positionalArguments": {},
-              "namedArguments": {},
-              "staticType": {
-                "symbol": "_Cloud",
-                "url": "package:celest/src/core/annotations.dart",
-                "isNullable": false
-              }
-            }
-          ],
-          "docs": [],
-          "location": {
-            "start": {
-              "offset": 3130,
-              "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 109,
-              "column": 14
-            },
-            "end": {
-              "offset": 3143,
-              "uri": "package:celest_backend/src/functions/sealed_classes.dart",
-              "line": 109,
-              "column": 27
-            },
-            "text": "okShapeResult"
           }
         }
       },
@@ -3848,6 +3900,13 @@
                   "column": 16
                 },
                 "text": "aString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3875,6 +3934,13 @@
                   "column": 11
                 },
                 "text": "anInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3902,6 +3968,13 @@
                   "column": 16
                 },
                 "text": "aDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3929,6 +4002,13 @@
                   "column": 12
                 },
                 "text": "aBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3956,6 +4036,13 @@
                   "column": 15
                 },
                 "text": "anEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3983,6 +4070,13 @@
                   "column": 12
                 },
                 "text": "aNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4009,6 +4103,13 @@
                   "column": 16
                 },
                 "text": "aBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4035,6 +4136,13 @@
                   "column": 20
                 },
                 "text": "aDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4061,6 +4169,13 @@
                   "column": 20
                 },
                 "text": "aDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4087,6 +4202,13 @@
                   "column": 16
                 },
                 "text": "aRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4113,6 +4235,13 @@
                   "column": 24
                 },
                 "text": "aStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4139,6 +4268,13 @@
                   "column": 10
                 },
                 "text": "aUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4165,6 +4301,13 @@
                   "column": 18
                 },
                 "text": "aUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4191,6 +4334,13 @@
                   "column": 22
                 },
                 "text": "aUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4226,6 +4376,13 @@
                   "column": 37
                 },
                 "text": "anIterableOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4260,6 +4417,13 @@
                   "column": 43
                 },
                 "text": "anIterableOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4295,6 +4459,13 @@
                   "column": 28
                 },
                 "text": "aListOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4330,6 +4501,13 @@
                   "column": 22
                 },
                 "text": "aListOfInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4365,6 +4543,13 @@
                   "column": 28
                 },
                 "text": "aListOfDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4400,6 +4585,13 @@
                   "column": 24
                 },
                 "text": "aListOfBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4435,6 +4627,13 @@
                   "column": 26
                 },
                 "text": "aListOfEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4470,6 +4669,13 @@
                   "column": 24
                 },
                 "text": "aListOfNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4504,6 +4710,13 @@
                   "column": 28
                 },
                 "text": "aListOfBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4538,6 +4751,13 @@
                   "column": 32
                 },
                 "text": "aListOfDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4572,6 +4792,13 @@
                   "column": 32
                 },
                 "text": "aListOfDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4606,6 +4833,13 @@
                   "column": 28
                 },
                 "text": "aListOfRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4640,6 +4874,13 @@
                   "column": 36
                 },
                 "text": "aListOfStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4674,6 +4915,13 @@
                   "column": 22
                 },
                 "text": "aListOfUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4708,6 +4956,13 @@
                   "column": 30
                 },
                 "text": "aListOfUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4742,6 +4997,13 @@
                   "column": 34
                 },
                 "text": "aListOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4783,6 +5045,13 @@
                   "column": 34
                 },
                 "text": "aMapOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4824,6 +5093,13 @@
                   "column": 28
                 },
                 "text": "aMapOfInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4865,6 +5141,13 @@
                   "column": 34
                 },
                 "text": "aMapOfDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4906,6 +5189,13 @@
                   "column": 30
                 },
                 "text": "aMapOfBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4947,6 +5237,13 @@
                   "column": 32
                 },
                 "text": "aMapOfEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4988,6 +5285,13 @@
                   "column": 30
                 },
                 "text": "aMapOfNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5028,6 +5332,13 @@
                   "column": 34
                 },
                 "text": "aMapOfBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5068,6 +5379,13 @@
                   "column": 38
                 },
                 "text": "aMapOfDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5108,6 +5426,13 @@
                   "column": 38
                 },
                 "text": "aMapOfDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5148,6 +5473,13 @@
                   "column": 34
                 },
                 "text": "aMapOfRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5188,6 +5520,13 @@
                   "column": 42
                 },
                 "text": "aMapOfStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5228,6 +5567,13 @@
                   "column": 28
                 },
                 "text": "aMapOfUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5268,6 +5614,13 @@
                   "column": 36
                 },
                 "text": "aMapOfUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5308,6 +5661,13 @@
                   "column": 40
                 },
                 "text": "aMapOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -5395,6 +5755,13 @@
                   "column": 17
                 },
                 "text": "aString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5422,6 +5789,13 @@
                   "column": 12
                 },
                 "text": "anInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5449,6 +5823,13 @@
                   "column": 17
                 },
                 "text": "aDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5476,6 +5857,13 @@
                   "column": 13
                 },
                 "text": "aBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5503,6 +5891,13 @@
                   "column": 16
                 },
                 "text": "anEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5530,6 +5925,13 @@
                   "column": 12
                 },
                 "text": "aNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5557,6 +5959,13 @@
                   "column": 17
                 },
                 "text": "aBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5584,6 +5993,13 @@
                   "column": 21
                 },
                 "text": "aDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5611,6 +6027,13 @@
                   "column": 21
                 },
                 "text": "aDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5638,6 +6061,13 @@
                   "column": 17
                 },
                 "text": "aRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5665,6 +6095,13 @@
                   "column": 25
                 },
                 "text": "aStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5692,6 +6129,13 @@
                   "column": 11
                 },
                 "text": "aUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5719,6 +6163,13 @@
                   "column": 19
                 },
                 "text": "aUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5746,6 +6197,13 @@
                   "column": 23
                 },
                 "text": "aUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5781,6 +6239,13 @@
                   "column": 38
                 },
                 "text": "anIterableOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5815,6 +6280,13 @@
                   "column": 44
                 },
                 "text": "anIterableOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5850,6 +6322,13 @@
                   "column": 29
                 },
                 "text": "aListOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5885,6 +6364,13 @@
                   "column": 23
                 },
                 "text": "aListOfInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5920,6 +6406,13 @@
                   "column": 29
                 },
                 "text": "aListOfDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5955,6 +6448,13 @@
                   "column": 25
                 },
                 "text": "aListOfBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -5990,6 +6490,13 @@
                   "column": 27
                 },
                 "text": "aListOfEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6025,6 +6532,13 @@
                   "column": 25
                 },
                 "text": "aListOfNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6059,6 +6573,13 @@
                   "column": 29
                 },
                 "text": "aListOfBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6093,6 +6614,13 @@
                   "column": 33
                 },
                 "text": "aListOfDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6127,6 +6655,13 @@
                   "column": 33
                 },
                 "text": "aListOfDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6161,6 +6696,13 @@
                   "column": 29
                 },
                 "text": "aListOfRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6195,6 +6737,13 @@
                   "column": 37
                 },
                 "text": "aListOfStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6229,6 +6778,13 @@
                   "column": 23
                 },
                 "text": "aListOfUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6263,6 +6819,13 @@
                   "column": 31
                 },
                 "text": "aListOfUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6297,6 +6860,13 @@
                   "column": 35
                 },
                 "text": "aListOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6338,6 +6908,13 @@
                   "column": 35
                 },
                 "text": "aMapOfString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6379,6 +6956,13 @@
                   "column": 29
                 },
                 "text": "aMapOfInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6420,6 +7004,13 @@
                   "column": 35
                 },
                 "text": "aMapOfDouble"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6461,6 +7052,13 @@
                   "column": 31
                 },
                 "text": "aMapOfBool"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6502,6 +7100,13 @@
                   "column": 33
                 },
                 "text": "aMapOfEnum"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6543,6 +7148,13 @@
                   "column": 31
                 },
                 "text": "aMapOfNull"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6583,6 +7195,13 @@
                   "column": 35
                 },
                 "text": "aMapOfBigInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6623,6 +7242,13 @@
                   "column": 39
                 },
                 "text": "aMapOfDateTime"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6663,6 +7289,13 @@
                   "column": 39
                 },
                 "text": "aMapOfDuration"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6703,6 +7336,13 @@
                   "column": 35
                 },
                 "text": "aMapOfRegExp"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6743,6 +7383,13 @@
                   "column": 43
                 },
                 "text": "aMapOfStackTrace"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6783,6 +7430,13 @@
                   "column": 29
                 },
                 "text": "aMapOfUri"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6823,6 +7477,13 @@
                   "column": 37
                 },
                 "text": "aMapOfUriData"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6863,6 +7524,13 @@
                   "column": 41
                 },
                 "text": "aMapOfUint8List"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -6950,6 +7618,13 @@
                   "column": 28
                 },
                 "text": "aSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -6977,6 +7652,13 @@
                   "column": 30
                 },
                 "text": "aComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7004,6 +7686,13 @@
                   "column": 26
                 },
                 "text": "aSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7031,6 +7720,13 @@
                   "column": 28
                 },
                 "text": "aComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7058,6 +7754,13 @@
                   "column": 37
                 },
                 "text": "aNullableSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7085,6 +7788,13 @@
                   "column": 39
                 },
                 "text": "aNullableComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7112,6 +7822,13 @@
                   "column": 35
                 },
                 "text": "aNullableSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7139,6 +7856,13 @@
                   "column": 37
                 },
                 "text": "aNullableComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7174,6 +7898,13 @@
                   "column": 49
                 },
                 "text": "anIterableOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7209,6 +7940,13 @@
                   "column": 51
                 },
                 "text": "anIterableOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7244,6 +7982,13 @@
                   "column": 47
                 },
                 "text": "anIterableOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7279,6 +8024,13 @@
                   "column": 49
                 },
                 "text": "anIterableOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7314,6 +8066,13 @@
                   "column": 57
                 },
                 "text": "aNullableIterableOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7349,6 +8108,13 @@
                   "column": 59
                 },
                 "text": "aNullableIterableOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7384,6 +8150,13 @@
                   "column": 55
                 },
                 "text": "aNullableIterableOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7419,6 +8192,13 @@
                   "column": 57
                 },
                 "text": "aNullableIterableOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7454,6 +8234,13 @@
                   "column": 58
                 },
                 "text": "anIterableOfNullableSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7489,6 +8276,13 @@
                   "column": 60
                 },
                 "text": "anIterableOfNullableComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7524,6 +8318,13 @@
                   "column": 56
                 },
                 "text": "anIterableOfNullableSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7559,6 +8360,13 @@
                   "column": 58
                 },
                 "text": "anIterableOfNullableComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7594,6 +8402,13 @@
                   "column": 40
                 },
                 "text": "aListOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7629,6 +8444,13 @@
                   "column": 42
                 },
                 "text": "aListOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7664,6 +8486,13 @@
                   "column": 38
                 },
                 "text": "aListOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7699,6 +8528,13 @@
                   "column": 40
                 },
                 "text": "aListOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7734,6 +8570,13 @@
                   "column": 49
                 },
                 "text": "aNullableListOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7769,6 +8612,13 @@
                   "column": 51
                 },
                 "text": "aNullableListOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7804,6 +8654,13 @@
                   "column": 47
                 },
                 "text": "aNullableListOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7839,6 +8696,13 @@
                   "column": 49
                 },
                 "text": "aNullableListOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7874,6 +8738,13 @@
                   "column": 49
                 },
                 "text": "aListOfNullableSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7909,6 +8780,13 @@
                   "column": 51
                 },
                 "text": "aListOfNullableComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7944,6 +8822,13 @@
                   "column": 47
                 },
                 "text": "aListOfNullableSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -7979,6 +8864,13 @@
                   "column": 49
                 },
                 "text": "aListOfNullableComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8020,6 +8912,13 @@
                   "column": 46
                 },
                 "text": "aMapOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8061,6 +8960,13 @@
                   "column": 48
                 },
                 "text": "aMapOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8102,6 +9008,13 @@
                   "column": 44
                 },
                 "text": "aMapOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8143,6 +9056,13 @@
                   "column": 46
                 },
                 "text": "aMapOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8184,6 +9104,13 @@
                   "column": 55
                 },
                 "text": "aNullableMapOfSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8225,6 +9152,13 @@
                   "column": 57
                 },
                 "text": "aNullableMapOfComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8266,6 +9200,13 @@
                   "column": 53
                 },
                 "text": "aNullableMapOfSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8307,6 +9248,13 @@
                   "column": 55
                 },
                 "text": "aNullableMapOfComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8348,6 +9296,13 @@
                   "column": 55
                 },
                 "text": "aMapOfNullableSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8389,6 +9344,13 @@
                   "column": 57
                 },
                 "text": "aMapOfNullableComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8430,6 +9392,13 @@
                   "column": 53
                 },
                 "text": "aMapOfNullableSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8471,6 +9440,13 @@
                   "column": 55
                 },
                 "text": "aMapOfNullableComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8512,6 +9488,13 @@
                   "column": 64
                 },
                 "text": "aNullableMapOfNullableSimpleStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8553,6 +9536,13 @@
                   "column": 66
                 },
                 "text": "aNullableMapOfNullableComplexStruct"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8594,6 +9584,13 @@
                   "column": 62
                 },
                 "text": "aNullableMapOfNullableSimpleClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -8635,6 +9632,13 @@
                   "column": 64
                 },
                 "text": "aNullableMapOfNullableComplexClass"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9021,6 +10025,13 @@
                   "column": 24
                 },
                 "text": "node"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9100,6 +10111,13 @@
                   "column": 12
                 },
                 "text": "tree1"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -9301,6 +10319,13 @@
                   "column": 63
                 },
                 "text": "selfReferencing"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9634,6 +10659,13 @@
                   "column": 24
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9715,6 +10747,13 @@
                   "column": 41
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9804,6 +10843,13 @@
                   "column": 37
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9893,6 +10939,13 @@
                   "column": 36
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -9974,6 +11027,13 @@
                   "column": 54
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10055,6 +11115,13 @@
                   "column": 42
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10136,6 +11203,13 @@
                   "column": 54
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10217,6 +11291,13 @@
                   "column": 48
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10298,6 +11379,13 @@
                   "column": 60
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10379,6 +11467,13 @@
                   "column": 66
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10460,6 +11555,13 @@
                   "column": 60
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10541,6 +11643,13 @@
                   "column": 72
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10622,6 +11731,13 @@
                   "column": 57
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10703,6 +11819,13 @@
                   "column": 69
                 },
                 "text": "s"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10784,6 +11907,13 @@
                   "column": 19
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10865,6 +11995,13 @@
                   "column": 22
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -10946,6 +12083,13 @@
                   "column": 34
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11027,6 +12171,13 @@
                   "column": 52
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11108,6 +12259,13 @@
                   "column": 40
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11189,6 +12347,13 @@
                   "column": 52
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11270,6 +12435,13 @@
                   "column": 46
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11351,6 +12523,13 @@
                   "column": 58
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11432,6 +12611,13 @@
                   "column": 64
                 },
                 "text": "v"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11513,6 +12699,13 @@
                   "column": 23
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11594,6 +12787,13 @@
                   "column": 26
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11675,6 +12875,13 @@
                   "column": 38
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11756,6 +12963,13 @@
                   "column": 56
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11837,6 +13051,13 @@
                   "column": 44
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11918,6 +13139,13 @@
                   "column": 56
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -11999,6 +13227,13 @@
                   "column": 50
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12080,6 +13315,13 @@
                   "column": 62
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12161,6 +13403,13 @@
                   "column": 68
                 },
                 "text": "color"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12242,6 +13491,13 @@
                   "column": 35
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12323,6 +13579,13 @@
                   "column": 38
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12404,6 +13667,13 @@
                   "column": 29
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12485,6 +13755,13 @@
                   "column": 29
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12566,6 +13843,13 @@
                   "column": 38
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12647,6 +13931,13 @@
                   "column": 32
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12728,6 +14019,13 @@
                   "column": 32
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -12809,6 +14107,13 @@
                   "column": 29
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -13138,6 +14443,13 @@
                   "column": 47
                 },
                 "text": "portfolio"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -13240,6 +14552,13 @@
                   "column": 27
                 },
                 "text": "json"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -13368,6 +14687,13 @@
                   "column": 37
                 },
                 "text": "json"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -13496,6 +14822,13 @@
                   "column": 33
                 },
                 "text": "json"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -17814,6 +19147,13 @@
                   "column": 65
                 },
                 "text": "parent"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -17895,6 +19235,13 @@
                   "column": 61
                 },
                 "text": "child"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -17976,6 +19323,13 @@
                   "column": 65
                 },
                 "text": "grandparent"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18057,6 +19411,13 @@
                   "column": 45
                 },
                 "text": "parent"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18138,6 +19499,13 @@
                   "column": 41
                 },
                 "text": "child"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18690,6 +20058,13 @@
                   "column": 23
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18771,6 +20146,13 @@
                   "column": 36
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18860,6 +20242,13 @@
                   "column": 26
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -18941,6 +20330,13 @@
                   "column": 39
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19030,6 +20426,13 @@
                   "column": 36
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19111,6 +20514,13 @@
                   "column": 49
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19200,6 +20610,13 @@
                   "column": 41
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19281,6 +20698,13 @@
                   "column": 54
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19370,6 +20794,13 @@
                   "column": 41
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19451,6 +20882,13 @@
                   "column": 54
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19540,6 +20978,13 @@
                   "column": 47
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19621,6 +21066,13 @@
                   "column": 60
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19710,6 +21162,13 @@
                   "column": 41
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19791,6 +21250,13 @@
                   "column": 54
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19880,6 +21346,13 @@
                   "column": 44
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -19961,6 +21434,13 @@
                   "column": 57
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20050,6 +21530,13 @@
                   "column": 38
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20131,6 +21618,13 @@
                   "column": 51
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20220,6 +21714,13 @@
                   "column": 30
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20301,6 +21802,13 @@
                   "column": 30
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20390,6 +21898,13 @@
                   "column": 55
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20471,6 +21986,13 @@
                   "column": 25
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20560,6 +22082,13 @@
                   "column": 44
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20641,6 +22170,13 @@
                   "column": 57
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20730,6 +22266,13 @@
                   "column": 32
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20811,6 +22354,13 @@
                   "column": 32
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20900,6 +22450,13 @@
                   "column": 27
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -20981,6 +22538,13 @@
                   "column": 27
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -21070,6 +22634,13 @@
                   "column": 50
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -22548,6 +24119,13 @@
                   "column": 14
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -22982,6 +24560,13 @@
                   "column": 26
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -23146,6 +24731,13 @@
                   "column": 28
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -23310,6 +24902,13 @@
                   "column": 29
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -30454,6 +32053,13 @@
                   "column": 23
                 },
                 "text": "requiredString"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -30481,6 +32087,13 @@
                   "column": 17
                 },
                 "text": "requiredInt"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -30936,6 +32549,13 @@
                   "column": 49
                 },
                 "text": "list"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31049,6 +32669,13 @@
                   "column": 60
                 },
                 "text": "list"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31168,6 +32795,13 @@
                   "column": 61
                 },
                 "text": "map"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31298,6 +32932,13 @@
                   "column": 64
                 },
                 "text": "map"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31427,6 +33068,13 @@
                   "column": 61
                 },
                 "text": "map"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31558,6 +33206,13 @@
                   "column": 26
                 },
                 "text": "map"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -31689,6 +33344,13 @@
                   "column": 30
                 },
                 "text": "map"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -32055,6 +33717,13 @@
                   "column": 53
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -32136,6 +33805,13 @@
                   "column": 66
                 },
                 "text": "value"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -33812,7 +35488,7 @@
     "celest": "1.0.14",
     "dart": {
       "type": "dart",
-      "version": "3.10.0-75.1.beta",
+      "version": "3.9.2",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -33821,7 +35497,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.36.0-0.3.pre",
+      "version": "3.35.6",
       "enabledExperiments": []
     }
   },

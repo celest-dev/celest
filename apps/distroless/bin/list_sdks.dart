@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:distroless/src/sdk/sdk_manager.dart';
 import 'package:pub_semver/pub_semver.dart';
 
-final Version minDartSdkVersion = Version(3, 7, 0);
-final Version minFlutterSdkVersion = Version(3, 29, 0);
+final Version minDartSdkVersion = Version(3, 9, 0);
+final Version minFlutterSdkVersion = Version(3, 35, 0);
 
 /// SDKs where the tagged Dart SDK version does not match the published one.
 final List<Version> badFlutterSdks = [

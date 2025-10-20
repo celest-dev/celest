@@ -12,8 +12,9 @@ final class LocalTarget extends TestTarget {
   @override
   Future<void> setUpAll() async {
     // Speed up tests by precompiling the CLI to kernel.
-    final entrypoint =
-        Directory.current.uri.resolve('bin/celest.dart').toFilePath();
+    final entrypoint = Directory.current.uri
+        .resolve('bin/celest.dart')
+        .toFilePath();
     final output = tempDir.childFile('celest.dill').path;
     await runCommand(<String>[
       Sdk.current.dartAotRuntime,

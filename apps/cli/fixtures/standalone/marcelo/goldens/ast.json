@@ -890,6 +890,13 @@
                   "column": 59
                 },
                 "text": "availableStock"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -971,6 +978,13 @@
                   "column": 63
                 },
                 "text": "availableStocks"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1052,6 +1066,13 @@
                   "column": 47
                 },
                 "text": "cashBalance"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1133,6 +1154,13 @@
                   "column": 39
                 },
                 "text": "portfolio"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1214,6 +1242,13 @@
                   "column": 23
                 },
                 "text": "stock"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1295,6 +1330,13 @@
                   "column": 11
                 },
                 "text": "ui"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1632,7 +1674,7 @@
     "celest": "1.0.14",
     "dart": {
       "type": "dart",
-      "version": "3.10.0-75.1.beta",
+      "version": "3.9.2",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -1641,7 +1683,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.36.0-0.3.pre",
+      "version": "3.35.6",
       "enabledExperiments": []
     }
   },

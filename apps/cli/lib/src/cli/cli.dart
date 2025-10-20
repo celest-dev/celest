@@ -87,9 +87,9 @@ final class Cli {
             : SentryHttpClient(client: ctx.httpClient));
     ctx.performance =
         sentryDsn != null &&
-                !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-            ? const SentryPerformance()
-            : const CelestPerformance();
+            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+        ? const SentryPerformance()
+        : const CelestPerformance();
     ctx.storage = storage ?? Storage();
     ctx.connectionMonitor.init();
     await ctx.connectionMonitor.stream.first;
@@ -119,13 +119,13 @@ final class Cli {
 
     ctx.analytics =
         postHogConfig != null &&
-                !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
-            ? PostHog(
-              config: postHogConfig,
-              client: ctx.httpClient,
-              storage: ctx.secureStorage,
-            )
-            : const NoopAnalytics();
+            !io.Platform.environment.containsKey('CELEST_NO_ANALYTICS')
+        ? PostHog(
+            config: postHogConfig,
+            client: ctx.httpClient,
+            storage: ctx.secureStorage,
+          )
+        : const NoopAnalytics();
 
     final sdkFinder = DartSdkFinder(
       platform: ctx.platform,
@@ -198,12 +198,12 @@ final class Cli {
             ..environment = ctx.kCliEnvironment
             ..debug = verbose
             ..tracesSampleRate =
-                1 // TODO: Lower as needed
+                1 // TODO(dnys1): Lower as needed
             ..sampleRate =
-                1 // TODO: Lower as needed
+                1 // TODO(dnys1): Lower as needed
             ..attachStacktrace = true
             ..sendDefaultPii =
-                true // TODO: Turn off for compliance
+                true // TODO(dnys1): Turn off for compliance
             ..attachThreads = true
             ..captureFailedRequests = true
             ..httpClient = ctx.httpClient
@@ -213,12 +213,11 @@ final class Cli {
               event =
                   sentryConfig!.beforeSend?.call(event, hint: hint) ?? event;
               final (:distinctId, :deviceId) = await ctx.secureStorage.init();
-              return event.copyWith(
-                user: SentryUser(
+              return event
+                ..user = SentryUser(
                   id: deviceId,
                   data: {'distinct_id': distinctId},
-                ),
-              );
+                );
             }
             ..addIntegration(
               // Only using for breadcrumbs.
@@ -280,8 +279,9 @@ final class Cli {
           return;
         }
 
-        final cliMessage =
-            ctx.verbose ? verboseMessage.toString() : message.toString();
+        final cliMessage = ctx.verbose
+            ? verboseMessage.toString()
+            : message.toString();
         switch (record.level) {
           case Level.FINEST ||
               Level.FINER ||
@@ -301,10 +301,9 @@ final class Cli {
       });
 
       final sdk = Sdk.current;
-      final sdkInfo =
-          StringBuffer()
-            ..writeln('Celest version: $version')
-            ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
+      final sdkInfo = StringBuffer()
+        ..writeln('Celest version: $version')
+        ..writeln('Dart SDK version: ${sdk.version} (${sdk.dart})');
       if ((sdk.flutterVersion, sdk.flutterSdkRoot) case (
         final flutterVersion?,
         final flutterRoot?,

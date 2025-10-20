@@ -29,15 +29,17 @@ final Logger _logger = Logger('pub');
 
 Future<void> dumpPackageConfig() async {
   try {
-    final packageConfig =
-        await fileSystem.file(projectPaths.packagesConfig).readAsString();
+    final packageConfig = await fileSystem
+        .file(projectPaths.packagesConfig)
+        .readAsString();
     _logger.finest('Package config:\n$packageConfig');
   } on Object catch (e, st) {
     _logger.finest('Failed to read package config.', e, st);
   }
   try {
-    final pubspec =
-        await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+    final pubspec = await fileSystem
+        .file(projectPaths.pubspecYaml)
+        .readAsString();
     _logger.finest('Pubspec:\n$pubspec');
   } on Object catch (e, st) {
     _logger.finest('Failed to read pubspec.', e, st);
@@ -50,10 +52,9 @@ Future<void> runPub({
   required String workingDirectory,
   @visibleForTesting bool verbose = false,
 }) async {
-  exe ??=
-      kDebugMode
-          ? Sdk.current.dart
-          : (await celestProject.determineProjectType()).executable;
+  exe ??= kDebugMode
+      ? Sdk.current.dart
+      : (await celestProject.determineProjectType()).executable;
 
   final command = <String>[
     exe,

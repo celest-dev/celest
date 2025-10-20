@@ -51,11 +51,10 @@ final class Initialized implements ConfigureState {
 base mixin Configure on CelestCommand {
   abstract Progress? currentProgress;
 
-  static Never _throwNoProject() =>
-      throw const CliException(
-        'No Celest project found in the current directory. '
-        'To create a new project, run `celest init`.',
-      );
+  static Never _throwNoProject() => throw const CliException(
+    'No Celest project found in the current directory. '
+    'To create a new project, run `celest init`.',
+  );
 
   String newProjectName({String? defaultName}) {
     if (defaultName != null && defaultName.startsWith('celest')) {
@@ -63,10 +62,9 @@ base mixin Configure on CelestCommand {
     }
     defaultName ??= 'My Project';
     for (;;) {
-      final input =
-          dcli
-              .ask('Enter a name for your project', defaultValue: defaultName)
-              .trim();
+      final input = dcli
+          .ask('Enter a name for your project', defaultValue: defaultName)
+          .trim();
       if (input.isEmpty) {
         cliLogger.err('Project name cannot be empty.');
         continue;

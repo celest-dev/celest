@@ -1629,13 +1629,11 @@ class CelestFunctionsCollections {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'list':
-            list
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
+        r'list': list
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass>(el),
+            )
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -2098,10 +2096,9 @@ class CelestFunctionsCycles {
         r'tree1': _$celest.Serializers.instance.serialize<Node>(tree1),
         r'tree2': _$celest.Serializers.instance.serialize<Parent?>(tree2),
         r'tree3': _$celest.Serializers.instance.serialize<Node?>(tree3),
-        r'additionalChildren':
-            additionalChildren
-                .map((el) => _$celest.Serializers.instance.serialize<Node?>(el))
-                .toList(),
+        r'additionalChildren': additionalChildren
+            .map((el) => _$celest.Serializers.instance.serialize<Node?>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -4723,21 +4720,24 @@ class CelestFunctionsGenericWrappers {
             .serialize<_$fast_immutable_collections_ilist.IList<SimpleClass>>(
               listOfSimpleClass,
             ),
-        r'listOfListOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<String>
-          >
-        >(listOfListOfString),
-        r'listOfListOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<Uri>
-          >
-        >(listOfListOfUri),
-        r'listOfListOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >
-        >(listOfListOfSimpleClass),
+        r'listOfListOfString': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_ilist.IList<
+                _$fast_immutable_collections_ilist.IList<String>
+              >
+            >(listOfListOfString),
+        r'listOfListOfUri': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_ilist.IList<
+                _$fast_immutable_collections_ilist.IList<Uri>
+              >
+            >(listOfListOfUri),
+        r'listOfListOfSimpleClass': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_ilist.IList<
+                _$fast_immutable_collections_ilist.IList<SimpleClass>
+              >
+            >(listOfListOfSimpleClass),
         r'mapOfString': _$celest.Serializers.instance
             .serialize<_$fast_immutable_collections_imap.IMap<String, String>>(
               mapOfString,
@@ -4746,45 +4746,52 @@ class CelestFunctionsGenericWrappers {
             .serialize<_$fast_immutable_collections_imap.IMap<String, Uri>>(
               mapOfUri,
             ),
-        r'mapOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-        >(mapOfSimpleClass),
-        r'mapOfListOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<String>
-          >
-        >(mapOfListOfString),
-        r'mapOfListOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<Uri>
-          >
-        >(mapOfListOfUri),
-        r'mapOfListOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >
-        >(mapOfListOfSimpleClass),
-        r'mapOfMapOfString': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, String>
-          >
-        >(mapOfMapOfString),
-        r'mapOfMapOfUri': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, Uri>
-          >
-        >(mapOfMapOfUri),
-        r'mapOfMapOfSimpleClass': _$celest.Serializers.instance.serialize<
-          _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-          >
-        >(mapOfMapOfSimpleClass),
+        r'mapOfSimpleClass': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+            >(mapOfSimpleClass),
+        r'mapOfListOfString': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_ilist.IList<String>
+              >
+            >(mapOfListOfString),
+        r'mapOfListOfUri': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_ilist.IList<Uri>
+              >
+            >(mapOfListOfUri),
+        r'mapOfListOfSimpleClass': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_ilist.IList<SimpleClass>
+              >
+            >(mapOfListOfSimpleClass),
+        r'mapOfMapOfString': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap.IMap<String, String>
+              >
+            >(mapOfMapOfString),
+        r'mapOfMapOfUri': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap.IMap<String, Uri>
+              >
+            >(mapOfMapOfUri),
+        r'mapOfMapOfSimpleClass': _$celest.Serializers.instance
+            .serialize<
+              _$fast_immutable_collections_imap.IMap<
+                String,
+                _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+              >
+            >(mapOfMapOfSimpleClass),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -6797,72 +6804,43 @@ class CelestFunctionsParameterTypes {
           aUint8List,
         ),
         r'anIterableOfString': anIterableOfString,
-        r'anIterableOfUint8List':
-            anIterableOfUint8List
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'anIterableOfUint8List': anIterableOfUint8List
+            .map((el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
-        r'aListOfEnum':
-            aListOfEnum
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<MyEnum>(el),
-                )
-                .toList(),
+        r'aListOfEnum': aListOfEnum
+            .map((el) => _$celest.Serializers.instance.serialize<MyEnum>(el))
+            .toList(),
         r'aListOfNull': aListOfNull,
-        r'aListOfBigInt':
-            aListOfBigInt
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<BigInt>(el),
-                )
-                .toList(),
-        r'aListOfDateTime':
-            aListOfDateTime
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<DateTime>(el),
-                )
-                .toList(),
-        r'aListOfDuration':
-            aListOfDuration
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<Duration>(el),
-                )
-                .toList(),
-        r'aListOfRegExp':
-            aListOfRegExp
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<RegExp>(el),
-                )
-                .toList(),
-        r'aListOfStackTrace':
-            aListOfStackTrace
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<StackTrace>(el),
-                )
-                .toList(),
-        r'aListOfUri':
-            aListOfUri
-                .map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
-                .toList(),
-        r'aListOfUriData':
-            aListOfUriData
-                .map(
-                  (el) => _$celest.Serializers.instance.serialize<UriData>(el),
-                )
-                .toList(),
-        r'aListOfUint8List':
-            aListOfUint8List
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'aListOfBigInt': aListOfBigInt
+            .map((el) => _$celest.Serializers.instance.serialize<BigInt>(el))
+            .toList(),
+        r'aListOfDateTime': aListOfDateTime
+            .map((el) => _$celest.Serializers.instance.serialize<DateTime>(el))
+            .toList(),
+        r'aListOfDuration': aListOfDuration
+            .map((el) => _$celest.Serializers.instance.serialize<Duration>(el))
+            .toList(),
+        r'aListOfRegExp': aListOfRegExp
+            .map((el) => _$celest.Serializers.instance.serialize<RegExp>(el))
+            .toList(),
+        r'aListOfStackTrace': aListOfStackTrace
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<StackTrace>(el),
+            )
+            .toList(),
+        r'aListOfUri': aListOfUri
+            .map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
+            .toList(),
+        r'aListOfUriData': aListOfUriData
+            .map((el) => _$celest.Serializers.instance.serialize<UriData>(el))
+            .toList(),
+        r'aListOfUint8List': aListOfUint8List
+            .map((el) => _$celest.Serializers.instance.serialize<Uint8List>(el))
+            .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
         r'aMapOfDouble': aMapOfDouble,
@@ -7013,72 +6991,47 @@ class CelestFunctionsParameterTypes {
           aUint8List,
         ),
         r'anIterableOfString': anIterableOfString,
-        r'anIterableOfUint8List':
-            anIterableOfUint8List
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'anIterableOfUint8List': anIterableOfUint8List
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<Uint8List>(el),
+            )
+            .toList(),
         r'aListOfString': aListOfString,
         r'aListOfInt': aListOfInt,
         r'aListOfDouble': aListOfDouble,
         r'aListOfBool': aListOfBool,
-        r'aListOfEnum':
-            aListOfEnum
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<MyEnum>(el),
-                )
-                .toList(),
+        r'aListOfEnum': aListOfEnum
+            ?.map((el) => _$celest.Serializers.instance.serialize<MyEnum>(el))
+            .toList(),
         r'aListOfNull': aListOfNull,
-        r'aListOfBigInt':
-            aListOfBigInt
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<BigInt>(el),
-                )
-                .toList(),
-        r'aListOfDateTime':
-            aListOfDateTime
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<DateTime>(el),
-                )
-                .toList(),
-        r'aListOfDuration':
-            aListOfDuration
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<Duration>(el),
-                )
-                .toList(),
-        r'aListOfRegExp':
-            aListOfRegExp
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<RegExp>(el),
-                )
-                .toList(),
-        r'aListOfStackTrace':
-            aListOfStackTrace
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<StackTrace>(el),
-                )
-                .toList(),
-        r'aListOfUri':
-            aListOfUri
-                ?.map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
-                .toList(),
-        r'aListOfUriData':
-            aListOfUriData
-                ?.map(
-                  (el) => _$celest.Serializers.instance.serialize<UriData>(el),
-                )
-                .toList(),
-        r'aListOfUint8List':
-            aListOfUint8List
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<Uint8List>(el),
-                )
-                .toList(),
+        r'aListOfBigInt': aListOfBigInt
+            ?.map((el) => _$celest.Serializers.instance.serialize<BigInt>(el))
+            .toList(),
+        r'aListOfDateTime': aListOfDateTime
+            ?.map((el) => _$celest.Serializers.instance.serialize<DateTime>(el))
+            .toList(),
+        r'aListOfDuration': aListOfDuration
+            ?.map((el) => _$celest.Serializers.instance.serialize<Duration>(el))
+            .toList(),
+        r'aListOfRegExp': aListOfRegExp
+            ?.map((el) => _$celest.Serializers.instance.serialize<RegExp>(el))
+            .toList(),
+        r'aListOfStackTrace': aListOfStackTrace
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<StackTrace>(el),
+            )
+            .toList(),
+        r'aListOfUri': aListOfUri
+            ?.map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
+            .toList(),
+        r'aListOfUriData': aListOfUriData
+            ?.map((el) => _$celest.Serializers.instance.serialize<UriData>(el))
+            .toList(),
+        r'aListOfUint8List': aListOfUint8List
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<Uint8List>(el),
+            )
+            .toList(),
         r'aMapOfString': aMapOfString,
         r'aMapOfInt': aMapOfInt,
         r'aMapOfDouble': aMapOfDouble,
@@ -7227,174 +7180,136 @@ class CelestFunctionsParameterTypes {
             .serialize<SimpleClass?>(aNullableSimpleClass),
         r'aNullableComplexClass': _$celest.Serializers.instance
             .serialize<ComplexClass?>(aNullableComplexClass),
-        r'anIterableOfSimpleStruct':
-            anIterableOfSimpleStruct
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'anIterableOfComplexStruct':
-            anIterableOfComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'anIterableOfSimpleClass':
-            anIterableOfSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'anIterableOfComplexClass':
-            anIterableOfComplexClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfSimpleStruct':
-            aNullableIterableOfSimpleStruct
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfComplexStruct':
-            aNullableIterableOfComplexStruct
-                ?.map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfSimpleClass':
-            aNullableIterableOfSimpleClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aNullableIterableOfComplexClass':
-            aNullableIterableOfComplexClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableSimpleStruct':
-            anIterableOfNullableSimpleStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<SimpleStruct?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableComplexStruct':
-            anIterableOfNullableComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableSimpleClass':
-            anIterableOfNullableSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass?>(el),
-                )
-                .toList(),
-        r'anIterableOfNullableComplexClass':
-            anIterableOfNullableComplexClass
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexClass?>(el),
-                )
-                .toList(),
-        r'aListOfSimpleStruct':
-            aListOfSimpleStruct
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aListOfComplexStruct':
-            aListOfComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aListOfSimpleClass':
-            aListOfSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aListOfComplexClass':
-            aListOfComplexClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aNullableListOfSimpleStruct':
-            aNullableListOfSimpleStruct
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleStruct>(el),
-                )
-                .toList(),
-        r'aNullableListOfComplexStruct':
-            aNullableListOfComplexStruct
-                ?.map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct>(el),
-                )
-                .toList(),
-        r'aNullableListOfSimpleClass':
-            aNullableListOfSimpleClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass>(el),
-                )
-                .toList(),
-        r'aNullableListOfComplexClass':
-            aNullableListOfComplexClass
-                ?.map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<ComplexClass>(el),
-                )
-                .toList(),
-        r'aListOfNullableSimpleStruct':
-            aListOfNullableSimpleStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<SimpleStruct?>(el),
-                )
-                .toList(),
-        r'aListOfNullableComplexStruct':
-            aListOfNullableComplexStruct
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexStruct?>(el),
-                )
-                .toList(),
-        r'aListOfNullableSimpleClass':
-            aListOfNullableSimpleClass
-                .map(
-                  (el) =>
-                      _$celest.Serializers.instance.serialize<SimpleClass?>(el),
-                )
-                .toList(),
-        r'aListOfNullableComplexClass':
-            aListOfNullableComplexClass
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ComplexClass?>(el),
-                )
-                .toList(),
+        r'anIterableOfSimpleStruct': anIterableOfSimpleStruct
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleStruct>(el),
+            )
+            .toList(),
+        r'anIterableOfComplexStruct': anIterableOfComplexStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct>(el),
+            )
+            .toList(),
+        r'anIterableOfSimpleClass': anIterableOfSimpleClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass>(el),
+            )
+            .toList(),
+        r'anIterableOfComplexClass': anIterableOfComplexClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<ComplexClass>(el),
+            )
+            .toList(),
+        r'aNullableIterableOfSimpleStruct': aNullableIterableOfSimpleStruct
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleStruct>(el),
+            )
+            .toList(),
+        r'aNullableIterableOfComplexStruct': aNullableIterableOfComplexStruct
+            ?.map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct>(el),
+            )
+            .toList(),
+        r'aNullableIterableOfSimpleClass': aNullableIterableOfSimpleClass
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass>(el),
+            )
+            .toList(),
+        r'aNullableIterableOfComplexClass': aNullableIterableOfComplexClass
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<ComplexClass>(el),
+            )
+            .toList(),
+        r'anIterableOfNullableSimpleStruct': anIterableOfNullableSimpleStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<SimpleStruct?>(el),
+            )
+            .toList(),
+        r'anIterableOfNullableComplexStruct': anIterableOfNullableComplexStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct?>(el),
+            )
+            .toList(),
+        r'anIterableOfNullableSimpleClass': anIterableOfNullableSimpleClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass?>(el),
+            )
+            .toList(),
+        r'anIterableOfNullableComplexClass': anIterableOfNullableComplexClass
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexClass?>(el),
+            )
+            .toList(),
+        r'aListOfSimpleStruct': aListOfSimpleStruct
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleStruct>(el),
+            )
+            .toList(),
+        r'aListOfComplexStruct': aListOfComplexStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct>(el),
+            )
+            .toList(),
+        r'aListOfSimpleClass': aListOfSimpleClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass>(el),
+            )
+            .toList(),
+        r'aListOfComplexClass': aListOfComplexClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<ComplexClass>(el),
+            )
+            .toList(),
+        r'aNullableListOfSimpleStruct': aNullableListOfSimpleStruct
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleStruct>(el),
+            )
+            .toList(),
+        r'aNullableListOfComplexStruct': aNullableListOfComplexStruct
+            ?.map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct>(el),
+            )
+            .toList(),
+        r'aNullableListOfSimpleClass': aNullableListOfSimpleClass
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass>(el),
+            )
+            .toList(),
+        r'aNullableListOfComplexClass': aNullableListOfComplexClass
+            ?.map(
+              (el) => _$celest.Serializers.instance.serialize<ComplexClass>(el),
+            )
+            .toList(),
+        r'aListOfNullableSimpleStruct': aListOfNullableSimpleStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<SimpleStruct?>(el),
+            )
+            .toList(),
+        r'aListOfNullableComplexStruct': aListOfNullableComplexStruct
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexStruct?>(el),
+            )
+            .toList(),
+        r'aListOfNullableSimpleClass': aListOfNullableSimpleClass
+            .map(
+              (el) => _$celest.Serializers.instance.serialize<SimpleClass?>(el),
+            )
+            .toList(),
+        r'aListOfNullableComplexClass': aListOfNullableComplexClass
+            .map(
+              (el) =>
+                  _$celest.Serializers.instance.serialize<ComplexClass?>(el),
+            )
+            .toList(),
         r'aMapOfSimpleStruct': aMapOfSimpleStruct.map(
           (key, value) => MapEntry(
             key,
@@ -10234,10 +10149,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10315,13 +10229,12 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithInheritedCustomJson>(el),
-                )
-                .toList(),
+        r'shapes': shapes
+            .map(
+              (el) => _$celest.Serializers.instance
+                  .serialize<ShapeWithInheritedCustomJson>(el),
+            )
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10353,13 +10266,12 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithCustomJson>(el),
-                )
-                .toList(),
+        r'shapes': shapes
+            .map(
+              (el) => _$celest.Serializers.instance
+                  .serialize<ShapeWithCustomJson>(el),
+            )
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10400,13 +10312,12 @@ class CelestFunctionsSealedClasses {
             .serialize<CircleWithOverriddenCustomJson>(circle),
         r'rectangle': _$celest.Serializers.instance
             .serialize<RectangleWithOverriddenCustomJson>(rectangle),
-        r'other':
-            other
-                .map(
-                  (el) => _$celest.Serializers.instance
-                      .serialize<ShapeWithOverriddenCustomJson>(el),
-                )
-                .toList(),
+        r'other': other
+            .map(
+              (el) => _$celest.Serializers.instance
+                  .serialize<ShapeWithOverriddenCustomJson>(el),
+            )
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10495,10 +10406,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10525,10 +10435,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10555,10 +10464,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10590,10 +10498,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10625,10 +10532,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10660,10 +10566,9 @@ class CelestFunctionsSealedClasses {
         'Accept': 'application/json',
       },
       body: _$celest.JsonUtf8.encode({
-        r'shapes':
-            shapes
-                .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
-                .toList(),
+        r'shapes': shapes
+            .map((el) => _$celest.Serializers.instance.serialize<Shape>(el))
+            .toList(),
       }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
@@ -10769,28 +10674,6 @@ class CelestFunctionsSealedClasses {
           (el) => _$celest.Serializers.instance.deserialize<Result<T, E>>(el),
         )
         .toList();
-  }
-
-  @_$celest.CloudFunction(api: 'sealed_classes', function: 'okShapeResult')
-  Future<OkShapeResult> okShapeResult(Shape shape) async {
-    final $response = await celest.httpClient.post(
-      celest.baseUri.resolve('/sealed-classes/ok-shape-result'),
-      headers: const {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: _$celest.JsonUtf8.encode({
-        r'shape': _$celest.Serializers.instance.serialize<Shape>(shape),
-      }),
-    );
-    final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
-    if ($response.statusCode != 200) {
-      _throwError(
-        code: $response.statusCode,
-        body: ($body as Map<String, Object?>),
-      );
-    }
-    return _$celest.Serializers.instance.deserialize<OkShapeResult>($body);
   }
 }
 

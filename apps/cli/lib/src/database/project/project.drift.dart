@@ -86,12 +86,12 @@ class $EnvironmentsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$EnvironmentsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$EnvironmentsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$EnvironmentsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$EnvironmentsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$EnvironmentsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$EnvironmentsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> id = const i0.Value.absent(),
@@ -102,16 +102,9 @@ class $EnvironmentsTableManager
                 required String id,
                 i0.Value<int> rowid = const i0.Value.absent(),
               }) => i1.EnvironmentsCompanion.insert(id: id, rowid: rowid),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -253,21 +246,12 @@ class $EnvironmentVariablesTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$EnvironmentVariablesFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer:
-              () => i1.$EnvironmentVariablesOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer:
-              () => i1.$EnvironmentVariablesAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              i1.$EnvironmentVariablesFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$EnvironmentVariablesOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () => i1
+              .$EnvironmentVariablesAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> environmentId = const i0.Value.absent(),
@@ -292,16 +276,9 @@ class $EnvironmentVariablesTableManager
                 value: value,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -437,12 +414,12 @@ class $SecretsTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$SecretsFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$SecretsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$SecretsAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$SecretsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$SecretsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$SecretsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> environmentId = const i0.Value.absent(),
@@ -467,16 +444,9 @@ class $SecretsTableManager
                 valueRef: valueRef,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -527,11 +497,10 @@ class Environments extends i0.Table
   i1.Environment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.Environment(
-      id:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
     );
   }
 
@@ -687,21 +656,18 @@ class EnvironmentVariables extends i0.Table
   i1.EnvironmentVariable map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.EnvironmentVariable(
-      environmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}environment_id'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      value:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}value'],
-          )!,
+      environmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}environment_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
     );
   }
 
@@ -775,10 +741,9 @@ class EnvironmentVariable extends i0.DataClass
   );
   EnvironmentVariable copyWithCompanion(i1.EnvironmentVariablesCompanion data) {
     return EnvironmentVariable(
-      environmentId:
-          data.environmentId.present
-              ? data.environmentId.value
-              : this.environmentId,
+      environmentId: data.environmentId.present
+          ? data.environmentId.value
+          : this.environmentId,
       name: data.name.present ? data.name.value : this.name,
       value: data.value.present ? data.value.value : this.value,
     );
@@ -926,21 +891,18 @@ class Secrets extends i0.Table with i0.TableInfo<Secrets, i1.Secret> {
   i1.Secret map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.Secret(
-      environmentId:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}environment_id'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      valueRef:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}value_ref'],
-          )!,
+      environmentId: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}environment_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      valueRef: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}value_ref'],
+      )!,
     );
   }
 
@@ -1010,10 +972,9 @@ class Secret extends i0.DataClass implements i0.Insertable<i1.Secret> {
       );
   Secret copyWithCompanion(i1.SecretsCompanion data) {
     return Secret(
-      environmentId:
-          data.environmentId.present
-              ? data.environmentId.value
-              : this.environmentId,
+      environmentId: data.environmentId.present
+          ? data.environmentId.value
+          : this.environmentId,
       name: data.name.present ? data.name.value : this.name,
       valueRef: data.valueRef.present ? data.valueRef.value : this.valueRef,
     );

@@ -45,6 +45,12 @@ final class LocalApiRunner {
   late final StreamSubscription<String> _stdoutSub;
   late final StreamSubscription<String> _stderrSub;
 
+  @visibleForTesting
+  Future<List<String>> Function()? isolateIdsProvider;
+
+  @visibleForTesting
+  Future<void> Function(String isolateId, String rootLibUri)? reloadSourcesHook;
+
   static Future<LocalApiRunner> start({
     required ast.ResolvedProject resolvedProject,
     required String path,
@@ -59,9 +65,11 @@ final class LocalApiRunner {
     // hub and is never exposed to the user.
     @visibleForTesting PortFinder portFinder = const RandomPortFinder(),
   }) async {
-    final (target, platformDill, sdkRoot) = switch (resolvedProject
-        .sdkConfig
-        .targetSdk) {
+    final (
+      target,
+      platformDill,
+      sdkRoot,
+    ) = switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.flutter => (
         'flutter',
         Sdk.current.flutterPlatformDill!,
@@ -181,9 +189,9 @@ final class LocalApiRunner {
     // When we check the port below, it's valid because the VM service is not
     // started yet, but later the API fails because it picked the same port.
     final vmServicePort = await const RandomPortFinder()
-    // If we've specified a port, though, that must be reserved for us to
-    // use, so start the search from the next port.
-    .findOpenPort(port == null ? null : port + 1);
+        // If we've specified a port, though, that must be reserved for us to
+        // use, so start the search from the next port.
+        .findOpenPort(port == null ? null : port + 1);
     final command = switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.dart => <String>[
         Sdk.current.dart,
@@ -255,6 +263,30 @@ final class LocalApiRunner {
     final relativePath = p.relative(path, from: projectPaths.projectRoot);
     final rootPrefix = platform.isWindows ? r'\' : '/';
     return Uri(scheme: 'celest', path: '$rootPrefix$relativePath');
+  }
+
+  @visibleForTesting
+  static LocalApiRunner testing({
+    required FrontendServerClient client,
+    required List<String> isolateIds,
+    Future<void> Function(String isolateId, String rootLibUri)? reloadHook,
+    bool verbose = false,
+    String path = '',
+    int port = 0,
+  }) {
+    final runner = LocalApiRunner._(
+      path: path,
+      verbose: verbose,
+      port: port,
+      client: client,
+      localApiProcess: _NoopProcess(),
+    );
+    runner.isolateIdsProvider = () async => List<String>.from(isolateIds);
+    runner.reloadSourcesHook = reloadHook ?? (_, __) async {};
+    runner._vmService = null;
+    runner._stdoutSub = Stream<String>.empty().listen((_) {});
+    runner._stderrSub = Stream<String>.empty().listen((_) {});
+    return runner;
   }
 
   static final _vmServicePattern = RegExp(
@@ -467,12 +499,55 @@ final class LocalApiRunner {
         else
           p.toUri(path),
     ]);
-    final dillOutput = _client.expectOutput(result);
+    _logger.finest(
+      'Compile result: dillOutput=${result.dillOutput} '
+      'errors=${result.errorCount}',
+    );
+
+    if (result.errorCount > 0) {
+      _logger.finest('Error compiling local API', result.debugResult);
+      await _client.reject();
+      throw CompilationException(
+        'Error compiling local API: ${result.debugResult}',
+        result.compilerOutputLines.toList(),
+      );
+    }
+
+    final dillOutput = result.dillOutput;
+    if (dillOutput == null) {
+      _logger.finest('Compile result:\n${result.debugResult}');
+      await _client.reject();
+      unreachable('An unknown error occurred compiling local API.');
+    }
     _logger.fine('Hot reloading local API with entrypoint: $dillOutput');
 
-    final isolates = await _vmService!.getVM().then((vm) => vm.isolates!);
-    for (final isolate in isolates) {
-      await _vmService!.reloadSources(isolate.id!, rootLibUri: dillOutput);
+    try {
+      final isolateIds = isolateIdsProvider != null
+          ? await isolateIdsProvider!()
+          : await _vmService!.getVM().then(
+              (vm) =>
+                  vm.isolates
+                      ?.map((isolate) => isolate.id)
+                      .whereType<String>()
+                      .toList() ??
+                  const <String>[],
+            );
+      for (final isolateId in isolateIds) {
+        if (reloadSourcesHook != null) {
+          await reloadSourcesHook!(isolateId, dillOutput);
+        } else {
+          await _vmService!.reloadSources(isolateId, rootLibUri: dillOutput);
+        }
+      }
+      _client.accept();
+    } on Object catch (error, stackTrace) {
+      _logger.finer(
+        'Hot reload failed; rejecting compilation',
+        error,
+        stackTrace,
+      );
+      await _client.reject();
+      rethrow;
     }
   }
 
@@ -538,6 +613,30 @@ final class LocalApiRunner {
   }
 }
 
+class _NoopProcess implements Process {
+  _NoopProcess();
+
+  final _stdinController = StreamController<List<int>>();
+
+  @override
+  IOSink get stdin => IOSink(_stdinController.sink);
+
+  @override
+  Stream<List<int>> get stdout => const Stream<List<int>>.empty();
+
+  @override
+  Stream<List<int>> get stderr => const Stream<List<int>>.empty();
+
+  @override
+  Future<int> get exitCode => Future.value(0);
+
+  @override
+  int get pid => 0;
+
+  @override
+  bool kill([ProcessSignal signal = ProcessSignal.sigterm]) => true;
+}
+
 final class CompilationException implements Exception {
   CompilationException(this.message, [this.compilerOutput = const []]);
 
@@ -548,38 +647,12 @@ final class CompilationException implements Exception {
   String toString() => message;
 }
 
-extension on FrontendServerClient {
-  String expectOutput(CompileResult result) {
-    _logger.finest(
-      'Compile result: dillOutput=${result.dillOutput} '
-      'errors=${result.errorCount}',
-    );
-    switch (result) {
-      case CompileResult(errorCount: > 0):
-        _logger.finest('Error compiling local API', result.debugResult);
-        accept(); // Always accept so we can call `compile` again.
-        throw CompilationException(
-          'Error compiling local API: ${result.debugResult}',
-          result.compilerOutputLines.toList(),
-        );
-      case CompileResult(:final dillOutput?):
-        accept();
-        return dillOutput;
-      default:
-        _logger.finest('Compile result:\n${result.debugResult}');
-        // `dillOutput` should never be null (see its docs).
-        unreachable('An unknown error occurred compiling local API.');
-    }
-  }
-}
-
 extension on CompileResult {
   String get debugResult {
-    final buffer =
-        StringBuffer()
-          ..writeln('dillOutput: $dillOutput')
-          ..writeln('Error count: $errorCount')
-          ..writeln('Compiler output:');
+    final buffer = StringBuffer()
+      ..writeln('dillOutput: $dillOutput')
+      ..writeln('Error count: $errorCount')
+      ..writeln('Compiler output:');
     for (final line in compilerOutputLines) {
       buffer.writeln('  $line');
     }

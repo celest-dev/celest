@@ -18,8 +18,9 @@ Future<bool> launchUrl(Uri url) async {
     throw UnsupportedError('Unsupported OS: ${Platform.operatingSystem}');
   }
 
-  final arguments =
-      Platform.isWindows ? ['start-process', '"$url"'] : [url.toString()];
+  final arguments = Platform.isWindows
+      ? ['start-process', '"$url"']
+      : [url.toString()];
   try {
     final res = await processManager.run(
       <String>[command, ...arguments],

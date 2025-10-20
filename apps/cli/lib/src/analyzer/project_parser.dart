@@ -23,12 +23,11 @@ final class CelestProjectParser {
       throw StateError('Could not parse $projectDart');
     }
 
-    final topLevelVariables =
-        projectDartLibrary.units
-            .expand((unit) => unit.unit.declarations)
-            .whereType<TopLevelVariableDeclaration>()
-            .expand((declaration) => declaration.variables.variables)
-            .toList();
+    final topLevelVariables = projectDartLibrary.units
+        .expand((unit) => unit.unit.declarations)
+        .whereType<TopLevelVariableDeclaration>()
+        .expand((declaration) => declaration.variables.variables)
+        .toList();
 
     if (_findDatabases(topLevelVariables)) {
       _dependencies.add('drift_hrana');

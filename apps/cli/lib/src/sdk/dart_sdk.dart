@@ -57,11 +57,10 @@ class Sdk {
   Version get version => _version ??= _parseVersion(sdkPath);
 
   /// The Flutter SDK's semantic versioning version (x.y.z-a.b.channel).
-  Version? get flutterVersion =>
-      _flutterVersion ??= switch (flutterSdkRoot) {
-        final flutterSdkRoot? => _parseVersion(flutterSdkRoot),
-        null => null,
-      };
+  Version? get flutterVersion => _flutterVersion ??= switch (flutterSdkRoot) {
+    final flutterSdkRoot? => _parseVersion(flutterSdkRoot),
+    null => null,
+  };
 
   /// If using the Flutter SDK, the root directory of the Flutter SDK.
   ///
@@ -137,18 +136,17 @@ class Sdk {
   String get frontendServerSnapshot =>
       p.absolute(sdkPath, 'bin', 'snapshots', 'frontend_server.dart.snapshot');
 
-  String? get flutterPatchedSdk =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk',
-          );
+  String? get flutterPatchedSdk => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk',
+        );
 
   String get flutterTester => p.join(flutterOsArtifacts, 'flutter_tester');
 
@@ -201,33 +199,31 @@ class Sdk {
   String get devToolsBinaries =>
       p.absolute(sdkPath, 'bin', 'resources', 'devtools');
 
-  String? get flutterPlatformDill =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk',
-            'platform_strong.dill',
-          );
+  String? get flutterPlatformDill => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk',
+          'platform_strong.dill',
+        );
 
-  String? get flutterPlatformProductDill =>
-      flutterSdkRoot == null
-          ? null
-          : p.absolute(
-            flutterSdkRoot!,
-            'bin',
-            'cache',
-            'artifacts',
-            'engine',
-            'common',
-            'flutter_patched_sdk_product',
-            'platform_strong.dill',
-          );
+  String? get flutterPlatformProductDill => flutterSdkRoot == null
+      ? null
+      : p.absolute(
+          flutterSdkRoot!,
+          'bin',
+          'cache',
+          'artifacts',
+          'engine',
+          'common',
+          'flutter_patched_sdk_product',
+          'platform_strong.dill',
+        );
 
   String get vmPlatformDill {
     final dillPath = p.absolute(

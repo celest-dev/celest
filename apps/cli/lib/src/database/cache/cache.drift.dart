@@ -103,16 +103,12 @@ class $AnalyzerByteStoreTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$AnalyzerByteStoreFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  i1.$AnalyzerByteStoreOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$AnalyzerByteStoreAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              i1.$AnalyzerByteStoreFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$AnalyzerByteStoreOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$AnalyzerByteStoreAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> cacheKey = const i0.Value.absent(),
@@ -133,16 +129,9 @@ class $AnalyzerByteStoreTableManager
                 content: content,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -280,12 +269,12 @@ class $VersionInfoTableManager
         i0.TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => i1.$VersionInfoFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => i1.$VersionInfoOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => i1.$VersionInfoAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              i1.$VersionInfoFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              i1.$VersionInfoOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              i1.$VersionInfoAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<String> celest = const i0.Value.absent(),
@@ -310,16 +299,9 @@ class $VersionInfoTableManager
                 flutter: flutter,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          i0.BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -386,11 +368,10 @@ class AnalyzerByteStore extends i0.Table
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.AnalyzerByteStoreData(
-      cacheKey:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}cache_key'],
-          )!,
+      cacheKey: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}cache_key'],
+      )!,
       content: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.blob,
         data['${effectivePrefix}content'],
@@ -586,16 +567,14 @@ class VersionInfo extends i0.Table
   i1.VersionInfoData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return i1.VersionInfoData(
-      celest:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}celest'],
-          )!,
-      dart:
-          attachedDatabase.typeMapping.read(
-            i0.DriftSqlType.string,
-            data['${effectivePrefix}dart'],
-          )!,
+      celest: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}celest'],
+      )!,
+      dart: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.string,
+        data['${effectivePrefix}dart'],
+      )!,
       flutter: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
         data['${effectivePrefix}flutter'],

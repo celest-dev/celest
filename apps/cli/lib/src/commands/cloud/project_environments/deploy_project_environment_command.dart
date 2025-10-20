@@ -22,11 +22,8 @@ final class DeployProjectEnvironmentCommand
       DeployProjectEnvironmentResponse();
 
   @override
-  CloudVerbs get verbs => const (
-    run: 'deploy',
-    running: 'Deploying',
-    completed: 'deployed',
-  );
+  CloudVerbs get verbs =>
+      const (run: 'deploy', running: 'Deploying', completed: 'deployed');
 
   @override
   CloudOperation<DeployProjectEnvironmentResponse> callService() async* {
@@ -43,8 +40,9 @@ Future<void> main() async {
   }
 }
 ''';
-    final tmpDir =
-        fileSystem.systemTempDirectory.createTempSync('celest_').path;
+    final tmpDir = fileSystem.systemTempDirectory
+        .createTempSync('celest_')
+        .path;
     await fileSystem
         .directory(tmpDir)
         .childFile('hello_world.dart')
@@ -73,7 +71,7 @@ Future<void> main() async {
     final _ = etag;
     // yield* cloud.projects.environments.deploy(
     //   options.resourceId,
-    //   // TODO: Take in celest_ast type
+    //   // TODO(dnys1): Take in celest_ast type
     //   assets: [
     //     pb.ProjectAsset(
     //       type: pb.ProjectAsset_Type.DART_KERNEL,

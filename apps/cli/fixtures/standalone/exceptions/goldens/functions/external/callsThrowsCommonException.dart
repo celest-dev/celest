@@ -1078,13 +1078,12 @@ final class CallsThrowsCommonExceptionTarget
   void init() {
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i8.AsyncError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'error': $value.error,
-              r'stackTrace': _i4.Serializers.instance.serialize<StackTrace>(
-                $value.stackTrace,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'error': $value.error,
+          r'stackTrace': _i4.Serializers.instance.serialize<StackTrace>(
+            $value.stackTrace,
+          ),
+        },
         deserialize: ($serialized) {
           return _i8.AsyncError(
             $serialized[r'error']!,
@@ -1097,13 +1096,12 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i8.TimeoutException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-              if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
-                  case final duration?)
-                r'duration': duration,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+          if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
+              case final duration?)
+            r'duration': duration,
+        },
         deserialize: ($serialized) {
           return _i8.TimeoutException(
             ($serialized[r'message'] as String?),
@@ -1119,14 +1117,13 @@ final class CallsThrowsCommonExceptionTarget
         _i11.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.unsupportedObject case final unsupportedObject?)
-                r'unsupportedObject': unsupportedObject,
-              if ($value.cause case final cause?) r'cause': cause,
-              if ($value.partialResult case final partialResult?)
-                r'partialResult': partialResult,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.unsupportedObject case final unsupportedObject?)
+            r'unsupportedObject': unsupportedObject,
+          if ($value.cause case final cause?) r'cause': cause,
+          if ($value.partialResult case final partialResult?)
+            r'partialResult': partialResult,
+        },
         deserialize: ($serialized) {
           return _i11.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
@@ -1138,12 +1135,11 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<ArgumentError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'invalidValue': $value.invalidValue,
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'invalidValue': $value.invalidValue,
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+        },
         deserialize: ($serialized) {
           return ArgumentError(
             $serialized?[r'message'],
@@ -1154,10 +1150,9 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<AssertionError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return AssertionError($serialized?[r'message']);
         },
@@ -1165,11 +1160,10 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<ConcurrentModificationError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.modifiedObject case final modifiedObject?)
-                r'modifiedObject': modifiedObject,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.modifiedObject case final modifiedObject?)
+            r'modifiedObject': modifiedObject,
+        },
         deserialize: ($serialized) {
           return ConcurrentModificationError($serialized?[r'modifiedObject']);
         },
@@ -1177,14 +1171,11 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<Error, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_i4.Serializers.instance.serialize<StackTrace?>(
-                    $value.stackTrace,
-                  )
-                  case final stackTrace?)
-                r'stackTrace': stackTrace,
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_i4.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+              case final stackTrace?)
+            r'stackTrace': stackTrace,
+        },
         deserialize: ($serialized) {
           return Error();
         },
@@ -1200,12 +1191,11 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<FormatException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'source': $value.source,
-              if ($value.offset case final offset?) r'offset': offset,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
         deserialize: ($serialized) {
           return FormatException(
             (($serialized?[r'message'] as String?)) ?? '',
@@ -1217,17 +1207,15 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<IndexError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.indexable case final indexable?)
-                r'indexable': indexable,
-              r'length': $value.length,
-              r'invalidValue': $value.invalidValue,
-              r'start': $value.start,
-              r'end': $value.end,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.indexable case final indexable?) r'indexable': indexable,
+          r'length': $value.length,
+          r'invalidValue': $value.invalidValue,
+          r'start': $value.start,
+          r'end': $value.end,
+        },
         deserialize: ($serialized) {
           return IndexError(
             ($serialized[r'invalidValue'] as num).toInt(),
@@ -1244,10 +1232,9 @@ final class CallsThrowsCommonExceptionTarget
         IntegerDivisionByZeroException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return IntegerDivisionByZeroException();
         },
@@ -1263,15 +1250,14 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<RangeError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.start case final start?) r'start': start,
-              if ($value.end case final end?) r'end': end,
-              if ($value.invalidValue case final invalidValue?)
-                r'invalidValue': invalidValue,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.start case final start?) r'start': start,
+          if ($value.end case final end?) r'end': end,
+          if ($value.invalidValue case final invalidValue?)
+            r'invalidValue': invalidValue,
+        },
         deserialize: ($serialized) {
           return RangeError($serialized[r'message']);
         },
@@ -1303,10 +1289,9 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnimplementedError(($serialized?[r'message'] as String?));
         },
@@ -1314,10 +1299,9 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<UnsupportedError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
         },
@@ -1359,17 +1343,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.AbortedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.AbortedException(
             ($serialized?[r'message'] as String?),
@@ -1384,17 +1367,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.AlreadyExistsException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
@@ -1409,17 +1391,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.BadRequestException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.BadRequestException(
             ($serialized?[r'message'] as String?),
@@ -1434,17 +1415,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.CancelledException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.CancelledException(
             ($serialized?[r'message'] as String?),
@@ -1459,17 +1439,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.CloudException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.CloudException.fromJson($serialized);
         },
@@ -1477,17 +1456,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.DataLossError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.DataLossError(
             ($serialized?[r'message'] as String?),
@@ -1502,17 +1480,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.DeadlineExceededError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
@@ -1530,17 +1507,16 @@ final class CallsThrowsCommonExceptionTarget
         _i5.FailedPreconditionException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
@@ -1555,17 +1531,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.InternalServerError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.InternalServerError(
             ($serialized?[r'message'] as String?),
@@ -1580,17 +1555,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.NotFoundException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.NotFoundException(
             ($serialized?[r'message'] as String?),
@@ -1605,17 +1579,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.OutOfRangeException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.OutOfRangeException(
             ($serialized?[r'message'] as String?),
@@ -1633,17 +1606,16 @@ final class CallsThrowsCommonExceptionTarget
         _i5.PermissionDeniedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
@@ -1661,17 +1633,16 @@ final class CallsThrowsCommonExceptionTarget
         _i5.ResourceExhaustedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
@@ -1686,17 +1657,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.UnauthorizedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.UnauthorizedException(
             ($serialized?[r'message'] as String?),
@@ -1711,17 +1681,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.UnavailableError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.UnavailableError(
             ($serialized?[r'message'] as String?),
@@ -1736,17 +1705,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.UnimplementedError(
             ($serialized?[r'message'] as String?),
@@ -1761,17 +1729,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.UnknownError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i5.UnknownError(
             ($serialized?[r'message'] as String?),
@@ -1786,17 +1753,16 @@ final class CallsThrowsCommonExceptionTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i12.SerializationException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i13.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i13.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i12.SerializationException(
             ($serialized[r'message'] as String?),

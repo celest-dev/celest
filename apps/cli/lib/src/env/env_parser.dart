@@ -99,16 +99,14 @@ final class EnvParser {
 
   /// If [val] is wrapped in single or double quotes, returns the quote character.
   /// Otherwise, returns the empty string.
-  static String surroundingQuote(String val) =>
-      _surroundQuotes.hasMatch(val)
-          ? _surroundQuotes.firstMatch(val)!.group(1)!
-          : '';
+  static String surroundingQuote(String val) => _surroundQuotes.hasMatch(val)
+      ? _surroundQuotes.firstMatch(val)!.group(1)!
+      : '';
 
   /// Removes quotes (single or double) surrounding a value.
-  static String unquote(String val) =>
-      _surroundQuotes.hasMatch(val)
-          ? _surroundQuotes.firstMatch(val)!.group(2)!
-          : strip(val, includeQuotes: true).trim();
+  static String unquote(String val) => _surroundQuotes.hasMatch(val)
+      ? _surroundQuotes.firstMatch(val)!.group(2)!
+      : strip(val, includeQuotes: true).trim();
 
   /// Strips comments (trailing or whole-line).
   static String strip(String line, {bool includeQuotes = false}) =>

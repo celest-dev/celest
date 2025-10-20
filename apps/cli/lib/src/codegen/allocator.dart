@@ -81,8 +81,9 @@ final class CelestAllocator implements Allocator {
     switch (uri) {
       case Uri(scheme: '' || 'file'):
         final path = uri.toFilePath();
-        final absolutePath =
-            _fileContext.isRelative(path) ? _fileContext.absolute(path) : path;
+        final absolutePath = _fileContext.isRelative(path)
+            ? _fileContext.absolute(path)
+            : path;
         if (p.equals(absolutePath, forFile)) {
           return symbol;
         }

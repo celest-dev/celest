@@ -41,6 +41,13 @@
                   "column": 37
                 },
                 "text": "a"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -68,6 +75,13 @@
                   "column": 49
                 },
                 "text": "b"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -95,6 +109,13 @@
                   "column": 59
                 },
                 "text": "t"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -184,6 +205,13 @@
                   "column": 49
                 },
                 "text": "locale"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -211,6 +239,13 @@
                   "column": 69
                 },
                 "text": "countryCode"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -1108,7 +1143,7 @@
     "celest": "1.0.14",
     "dart": {
       "type": "dart",
-      "version": "3.10.0-75.1.beta",
+      "version": "3.9.2",
       "enabledExperiments": []
     },
     "targetSdk": "flutter",
@@ -1117,7 +1152,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.36.0-0.3.pre",
+      "version": "3.35.6",
       "enabledExperiments": []
     }
   },

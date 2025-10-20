@@ -123,8 +123,9 @@ class CliJsonLogger extends CliLogger {
     }
 
     final options = choices.map(displayChoice).toList();
-    final defaultOption =
-        defaultValue != null ? displayChoice(defaultValue) : null;
+    final defaultOption = defaultValue != null
+        ? displayChoice(defaultValue)
+        : null;
     _writeLog(
       LogMessage.chooseOne(
         message: message,

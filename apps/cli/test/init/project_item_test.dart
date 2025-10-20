@@ -68,8 +68,9 @@ void main() {
       );
       await updater.create();
 
-      final updatedPubspec =
-          await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+      final updatedPubspec = await fileSystem
+          .file(projectPaths.pubspecYaml)
+          .readAsString();
       expect(updatedPubspec, equalsIgnoringWhitespace(pubspecYaml));
     });
 
@@ -88,8 +89,9 @@ void main() {
       );
       await updater.create();
 
-      final updatedPubspec =
-          await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+      final updatedPubspec = await fileSystem
+          .file(projectPaths.pubspecYaml)
+          .readAsString();
       expect(updatedPubspec, equalsIgnoringWhitespace(_pubspecYaml()));
     });
 
@@ -111,8 +113,9 @@ void main() {
       );
       await updater.create();
 
-      final updatedPubspec =
-          await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+      final updatedPubspec = await fileSystem
+          .file(projectPaths.pubspecYaml)
+          .readAsString();
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
@@ -137,8 +140,9 @@ void main() {
       );
       await updater.create();
 
-      final updatedPubspec =
-          await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+      final updatedPubspec = await fileSystem
+          .file(projectPaths.pubspecYaml)
+          .readAsString();
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
@@ -163,8 +167,9 @@ void main() {
       );
       await updater.create();
 
-      final updatedPubspec =
-          await fileSystem.file(projectPaths.pubspecYaml).readAsString();
+      final updatedPubspec = await fileSystem
+          .file(projectPaths.pubspecYaml)
+          .readAsString();
       expect(
         updatedPubspec,
         equalsIgnoringWhitespace(_pubspecYaml()),
@@ -214,8 +219,9 @@ environment:
         ),
       ).create();
 
-      final updatedPubspecYaml =
-          await tempDir.childFile('pubspec.yaml').readAsString();
+      final updatedPubspecYaml = await tempDir
+          .childFile('pubspec.yaml')
+          .readAsString();
       expect(
         updatedPubspecYaml,
         equalsIgnoringWhitespace('''
@@ -270,8 +276,9 @@ dev_dependencies:
         ),
       ).create();
 
-      final updatedPubspecYaml =
-          await tempDir.childFile('pubspec.yaml').readAsString();
+      final updatedPubspecYaml = await tempDir
+          .childFile('pubspec.yaml')
+          .readAsString();
       expect(
         updatedPubspecYaml,
         equalsIgnoringWhitespace('''
@@ -305,8 +312,9 @@ dev_dependencies:
         projectDisplayName: 'My Project',
       ).create();
 
-      final pubspecFile =
-          await tempDir.childFile('pubspec.yaml').readAsString();
+      final pubspecFile = await tempDir
+          .childFile('pubspec.yaml')
+          .readAsString();
       expect(
         pubspecFile,
         startsWith('''
@@ -349,8 +357,9 @@ dev_dependencies:
         ),
       ).create();
 
-      final updatedPubspecYaml =
-          await tempDir.childFile('pubspec.yaml').readAsString();
+      final updatedPubspecYaml = await tempDir
+          .childFile('pubspec.yaml')
+          .readAsString();
       expect(
         updatedPubspecYaml,
         equalsIgnoringWhitespace('''
@@ -411,8 +420,9 @@ dev_dependencies:
         ),
       ).create();
 
-      final updatedPubspecYaml =
-          await tempDir.childFile('pubspec.yaml').readAsString();
+      final updatedPubspecYaml = await tempDir
+          .childFile('pubspec.yaml')
+          .readAsString();
       expect(
         updatedPubspecYaml,
         equalsIgnoringWhitespace('''

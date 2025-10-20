@@ -129,12 +129,11 @@ extension<T> on Future<T> {
     if (timeout != null) {
       return fut.timeout(
         timeout,
-        onTimeout:
-            () => _fail(
-              '$methodName Timed out',
-              TimeoutException(null, timeout),
-              Chain.current(),
-            ),
+        onTimeout: () => _fail(
+          '$methodName Timed out',
+          TimeoutException(null, timeout),
+          Chain.current(),
+        ),
       );
     }
     return fut;

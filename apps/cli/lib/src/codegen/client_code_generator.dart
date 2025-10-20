@@ -65,10 +65,9 @@ final class CodegenDependencies extends DelegatingSet<String> {
   static final Logger _logger = Logger('CodegenDependencies');
 
   Future<bool> save() async {
-    var (pubspec, pubspecYaml) =
-        p.equals(rootDir, projectPaths.projectRoot)
-            ? (celestProject.pubspec, celestProject.pubspecYaml)
-            : (celestProject.clientPubspec, celestProject.clientPubspecYaml);
+    var (pubspec, pubspecYaml) = p.equals(rootDir, projectPaths.projectRoot)
+        ? (celestProject.pubspec, celestProject.pubspecYaml)
+        : (celestProject.clientPubspec, celestProject.clientPubspecYaml);
     final pubspecFile = fileSystem.directory(rootDir).childFile('pubspec.yaml');
     final currentDependencies = Set.of(pubspec.dependencies.keys);
     final missingDependencies = difference(currentDependencies);

@@ -852,13 +852,12 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
   void init() {
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i7.AsyncError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'error': $value.error,
-              r'stackTrace': _i5.Serializers.instance.serialize<StackTrace>(
-                $value.stackTrace,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'error': $value.error,
+          r'stackTrace': _i5.Serializers.instance.serialize<StackTrace>(
+            $value.stackTrace,
+          ),
+        },
         deserialize: ($serialized) {
           return _i7.AsyncError(
             $serialized[r'error']!,
@@ -871,13 +870,12 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i7.TimeoutException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-              if (_i5.Serializers.instance.serialize<Duration?>($value.duration)
-                  case final duration?)
-                r'duration': duration,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+          if (_i5.Serializers.instance.serialize<Duration?>($value.duration)
+              case final duration?)
+            r'duration': duration,
+        },
         deserialize: ($serialized) {
           return _i7.TimeoutException(
             ($serialized[r'message'] as String?),
@@ -893,14 +891,13 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         _i9.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.unsupportedObject case final unsupportedObject?)
-                r'unsupportedObject': unsupportedObject,
-              if ($value.cause case final cause?) r'cause': cause,
-              if ($value.partialResult case final partialResult?)
-                r'partialResult': partialResult,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.unsupportedObject case final unsupportedObject?)
+            r'unsupportedObject': unsupportedObject,
+          if ($value.cause case final cause?) r'cause': cause,
+          if ($value.partialResult case final partialResult?)
+            r'partialResult': partialResult,
+        },
         deserialize: ($serialized) {
           return _i9.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
@@ -912,12 +909,11 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<ArgumentError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'invalidValue': $value.invalidValue,
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'invalidValue': $value.invalidValue,
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+        },
         deserialize: ($serialized) {
           return ArgumentError(
             $serialized?[r'message'],
@@ -928,10 +924,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<AssertionError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return AssertionError($serialized?[r'message']);
         },
@@ -939,11 +934,10 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<ConcurrentModificationError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.modifiedObject case final modifiedObject?)
-                r'modifiedObject': modifiedObject,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.modifiedObject case final modifiedObject?)
+            r'modifiedObject': modifiedObject,
+        },
         deserialize: ($serialized) {
           return ConcurrentModificationError($serialized?[r'modifiedObject']);
         },
@@ -951,14 +945,11 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<Error, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_i5.Serializers.instance.serialize<StackTrace?>(
-                    $value.stackTrace,
-                  )
-                  case final stackTrace?)
-                r'stackTrace': stackTrace,
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_i5.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+              case final stackTrace?)
+            r'stackTrace': stackTrace,
+        },
         deserialize: ($serialized) {
           return Error();
         },
@@ -974,12 +965,11 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<FormatException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'source': $value.source,
-              if ($value.offset case final offset?) r'offset': offset,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
         deserialize: ($serialized) {
           return FormatException(
             (($serialized?[r'message'] as String?)) ?? '',
@@ -991,17 +981,15 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<IndexError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.indexable case final indexable?)
-                r'indexable': indexable,
-              r'length': $value.length,
-              r'invalidValue': $value.invalidValue,
-              r'start': $value.start,
-              r'end': $value.end,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.indexable case final indexable?) r'indexable': indexable,
+          r'length': $value.length,
+          r'invalidValue': $value.invalidValue,
+          r'start': $value.start,
+          r'end': $value.end,
+        },
         deserialize: ($serialized) {
           return IndexError(
             ($serialized[r'invalidValue'] as num).toInt(),
@@ -1018,10 +1006,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         IntegerDivisionByZeroException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return IntegerDivisionByZeroException();
         },
@@ -1037,15 +1024,14 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<RangeError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.start case final start?) r'start': start,
-              if ($value.end case final end?) r'end': end,
-              if ($value.invalidValue case final invalidValue?)
-                r'invalidValue': invalidValue,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.start case final start?) r'start': start,
+          if ($value.end case final end?) r'end': end,
+          if ($value.invalidValue case final invalidValue?)
+            r'invalidValue': invalidValue,
+        },
         deserialize: ($serialized) {
           return RangeError($serialized[r'message']);
         },
@@ -1077,10 +1063,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnimplementedError(($serialized?[r'message'] as String?));
         },
@@ -1088,10 +1073,9 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<UnsupportedError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
         },
@@ -1115,17 +1099,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.AbortedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.AbortedException(
             ($serialized?[r'message'] as String?),
@@ -1140,17 +1123,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.AlreadyExistsException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
@@ -1165,17 +1147,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.BadRequestException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.BadRequestException(
             ($serialized?[r'message'] as String?),
@@ -1190,17 +1171,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.CancelledException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.CancelledException(
             ($serialized?[r'message'] as String?),
@@ -1215,17 +1195,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.CloudException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.CloudException.fromJson($serialized);
         },
@@ -1233,17 +1212,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.DataLossError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.DataLossError(
             ($serialized?[r'message'] as String?),
@@ -1258,17 +1236,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.DeadlineExceededError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
@@ -1286,17 +1263,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         _i4.FailedPreconditionException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
@@ -1311,17 +1287,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.InternalServerError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.InternalServerError(
             ($serialized?[r'message'] as String?),
@@ -1336,17 +1311,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.NotFoundException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.NotFoundException(
             ($serialized?[r'message'] as String?),
@@ -1361,17 +1335,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.OutOfRangeException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.OutOfRangeException(
             ($serialized?[r'message'] as String?),
@@ -1389,17 +1362,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         _i4.PermissionDeniedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
@@ -1417,17 +1389,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
         _i4.ResourceExhaustedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
@@ -1442,17 +1413,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.UnauthorizedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.UnauthorizedException(
             ($serialized?[r'message'] as String?),
@@ -1467,17 +1437,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.UnavailableError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.UnavailableError(
             ($serialized?[r'message'] as String?),
@@ -1492,17 +1461,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.UnimplementedError(
             ($serialized?[r'message'] as String?),
@@ -1517,17 +1485,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i4.UnknownError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i4.UnknownError(
             ($serialized?[r'message'] as String?),
@@ -1542,17 +1509,16 @@ final class StreamHelloTarget extends _i1.CloudEventSourceTarget {
     );
     _i5.Serializers.instance.put(
       _i5.Serializer.define<_i10.SerializationException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
-                    $value.details,
-                    const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i5.Serializers.instance.serialize<_i12.JsonValue?>(
+                $value.details,
+                const _i5.TypeToken<_i12.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i10.SerializationException(
             ($serialized[r'message'] as String?),

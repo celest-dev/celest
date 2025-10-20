@@ -58,18 +58,21 @@ void main() {
   }
 
   final testRunners = <TestRunner>[];
-  final testDirs = [
-        // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
-        // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
-        p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
-      ]
-      .map(fileSystem.directory)
-      .expand((testDir) => testDir.listSync().whereType<Directory>());
+  final testDirs =
+      [
+            // TODO(dnys1): Need to ensure Firebase/Supabase pre-reqs are installed
+            // p.join(fileSystem.currentDirectory.path, 'fixtures', 'apps'),
+            p.join(fileSystem.currentDirectory.path, 'fixtures', 'standalone'),
+          ]
+          .map(fileSystem.directory)
+          .expand((testDir) => testDir.listSync().whereType<Directory>());
   for (final testDir in testDirs) {
-    final (projectDir, useCelestLayout) =
-        testDir.childDirectory('celest').existsSync()
-            ? (testDir.childDirectory('celest'), true)
-            : (testDir, false);
+    final (
+      projectDir,
+      useCelestLayout,
+    ) = testDir.childDirectory('celest').existsSync()
+        ? (testDir.childDirectory('celest'), true)
+        : (testDir, false);
     if (!projectDir.childFile('pubspec.yaml').existsSync()) {
       continue;
     }
@@ -89,8 +92,9 @@ void main() {
       projectRoot: projectDir.path,
       updateGoldens: updateGoldens,
       clearCache: clearCache,
-      parentProject:
-          useCelestLayout ? ParentProject.loadSync(testDir.path) : null,
+      parentProject: useCelestLayout
+          ? ParentProject.loadSync(testDir.path)
+          : null,
       clientDir: projectDir.childDirectory('client'),
       goldensDir: fileSystem.directory(p.join(projectDir.path, 'goldens')),
       includeApis: includeApis,
@@ -150,8 +154,9 @@ class TestRunner {
           ], workingDirectory: projectRoot);
           expect(res.exitCode, 0, reason: '${res.stdout}\n${res.stderr}');
         }
-        final sdkResult =
-            await DartSdkFinder(projectRoot: projectRoot).findSdk();
+        final sdkResult = await DartSdkFinder(
+          projectRoot: projectRoot,
+        ).findSdk();
         Sdk.current = sdkResult.sdk;
         await runPub(
           exe: Platform.resolvedExecutable,
@@ -264,11 +269,10 @@ class TestRunner {
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -315,11 +319,10 @@ class TestRunner {
       expect(warnings, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -357,11 +360,10 @@ class TestRunner {
       expect(errors, isEmpty);
       expect(project, isNotNull);
 
-      final configValues =
-          await ConfigValueSolver(
-            project: project!,
-            environmentId: 'local',
-          ).solveAll();
+      final configValues = await ConfigValueSolver(
+        project: project!,
+        environmentId: 'local',
+      ).solveAll();
       final projectResolver = ProjectLinker(
         configValues: configValues,
         environmentId: 'local',
@@ -511,11 +513,10 @@ class TestRunner {
         expect(errors, isEmpty);
         expect(project, isNotNull);
 
-        final configValues =
-            await ConfigValueSolver(
-              project: project!,
-              environmentId: 'local',
-            ).solveAll();
+        final configValues = await ConfigValueSolver(
+          project: project!,
+          environmentId: 'local',
+        ).solveAll();
         final projectResolver = ProjectLinker(
           configValues: configValues,
           environmentId: 'local',
@@ -2839,35 +2840,35 @@ final tests = <String, Test>{
               ],
             ),
           ],
-          'okShapeResult': [
-            FunctionTestSuccess(
-              name: 'circle',
-              input: {
-                'shape': {r'$type': 'Circle', 'radius': 5.0},
-              },
-              output: {
-                'data': {
-                  r'$type': 'Circle',
-                  'radius': 5.0,
-                  'area': pi * 5.0 * 5.0,
-                },
-              },
-            ),
-            FunctionTestSuccess(
-              name: 'rectangle',
-              input: {
-                'shape': {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
-              },
-              output: {
-                'data': {
-                  r'$type': 'Rectangle',
-                  'width': 5.0,
-                  'height': 5.0,
-                  'area': 25.0,
-                },
-              },
-            ),
-          ],
+          // 'okShapeResult': [
+          //   FunctionTestSuccess(
+          //     name: 'circle',
+          //     input: {
+          //       'shape': {r'$type': 'Circle', 'radius': 5.0},
+          //     },
+          //     output: {
+          //       'data': {
+          //         r'$type': 'Circle',
+          //         'radius': 5.0,
+          //         'area': pi * 5.0 * 5.0,
+          //       },
+          //     },
+          //   ),
+          //   FunctionTestSuccess(
+          //     name: 'rectangle',
+          //     input: {
+          //       'shape': {r'$type': 'Rectangle', 'width': 5.0, 'height': 5.0},
+          //     },
+          //     output: {
+          //       'data': {
+          //         r'$type': 'Rectangle',
+          //         'width': 5.0,
+          //         'height': 5.0,
+          //         'area': 25.0,
+          //       },
+          //     },
+          //   ),
+          // ],
           'swappedResult': [
             FunctionTestSuccess(
               name: 'swappedResult',

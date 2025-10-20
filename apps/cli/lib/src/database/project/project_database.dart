@@ -24,21 +24,19 @@ final class ProjectDatabase extends $ProjectDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen:
-          (details) => _lock.withResource(() async {
-            await customStatement('PRAGMA foreign_keys = ON');
-            await customStatement('PRAGMA journal_mode = WAL');
-            await customStatement('PRAGMA busy_timeout = 5000');
-            await customStatement('PRAGMA synchronous = NORMAL');
-            await customStatement('PRAGMA mmap_size = 30000000000');
-            await customStatement('PRAGMA cache_size = 1000000000');
-            await customStatement('PRAGMA page_size = 32768');
-            await customStatement('PRAGMA temp_store = memory');
-          }),
-      onCreate:
-          (m) => _lock.withResource(() async {
-            await m.createAll();
-          }),
+      beforeOpen: (details) => _lock.withResource(() async {
+        await customStatement('PRAGMA foreign_keys = ON');
+        await customStatement('PRAGMA journal_mode = WAL');
+        await customStatement('PRAGMA busy_timeout = 5000');
+        await customStatement('PRAGMA synchronous = NORMAL');
+        await customStatement('PRAGMA mmap_size = 30000000000');
+        await customStatement('PRAGMA cache_size = 1000000000');
+        await customStatement('PRAGMA page_size = 32768');
+        await customStatement('PRAGMA temp_store = memory');
+      }),
+      onCreate: (m) => _lock.withResource(() async {
+        await m.createAll();
+      }),
     );
   }
 
@@ -46,13 +44,12 @@ final class ProjectDatabase extends $ProjectDatabase {
     String name, {
     required String environmentId,
   }) async {
-    final query =
-        select(environmentVariables)
-          ..where(
-            (env) =>
-                env.name.equals(name) & env.environmentId.equals(environmentId),
-          )
-          ..limit(1);
+    final query = select(environmentVariables)
+      ..where(
+        (env) =>
+            env.name.equals(name) & env.environmentId.equals(environmentId),
+      )
+      ..limit(1);
     final values = await query.get();
     return values.firstOrNull?.value;
   }

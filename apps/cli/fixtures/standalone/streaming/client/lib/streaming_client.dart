@@ -35,6 +35,7 @@ class Celest with _$celest.CelestBase {
 
   late CelestEnvironment _currentEnvironment;
 
+  @override
   late final _$native_storage_native_storage.NativeStorage nativeStorage =
       _$native_storage_native_storage.NativeStorage(scope: 'celest');
 

@@ -35,16 +35,29 @@ import 'package:fast_immutable_collections/src/imap/imap.dart'
 void initSerializers({_$celest.Serializers? serializers}) {
   return runZoned(() {
     _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<Record$rmm4wt, Map<String, Object?>>(
+        serialize: ($value) => <String, Object?>{
+          r'anotherField': $value.anotherField,
+          r'field': $value.field,
+        },
+        deserialize: ($serialized) {
+          return (
+            anotherField: ($serialized[r'anotherField'] as String),
+            field: ($serialized[r'field'] as String),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Record$k2phuz, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'aliased': _$celest.Serializers.instance
-                  .serialize<NamedFieldsRecord>($value.aliased),
-              r'nonAliased': _$celest.Serializers.instance
-                  .serialize<({String anotherField, String field})>(
-                    $value.nonAliased,
-                  ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'aliased': _$celest.Serializers.instance
+              .serialize<NamedFieldsRecord>($value.aliased),
+          r'nonAliased': _$celest.Serializers.instance
+              .serialize<({String anotherField, String field})>(
+                $value.nonAliased,
+              ),
+        },
         deserialize: ($serialized) {
           return (
             aliased: _$celest.Serializers.instance
@@ -59,12 +72,11 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Record$k7x4l9, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'a': $value.a,
-              r'b': $value.b,
-              r'c': $value.c,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'a': $value.a,
+          r'b': $value.b,
+          r'c': $value.c,
+        },
         deserialize: ($serialized) {
           return (
             a: ($serialized[r'a'] as String),
@@ -75,28 +87,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
       ),
     );
     _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<Record$rmm4wt, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'anotherField': $value.anotherField,
-              r'field': $value.field,
-            },
-        deserialize: ($serialized) {
-          return (
-            anotherField: ($serialized[r'anotherField'] as String),
-            field: ($serialized[r'field'] as String),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<AsyncError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'error': $value.error,
-              r'stackTrace': _$celest.Serializers.instance
-                  .serialize<StackTrace>($value.stackTrace),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'error': $value.error,
+          r'stackTrace': _$celest.Serializers.instance.serialize<StackTrace>(
+            $value.stackTrace,
+          ),
+        },
         deserialize: ($serialized) {
           return AsyncError(
             $serialized[r'error']!,
@@ -109,15 +106,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<TimeoutException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-              if (_$celest.Serializers.instance.serialize<Duration?>(
-                    $value.duration,
-                  )
-                  case final duration?)
-                r'duration': duration,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+          if (_$celest.Serializers.instance.serialize<Duration?>(
+                $value.duration,
+              )
+              case final duration?)
+            r'duration': duration,
+        },
         deserialize: ($serialized) {
           return TimeoutException(
             ($serialized[r'message'] as String?),
@@ -131,14 +127,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest
           .Serializer.define<JsonUnsupportedObjectError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.unsupportedObject case final unsupportedObject?)
-                r'unsupportedObject': unsupportedObject,
-              if ($value.cause case final cause?) r'cause': cause,
-              if ($value.partialResult case final partialResult?)
-                r'partialResult': partialResult,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.unsupportedObject case final unsupportedObject?)
+            r'unsupportedObject': unsupportedObject,
+          if ($value.cause case final cause?) r'cause': cause,
+          if ($value.partialResult case final partialResult?)
+            r'partialResult': partialResult,
+        },
         deserialize: ($serialized) {
           return JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
@@ -150,12 +145,11 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<ArgumentError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'invalidValue': $value.invalidValue,
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'invalidValue': $value.invalidValue,
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+        },
         deserialize: ($serialized) {
           return ArgumentError(
             $serialized?[r'message'],
@@ -166,10 +160,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<AssertionError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return AssertionError($serialized?[r'message']);
         },
@@ -180,11 +173,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
         ConcurrentModificationError,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.modifiedObject case final modifiedObject?)
-                r'modifiedObject': modifiedObject,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.modifiedObject case final modifiedObject?)
+            r'modifiedObject': modifiedObject,
+        },
         deserialize: ($serialized) {
           return ConcurrentModificationError($serialized?[r'modifiedObject']);
         },
@@ -192,14 +184,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Error, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_$celest.Serializers.instance.serialize<StackTrace?>(
-                    $value.stackTrace,
-                  )
-                  case final stackTrace?)
-                r'stackTrace': stackTrace,
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_$celest.Serializers.instance.serialize<StackTrace?>(
+                $value.stackTrace,
+              )
+              case final stackTrace?)
+            r'stackTrace': stackTrace,
+        },
         deserialize: ($serialized) {
           return Error();
         },
@@ -215,12 +206,11 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<FormatException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'source': $value.source,
-              if ($value.offset case final offset?) r'offset': offset,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
         deserialize: ($serialized) {
           return FormatException(
             (($serialized?[r'message'] as String?)) ?? '',
@@ -232,17 +222,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<IndexError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.indexable case final indexable?)
-                r'indexable': indexable,
-              r'length': $value.length,
-              r'invalidValue': $value.invalidValue,
-              r'start': $value.start,
-              r'end': $value.end,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.indexable case final indexable?) r'indexable': indexable,
+          r'length': $value.length,
+          r'invalidValue': $value.invalidValue,
+          r'start': $value.start,
+          r'end': $value.end,
+        },
         deserialize: ($serialized) {
           return IndexError(
             ($serialized[r'invalidValue'] as num).toInt(),
@@ -259,10 +247,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
         IntegerDivisionByZeroException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return IntegerDivisionByZeroException();
         },
@@ -278,15 +265,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<RangeError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.start case final start?) r'start': start,
-              if ($value.end case final end?) r'end': end,
-              if ($value.invalidValue case final invalidValue?)
-                r'invalidValue': invalidValue,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.start case final start?) r'start': start,
+          if ($value.end case final end?) r'end': end,
+          if ($value.invalidValue case final invalidValue?)
+            r'invalidValue': invalidValue,
+        },
         deserialize: ($serialized) {
           return RangeError($serialized[r'message']);
         },
@@ -318,10 +304,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnimplementedError(($serialized?[r'message'] as String?));
         },
@@ -329,10 +314,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<UnsupportedError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
         },
@@ -382,12 +366,11 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<BadShapeException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'shape': _$celest.Serializers.instance.serialize<Shape>(
-                $value.shape,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'shape': _$celest.Serializers.instance.serialize<Shape>(
+            $value.shape,
+          ),
+        },
         deserialize: ($serialized) {
           return BadShapeException(
             _$celest.Serializers.instance.deserialize<Shape>(
@@ -399,15 +382,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<CustomError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'additionalInfo': _$celest.Serializers.instance
-                  .serialize<_$celest.JsonMap>(
-                    $value.additionalInfo,
-                    const _$celest.TypeToken<_$celest.JsonMap>('JsonMap'),
-                  ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'additionalInfo': _$celest.Serializers.instance
+              .serialize<_$celest.JsonMap>(
+                $value.additionalInfo,
+                const _$celest.TypeToken<_$celest.JsonMap>('JsonMap'),
+              ),
+        },
         deserialize: ($serialized) {
           return CustomError();
         },
@@ -424,13 +406,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest
           .Serializer.define<CustomErrorWithStackTrace, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'stackTrace': _$celest.Serializers.instance
-                  .serialize<StackTrace>($value.stackTrace),
-              r'message': $value.message,
-              r'additionalInfo': $value.additionalInfo,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'stackTrace': _$celest.Serializers.instance.serialize<StackTrace>(
+            $value.stackTrace,
+          ),
+          r'message': $value.message,
+          r'additionalInfo': $value.additionalInfo,
+        },
         deserialize: ($serialized) {
           return CustomErrorWithStackTrace(
             stackTrace: _$celest.Serializers.instance.deserialize<StackTrace?>(
@@ -442,15 +424,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<CustomException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'additionalInfo': _$celest.Serializers.instance
-                  .serialize<_$celest.JsonMap>(
-                    $value.additionalInfo,
-                    const _$celest.TypeToken<_$celest.JsonMap>('JsonMap'),
-                  ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'additionalInfo': _$celest.Serializers.instance
+              .serialize<_$celest.JsonMap>(
+                $value.additionalInfo,
+                const _$celest.TypeToken<_$celest.JsonMap>('JsonMap'),
+              ),
+        },
         deserialize: ($serialized) {
           return CustomException();
         },
@@ -514,16 +495,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<DefaultValues, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'field': $value.field,
-              if ($value.nullableField case final nullableField?)
-                r'nullableField': nullableField,
-              if ($value.nullableFieldWithDefault
-                  case final nullableFieldWithDefault?)
-                r'nullableFieldWithDefault': nullableFieldWithDefault,
-              r'fieldWithoutInitializer': $value.fieldWithoutInitializer,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'field': $value.field,
+          if ($value.nullableField case final nullableField?)
+            r'nullableField': nullableField,
+          if ($value.nullableFieldWithDefault
+              case final nullableFieldWithDefault?)
+            r'nullableFieldWithDefault': nullableFieldWithDefault,
+          r'fieldWithoutInitializer': $value.fieldWithoutInitializer,
+        },
         deserialize: ($serialized) {
           return DefaultValues(
             field: (($serialized?[r'field'] as String?)) ?? 'default',
@@ -545,11 +525,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Fields, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'superField': $value.superField,
-              r'field': $value.field,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'superField': $value.superField,
+          r'field': $value.field,
+        },
         deserialize: ($serialized) {
           return Fields(
             ($serialized[r'superField'] as String),
@@ -576,11 +555,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<MixedFields, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'superField': $value.superField,
-              r'field': $value.field,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'superField': $value.superField,
+          r'field': $value.field,
+        },
         deserialize: ($serialized) {
           return MixedFields(
             ($serialized[r'superField'] as String),
@@ -591,11 +569,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NamedFields, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'superField': $value.superField,
-              r'field': $value.field,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'superField': $value.superField,
+          r'field': $value.field,
+        },
         deserialize: ($serialized) {
           return NamedFields(
             superField: ($serialized[r'superField'] as String),
@@ -606,17 +583,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NestedClass, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'fields': _$celest.Serializers.instance.serialize<Fields>(
-                $value.fields,
-              ),
-              if (_$celest.Serializers.instance.serialize<Fields?>(
-                    $value.nullableFields,
-                  )
-                  case final nullableFields?)
-                r'nullableFields': nullableFields,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'fields': _$celest.Serializers.instance.serialize<Fields>(
+            $value.fields,
+          ),
+          if (_$celest.Serializers.instance.serialize<Fields?>(
+                $value.nullableFields,
+              )
+              case final nullableFields?)
+            r'nullableFields': nullableFields,
+        },
         deserialize: ($serialized) {
           return NestedClass(
             _$celest.Serializers.instance.deserialize<Fields>(
@@ -683,17 +659,12 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Child, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'name': $value.name,
-              r'children':
-                  $value.children
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<Node>(el),
-                      )
-                      .toList(),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'name': $value.name,
+          r'children': $value.children
+              .map((el) => _$celest.Serializers.instance.serialize<Node>(el))
+              .toList(),
+        },
         deserialize: ($serialized) {
           return Child(($serialized[r'name'] as String));
         },
@@ -747,17 +718,12 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Parent, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'name': $value.name,
-              r'children':
-                  $value.children
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<Node>(el),
-                      )
-                      .toList(),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'name': $value.name,
+          r'children': $value.children
+              .map((el) => _$celest.Serializers.instance.serialize<Node>(el))
+              .toList(),
+        },
         deserialize: ($serialized) {
           return Parent(
             ($serialized[r'name'] as String),
@@ -772,25 +738,24 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<SelfReferencing, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_$celest.Serializers.instance.serialize<SelfReferencing?>(
-                    $value.value,
-                  )
-                  case final value?)
-                r'value': value,
-              if (_$celest.Serializers.instance
-                      .serialize<SelfReferencingWrapper?>($value.wrapper)
-                  case final wrapper?)
-                r'wrapper': wrapper,
-              r'list':
-                  $value.list
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<SelfReferencing>(el),
-                      )
-                      .toList(),
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_$celest.Serializers.instance.serialize<SelfReferencing?>(
+                $value.value,
+              )
+              case final value?)
+            r'value': value,
+          if (_$celest.Serializers.instance.serialize<SelfReferencingWrapper?>(
+                $value.wrapper,
+              )
+              case final wrapper?)
+            r'wrapper': wrapper,
+          r'list': $value.list
+              .map(
+                (el) => _$celest.Serializers.instance
+                    .serialize<SelfReferencing>(el),
+              )
+              .toList(),
+        },
         deserialize: ($serialized) {
           return SelfReferencing(
             value: _$celest.Serializers.instance.deserialize<SelfReferencing?>(
@@ -798,24 +763,23 @@ void initSerializers({_$celest.Serializers? serializers}) {
             ),
             wrapper: _$celest.Serializers.instance
                 .deserialize<SelfReferencingWrapper?>($serialized[r'wrapper']),
-            list:
-                ($serialized[r'list'] as Iterable<Object?>)
-                    .map(
-                      (el) => _$celest.Serializers.instance
-                          .deserialize<SelfReferencing>(el),
-                    )
-                    .toList(),
+            list: ($serialized[r'list'] as Iterable<Object?>)
+                .map(
+                  (el) => _$celest.Serializers.instance
+                      .deserialize<SelfReferencing>(el),
+                )
+                .toList(),
           );
         },
       ),
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<SelfReferencingWrapper, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'value': _$celest.Serializers.instance
-                  .serialize<SelfReferencing>($value.value),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'value': _$celest.Serializers.instance.serialize<SelfReferencing>(
+            $value.value,
+          ),
+        },
         deserialize: ($serialized) {
           return SelfReferencingWrapper(
             value: _$celest.Serializers.instance.deserialize<SelfReferencing>(
@@ -1043,82 +1007,92 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<GenericWrappers, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'listOfString': _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<String>>(
-                    $value.listOfString,
-                  ),
-              r'listOfUri': _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(
-                    $value.listOfUri,
-                  ),
-              r'listOfSimpleClass': _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_ilist.IList<SimpleClass>
-              >($value.listOfSimpleClass),
-              r'listOfListOfString': _$celest.Serializers.instance.serialize<
+        serialize: ($value) => <String, Object?>{
+          r'listOfString': _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<String>>(
+                $value.listOfString,
+              ),
+          r'listOfUri': _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(
+                $value.listOfUri,
+              ),
+          r'listOfSimpleClass': _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<SimpleClass>>(
+                $value.listOfSimpleClass,
+              ),
+          r'listOfListOfString': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_ilist.IList<
                   _$fast_immutable_collections_ilist.IList<String>
                 >
               >($value.listOfListOfString),
-              r'listOfListOfUri': _$celest.Serializers.instance.serialize<
+          r'listOfListOfUri': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_ilist.IList<
                   _$fast_immutable_collections_ilist.IList<Uri>
                 >
               >($value.listOfListOfUri),
-              r'listOfListOfSimpleClass': _$celest.Serializers.instance
-                  .serialize<
-                    _$fast_immutable_collections_ilist.IList<
-                      _$fast_immutable_collections_ilist.IList<SimpleClass>
-                    >
-                  >($value.listOfListOfSimpleClass),
-              r'mapOfString': _$celest.Serializers.instance.serialize<
+          r'listOfListOfSimpleClass': _$celest.Serializers.instance
+              .serialize<
+                _$fast_immutable_collections_ilist.IList<
+                  _$fast_immutable_collections_ilist.IList<SimpleClass>
+                >
+              >($value.listOfListOfSimpleClass),
+          r'mapOfString': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<String, String>
               >($value.mapOfString),
-              r'mapOfUri': _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_imap.IMap<String, Uri>
-              >($value.mapOfUri),
-              r'mapOfSimpleClass': _$celest.Serializers.instance.serialize<
+          r'mapOfUri': _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_imap.IMap<String, Uri>>(
+                $value.mapOfUri,
+              ),
+          r'mapOfSimpleClass': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<String, SimpleClass>
               >($value.mapOfSimpleClass),
-              r'mapOfListOfString': _$celest.Serializers.instance.serialize<
+          r'mapOfListOfString': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<
                   String,
                   _$fast_immutable_collections_ilist.IList<String>
                 >
               >($value.mapOfListOfString),
-              r'mapOfListOfUri': _$celest.Serializers.instance.serialize<
+          r'mapOfListOfUri': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<
                   String,
                   _$fast_immutable_collections_ilist.IList<Uri>
                 >
               >($value.mapOfListOfUri),
-              r'mapOfListOfSimpleClass': _$celest.Serializers.instance
-                  .serialize<
-                    _$fast_immutable_collections_imap.IMap<
-                      String,
-                      _$fast_immutable_collections_ilist.IList<SimpleClass>
-                    >
-                  >($value.mapOfListOfSimpleClass),
-              r'mapOfMapOfString': _$celest.Serializers.instance.serialize<
+          r'mapOfListOfSimpleClass': _$celest.Serializers.instance
+              .serialize<
+                _$fast_immutable_collections_imap.IMap<
+                  String,
+                  _$fast_immutable_collections_ilist.IList<SimpleClass>
+                >
+              >($value.mapOfListOfSimpleClass),
+          r'mapOfMapOfString': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<
                   String,
                   _$fast_immutable_collections_imap.IMap<String, String>
                 >
               >($value.mapOfMapOfString),
-              r'mapOfMapOfUri': _$celest.Serializers.instance.serialize<
+          r'mapOfMapOfUri': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<
                   String,
                   _$fast_immutable_collections_imap.IMap<String, Uri>
                 >
               >($value.mapOfMapOfUri),
-              r'mapOfMapOfSimpleClass': _$celest.Serializers.instance.serialize<
+          r'mapOfMapOfSimpleClass': _$celest.Serializers.instance
+              .serialize<
                 _$fast_immutable_collections_imap.IMap<
                   String,
                   _$fast_immutable_collections_imap.IMap<String, SimpleClass>
                 >
               >($value.mapOfMapOfSimpleClass),
-            },
+        },
         deserialize: ($serialized) {
           return GenericWrappers(
             listOfString: _$celest.Serializers.instance
@@ -1129,69 +1103,82 @@ void initSerializers({_$celest.Serializers? serializers}) {
                 .deserialize<_$fast_immutable_collections_ilist.IList<Uri>>(
                   $serialized[r'listOfUri'],
                 ),
-            listOfSimpleClass: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<SimpleClass>
-            >($serialized[r'listOfSimpleClass']),
-            listOfListOfString: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<
-                _$fast_immutable_collections_ilist.IList<String>
-              >
-            >($serialized[r'listOfListOfString']),
-            listOfListOfUri: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<
-                _$fast_immutable_collections_ilist.IList<Uri>
-              >
-            >($serialized[r'listOfListOfUri']),
-            listOfListOfSimpleClass: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<
-                _$fast_immutable_collections_ilist.IList<SimpleClass>
-              >
-            >($serialized[r'listOfListOfSimpleClass']),
-            mapOfString: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, String>
-            >($serialized[r'mapOfString']),
-            mapOfUri: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, Uri>
-            >($serialized[r'mapOfUri']),
-            mapOfSimpleClass: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-            >($serialized[r'mapOfSimpleClass']),
-            mapOfListOfString: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_ilist.IList<String>
-              >
-            >($serialized[r'mapOfListOfString']),
-            mapOfListOfUri: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_ilist.IList<Uri>
-              >
-            >($serialized[r'mapOfListOfUri']),
-            mapOfListOfSimpleClass: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_ilist.IList<SimpleClass>
-              >
-            >($serialized[r'mapOfListOfSimpleClass']),
-            mapOfMapOfString: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_imap.IMap<String, String>
-              >
-            >($serialized[r'mapOfMapOfString']),
-            mapOfMapOfUri: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_imap.IMap<String, Uri>
-              >
-            >($serialized[r'mapOfMapOfUri']),
-            mapOfMapOfSimpleClass: _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<
-                String,
-                _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-              >
-            >($serialized[r'mapOfMapOfSimpleClass']),
+            listOfSimpleClass: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_ilist.IList<SimpleClass>
+                >($serialized[r'listOfSimpleClass']),
+            listOfListOfString: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_ilist.IList<
+                    _$fast_immutable_collections_ilist.IList<String>
+                  >
+                >($serialized[r'listOfListOfString']),
+            listOfListOfUri: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_ilist.IList<
+                    _$fast_immutable_collections_ilist.IList<Uri>
+                  >
+                >($serialized[r'listOfListOfUri']),
+            listOfListOfSimpleClass: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_ilist.IList<
+                    _$fast_immutable_collections_ilist.IList<SimpleClass>
+                  >
+                >($serialized[r'listOfListOfSimpleClass']),
+            mapOfString: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, String>
+                >($serialized[r'mapOfString']),
+            mapOfUri: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, Uri>
+                >($serialized[r'mapOfUri']),
+            mapOfSimpleClass: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+                >($serialized[r'mapOfSimpleClass']),
+            mapOfListOfString: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_ilist.IList<String>
+                  >
+                >($serialized[r'mapOfListOfString']),
+            mapOfListOfUri: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_ilist.IList<Uri>
+                  >
+                >($serialized[r'mapOfListOfUri']),
+            mapOfListOfSimpleClass: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_ilist.IList<SimpleClass>
+                  >
+                >($serialized[r'mapOfListOfSimpleClass']),
+            mapOfMapOfString: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_imap.IMap<String, String>
+                  >
+                >($serialized[r'mapOfMapOfString']),
+            mapOfMapOfUri: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_imap.IMap<String, Uri>
+                  >
+                >($serialized[r'mapOfMapOfUri']),
+            mapOfMapOfSimpleClass: _$celest.Serializers.instance
+                .deserialize<
+                  _$fast_immutable_collections_imap.IMap<
+                    String,
+                    _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+                  >
+                >($serialized[r'mapOfMapOfSimpleClass']),
           );
         },
       ),
@@ -1214,10 +1201,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Serializable, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.type case final type?) r'type': type,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.type case final type?) r'type': type,
+        },
         deserialize: ($serialized) {
           return Serializable(($serialized?[r'type'] as String?));
         },
@@ -1233,11 +1219,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NestedGrandparent, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'parent': _$celest.Serializers.instance
-                  .serialize<_$_common__common.NestedParent>($value.parent),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'parent': _$celest.Serializers.instance
+              .serialize<_$_common__common.NestedParent>($value.parent),
+        },
         deserialize: ($serialized) {
           return NestedGrandparent(
             _$celest.Serializers.instance
@@ -1250,11 +1235,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NestedParent, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'child': _$celest.Serializers.instance
-                  .serialize<_$_common__common.NestedChild>($value.child),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'child': _$celest.Serializers.instance
+              .serialize<_$_common__common.NestedChild>($value.child),
+        },
         deserialize: ($serialized) {
           return (_$_common__common.NestedParent(
                 _$celest.Serializers.instance
@@ -1276,204 +1260,172 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<ComplexStruct, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'aBigInt': _$celest.Serializers.instance.serialize<BigInt>(
-                $value.aBigInt,
-              ),
-              r'aBool': $value.aBool,
-              r'aDateTime': _$celest.Serializers.instance.serialize<DateTime>(
-                $value.aDateTime,
-              ),
-              r'aDouble': $value.aDouble,
-              r'aDuration': _$celest.Serializers.instance.serialize<Duration>(
-                $value.aDuration,
-              ),
-              r'aListOfBigInt':
-                  $value.aListOfBigInt
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<BigInt>(el),
-                      )
-                      .toList(),
-              r'aListOfBool': $value.aListOfBool,
-              r'aListOfDateTime':
-                  $value.aListOfDateTime
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<DateTime>(el),
-                      )
-                      .toList(),
-              r'aListOfDouble': $value.aListOfDouble,
-              r'aListOfDuration':
-                  $value.aListOfDuration
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<Duration>(el),
-                      )
-                      .toList(),
-              r'aListOfEnum':
-                  $value.aListOfEnum
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<MyEnum>(el),
-                      )
-                      .toList(),
-              r'aListOfInt': $value.aListOfInt,
-              r'aListOfNull': $value.aListOfNull,
-              r'aListOfRegExp':
-                  $value.aListOfRegExp
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<RegExp>(el),
-                      )
-                      .toList(),
-              r'aListOfSimpleClass':
-                  $value.aListOfSimpleClass
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<SimpleClass>(el),
-                      )
-                      .toList(),
-              r'aListOfSimpleStruct':
-                  $value.aListOfSimpleStruct
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<SimpleStruct>(el),
-                      )
-                      .toList(),
-              r'aListOfStackTrace':
-                  $value.aListOfStackTrace
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<StackTrace>(el),
-                      )
-                      .toList(),
-              r'aListOfString': $value.aListOfString,
-              r'aListOfUint8List':
-                  $value.aListOfUint8List
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<Uint8List>(el),
-                      )
-                      .toList(),
-              r'aListOfUri':
-                  $value.aListOfUri
-                      .map(
-                        (el) =>
-                            _$celest.Serializers.instance.serialize<Uri>(el),
-                      )
-                      .toList(),
-              r'aListOfUriData':
-                  $value.aListOfUriData
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<UriData>(el),
-                      )
-                      .toList(),
-              r'aMapOfBigInt': $value.aMapOfBigInt.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<BigInt>(value),
-                ),
-              ),
-              r'aMapOfBool': $value.aMapOfBool,
-              r'aMapOfDateTime': $value.aMapOfDateTime.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<DateTime>(value),
-                ),
-              ),
-              r'aMapOfDouble': $value.aMapOfDouble,
-              r'aMapOfDuration': $value.aMapOfDuration.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<Duration>(value),
-                ),
-              ),
-              r'aMapOfEnum': $value.aMapOfEnum.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<MyEnum>(value),
-                ),
-              ),
-              r'aMapOfInt': $value.aMapOfInt,
-              r'aMapOfNull': $value.aMapOfNull,
-              r'aMapOfRegExp': $value.aMapOfRegExp.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<RegExp>(value),
-                ),
-              ),
-              r'aMapOfSimpleClass': $value.aMapOfSimpleClass.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<SimpleClass>(value),
-                ),
-              ),
-              r'aMapOfSimpleStruct': $value.aMapOfSimpleStruct.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<SimpleStruct>(value),
-                ),
-              ),
-              r'aMapOfStackTrace': $value.aMapOfStackTrace.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<StackTrace>(value),
-                ),
-              ),
-              r'aMapOfString': $value.aMapOfString,
-              r'aMapOfUint8List': $value.aMapOfUint8List.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<Uint8List>(value),
-                ),
-              ),
-              r'aMapOfUri': $value.aMapOfUri.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<Uri>(value),
-                ),
-              ),
-              r'aMapOfUriData': $value.aMapOfUriData.map(
-                (key, value) => MapEntry(
-                  key,
-                  _$celest.Serializers.instance.serialize<UriData>(value),
-                ),
-              ),
-              r'aNull': $value.aNull,
-              r'aRegExp': _$celest.Serializers.instance.serialize<RegExp>(
-                $value.aRegExp,
-              ),
-              r'aSimpleClass': _$celest.Serializers.instance
-                  .serialize<SimpleClass>($value.aSimpleClass),
-              r'aSimpleStruct': _$celest.Serializers.instance
-                  .serialize<SimpleStruct>($value.aSimpleStruct),
-              r'aStackTrace': _$celest.Serializers.instance
-                  .serialize<StackTrace>($value.aStackTrace),
-              r'aString': $value.aString,
-              r'aUint8List': _$celest.Serializers.instance.serialize<Uint8List>(
-                $value.aUint8List,
-              ),
-              r'aUri': _$celest.Serializers.instance.serialize<Uri>(
-                $value.aUri,
-              ),
-              r'aUriData': _$celest.Serializers.instance.serialize<UriData>(
-                $value.aUriData,
-              ),
-              r'anEnum': _$celest.Serializers.instance.serialize<MyEnum>(
-                $value.anEnum,
-              ),
-              r'anInt': $value.anInt,
-              r'anIterableOfSimpleClass':
-                  $value.anIterableOfSimpleClass
-                      .map(
-                        (el) => _$celest.Serializers.instance
-                            .serialize<SimpleClass>(el),
-                      )
-                      .toList(),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'aBigInt': _$celest.Serializers.instance.serialize<BigInt>(
+            $value.aBigInt,
+          ),
+          r'aBool': $value.aBool,
+          r'aDateTime': _$celest.Serializers.instance.serialize<DateTime>(
+            $value.aDateTime,
+          ),
+          r'aDouble': $value.aDouble,
+          r'aDuration': _$celest.Serializers.instance.serialize<Duration>(
+            $value.aDuration,
+          ),
+          r'aListOfBigInt': $value.aListOfBigInt
+              .map((el) => _$celest.Serializers.instance.serialize<BigInt>(el))
+              .toList(),
+          r'aListOfBool': $value.aListOfBool,
+          r'aListOfDateTime': $value.aListOfDateTime
+              .map(
+                (el) => _$celest.Serializers.instance.serialize<DateTime>(el),
+              )
+              .toList(),
+          r'aListOfDouble': $value.aListOfDouble,
+          r'aListOfDuration': $value.aListOfDuration
+              .map(
+                (el) => _$celest.Serializers.instance.serialize<Duration>(el),
+              )
+              .toList(),
+          r'aListOfEnum': $value.aListOfEnum
+              .map((el) => _$celest.Serializers.instance.serialize<MyEnum>(el))
+              .toList(),
+          r'aListOfInt': $value.aListOfInt,
+          r'aListOfNull': $value.aListOfNull,
+          r'aListOfRegExp': $value.aListOfRegExp
+              .map((el) => _$celest.Serializers.instance.serialize<RegExp>(el))
+              .toList(),
+          r'aListOfSimpleClass': $value.aListOfSimpleClass
+              .map(
+                (el) =>
+                    _$celest.Serializers.instance.serialize<SimpleClass>(el),
+              )
+              .toList(),
+          r'aListOfSimpleStruct': $value.aListOfSimpleStruct
+              .map(
+                (el) =>
+                    _$celest.Serializers.instance.serialize<SimpleStruct>(el),
+              )
+              .toList(),
+          r'aListOfStackTrace': $value.aListOfStackTrace
+              .map(
+                (el) => _$celest.Serializers.instance.serialize<StackTrace>(el),
+              )
+              .toList(),
+          r'aListOfString': $value.aListOfString,
+          r'aListOfUint8List': $value.aListOfUint8List
+              .map(
+                (el) => _$celest.Serializers.instance.serialize<Uint8List>(el),
+              )
+              .toList(),
+          r'aListOfUri': $value.aListOfUri
+              .map((el) => _$celest.Serializers.instance.serialize<Uri>(el))
+              .toList(),
+          r'aListOfUriData': $value.aListOfUriData
+              .map((el) => _$celest.Serializers.instance.serialize<UriData>(el))
+              .toList(),
+          r'aMapOfBigInt': $value.aMapOfBigInt.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<BigInt>(value),
+            ),
+          ),
+          r'aMapOfBool': $value.aMapOfBool,
+          r'aMapOfDateTime': $value.aMapOfDateTime.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<DateTime>(value),
+            ),
+          ),
+          r'aMapOfDouble': $value.aMapOfDouble,
+          r'aMapOfDuration': $value.aMapOfDuration.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Duration>(value),
+            ),
+          ),
+          r'aMapOfEnum': $value.aMapOfEnum.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<MyEnum>(value),
+            ),
+          ),
+          r'aMapOfInt': $value.aMapOfInt,
+          r'aMapOfNull': $value.aMapOfNull,
+          r'aMapOfRegExp': $value.aMapOfRegExp.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<RegExp>(value),
+            ),
+          ),
+          r'aMapOfSimpleClass': $value.aMapOfSimpleClass.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+            ),
+          ),
+          r'aMapOfSimpleStruct': $value.aMapOfSimpleStruct.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<SimpleStruct>(value),
+            ),
+          ),
+          r'aMapOfStackTrace': $value.aMapOfStackTrace.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<StackTrace>(value),
+            ),
+          ),
+          r'aMapOfString': $value.aMapOfString,
+          r'aMapOfUint8List': $value.aMapOfUint8List.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uint8List>(value),
+            ),
+          ),
+          r'aMapOfUri': $value.aMapOfUri.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<Uri>(value),
+            ),
+          ),
+          r'aMapOfUriData': $value.aMapOfUriData.map(
+            (key, value) => MapEntry(
+              key,
+              _$celest.Serializers.instance.serialize<UriData>(value),
+            ),
+          ),
+          r'aNull': $value.aNull,
+          r'aRegExp': _$celest.Serializers.instance.serialize<RegExp>(
+            $value.aRegExp,
+          ),
+          r'aSimpleClass': _$celest.Serializers.instance.serialize<SimpleClass>(
+            $value.aSimpleClass,
+          ),
+          r'aSimpleStruct': _$celest.Serializers.instance
+              .serialize<SimpleStruct>($value.aSimpleStruct),
+          r'aStackTrace': _$celest.Serializers.instance.serialize<StackTrace>(
+            $value.aStackTrace,
+          ),
+          r'aString': $value.aString,
+          r'aUint8List': _$celest.Serializers.instance.serialize<Uint8List>(
+            $value.aUint8List,
+          ),
+          r'aUri': _$celest.Serializers.instance.serialize<Uri>($value.aUri),
+          r'aUriData': _$celest.Serializers.instance.serialize<UriData>(
+            $value.aUriData,
+          ),
+          r'anEnum': _$celest.Serializers.instance.serialize<MyEnum>(
+            $value.anEnum,
+          ),
+          r'anInt': $value.anInt,
+          r'anIterableOfSimpleClass': $value.anIterableOfSimpleClass
+              .map(
+                (el) =>
+                    _$celest.Serializers.instance.serialize<SimpleClass>(el),
+              )
+              .toList(),
+        },
         deserialize: ($serialized) {
           return (
             aBigInt: _$celest.Serializers.instance.deserialize<BigInt>(
@@ -1487,17 +1439,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
             aDuration: _$celest.Serializers.instance.deserialize<Duration>(
               $serialized[r'aDuration'],
             ),
-            aListOfBigInt:
-                ($serialized[r'aListOfBigInt'] as Iterable<Object?>)
-                    .map(
-                      (el) =>
-                          _$celest.Serializers.instance.deserialize<BigInt>(el),
-                    )
-                    .toList(),
-            aListOfBool:
-                ($serialized[r'aListOfBool'] as Iterable<Object?>)
-                    .map((el) => (el as bool))
-                    .toList(),
+            aListOfBigInt: ($serialized[r'aListOfBigInt'] as Iterable<Object?>)
+                .map(
+                  (el) => _$celest.Serializers.instance.deserialize<BigInt>(el),
+                )
+                .toList(),
+            aListOfBool: ($serialized[r'aListOfBool'] as Iterable<Object?>)
+                .map((el) => (el as bool))
+                .toList(),
             aListOfDateTime:
                 ($serialized[r'aListOfDateTime'] as Iterable<Object?>)
                     .map(
@@ -1505,10 +1454,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
                           .deserialize<DateTime>(el),
                     )
                     .toList(),
-            aListOfDouble:
-                ($serialized[r'aListOfDouble'] as Iterable<Object?>)
-                    .map((el) => (el as num).toDouble())
-                    .toList(),
+            aListOfDouble: ($serialized[r'aListOfDouble'] as Iterable<Object?>)
+                .map((el) => (el as num).toDouble())
+                .toList(),
             aListOfDuration:
                 ($serialized[r'aListOfDuration'] as Iterable<Object?>)
                     .map(
@@ -1516,28 +1464,22 @@ void initSerializers({_$celest.Serializers? serializers}) {
                           .deserialize<Duration>(el),
                     )
                     .toList(),
-            aListOfEnum:
-                ($serialized[r'aListOfEnum'] as Iterable<Object?>)
-                    .map(
-                      (el) =>
-                          _$celest.Serializers.instance.deserialize<MyEnum>(el),
-                    )
-                    .toList(),
-            aListOfInt:
-                ($serialized[r'aListOfInt'] as Iterable<Object?>)
-                    .map((el) => (el as num).toInt())
-                    .toList(),
-            aListOfNull:
-                ($serialized[r'aListOfNull'] as Iterable<Object?>)
-                    .map((el) => (el as Null))
-                    .toList(),
-            aListOfRegExp:
-                ($serialized[r'aListOfRegExp'] as Iterable<Object?>)
-                    .map(
-                      (el) =>
-                          _$celest.Serializers.instance.deserialize<RegExp>(el),
-                    )
-                    .toList(),
+            aListOfEnum: ($serialized[r'aListOfEnum'] as Iterable<Object?>)
+                .map(
+                  (el) => _$celest.Serializers.instance.deserialize<MyEnum>(el),
+                )
+                .toList(),
+            aListOfInt: ($serialized[r'aListOfInt'] as Iterable<Object?>)
+                .map((el) => (el as num).toInt())
+                .toList(),
+            aListOfNull: ($serialized[r'aListOfNull'] as Iterable<Object?>)
+                .map((el) => (el as Null))
+                .toList(),
+            aListOfRegExp: ($serialized[r'aListOfRegExp'] as Iterable<Object?>)
+                .map(
+                  (el) => _$celest.Serializers.instance.deserialize<RegExp>(el),
+                )
+                .toList(),
             aListOfSimpleClass:
                 ($serialized[r'aListOfSimpleClass'] as Iterable<Object?>)
                     .map(
@@ -1559,10 +1501,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
                           .deserialize<StackTrace>(el),
                     )
                     .toList(),
-            aListOfString:
-                ($serialized[r'aListOfString'] as Iterable<Object?>)
-                    .map((el) => (el as String))
-                    .toList(),
+            aListOfString: ($serialized[r'aListOfString'] as Iterable<Object?>)
+                .map((el) => (el as String))
+                .toList(),
             aListOfUint8List:
                 ($serialized[r'aListOfUint8List'] as Iterable<Object?>)
                     .map(
@@ -1570,13 +1511,9 @@ void initSerializers({_$celest.Serializers? serializers}) {
                           .deserialize<Uint8List>(el),
                     )
                     .toList(),
-            aListOfUri:
-                ($serialized[r'aListOfUri'] as Iterable<Object?>)
-                    .map(
-                      (el) =>
-                          _$celest.Serializers.instance.deserialize<Uri>(el),
-                    )
-                    .toList(),
+            aListOfUri: ($serialized[r'aListOfUri'] as Iterable<Object?>)
+                .map((el) => _$celest.Serializers.instance.deserialize<Uri>(el))
+                .toList(),
             aListOfUriData:
                 ($serialized[r'aListOfUriData'] as Iterable<Object?>)
                     .map(
@@ -1637,16 +1574,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
                     ),
                   ),
                 ),
-            aMapOfSimpleStruct: ($serialized[r'aMapOfSimpleStruct']
-                    as Map<String, Object?>)
-                .map(
-                  (key, value) => MapEntry(
-                    key,
-                    _$celest.Serializers.instance.deserialize<SimpleStruct>(
-                      value,
+            aMapOfSimpleStruct:
+                ($serialized[r'aMapOfSimpleStruct'] as Map<String, Object?>)
+                    .map(
+                      (key, value) => MapEntry(
+                        key,
+                        _$celest.Serializers.instance.deserialize<SimpleStruct>(
+                          value,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
             aMapOfStackTrace:
                 ($serialized[r'aMapOfStackTrace'] as Map<String, Object?>).map(
                   (key, value) => MapEntry(
@@ -1740,11 +1677,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NamedFieldsRecord, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'anotherField': $value.anotherField,
-              r'field': $value.field,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'anotherField': $value.anotherField,
+          r'field': $value.field,
+        },
         deserialize: ($serialized) {
           return (
             anotherField: ($serialized[r'anotherField'] as String),
@@ -1755,11 +1691,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Nested, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'namedFields': _$celest.Serializers.instance
-                  .serialize<NamedFieldsRecord>($value.namedFields),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'namedFields': _$celest.Serializers.instance
+              .serialize<NamedFieldsRecord>($value.namedFields),
+        },
         deserialize: ($serialized) {
           return (
             namedFields: _$celest.Serializers.instance
@@ -1770,14 +1705,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<NullableNested, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_$celest.Serializers.instance.serialize<NamedFieldsRecord?>(
-                    $value.namedFields,
-                  )
-                  case final namedFields?)
-                r'namedFields': namedFields,
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_$celest.Serializers.instance.serialize<NamedFieldsRecord?>(
+                $value.namedFields,
+              )
+              case final namedFields?)
+            r'namedFields': namedFields,
+        },
         deserialize: ($serialized) {
           return (
             namedFields: _$celest.Serializers.instance
@@ -1788,11 +1722,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Circle, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'radius': $value.radius,
-              r'area': $value.area,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'radius': $value.radius,
+          r'area': $value.area,
+        },
         deserialize: ($serialized) {
           return Circle(($serialized[r'radius'] as num).toDouble());
         },
@@ -1840,14 +1773,23 @@ void initSerializers({_$celest.Serializers? serializers}) {
         },
       ),
     );
+    _$celest.Serializers.instance.put(const ErrResult_T_ShapeSerializer());
+    _$celest.Serializers.instance.put(
+      const ErrResult_T_ShapeSerializer<Shape>(),
+    );
+    _$celest.Serializers.instance.put(
+      const ErrResult_T_ShapeSerializer<Circle>(),
+    );
+    _$celest.Serializers.instance.put(
+      const ErrResult_T_ShapeSerializer<Rectangle>(),
+    );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<ErrResult<Shape>, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'error': _$celest.Serializers.instance.serialize<Shape>(
-                $value.error,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'error': _$celest.Serializers.instance.serialize<Shape>(
+            $value.error,
+          ),
+        },
         deserialize: ($serialized) {
           return ErrResult<Shape>(
             _$celest.Serializers.instance.deserialize<Shape>(
@@ -1866,24 +1808,11 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       const ErrResult_E_ShapeExceptionSerializer<BadShapeException>(),
     );
-    _$celest.Serializers.instance.put(const ErrResult_T_ShapeSerializer());
-    _$celest.Serializers.instance.put(
-      const ErrResult_T_ShapeSerializer<Shape>(),
-    );
-    _$celest.Serializers.instance.put(
-      const ErrResult_T_ShapeSerializer<Circle>(),
-    );
-    _$celest.Serializers.instance.put(
-      const ErrResult_T_ShapeSerializer<Rectangle>(),
-    );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<OkResult<Shape>, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'data': _$celest.Serializers.instance.serialize<Shape>(
-                $value.data,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'data': _$celest.Serializers.instance.serialize<Shape>($value.data),
+        },
         deserialize: ($serialized) {
           return OkResult<Shape>(
             _$celest.Serializers.instance.deserialize<Shape>(
@@ -1892,6 +1821,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
           );
         },
       ),
+    );
+    _$celest.Serializers.instance.put(
+      const OkResult_E_ShapeExceptionSerializer(),
+    );
+    _$celest.Serializers.instance.put(
+      const OkResult_E_ShapeExceptionSerializer<ShapeException>(),
+    );
+    _$celest.Serializers.instance.put(
+      const OkResult_E_ShapeExceptionSerializer<BadShapeException>(),
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<OkResult<String>, Map<String, Object?>>(
@@ -1912,39 +1850,12 @@ void initSerializers({_$celest.Serializers? serializers}) {
       const OkResult_T_ShapeSerializer<Rectangle>(),
     );
     _$celest.Serializers.instance.put(
-      const OkResult_E_ShapeExceptionSerializer(),
-    );
-    _$celest.Serializers.instance.put(
-      const OkResult_E_ShapeExceptionSerializer<ShapeException>(),
-    );
-    _$celest.Serializers.instance.put(
-      const OkResult_E_ShapeExceptionSerializer<BadShapeException>(),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<OkShapeResult, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'data': _$celest.Serializers.instance.serialize<Shape>(
-                $value.data,
-              ),
-            },
-        deserialize: ($serialized) {
-          return OkShapeResult(
-            _$celest.Serializers.instance.deserialize<Shape>(
-              $serialized[r'data'],
-            ),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Rectangle, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'width': $value.width,
-              r'height': $value.height,
-              r'area': $value.area,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'width': $value.width,
+          r'height': $value.height,
+          r'area': $value.area,
+        },
         deserialize: ($serialized) {
           return Rectangle(
             ($serialized[r'width'] as num).toDouble(),
@@ -1992,130 +1903,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
       ),
     );
     _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<Result<Shape, String>, Map<String, Object?>>(
-        serialize: ($value) {
-          if ($value is OkResult<Shape>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<OkResult<Shape>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'OkResult',
-            };
-          }
-          if ($value is SwappedResult<String, Shape>) {
-            return {
-              ...(_$celest.Serializers.instance
-                      .serialize<SwappedResult<String, Shape>>($value)
-                  as Map<String, Object?>),
-              r'$type': r'SwappedResult',
-            };
-          }
-          if ($value is ErrResult<String>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<ErrResult<String>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'ErrResult',
-            };
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($value.runtimeType))
-                .toString(),
-          );
-        },
-        deserialize: ($serialized) {
-          if ($serialized[r'$type'] == r'OkResult') {
-            return _$celest.Serializers.instance.deserialize<OkResult<Shape>>(
-              $serialized,
-            );
-          }
-          if ($serialized[r'$type'] == r'SwappedResult') {
-            return _$celest.Serializers.instance
-                .deserialize<SwappedResult<String, Shape>>($serialized);
-          }
-          if ($serialized[r'$type'] == r'ErrResult') {
-            return _$celest.Serializers.instance.deserialize<ErrResult<String>>(
-              $serialized,
-            );
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($serialized[r'$type']))
-                .toString(),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<Result<String, Shape>, Map<String, Object?>>(
-        serialize: ($value) {
-          if ($value is OkResult<String>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<OkResult<String>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'OkResult',
-            };
-          }
-          if ($value is SwappedResult<Shape, String>) {
-            return {
-              ...(_$celest.Serializers.instance
-                      .serialize<SwappedResult<Shape, String>>($value)
-                  as Map<String, Object?>),
-              r'$type': r'SwappedResult',
-            };
-          }
-          if ($value is ErrResult<Shape>) {
-            return {
-              ...(_$celest.Serializers.instance.serialize<ErrResult<Shape>>(
-                    $value,
-                  )
-                  as Map<String, Object?>),
-              r'$type': r'ErrResult',
-            };
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($value.runtimeType))
-                .toString(),
-          );
-        },
-        deserialize: ($serialized) {
-          if ($serialized[r'$type'] == r'OkResult') {
-            return _$celest.Serializers.instance.deserialize<OkResult<String>>(
-              $serialized,
-            );
-          }
-          if ($serialized[r'$type'] == r'SwappedResult') {
-            return _$celest.Serializers.instance
-                .deserialize<SwappedResult<Shape, String>>($serialized);
-          }
-          if ($serialized[r'$type'] == r'ErrResult') {
-            return _$celest.Serializers.instance.deserialize<ErrResult<Shape>>(
-              $serialized,
-            );
-          }
-          throw _$celest.SerializationException(
-            (StringBuffer('Unknown subtype of ')
-                  ..write(r'Result')
-                  ..write(': ')
-                  ..write($serialized[r'$type']))
-                .toString(),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
       const Result_T_Shape_E_ShapeExceptionSerializer(),
     );
     _$celest.Serializers.instance.put(
@@ -2147,6 +1934,130 @@ void initSerializers({_$celest.Serializers? serializers}) {
         Rectangle,
         BadShapeException
       >(),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<Result<Shape, String>, Map<String, Object?>>(
+        serialize: ($value) {
+          if ($value is ErrResult<String>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<ErrResult<String>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'ErrResult',
+            };
+          }
+          if ($value is SwappedResult<String, Shape>) {
+            return {
+              ...(_$celest.Serializers.instance
+                      .serialize<SwappedResult<String, Shape>>($value)
+                  as Map<String, Object?>),
+              r'$type': r'SwappedResult',
+            };
+          }
+          if ($value is OkResult<Shape>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<OkResult<Shape>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'OkResult',
+            };
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($value.runtimeType))
+                .toString(),
+          );
+        },
+        deserialize: ($serialized) {
+          if ($serialized[r'$type'] == r'ErrResult') {
+            return _$celest.Serializers.instance.deserialize<ErrResult<String>>(
+              $serialized,
+            );
+          }
+          if ($serialized[r'$type'] == r'SwappedResult') {
+            return _$celest.Serializers.instance
+                .deserialize<SwappedResult<String, Shape>>($serialized);
+          }
+          if ($serialized[r'$type'] == r'OkResult') {
+            return _$celest.Serializers.instance.deserialize<OkResult<Shape>>(
+              $serialized,
+            );
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($serialized[r'$type']))
+                .toString(),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<Result<String, Shape>, Map<String, Object?>>(
+        serialize: ($value) {
+          if ($value is ErrResult<Shape>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<ErrResult<Shape>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'ErrResult',
+            };
+          }
+          if ($value is SwappedResult<Shape, String>) {
+            return {
+              ...(_$celest.Serializers.instance
+                      .serialize<SwappedResult<Shape, String>>($value)
+                  as Map<String, Object?>),
+              r'$type': r'SwappedResult',
+            };
+          }
+          if ($value is OkResult<String>) {
+            return {
+              ...(_$celest.Serializers.instance.serialize<OkResult<String>>(
+                    $value,
+                  )
+                  as Map<String, Object?>),
+              r'$type': r'OkResult',
+            };
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($value.runtimeType))
+                .toString(),
+          );
+        },
+        deserialize: ($serialized) {
+          if ($serialized[r'$type'] == r'ErrResult') {
+            return _$celest.Serializers.instance.deserialize<ErrResult<Shape>>(
+              $serialized,
+            );
+          }
+          if ($serialized[r'$type'] == r'SwappedResult') {
+            return _$celest.Serializers.instance
+                .deserialize<SwappedResult<Shape, String>>($serialized);
+          }
+          if ($serialized[r'$type'] == r'OkResult') {
+            return _$celest.Serializers.instance.deserialize<OkResult<String>>(
+              $serialized,
+            );
+          }
+          throw _$celest.SerializationException(
+            (StringBuffer('Unknown subtype of ')
+                  ..write(r'Result')
+                  ..write(': ')
+                  ..write($serialized[r'$type']))
+                .toString(),
+          );
+        },
+      ),
     );
     _$celest.Serializers.instance.put(
       const Result_E_ShapeException_T_ShapeSerializer(),
@@ -2230,6 +2141,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<ShapeWithCustomJson, Map<String, Object?>>(
         serialize: ($value) {
+          if ($value is RectangleWithCustomJson) {
+            return {
+              ...(_$celest.Serializers.instance
+                      .serialize<RectangleWithCustomJson>($value)
+                  as Map<String, Object?>),
+              r'$type': r'RectangleWithCustomJson',
+            };
+          }
           if ($value is CircleWithCustomJson) {
             return {
               ...(_$celest.Serializers.instance.serialize<CircleWithCustomJson>(
@@ -2237,14 +2156,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
                   )
                   as Map<String, Object?>),
               r'$type': r'CircleWithCustomJson',
-            };
-          }
-          if ($value is RectangleWithCustomJson) {
-            return {
-              ...(_$celest.Serializers.instance
-                      .serialize<RectangleWithCustomJson>($value)
-                  as Map<String, Object?>),
-              r'$type': r'RectangleWithCustomJson',
             };
           }
           throw _$celest.SerializationException(
@@ -2256,13 +2167,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
           );
         },
         deserialize: ($serialized) {
-          if ($serialized[r'$type'] == r'CircleWithCustomJson') {
-            return _$celest.Serializers.instance
-                .deserialize<CircleWithCustomJson>($serialized);
-          }
           if ($serialized[r'$type'] == r'RectangleWithCustomJson') {
             return _$celest.Serializers.instance
                 .deserialize<RectangleWithCustomJson>($serialized);
+          }
+          if ($serialized[r'$type'] == r'CircleWithCustomJson') {
+            return _$celest.Serializers.instance
+                .deserialize<CircleWithCustomJson>($serialized);
           }
           throw _$celest.SerializationException(
             (StringBuffer('Unknown subtype of ')
@@ -2279,16 +2190,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
         ShapeWithInheritedCustomJson,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => {
-              ...$value.toJson(),
-              r'$type': switch ($value) {
-                RectangleWithInheritedCustomJson() =>
-                  r'RectangleWithInheritedCustomJson',
-                CircleWithInheritedCustomJson() =>
-                  r'CircleWithInheritedCustomJson',
-              },
-            },
+        serialize: ($value) => {
+          ...$value.toJson(),
+          r'$type': switch ($value) {
+            RectangleWithInheritedCustomJson() =>
+              r'RectangleWithInheritedCustomJson',
+            CircleWithInheritedCustomJson() => r'CircleWithInheritedCustomJson',
+          },
+        },
         deserialize: ($serialized) {
           return ShapeWithInheritedCustomJson.fromJson($serialized);
         },
@@ -2299,16 +2208,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
         ShapeWithOverriddenCustomJson,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => {
-              ...$value.toJson(),
-              r'$type': switch ($value) {
-                RectangleWithOverriddenCustomJson() =>
-                  r'RectangleWithOverriddenCustomJson',
-                CircleWithOverriddenCustomJson() =>
-                  r'CircleWithOverriddenCustomJson',
-              },
-            },
+        serialize: ($value) => {
+          ...$value.toJson(),
+          r'$type': switch ($value) {
+            RectangleWithOverriddenCustomJson() =>
+              r'RectangleWithOverriddenCustomJson',
+            CircleWithOverriddenCustomJson() =>
+              r'CircleWithOverriddenCustomJson',
+          },
+        },
         deserialize: ($serialized) {
           return ShapeWithOverriddenCustomJson.fromJson($serialized);
         },
@@ -2358,14 +2266,31 @@ void initSerializers({_$celest.Serializers? serializers}) {
         SwappedResult<String, Shape>,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'result': _$celest.Serializers.instance
-                  .serialize<Result<String, Shape>>($value.result),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'result': _$celest.Serializers.instance
+              .serialize<Result<String, Shape>>($value.result),
+        },
         deserialize: ($serialized) {
           return SwappedResult<String, Shape>(
             _$celest.Serializers.instance.deserialize<Result<String, Shape>>(
+              $serialized[r'result'],
+            ),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        SwappedResult<Shape, String>,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => <String, Object?>{
+          r'result': _$celest.Serializers.instance
+              .serialize<Result<Shape, String>>($value.result),
+        },
+        deserialize: ($serialized) {
+          return SwappedResult<Shape, String>(
+            _$celest.Serializers.instance.deserialize<Result<Shape, String>>(
               $serialized[r'result'],
             ),
           );
@@ -2412,25 +2337,6 @@ void initSerializers({_$celest.Serializers? serializers}) {
       >(),
     );
     _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        SwappedResult<Shape, String>,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'result': _$celest.Serializers.instance
-                  .serialize<Result<Shape, String>>($value.result),
-            },
-        deserialize: ($serialized) {
-          return SwappedResult<Shape, String>(
-            _$celest.Serializers.instance.deserialize<Result<Shape, String>>(
-              $serialized[r'result'],
-            ),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
       _$celest.Serializer.define<Portfolio, Map<String, dynamic>>(
         serialize: ($value) => $value.toJson(),
         deserialize: ($serialized) {
@@ -2441,17 +2347,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest
           .Serializer.define<_$celest.AbortedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.AbortedException(
             ($serialized?[r'message'] as String?),
@@ -2469,17 +2374,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.AlreadyExistsException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
@@ -2497,17 +2401,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.BadRequestException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.BadRequestException(
             ($serialized?[r'message'] as String?),
@@ -2525,17 +2428,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.CancelledException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.CancelledException(
             ($serialized?[r'message'] as String?),
@@ -2550,17 +2452,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.CloudException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.CloudException.fromJson($serialized);
         },
@@ -2568,17 +2469,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.DataLossError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.DataLossError(
             ($serialized?[r'message'] as String?),
@@ -2596,17 +2496,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.DeadlineExceededError,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
@@ -2624,17 +2523,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.FailedPreconditionException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
@@ -2652,17 +2550,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.InternalServerError,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.InternalServerError(
             ($serialized?[r'message'] as String?),
@@ -2678,17 +2575,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest
           .Serializer.define<_$celest.NotFoundException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.NotFoundException(
             ($serialized?[r'message'] as String?),
@@ -2706,17 +2602,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.OutOfRangeException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.OutOfRangeException(
             ($serialized?[r'message'] as String?),
@@ -2734,17 +2629,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.PermissionDeniedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
@@ -2762,17 +2656,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.ResourceExhaustedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
@@ -2790,17 +2683,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.UnauthorizedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.UnauthorizedException(
             ($serialized?[r'message'] as String?),
@@ -2816,17 +2708,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     _$celest.Serializers.instance.put(
       _$celest
           .Serializer.define<_$celest.UnavailableError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.UnavailableError(
             ($serialized?[r'message'] as String?),
@@ -2844,17 +2735,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.UnimplementedError,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.UnimplementedError(
             ($serialized?[r'message'] as String?),
@@ -2869,17 +2759,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<_$celest.UnknownError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.UnknownError(
             ($serialized?[r'message'] as String?),
@@ -2897,17 +2786,16 @@ void initSerializers({_$celest.Serializers? serializers}) {
         _$celest.SerializationException,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
-                    $value.details,
-                    const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_$celest.Serializers.instance.serialize<_$celest.JsonValue?>(
+                $value.details,
+                const _$celest.TypeToken<_$celest.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _$celest.SerializationException(
             ($serialized[r'message'] as String?),
@@ -2989,101 +2877,17 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<
-        _$fast_immutable_collections_ilist.IList<String>,
-        dynamic
-      >(
-        serialize: ($value) => $value.toJson((value) => value),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_ilist.IList<String>.fromJson(
-            $serialized,
-            (value) => (value as String),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_ilist.IList<Uri>,
-        dynamic
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => _$celest.Serializers.instance.serialize<Uri>(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_ilist.IList<Uri>.fromJson(
-            $serialized,
-            (value) => _$celest.Serializers.instance.deserialize<Uri>(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_ilist.IList<
-          _$fast_immutable_collections_ilist.IList<SimpleClass>
-        >,
-        dynamic
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_ilist.IList<SimpleClass>
-              >(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >.fromJson(
-            $serialized,
-            (value) => _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<SimpleClass>
-            >(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_ilist.IList<
-          _$fast_immutable_collections_ilist.IList<Uri>
-        >,
-        dynamic
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(
-                    value,
-                  ),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_ilist.IList<
-            _$fast_immutable_collections_ilist.IList<Uri>
-          >.fromJson(
-            $serialized,
-            (value) => _$celest.Serializers.instance
-                .deserialize<_$fast_immutable_collections_ilist.IList<Uri>>(
-                  value,
-                ),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
         _$fast_immutable_collections_ilist.IList<
           _$fast_immutable_collections_ilist.IList<String>
         >,
         dynamic
       >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<String>>(
-                    value,
-                  ),
-            ),
+        serialize: ($value) => $value.toJson(
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<String>>(
+                value,
+              ),
+        ),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_ilist.IList<
             _$fast_immutable_collections_ilist.IList<String>
@@ -3099,14 +2903,67 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<
+        _$fast_immutable_collections_ilist.IList<Uri>,
+        dynamic
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => _$celest.Serializers.instance.serialize<Uri>(value),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_ilist.IList<Uri>.fromJson(
+            $serialized,
+            (value) => _$celest.Serializers.instance.deserialize<Uri>(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_ilist.IList<String>,
+        dynamic
+      >(
+        serialize: ($value) => $value.toJson((value) => value),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_ilist.IList<String>.fromJson(
+            $serialized,
+            (value) => (value as String),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_ilist.IList<
+          _$fast_immutable_collections_ilist.IList<Uri>
+        >,
+        dynamic
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(value),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_ilist.IList<
+            _$fast_immutable_collections_ilist.IList<Uri>
+          >.fromJson(
+            $serialized,
+            (value) => _$celest.Serializers.instance
+                .deserialize<_$fast_immutable_collections_ilist.IList<Uri>>(
+                  value,
+                ),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
         _$fast_immutable_collections_ilist.IList<SimpleClass>,
         dynamic
       >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) =>
-                  _$celest.Serializers.instance.serialize<SimpleClass>(value),
-            ),
+        serialize: ($value) => $value.toJson(
+          (value) =>
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+        ),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_ilist.IList<SimpleClass>.fromJson(
             $serialized,
@@ -3118,11 +2975,127 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<
+        _$fast_immutable_collections_ilist.IList<
+          _$fast_immutable_collections_ilist.IList<SimpleClass>
+        >,
+        dynamic
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<SimpleClass>>(
+                value,
+              ),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_ilist.IList<
+            _$fast_immutable_collections_ilist.IList<SimpleClass>
+          >.fromJson(
+            $serialized,
+            (value) =>
+                _$celest.Serializers.instance.deserialize<
+                  _$fast_immutable_collections_ilist.IList<SimpleClass>
+                >(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_imap.IMap<
+          String,
+          _$fast_immutable_collections_ilist.IList<SimpleClass>
+        >,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<SimpleClass>>(
+                value,
+              ),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_imap.IMap<
+            String,
+            _$fast_immutable_collections_ilist.IList<SimpleClass>
+          >.fromJson(
+            $serialized,
+            (value) => (value as String),
+            (value) =>
+                _$celest.Serializers.instance.deserialize<
+                  _$fast_immutable_collections_ilist.IList<SimpleClass>
+                >(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_imap.IMap<
+          String,
+          _$fast_immutable_collections_imap.IMap<String, String>
+        >,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) =>
+              _$celest.Serializers.instance.serialize<
+                _$fast_immutable_collections_imap.IMap<String, String>
+              >(value),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_imap.IMap<
+            String,
+            _$fast_immutable_collections_imap.IMap<String, String>
+          >.fromJson(
+            $serialized,
+            (value) => (value as String),
+            (value) =>
+                _$celest.Serializers.instance.deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, String>
+                >(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_imap.IMap<
+          String,
+          _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+        >,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) =>
+              _$celest.Serializers.instance.serialize<
+                _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+              >(value),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_imap.IMap<
+            String,
+            _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+          >.fromJson(
+            $serialized,
+            (value) => (value as String),
+            (value) =>
+                _$celest.Serializers.instance.deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, SimpleClass>
+                >(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
         _$fast_immutable_collections_imap.IMap<String, String>,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => $value.toJson((value) => value, (value) => value),
+        serialize: ($value) =>
+            $value.toJson((value) => value, (value) => value),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_imap.IMap<
             String,
@@ -3139,134 +3112,15 @@ void initSerializers({_$celest.Serializers? serializers}) {
       _$celest.Serializer.define<
         _$fast_immutable_collections_imap.IMap<
           String,
-          _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-        >,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-              >(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-          >.fromJson(
-            $serialized,
-            (value) => (value as String),
-            (value) => _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, SimpleClass>
-            >(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_imap.IMap<
-          String,
-          _$fast_immutable_collections_imap.IMap<String, Uri>
-        >,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_imap.IMap<String, Uri>
-              >(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, Uri>
-          >.fromJson(
-            $serialized,
-            (value) => (value as String),
-            (value) => _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, Uri>
-            >(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_imap.IMap<
-          String,
-          _$fast_immutable_collections_imap.IMap<String, String>
-        >,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_imap.IMap<String, String>
-              >(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_imap.IMap<String, String>
-          >.fromJson(
-            $serialized,
-            (value) => (value as String),
-            (value) => _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_imap.IMap<String, String>
-            >(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_imap.IMap<
-          String,
-          _$fast_immutable_collections_ilist.IList<SimpleClass>
-        >,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance.serialize<
-                _$fast_immutable_collections_ilist.IList<SimpleClass>
-              >(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_imap.IMap<
-            String,
-            _$fast_immutable_collections_ilist.IList<SimpleClass>
-          >.fromJson(
-            $serialized,
-            (value) => (value as String),
-            (value) => _$celest.Serializers.instance.deserialize<
-              _$fast_immutable_collections_ilist.IList<SimpleClass>
-            >(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
-        _$fast_immutable_collections_imap.IMap<
-          String,
           _$fast_immutable_collections_ilist.IList<Uri>
         >,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(
-                    value,
-                  ),
-            ),
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<Uri>>(value),
+        ),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_imap.IMap<
             String,
@@ -3286,18 +3140,70 @@ void initSerializers({_$celest.Serializers? serializers}) {
       _$celest.Serializer.define<
         _$fast_immutable_collections_imap.IMap<
           String,
+          _$fast_immutable_collections_imap.IMap<String, Uri>
+        >,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_imap.IMap<String, Uri>>(
+                value,
+              ),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_imap.IMap<
+            String,
+            _$fast_immutable_collections_imap.IMap<String, Uri>
+          >.fromJson(
+            $serialized,
+            (value) => (value as String),
+            (value) =>
+                _$celest.Serializers.instance.deserialize<
+                  _$fast_immutable_collections_imap.IMap<String, Uri>
+                >(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_imap.IMap<String, SimpleClass>,
+        Map<String, Object?>
+      >(
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) =>
+              _$celest.Serializers.instance.serialize<SimpleClass>(value),
+        ),
+        deserialize: ($serialized) {
+          return _$fast_immutable_collections_imap.IMap<
+            String,
+            SimpleClass
+          >.fromJson(
+            $serialized,
+            (value) => (value as String),
+            (value) =>
+                _$celest.Serializers.instance.deserialize<SimpleClass>(value),
+          );
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<
+        _$fast_immutable_collections_imap.IMap<
+          String,
           _$fast_immutable_collections_ilist.IList<String>
         >,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance
-                  .serialize<_$fast_immutable_collections_ilist.IList<String>>(
-                    value,
-                  ),
-            ),
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) => _$celest.Serializers.instance
+              .serialize<_$fast_immutable_collections_ilist.IList<String>>(
+                value,
+              ),
+        ),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_imap.IMap<
             String,
@@ -3315,38 +3221,13 @@ void initSerializers({_$celest.Serializers? serializers}) {
     );
     _$celest.Serializers.instance.put(
       _$celest.Serializer.define<
-        _$fast_immutable_collections_imap.IMap<String, SimpleClass>,
-        Map<String, Object?>
-      >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) =>
-                  _$celest.Serializers.instance.serialize<SimpleClass>(value),
-            ),
-        deserialize: ($serialized) {
-          return _$fast_immutable_collections_imap.IMap<
-            String,
-            SimpleClass
-          >.fromJson(
-            $serialized,
-            (value) => (value as String),
-            (value) =>
-                _$celest.Serializers.instance.deserialize<SimpleClass>(value),
-          );
-        },
-      ),
-    );
-    _$celest.Serializers.instance.put(
-      _$celest.Serializer.define<
         _$fast_immutable_collections_imap.IMap<String, Uri>,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => $value.toJson(
-              (value) => value,
-              (value) => _$celest.Serializers.instance.serialize<Uri>(value),
-            ),
+        serialize: ($value) => $value.toJson(
+          (value) => value,
+          (value) => _$celest.Serializers.instance.serialize<Uri>(value),
+        ),
         deserialize: ($serialized) {
           return _$fast_immutable_collections_imap.IMap<String, Uri>.fromJson(
             $serialized,
@@ -3359,11 +3240,10 @@ void initSerializers({_$celest.Serializers? serializers}) {
   }, zoneValues: {_$celest.Serializers: serializers});
 }
 
-typedef Record$k2phuz =
-    ({
-      NamedFieldsRecord aliased,
-      ({String anotherField, String field}) nonAliased,
-    });
+typedef Record$k2phuz = ({
+  NamedFieldsRecord aliased,
+  ({String anotherField, String field}) nonAliased,
+});
 typedef Record$k7x4l9 = ({String a, String b, String c});
 typedef Record$rmm4wt = ({String anotherField, String field});
 
@@ -3648,8 +3528,8 @@ final class Result_E_ShapeException_T_ShapeSerializer<
   @override
   Result<E, T> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
-    if ($serialized[r'$type'] == r'OkResult') {
-      return _$celest.Serializers.instance.deserialize<OkResult<E>>(
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return _$celest.Serializers.instance.deserialize<ErrResult<T>>(
         $serialized,
       );
     }
@@ -3658,8 +3538,8 @@ final class Result_E_ShapeException_T_ShapeSerializer<
         $serialized,
       );
     }
-    if ($serialized[r'$type'] == r'ErrResult') {
-      return _$celest.Serializers.instance.deserialize<ErrResult<T>>(
+    if ($serialized[r'$type'] == r'OkResult') {
+      return _$celest.Serializers.instance.deserialize<OkResult<E>>(
         $serialized,
       );
     }
@@ -3674,11 +3554,11 @@ final class Result_E_ShapeException_T_ShapeSerializer<
 
   @override
   Object? serialize(Result<E, T> $value) {
-    if ($value is OkResult<E>) {
+    if ($value is ErrResult<T>) {
       return {
-        ...(_$celest.Serializers.instance.serialize<OkResult<E>>($value)
+        ...(_$celest.Serializers.instance.serialize<ErrResult<T>>($value)
             as Map<String, Object?>),
-        r'$type': r'OkResult',
+        r'$type': r'ErrResult',
       };
     }
     if ($value is SwappedResult<T, E>) {
@@ -3688,11 +3568,11 @@ final class Result_E_ShapeException_T_ShapeSerializer<
         r'$type': r'SwappedResult',
       };
     }
-    if ($value is ErrResult<T>) {
+    if ($value is OkResult<E>) {
       return {
-        ...(_$celest.Serializers.instance.serialize<ErrResult<T>>($value)
+        ...(_$celest.Serializers.instance.serialize<OkResult<E>>($value)
             as Map<String, Object?>),
-        r'$type': r'ErrResult',
+        r'$type': r'OkResult',
       };
     }
     throw _$celest.SerializationException(
@@ -3715,8 +3595,8 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<
   @override
   Result<T, E> deserialize(Object? $value) {
     final $serialized = assertWireType<Map<String, Object?>>($value);
-    if ($serialized[r'$type'] == r'OkResult') {
-      return _$celest.Serializers.instance.deserialize<OkResult<T>>(
+    if ($serialized[r'$type'] == r'ErrResult') {
+      return _$celest.Serializers.instance.deserialize<ErrResult<E>>(
         $serialized,
       );
     }
@@ -3725,8 +3605,8 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<
         $serialized,
       );
     }
-    if ($serialized[r'$type'] == r'ErrResult') {
-      return _$celest.Serializers.instance.deserialize<ErrResult<E>>(
+    if ($serialized[r'$type'] == r'OkResult') {
+      return _$celest.Serializers.instance.deserialize<OkResult<T>>(
         $serialized,
       );
     }
@@ -3741,11 +3621,11 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<
 
   @override
   Object? serialize(Result<T, E> $value) {
-    if ($value is OkResult<T>) {
+    if ($value is ErrResult<E>) {
       return {
-        ...(_$celest.Serializers.instance.serialize<OkResult<T>>($value)
+        ...(_$celest.Serializers.instance.serialize<ErrResult<E>>($value)
             as Map<String, Object?>),
-        r'$type': r'OkResult',
+        r'$type': r'ErrResult',
       };
     }
     if ($value is SwappedResult<E, T>) {
@@ -3755,11 +3635,11 @@ final class Result_T_Shape_E_ShapeExceptionSerializer<
         r'$type': r'SwappedResult',
       };
     }
-    if ($value is ErrResult<E>) {
+    if ($value is OkResult<T>) {
       return {
-        ...(_$celest.Serializers.instance.serialize<ErrResult<E>>($value)
+        ...(_$celest.Serializers.instance.serialize<OkResult<T>>($value)
             as Map<String, Object?>),
-        r'$type': r'ErrResult',
+        r'$type': r'OkResult',
       };
     }
     throw _$celest.SerializationException(

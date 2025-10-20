@@ -12,13 +12,12 @@ base mixin Migrate on Configure {
   }) async {
     logger.finest('Migrating project at "${projectPaths.projectRoot}"...');
     return performance.trace('Migrate', 'migrateProject', () async {
-      final result =
-          await ProjectMigrator(
-            parentProject: parentProject,
-            projectRoot: projectPaths.projectRoot,
-            projectName: celestProject.projectName,
-            upgradeFromVersion: upgradeFromVersion,
-          ).migrate();
+      final result = await ProjectMigrator(
+        parentProject: parentProject,
+        projectRoot: projectPaths.projectRoot,
+        projectName: celestProject.projectName,
+        upgradeFromVersion: upgradeFromVersion,
+      ).migrate();
       logger.fine('Project migration result: $result');
       return result;
     });

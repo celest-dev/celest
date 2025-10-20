@@ -80,12 +80,12 @@ final class _ReferencedTypesCollector extends ast.AstVisitor<void> {
 
   @override
   void visitDatabase(ast.Database database) {
-    // TODO: implement visitDatabase
+    // TODO(dnys1): implement visitDatabase
   }
 
   @override
   void visitDatabaseSchema(ast.DatabaseSchema schema) {
-    // TODO: implement visitSchema
+    // TODO(dnys1): implement visitSchema
   }
 }
 
@@ -97,38 +97,34 @@ final class ClientGenerator {
   }) {
     final referencedTypes = _ReferencedTypesCollector();
     project.accept(referencedTypes);
-    _library =
-        LibraryBuilder()
-          ..name = ''
-          ..comments.addAll(kClientHeader)
-          ..directives.addAll([
-            if (project.auth != null) ...[
-              Directive.export(
-                p
-                    .relative(
-                      ClientPaths.auth,
-                      from: p.dirname(ClientPaths.client),
-                    )
-                    .to(p.posix),
+    _library = LibraryBuilder()
+      ..name = ''
+      ..comments.addAll(kClientHeader)
+      ..directives.addAll([
+        if (project.auth != null) ...[
+          Directive.export(
+            p
+                .relative(ClientPaths.auth, from: p.dirname(ClientPaths.client))
+                .to(p.posix),
+          ),
+          // TODO(dnys1): This may cause conflicts with other packages/types
+          Directive.export('package:celest_auth/celest_auth.dart'),
+        ],
+        ...referencedTypes.types
+            .groupSetsBy((ref) => ref.url!)
+            .entries
+            .map(
+              (symbols) => Directive.export(
+                symbols.key,
+                show: symbols.value.map((s) => s.symbol!).toSet().sorted(),
               ),
-              // TODO(dnys1): This may cause conflicts with other packages/types
-              Directive.export('package:celest_auth/celest_auth.dart'),
-            ],
-            ...referencedTypes.types
-                .groupSetsBy((ref) => ref.url!)
-                .entries
-                .map(
-                  (symbols) => Directive.export(
-                    symbols.key,
-                    show: symbols.value.map((s) => s.symbol!).toSet().sorted(),
-                  ),
-                ),
-          ])
-          ..body.addAll([
-            _client,
-            _celestEnvironment,
-            lazySpec(_clientClass.build),
-          ]);
+            ),
+      ])
+      ..body.addAll([
+        _client,
+        _celestEnvironment,
+        lazySpec(_clientClass.build),
+      ]);
   }
 
   final ast.Project project;
@@ -139,195 +135,162 @@ final class ClientGenerator {
   bool get _hasServer => project.apis.isNotEmpty || project.auth != null;
 
   final _client = Field(
-    (f) =>
-        f
-          ..modifier = FieldModifier.final$
-          ..type = ClientTypes.clientClass.ref
-          ..name = ClientTypes.topLevelClient.name
-          ..assignment = ClientTypes.clientClass.ref.newInstance([]).code,
+    (f) => f
+      ..modifier = FieldModifier.final$
+      ..type = ClientTypes.clientClass.ref
+      ..name = ClientTypes.topLevelClient.name
+      ..assignment = ClientTypes.clientClass.ref.newInstance([]).code,
   );
   late final _celestEnvironment = Enum(
-    (e) =>
-        e
-          ..name = 'CelestEnvironment'
-          ..methods.addAll([
-            Method(
-              (m) =>
-                  m
-                    ..type = MethodType.getter
-                    ..returns = DartTypes.core.uri
-                    ..name = 'baseUri'
-                    ..lambda = true
-                    ..body = Block.of([
-                      const Code('switch (this) {'),
-                      const Code('local => '),
-                      DartTypes.globals.kIsWeb
-                          .or(
-                            DartTypes.io.platform
-                                .property('isAndroid')
-                                .negate(),
-                          )
-                          .conditional(
-                            DartTypes.core.uri.property('parse').call([
-                              literalString(projectUris.localUri.toString()),
-                            ]),
-                            DartTypes.core.uri.property('parse').call([
-                              literalString(
-                                'http://10.0.2.2:${projectUris.localUri.port}',
-                              ),
-                            ]),
-                          )
-                          .code,
-                      const Code(','),
-                      if (projectUris.productionUri
-                          case final productionUri?) ...[
-                        const Code('production => '),
-                        DartTypes.core.uri.property('parse').call([
-                          literalString(productionUri.toString()),
-                        ]).code,
-                        const Code(','),
-                      ],
-                      const Code('}'),
+    (e) => e
+      ..name = 'CelestEnvironment'
+      ..methods.addAll([
+        Method(
+          (m) => m
+            ..type = MethodType.getter
+            ..returns = DartTypes.core.uri
+            ..name = 'baseUri'
+            ..lambda = true
+            ..body = Block.of([
+              const Code('switch (this) {'),
+              const Code('local => '),
+              DartTypes.globals.kIsWeb
+                  .or(DartTypes.io.platform.property('isAndroid').negate())
+                  .conditional(
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(projectUris.localUri.toString()),
                     ]),
-            ),
-          ])
-          ..values.addAll([
-            EnumValue((v) => v..name = 'local'),
-            if (projectUris.productionUri != null)
-              EnumValue((v) => v..name = 'production'),
-          ]),
-  );
-  late final _clientClass =
-      ClassBuilder()
-        ..name = ClientTypes.clientClass.name
-        ..mixins.addAll([
-          if (_hasServer)
-            refer('CelestBase', 'package:celest_core/_internal.dart'),
-        ])
-        ..methods.addAll([
-          Method(
-            (m) =>
-                m
-                  ..returns = refer('T')
-                  ..name = '_checkInitialized'
-                  ..types.add(refer('T'))
-                  ..requiredParameters.add(
-                    Parameter(
-                      (p) =>
-                          p
-                            ..name = 'value'
-                            ..type = FunctionType(
-                              (f) => f..returnType = refer('T'),
-                            ),
-                    ),
+                    DartTypes.core.uri.property('parse').call([
+                      literalString(
+                        'http://10.0.2.2:${projectUris.localUri.port}',
+                      ),
+                    ]),
                   )
-                  ..body = Block(
-                    (b) =>
-                        b
-                          ..statements.add(
-                            DartTypes.core.stateError
-                                .newInstance([
-                                  literalString(
-                                    'Celest has not been initialized. Make sure to call '
-                                    '`celest.init()` at the start of your `main` method.',
-                                  ),
-                                ])
-                                .thrown
-                                .wrapWithBlockIf(
-                                  refer('_initialized').negate(),
-                                ),
-                          )
-                          ..addExpression(refer('value').call([]).returned),
-                  ),
-          ),
-          Method(
-            (m) =>
-                m
-                  ..returns = refer('CelestEnvironment')
-                  ..type = MethodType.getter
-                  ..name = 'currentEnvironment'
-                  ..lambda = true
-                  ..body =
-                      refer('_checkInitialized').call([
-                        Method(
-                          (m) => m..body = refer('_currentEnvironment').code,
-                        ).closure,
-                      ]).code,
-          ),
-          if (_hasServer) ...[
-            Method(
-              (m) =>
-                  m
-                    ..annotations.add(DartTypes.core.override)
-                    ..returns = DartTypes.core.uri
-                    ..type = MethodType.getter
-                    ..name = 'baseUri'
-                    ..lambda = true
-                    ..body =
-                        refer('_checkInitialized').call([
-                          Method(
-                            (m) => m..body = refer('_baseUri').code,
-                          ).closure,
-                        ]).code,
+                  .code,
+              const Code(','),
+              if (projectUris.productionUri case final productionUri?) ...[
+                const Code('production => '),
+                DartTypes.core.uri.property('parse').call([
+                  literalString(productionUri.toString()),
+                ]).code,
+                const Code(','),
+              ],
+              const Code('}'),
+            ]),
+        ),
+      ])
+      ..values.addAll([
+        EnumValue((v) => v..name = 'local'),
+        if (projectUris.productionUri != null)
+          EnumValue((v) => v..name = 'production'),
+      ]),
+  );
+  late final _clientClass = ClassBuilder()
+    ..name = ClientTypes.clientClass.name
+    ..mixins.addAll([
+      if (_hasServer) refer('CelestBase', 'package:celest_core/_internal.dart'),
+    ])
+    ..methods.addAll([
+      Method(
+        (m) => m
+          ..returns = refer('T')
+          ..name = '_checkInitialized'
+          ..types.add(refer('T'))
+          ..requiredParameters.add(
+            Parameter(
+              (p) => p
+                ..name = 'value'
+                ..type = FunctionType((f) => f..returnType = refer('T')),
             ),
-          ],
-        ])
-        ..fields.addAll([
-          Field(
-            (f) =>
-                f
-                  ..modifier = FieldModifier.var$
-                  ..name = '_initialized'
-                  ..assignment = literalBool(false).code,
+          )
+          ..body = Block(
+            (b) => b
+              ..statements.add(
+                DartTypes.core.stateError
+                    .newInstance([
+                      literalString(
+                        'Celest has not been initialized. Make sure to call '
+                        '`celest.init()` at the start of your `main` method.',
+                      ),
+                    ])
+                    .thrown
+                    .wrapWithBlockIf(refer('_initialized').negate()),
+              )
+              ..addExpression(refer('value').call([]).returned),
           ),
-          Field(
-            (f) =>
-                f
-                  ..late = true
-                  ..type = refer('CelestEnvironment')
-                  ..name = '_currentEnvironment',
-          ),
-          if (_hasServer) ...[
-            Field(
-              (f) =>
-                  f
-                    // TODO(dnys1): Add back in 0.5.0
-                    // ..annotations.add(DartTypes.core.override)
-                    ..late = true
-                    ..modifier = FieldModifier.final$
-                    ..type = DartTypes.nativeStorage.nativeStorage
-                    ..name = 'nativeStorage'
-                    ..assignment =
-                        DartTypes.nativeStorage.nativeStorage.newInstance([], {
-                          'scope': literalString('celest'),
-                        }).code,
-            ),
-            Field(
-              (f) =>
-                  f
-                    ..annotations.add(DartTypes.core.override)
-                    ..late = true
-                    ..type = DartTypes.http.client
-                    ..name = 'httpClient'
-                    ..assignment =
-                        refer(
-                          'CelestHttpClient',
-                          'package:celest_core/_internal.dart',
-                        ).newInstance([], {
-                          'secureStorage': refer(
-                            'nativeStorage',
-                          ).property('secure'),
-                        }).code,
-            ),
-            Field(
-              (f) =>
-                  f
-                    ..late = true
-                    ..type = DartTypes.core.uri
-                    ..name = '_baseUri',
-            ),
-          ],
-        ]);
+      ),
+      Method(
+        (m) => m
+          ..returns = refer('CelestEnvironment')
+          ..type = MethodType.getter
+          ..name = 'currentEnvironment'
+          ..lambda = true
+          ..body = refer('_checkInitialized').call([
+            Method((m) => m..body = refer('_currentEnvironment').code).closure,
+          ]).code,
+      ),
+      if (_hasServer) ...[
+        Method(
+          (m) => m
+            ..annotations.add(DartTypes.core.override)
+            ..returns = DartTypes.core.uri
+            ..type = MethodType.getter
+            ..name = 'baseUri'
+            ..lambda = true
+            ..body = refer('_checkInitialized').call([
+              Method((m) => m..body = refer('_baseUri').code).closure,
+            ]).code,
+        ),
+      ],
+    ])
+    ..fields.addAll([
+      Field(
+        (f) => f
+          ..modifier = FieldModifier.var$
+          ..name = '_initialized'
+          ..assignment = literalBool(false).code,
+      ),
+      Field(
+        (f) => f
+          ..late = true
+          ..type = refer('CelestEnvironment')
+          ..name = '_currentEnvironment',
+      ),
+      if (_hasServer) ...[
+        Field(
+          (f) => f
+            ..annotations.add(DartTypes.core.override)
+            ..late = true
+            ..modifier = FieldModifier.final$
+            ..type = DartTypes.nativeStorage.nativeStorage
+            ..name = 'nativeStorage'
+            ..assignment = DartTypes.nativeStorage.nativeStorage.newInstance(
+              [],
+              {'scope': literalString('celest')},
+            ).code,
+        ),
+        Field(
+          (f) => f
+            ..annotations.add(DartTypes.core.override)
+            ..late = true
+            ..type = DartTypes.http.client
+            ..name = 'httpClient'
+            ..assignment =
+                refer(
+                  'CelestHttpClient',
+                  'package:celest_core/_internal.dart',
+                ).newInstance([], {
+                  'secureStorage': refer('nativeStorage').property('secure'),
+                }).code,
+        ),
+        Field(
+          (f) => f
+            ..late = true
+            ..type = DartTypes.core.uri
+            ..name = '_baseUri',
+        ),
+      ],
+    ]);
 
   Method get resetMethod {
     return Method((m) {
@@ -421,28 +384,24 @@ final class ClientGenerator {
       _clientClass
         ..fields.add(
           Field(
-            (f) =>
-                f
-                  ..modifier = FieldModifier.final$
-                  ..name = '_functions'
-                  ..assignment =
-                      ClientTypes.functionsClass.ref.newInstance([]).code,
+            (f) => f
+              ..modifier = FieldModifier.final$
+              ..name = '_functions'
+              ..assignment = ClientTypes.functionsClass.ref
+                  .newInstance([])
+                  .code,
           ),
         )
         ..methods.add(
           Method(
-            (m) =>
-                m
-                  ..returns = ClientTypes.functionsClass.ref
-                  ..type = MethodType.getter
-                  ..name = 'functions'
-                  ..lambda = true
-                  ..body =
-                      refer('_checkInitialized').call([
-                        Method(
-                          (m) => m..body = refer('_functions').code,
-                        ).closure,
-                      ]).code,
+            (m) => m
+              ..returns = ClientTypes.functionsClass.ref
+              ..type = MethodType.getter
+              ..name = 'functions'
+              ..lambda = true
+              ..body = refer('_checkInitialized').call([
+                Method((m) => m..body = refer('_functions').code).closure,
+              ]).code,
           ),
         );
       customSerializers = functionsGenerator.customSerializers;
@@ -454,44 +413,37 @@ final class ClientGenerator {
       _clientClass
         ..fields.add(
           Field(
-            (f) =>
-                f
-                  ..late = true
-                  ..type = ClientTypes.authClass.ref
-                  ..name = '_auth'
-                  ..assignment =
-                      ClientTypes.authClass.ref
-                          .newInstance(
-                            [refer('this')],
-                            {'storage': refer('nativeStorage')},
-                          )
-                          .code,
+            (f) => f
+              ..late = true
+              ..type = ClientTypes.authClass.ref
+              ..name = '_auth'
+              ..assignment = ClientTypes.authClass.ref
+                  .newInstance(
+                    [refer('this')],
+                    {'storage': refer('nativeStorage')},
+                  )
+                  .code,
           ),
         )
         ..methods.add(
           Method(
-            (m) =>
-                m
-                  ..returns = ClientTypes.authClass.ref
-                  ..type = MethodType.getter
-                  ..name = 'auth'
-                  ..lambda = true
-                  ..body =
-                      refer('_checkInitialized').call([
-                        Method((m) => m..body = refer('_auth').code).closure,
-                      ]).code,
+            (m) => m
+              ..returns = ClientTypes.authClass.ref
+              ..type = MethodType.getter
+              ..name = 'auth'
+              ..lambda = true
+              ..body = refer('_checkInitialized').call([
+                Method((m) => m..body = refer('_auth').code).closure,
+              ]).code,
           ),
         );
       clientInitBody.addExpression(
         refer('scheduleMicrotask', 'dart:async').call([
           Method(
-            (m) =>
-                m
-                  ..body =
-                      refer('_auth').property('init').call([], {
-                        if (hasExternalAuth)
-                          'externalAuth': refer('externalAuth'),
-                      }).code,
+            (m) => m
+              ..body = refer('_auth').property('init').call([], {
+                if (hasExternalAuth) 'externalAuth': refer('externalAuth'),
+              }).code,
           ).closure,
         ]),
       );
@@ -504,11 +456,10 @@ final class ClientGenerator {
       );
       libraries[ClientPaths.serializers] = clientSerializers.generate();
 
-      final initSerializers =
-          refer(
-            'initSerializers',
-            ClientPaths.serializers,
-          ).call([], {'serializers': refer('serializers')}).statement;
+      final initSerializers = refer(
+        'initSerializers',
+        ClientPaths.serializers,
+      ).call([], {'serializers': refer('serializers')}).statement;
       clientInitBody.statements.add(initSerializers);
     }
 
@@ -518,36 +469,31 @@ final class ClientGenerator {
 
     // Add client methods
     final clientInit = Method(
-      (m) =>
-          m
-            ..name = 'init'
-            ..returns = DartTypes.core.void$
-            ..optionalParameters.addAll([
-              Parameter(
-                (p) =>
-                    p
-                      ..name = 'environment'
-                      ..type = refer('CelestEnvironment').nullable
-                      ..named = true,
-              ),
-              Parameter(
-                (p) =>
-                    p
-                      ..name = 'serializers'
-                      ..type = DartTypes.celest.serializers.nullable
-                      ..named = true,
-              ),
-              if (hasExternalAuth)
-                Parameter(
-                  (p) =>
-                      p
-                        ..name = 'externalAuth'
-                        ..type =
-                            refer('ExternalAuth', ClientPaths.auth).nullable
-                        ..named = true,
-                ),
-            ])
-            ..body = clientInitBody.build(),
+      (m) => m
+        ..name = 'init'
+        ..returns = DartTypes.core.void$
+        ..optionalParameters.addAll([
+          Parameter(
+            (p) => p
+              ..name = 'environment'
+              ..type = refer('CelestEnvironment').nullable
+              ..named = true,
+          ),
+          Parameter(
+            (p) => p
+              ..name = 'serializers'
+              ..type = DartTypes.celest.serializers.nullable
+              ..named = true,
+          ),
+          if (hasExternalAuth)
+            Parameter(
+              (p) => p
+                ..name = 'externalAuth'
+                ..type = refer('ExternalAuth', ClientPaths.auth).nullable
+                ..named = true,
+            ),
+        ])
+        ..body = clientInitBody.build(),
     );
     _clientClass.methods
       ..add(clientInit)

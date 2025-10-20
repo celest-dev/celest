@@ -1613,6 +1613,13 @@
               "references": {
                 "name": "aString",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1670,6 +1677,13 @@
               "references": {
                 "name": "anInt",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1727,6 +1741,13 @@
               "references": {
                 "name": "aDouble",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1784,6 +1805,13 @@
               "references": {
                 "name": "aNum",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1841,6 +1869,13 @@
               "references": {
                 "name": "aBool",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1897,6 +1932,13 @@
               "references": {
                 "name": "aDateTime",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -1954,6 +1996,13 @@
               "references": {
                 "name": "aNullableString",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2011,6 +2060,13 @@
               "references": {
                 "name": "aNullableInt",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2068,6 +2124,13 @@
               "references": {
                 "name": "aNullableDouble",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2125,6 +2188,13 @@
               "references": {
                 "name": "aNullableNum",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2182,6 +2252,13 @@
               "references": {
                 "name": "aNullableBool",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2239,6 +2316,13 @@
               "references": {
                 "name": "aNullableDateTime",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2304,6 +2388,13 @@
               "references": {
                 "name": "aListOfString",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2369,6 +2460,13 @@
               "references": {
                 "name": "aListOfInt",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2434,6 +2532,13 @@
               "references": {
                 "name": "aListOfDouble",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2499,6 +2604,13 @@
               "references": {
                 "name": "aListOfNum",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2564,6 +2676,13 @@
               "references": {
                 "name": "aListOfBool",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2628,6 +2747,13 @@
               "references": {
                 "name": "aListOfDateTime",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2693,6 +2819,13 @@
               "references": {
                 "name": "aNullableListOfString",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2758,6 +2891,13 @@
               "references": {
                 "name": "aNullableListOfInt",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2823,6 +2963,13 @@
               "references": {
                 "name": "aNullableListOfDouble",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2888,6 +3035,13 @@
               "references": {
                 "name": "aNullableListOfNum",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -2953,6 +3107,13 @@
               "references": {
                 "name": "aNullableListOfBool",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -3017,6 +3178,13 @@
               "references": {
                 "name": "aNullableListOfDateTime",
                 "type": "httpQuery"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -3352,6 +3520,13 @@
                   "column": 42
                 },
                 "text": "type"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -4031,6 +4206,13 @@
               "references": {
                 "name": "aString",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4088,6 +4270,13 @@
               "references": {
                 "name": "anInt",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4145,6 +4334,13 @@
               "references": {
                 "name": "aDouble",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4202,6 +4398,13 @@
               "references": {
                 "name": "aNum",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4259,6 +4462,13 @@
               "references": {
                 "name": "aBool",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4315,6 +4525,13 @@
               "references": {
                 "name": "aDateTime",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4372,6 +4589,13 @@
               "references": {
                 "name": "aNullableString",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4429,6 +4653,13 @@
               "references": {
                 "name": "aNullableInt",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4486,6 +4717,13 @@
               "references": {
                 "name": "aNullableDouble",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4543,6 +4781,13 @@
               "references": {
                 "name": "aNullableNum",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4600,6 +4845,13 @@
               "references": {
                 "name": "aNullableBool",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             },
             {
@@ -4657,6 +4909,13 @@
               "references": {
                 "name": "aNullableDateTime",
                 "type": "httpHeader"
+              },
+              "defaultTo": {
+                "$": "DartNull",
+                "staticType": {
+                  "symbol": "Null",
+                  "url": "dart:core"
+                }
               }
             }
           ],
@@ -4966,7 +5225,7 @@
     "celest": "1.0.14",
     "dart": {
       "type": "dart",
-      "version": "3.10.0-75.1.beta",
+      "version": "3.9.2",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -4975,7 +5234,7 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.36.0-0.3.pre",
+      "version": "3.35.6",
       "enabledExperiments": []
     }
   },

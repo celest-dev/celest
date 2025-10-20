@@ -37,10 +37,9 @@ final class AddAnalyzerPlugin extends ProjectMigration {
                 },
               )
               as YamlMap;
-      final existingPlugins =
-          analyzer.containsKey('plugins')
-              ? analyzer.nodes['plugins'] as YamlList
-              : null;
+      final existingPlugins = analyzer.containsKey('plugins')
+          ? analyzer.nodes['plugins'] as YamlList
+          : null;
       final hasPlugins = existingPlugins != null;
       if ((existingPlugins ?? []).contains('celest')) {
         return const ProjectMigrationSuccess();

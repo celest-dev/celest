@@ -1,7 +1,7 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:celest/src/core/context.dart' as _i222;
+import 'package:celest/src/core/context.dart' as _i221;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 
 import 'functions/asserts/assertsEnabled.dart' as _i2;
@@ -212,23 +212,22 @@ import 'functions/sealed_classes/circleWithOverriddenCustomJson.dart' as _i204;
 import 'functions/sealed_classes/errShapeResults.dart' as _i205;
 import 'functions/sealed_classes/genericResult.dart' as _i206;
 import 'functions/sealed_classes/multipleGenericResult.dart' as _i207;
-import 'functions/sealed_classes/okShapeResult.dart' as _i208;
-import 'functions/sealed_classes/okShapeResults.dart' as _i209;
-import 'functions/sealed_classes/rectangle.dart' as _i210;
+import 'functions/sealed_classes/okShapeResults.dart' as _i208;
+import 'functions/sealed_classes/rectangle.dart' as _i209;
 import 'functions/sealed_classes/rectangleWithOverriddenCustomJson.dart'
-    as _i211;
-import 'functions/sealed_classes/sealedClass.dart' as _i212;
-import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i213;
+    as _i210;
+import 'functions/sealed_classes/sealedClass.dart' as _i211;
+import 'functions/sealed_classes/sealedClassWithCustomJson.dart' as _i212;
 import 'functions/sealed_classes/sealedClassWithInheritedCustomJson.dart'
-    as _i214;
+    as _i213;
 import 'functions/sealed_classes/sealedClassWithOverriddenCustomJson.dart'
-    as _i215;
-import 'functions/sealed_classes/shapeResults.dart' as _i216;
-import 'functions/sealed_classes/swappedResult.dart' as _i217;
-import 'functions/typedefs/json.dart' as _i218;
-import 'functions/typedefs/mixedJson.dart' as _i219;
-import 'functions/typedefs/nullableJson.dart' as _i220;
-import 'functions/typedefs/portfolio.dart' as _i221;
+    as _i214;
+import 'functions/sealed_classes/shapeResults.dart' as _i215;
+import 'functions/sealed_classes/swappedResult.dart' as _i216;
+import 'functions/typedefs/json.dart' as _i217;
+import 'functions/typedefs/mixedJson.dart' as _i218;
+import 'functions/typedefs/nullableJson.dart' as _i219;
+import 'functions/typedefs/portfolio.dart' as _i220;
 
 Future<void> main() async {
   return start();
@@ -513,25 +512,24 @@ Future<void> start() async {
       '/sealed-classes/generic-result': _i206.GenericResultTarget(),
       '/sealed-classes/multiple-generic-result':
           _i207.MultipleGenericResultTarget(),
-      '/sealed-classes/ok-shape-result': _i208.OkShapeResultTarget(),
-      '/sealed-classes/ok-shape-results': _i209.OkShapeResultsTarget(),
-      '/sealed-classes/rectangle': _i210.RectangleTarget(),
+      '/sealed-classes/ok-shape-results': _i208.OkShapeResultsTarget(),
+      '/sealed-classes/rectangle': _i209.RectangleTarget(),
       '/sealed-classes/rectangle-with-overridden-custom-json':
-          _i211.RectangleWithOverriddenCustomJsonTarget(),
-      '/sealed-classes/sealed-class': _i212.SealedClassTarget(),
+          _i210.RectangleWithOverriddenCustomJsonTarget(),
+      '/sealed-classes/sealed-class': _i211.SealedClassTarget(),
       '/sealed-classes/sealed-class-with-custom-json':
-          _i213.SealedClassWithCustomJsonTarget(),
+          _i212.SealedClassWithCustomJsonTarget(),
       '/sealed-classes/sealed-class-with-inherited-custom-json':
-          _i214.SealedClassWithInheritedCustomJsonTarget(),
+          _i213.SealedClassWithInheritedCustomJsonTarget(),
       '/sealed-classes/sealed-class-with-overridden-custom-json':
-          _i215.SealedClassWithOverriddenCustomJsonTarget(),
-      '/sealed-classes/shape-results': _i216.ShapeResultsTarget(),
-      '/sealed-classes/swapped-result': _i217.SwappedResultTarget(),
-      '/typedefs/json': _i218.JsonTarget(),
-      '/typedefs/mixed-json': _i219.MixedJsonTarget(),
-      '/typedefs/nullable-json': _i220.NullableJsonTarget(),
-      '/typedefs/portfolio': _i221.PortfolioTarget(),
+          _i214.SealedClassWithOverriddenCustomJsonTarget(),
+      '/sealed-classes/shape-results': _i215.ShapeResultsTarget(),
+      '/sealed-classes/swapped-result': _i216.SwappedResultTarget(),
+      '/typedefs/json': _i217.JsonTarget(),
+      '/typedefs/mixed-json': _i218.MixedJsonTarget(),
+      '/typedefs/nullable-json': _i219.NullableJsonTarget(),
+      '/typedefs/portfolio': _i220.PortfolioTarget(),
     },
-    setup: (_i222.Context context) async {},
+    setup: (_i221.Context context) async {},
   );
 }

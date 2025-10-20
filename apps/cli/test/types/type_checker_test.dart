@@ -85,32 +85,33 @@ void main() {
           nullabilitySuffix: NullabilitySuffix.none,
         );
     staticEnumChecker = TypeChecker.fromStatic(staticEnum);
-    staticEnumMixin = (testSource.exportNamespace.get('MyEnumMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticEnumMixin =
+        (testSource.exportNamespace.get2('MyEnumMixin')! as InterfaceElement)
+            .instantiate(
+              typeArguments: [],
+              nullabilitySuffix: NullabilitySuffix.none,
+            );
     staticEnumMixinChecker = TypeChecker.fromStatic(staticEnumMixin);
-    staticMapMixin = (testSource.exportNamespace.get('MyMapMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticMapMixin =
+        (testSource.exportNamespace.get2('MyMapMixin')! as InterfaceElement)
+            .instantiate(
+              typeArguments: [],
+              nullabilitySuffix: NullabilitySuffix.none,
+            );
     staticMapMixinChecker = TypeChecker.fromStatic(staticMapMixin);
-    staticMyEnum = (testSource.exportNamespace.get('MyEnum')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
-    staticMyEnumWithMixin = (testSource.exportNamespace.get('MyEnumWithMixin')!
-            as InterfaceElement)
-        .instantiate(
-          typeArguments: [],
-          nullabilitySuffix: NullabilitySuffix.none,
-        );
+    staticMyEnum =
+        (testSource.exportNamespace.get2('MyEnum')! as InterfaceElement)
+            .instantiate(
+              typeArguments: [],
+              nullabilitySuffix: NullabilitySuffix.none,
+            );
+    staticMyEnumWithMixin =
+        (testSource.exportNamespace.get2('MyEnumWithMixin')!
+                as InterfaceElement)
+            .instantiate(
+              typeArguments: [],
+              nullabilitySuffix: NullabilitySuffix.none,
+            );
 
     staticHashMap = collection
         .getClass2('HashMap')!
@@ -219,8 +220,9 @@ void main() {
       // Ensure we're consistent WRT generic types
       test('should be assignable from Map<String, String>', () {
         // Using Uri.queryParameters to get a Map<String, String>
-        final stringStringMapType =
-            staticUri.getGetter('queryParameters')!.returnType;
+        final stringStringMapType = staticUri
+            .getGetter('queryParameters')!
+            .returnType;
 
         expect(checkMap().isAssignableFromType(stringStringMapType), isTrue);
         expect(checkMap().isExactlyType(stringStringMapType), isTrue);
@@ -261,15 +263,13 @@ void main() {
     commonTests(
       checkIterable: () => const TypeChecker.fromUrl('dart:core#Iterable'),
       checkEnum: () => const TypeChecker.fromUrl('dart:core#Enum'),
-      checkEnumMixin:
-          () => const TypeChecker.fromUrl(
-            'asset:celest_cli/test/types/type_checker_test.dart#MyEnumMixin',
-          ),
+      checkEnumMixin: () => const TypeChecker.fromUrl(
+        'asset:celest_cli/test/types/type_checker_test.dart#MyEnumMixin',
+      ),
       checkMap: () => const TypeChecker.fromUrl('dart:core#Map'),
-      checkMapMixin:
-          () => const TypeChecker.fromUrl(
-            'asset:celest_cli/test/types/type_checker_test.dart#MyMapMixin',
-          ),
+      checkMapMixin: () => const TypeChecker.fromUrl(
+        'asset:celest_cli/test/types/type_checker_test.dart#MyMapMixin',
+      ),
       checkHashMap: () => const TypeChecker.fromUrl('dart:collection#HashMap'),
     );
   });
@@ -439,11 +439,10 @@ void main() {
             ),
       );
       $ExampleOfA = library.getClass2('ExampleOfA')!;
-      $annotatedParameter =
-          library.topLevelFunctions
-              .firstWhere((f) => f.name3 == 'annotatedParameter')
-              .formalParameters
-              .single;
+      $annotatedParameter = library.topLevelFunctions
+          .firstWhere((f) => f.name3 == 'annotatedParameter')
+          .formalParameters
+          .single;
     });
 
     test('should throw by default', () {

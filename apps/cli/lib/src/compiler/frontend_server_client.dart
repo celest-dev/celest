@@ -15,6 +15,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 /// Wrapper around the incremental frontend server compiler.
@@ -403,6 +404,21 @@ class CompileResult {
   /// All the transitive source dependencies that were removed as a part of
   /// this compile.
   final Iterable<Uri> removedSources;
+
+  @visibleForTesting
+  static CompileResult testing({
+    String? dillOutput,
+    Iterable<String> compilerOutputLines = const [],
+    int errorCount = 0,
+    Iterable<Uri> newSources = const [],
+    Iterable<Uri> removedSources = const [],
+  }) => CompileResult._(
+    dillOutput: dillOutput,
+    compilerOutputLines: compilerOutputLines,
+    errorCount: errorCount,
+    newSources: newSources,
+    removedSources: removedSources,
+  );
 }
 
 /// Internal states for the client.

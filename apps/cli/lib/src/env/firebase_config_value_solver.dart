@@ -214,10 +214,9 @@ final class FirebaseConfigValueSolver extends PromptConfigValueSolver {
       _logger.finest('Active project found in global config: $activeProject');
 
       // When there is an alias matching the environment ID, we always use that.
-      final matchingEnvironmentId =
-          aliasesByProjectId.entries
-              .firstWhereOrNull((entry) => entry.value == environmentId)
-              ?.key;
+      final matchingEnvironmentId = aliasesByProjectId.entries
+          .firstWhereOrNull((entry) => entry.value == environmentId)
+          ?.key;
       if (matchingEnvironmentId != null) {
         _logger.finest(
           'Found project matching environment ID: $matchingEnvironmentId',

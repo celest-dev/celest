@@ -1350,31 +1350,36 @@ class CelestFunctionsHttpQuery {
                 r'aNullableDateTime': aNullableDateTime.toIso8601String(),
               r'aListOfString': aListOfString,
               r'aListOfInt': aListOfInt.map((el) => el.toString()).toList(),
-              r'aListOfDouble':
-                  aListOfDouble.map((el) => el.toString()).toList(),
+              r'aListOfDouble': aListOfDouble
+                  .map((el) => el.toString())
+                  .toList(),
               r'aListOfNum': aListOfNum.map((el) => el.toString()).toList(),
               r'aListOfBool': aListOfBool.map((el) => el.toString()).toList(),
-              r'aListOfDateTime':
-                  aListOfDateTime.map((el) => el.toIso8601String()).toList(),
+              r'aListOfDateTime': aListOfDateTime
+                  .map((el) => el.toIso8601String())
+                  .toList(),
               if (aNullableListOfString != null)
                 r'aNullableListOfString': aNullableListOfString,
               if (aNullableListOfInt != null)
-                r'aNullableListOfInt':
-                    aNullableListOfInt.map((el) => el.toString()).toList(),
+                r'aNullableListOfInt': aNullableListOfInt
+                    .map((el) => el.toString())
+                    .toList(),
               if (aNullableListOfDouble != null)
-                r'aNullableListOfDouble':
-                    aNullableListOfDouble.map((el) => el.toString()).toList(),
+                r'aNullableListOfDouble': aNullableListOfDouble
+                    .map((el) => el.toString())
+                    .toList(),
               if (aNullableListOfNum != null)
-                r'aNullableListOfNum':
-                    aNullableListOfNum.map((el) => el.toString()).toList(),
+                r'aNullableListOfNum': aNullableListOfNum
+                    .map((el) => el.toString())
+                    .toList(),
               if (aNullableListOfBool != null)
-                r'aNullableListOfBool':
-                    aNullableListOfBool.map((el) => el.toString()).toList(),
+                r'aNullableListOfBool': aNullableListOfBool
+                    .map((el) => el.toString())
+                    .toList(),
               if (aNullableListOfDateTime != null)
-                r'aNullableListOfDateTime':
-                    aNullableListOfDateTime
-                        .map((el) => el.toIso8601String())
-                        .toList(),
+                r'aNullableListOfDateTime': aNullableListOfDateTime
+                    .map((el) => el.toIso8601String())
+                    .toList(),
             },
           ),
       headers: const {

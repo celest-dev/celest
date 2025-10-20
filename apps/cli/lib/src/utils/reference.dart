@@ -57,10 +57,9 @@ extension ReferenceHelper on Reference {
   Reference get noBound {
     return switch (this) {
       final TypeReference type => type.rebuild(
-        (t) =>
-            t
-              ..bound = null
-              ..types.map((t) => t.toTypeReference.noBound),
+        (t) => t
+          ..bound = null
+          ..types.map((t) => t.toTypeReference.noBound),
       ),
       _ => this,
     };
@@ -88,11 +87,10 @@ extension ReferenceHelper on Reference {
   /// Constructs a `built_value` FullType reference for this.
   Expression fullType([Iterable<Reference>? parameters]) {
     final typeRef = toTypeReference;
-    final ctor =
-        typeRef.isNullable ?? false
-            ? (Iterable<Expression> args) => DartTypes.builtValue.fullType
-                .constInstanceNamed('nullable', args)
-            : DartTypes.builtValue.fullType.constInstance;
+    final ctor = typeRef.isNullable ?? false
+        ? (Iterable<Expression> args) =>
+              DartTypes.builtValue.fullType.constInstanceNamed('nullable', args)
+        : DartTypes.builtValue.fullType.constInstance;
     if (typeRef.types.isEmpty && (parameters == null || parameters.isEmpty)) {
       return ctor([typeRef.nonNullable]);
     }

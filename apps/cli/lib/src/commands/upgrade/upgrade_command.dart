@@ -80,11 +80,8 @@ final class UpgradeCommand extends CelestCommand {
             'celest_cli',
             latestVersion.toString(),
           ];
-          final ProcessResult(
-            :exitCode,
-            :stdout,
-            :stderr,
-          ) = await processManager.run(command);
+          final ProcessResult(:exitCode, :stdout, :stderr) =
+              await processManager.run(command);
           if (exitCode == 0) {
             progress.complete('Celest has been updated to the latest version!');
           } else {

@@ -36,10 +36,9 @@ final class ConfigValueSolver {
     final envManager = await celestProject.envManager.environment(
       environmentId,
     );
-    final allConfigValues =
-        ConfigVarSet()
-          ..addAll(project.variables)
-          ..addAll(project.secrets);
+    final allConfigValues = ConfigVarSet()
+      ..addAll(project.variables)
+      ..addAll(project.secrets);
     final allConfigEntries = {
       ...envValues,
       ...secretValues,
@@ -57,13 +56,14 @@ final class ConfigValueSolver {
     // resolution logic.
     final authVariables = project.auth?.variables;
     final authSecrets = project.auth?.secrets;
-    final authConfigValues = BuiltListMultimap<
-      ast.AuthProviderType,
-      ast.ConfigurationVariable
-    >.build((b) {
-      authVariables?.forEach(b.add);
-      authSecrets?.forEach(b.add);
-    });
+    final authConfigValues =
+        BuiltListMultimap<
+          ast.AuthProviderType,
+          ast.ConfigurationVariable
+        >.build((b) {
+          authVariables?.forEach(b.add);
+          authSecrets?.forEach(b.add);
+        });
     for (final MapEntry(key: provider, value: configValues)
         in authConfigValues.toMap().entries) {
       for (final configValue in configValues) {

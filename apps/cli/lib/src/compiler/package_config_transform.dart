@@ -11,25 +11,24 @@ Future<String> transformPackageConfig({
   final packageConfig = await loadPackageConfig(
     fileSystem.file(packageConfigPath),
   );
-  final newPackages =
-      packageConfig.packages.map((package) {
-        return Package(
-          package.name,
-          switch (package.root.scheme) {
-            '' => Uri(
-              path: p.relative(
-                p.join(fromRoot, '.dart_tool', package.root.path),
-                from: p.join(toRoot, '.dart_tool'),
-              ),
-            ),
-            _ => package.root,
-          },
-          packageUriRoot: package.packageUriRoot,
-          languageVersion: package.languageVersion,
-          extraData: package.extraData,
-          relativeRoot: package.relativeRoot,
-        );
-      }).toList();
+  final newPackages = packageConfig.packages.map((package) {
+    return Package(
+      package.name,
+      switch (package.root.scheme) {
+        '' => Uri(
+          path: p.relative(
+            p.join(fromRoot, '.dart_tool', package.root.path),
+            from: p.join(toRoot, '.dart_tool'),
+          ),
+        ),
+        _ => package.root,
+      },
+      packageUriRoot: package.packageUriRoot,
+      languageVersion: package.languageVersion,
+      extraData: package.extraData,
+      relativeRoot: package.relativeRoot,
+    );
+  }).toList();
   final newPackageConfig = PackageConfig(
     newPackages,
     extraData: packageConfig.extraData,

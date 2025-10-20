@@ -53,8 +53,9 @@ final class CacheDatabase extends $CacheDatabase {
       verbose: verbose,
       rawDatabase: rawCompleter,
     );
-    final versionInfo =
-        await database.cacheDrift.getVersionInfo().getSingleOrNull();
+    final versionInfo = await database.cacheDrift
+        .getVersionInfo()
+        .getSingleOrNull();
     if (versionInfo case VersionInfoData(
       :final dart,
       :final flutter,
@@ -114,21 +115,19 @@ final class CacheDatabase extends $CacheDatabase {
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      beforeOpen:
-          (details) => _lock.withResource(() async {
-            await customStatement('PRAGMA foreign_keys = ON');
-            await customStatement('PRAGMA journal_mode = WAL');
-            await customStatement('PRAGMA busy_timeout = 5000');
-            await customStatement('PRAGMA synchronous = NORMAL');
-            await customStatement('PRAGMA mmap_size = 30000000000');
-            await customStatement('PRAGMA cache_size = 1000000000');
-            await customStatement('PRAGMA page_size = 32768');
-            await customStatement('PRAGMA temp_store = memory');
-          }),
-      onCreate:
-          (m) => _lock.withResource(() async {
-            await m.createAll();
-          }),
+      beforeOpen: (details) => _lock.withResource(() async {
+        await customStatement('PRAGMA foreign_keys = ON');
+        await customStatement('PRAGMA journal_mode = WAL');
+        await customStatement('PRAGMA busy_timeout = 5000');
+        await customStatement('PRAGMA synchronous = NORMAL');
+        await customStatement('PRAGMA mmap_size = 30000000000');
+        await customStatement('PRAGMA cache_size = 1000000000');
+        await customStatement('PRAGMA page_size = 32768');
+        await customStatement('PRAGMA temp_store = memory');
+      }),
+      onCreate: (m) => _lock.withResource(() async {
+        await m.createAll();
+      }),
     );
   }
 

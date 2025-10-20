@@ -56,15 +56,13 @@ Expression _toString(Reference type, Expression ref) {
         .property('map')
         .call([
           Method(
-            (m) =>
-                m
-                  ..requiredParameters.add(Parameter((p) => p..name = 'el'))
-                  ..body =
-                      _toString(
-                        type.toTypeReference.types.single,
-                        refer('el'),
-                      ).code
-                  ..lambda = true,
+            (m) => m
+              ..requiredParameters.add(Parameter((p) => p..name = 'el'))
+              ..body = _toString(
+                type.toTypeReference.types.single,
+                refer('el'),
+              ).code
+              ..lambda = true,
           ).closure,
         ])
         .property('toList')

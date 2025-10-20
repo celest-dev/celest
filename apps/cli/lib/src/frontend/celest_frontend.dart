@@ -270,16 +270,17 @@ final class CelestFrontend with CloudRepository {
   // safe, we invalidate all files on every reload. This is not ideal, but
   // it's the safest option for now.
   Future<Set<String>> _invalidateAllProjectFiles() async {
-    final allProjectFiles =
-        await fileSystem
-            .directory(projectPaths.projectRoot)
-            .list(recursive: true)
-            .whereType<File>()
-            .toList();
+    final allProjectFiles = await fileSystem
+        .directory(projectPaths.projectRoot)
+        .list(recursive: true)
+        .whereType<File>()
+        .toList();
     // Invalidate all paths.
     typeHelper.reset();
-    final toInvalidate =
-        allProjectFiles.map((f) => f.path).where(_isReloadablePath).toList();
+    final toInvalidate = allProjectFiles
+        .map((f) => f.path)
+        .where(_isReloadablePath)
+        .toList();
     logger.finest('Invaliding paths: $toInvalidate');
     return {...toInvalidate, ...await celestProject.invalidate(toInvalidate)};
   }
@@ -388,10 +389,9 @@ final class CelestFrontend with CloudRepository {
                 environmentId: 'local',
                 resolvedProject: resolvedProject,
                 restartMode: restartMode,
-                port:
-                    (await isolatedSecureStorage.getLocalUri(
-                      project.name,
-                    )).port,
+                port: (await isolatedSecureStorage.getLocalUri(
+                  project.name,
+                )).port,
               );
             } on CompilationException catch (e, st) {
               currentProgress!.fail();
@@ -814,11 +814,10 @@ final class CelestFrontend with CloudRepository {
     required String environmentId,
   }) => performance.trace('CelestFrontend', 'resolveProject', () async {
     logger.fine('Resolving configuration values...');
-    final configValues =
-        await ConfigValueSolver(
-          project: project,
-          environmentId: environmentId,
-        ).solveAll();
+    final configValues = await ConfigValueSolver(
+      project: project,
+      environmentId: environmentId,
+    ).solveAll();
     logger.fine('Resolving project...');
     final projectResolver = ProjectLinker(
       configValues: configValues,
@@ -1021,9 +1020,10 @@ final class CelestFrontend with CloudRepository {
       resolvedProject: resolvedProject,
       environmentId: environmentId,
     );
-    final (flutterAssetBytes, flutterAssetsEtag) = switch (resolvedProject
-        .sdkConfig
-        .targetSdk) {
+    final (
+      flutterAssetBytes,
+      flutterAssetsEtag,
+    ) = switch (resolvedProject.sdkConfig.targetSdk) {
       ast.SdkType.flutter => await _tarGzDirectory(
         p.join(projectPaths.buildDir, 'flutter_assets'),
       ),

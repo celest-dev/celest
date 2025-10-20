@@ -218,11 +218,10 @@ class _Core {
 
   /// Creates a [Future] reference.
   Reference future([Reference? ref]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Future'
-          ..url = _url
-          ..types.addAll([if (ref != null) ref]),
+    (t) => t
+      ..symbol = 'Future'
+      ..url = _url
+      ..types.addAll([if (ref != null) ref]),
   );
 
   /// Creates a [IndexError] reference.
@@ -234,32 +233,29 @@ class _Core {
 
   /// Creates a [Iterable] reference.
   Reference iterable([Reference? ref]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Iterable'
-          ..url = _url
-          ..types.addAll([if (ref != null) ref]),
+    (t) => t
+      ..symbol = 'Iterable'
+      ..url = _url
+      ..types.addAll([if (ref != null) ref]),
   );
 
   /// Creates a [List] reference.
   Reference list([Reference? ref]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'List'
-          ..url = _url
-          ..types.addAll([if (ref != null) ref]),
+    (t) => t
+      ..symbol = 'List'
+      ..url = _url
+      ..types.addAll([if (ref != null) ref]),
   );
 
   /// Creates a [Map] reference.
   Reference map([Reference? key, Reference? value]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Map'
-          ..url = _url
-          ..types.addAll([
-            if (key != null) key,
-            if (key != null && value != null) value,
-          ]),
+    (t) => t
+      ..symbol = 'Map'
+      ..url = _url
+      ..types.addAll([
+        if (key != null) key,
+        if (key != null && value != null) value,
+      ]),
   );
 
   /// Creates an [MapEntry] reference.
@@ -297,11 +293,10 @@ class _Core {
 
   /// Creates a [Set] reference.
   Reference set(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Set'
-          ..url = _url
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'Set'
+      ..url = _url
+      ..types.add(ref),
   );
 
   /// Creates a [StackOverflowError] reference.
@@ -318,11 +313,10 @@ class _Core {
 
   /// Creates a [Stream] reference.
   Reference stream([Reference? ref]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Stream'
-          ..url = _url
-          ..types.addAll([if (ref != null) ref]),
+    (t) => t
+      ..symbol = 'Stream'
+      ..url = _url
+      ..types.addAll([if (ref != null) ref]),
   );
 
   /// Creates a [String] reference.
@@ -364,11 +358,10 @@ class _Async {
 
   /// Creates a [FutureOr] reference.
   Reference futureOr(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'FutureOr'
-          ..url = _url
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'FutureOr'
+      ..url = _url
+      ..types.add(ref),
   );
 
   /// Creates a `runZoned` refererence.
@@ -399,20 +392,18 @@ class BuiltValueType {
   /// Creates a [built_value.Built] reference for [ref] and its builder class,
   /// [builderRef].
   Reference built(Reference ref, Reference builderRef) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Built'
-          ..url = mainUrl
-          ..types.addAll([ref, builderRef]),
+    (t) => t
+      ..symbol = 'Built'
+      ..url = mainUrl
+      ..types.addAll([ref, builderRef]),
   );
 
   /// Creates a [built_collection.BuiltList] reference for generic type [ref].
   Reference builtList(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'BuiltList'
-          ..url = collectionUrl
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'BuiltList'
+      ..url = collectionUrl
+      ..types.add(ref),
   );
 
   /// Creates a [built_collection.BuiltListMultimap] reference with key [key]
@@ -422,31 +413,28 @@ class BuiltValueType {
   /// a `BuiltListMultimap<String, String>` which is the same a
   /// `Map<String, List<String>>` when built.
   Reference builtListMultimap(Reference key, Reference value) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'BuiltListMultimap'
-          ..url = collectionUrl
-          ..types.addAll([key, value]),
+    (t) => t
+      ..symbol = 'BuiltListMultimap'
+      ..url = collectionUrl
+      ..types.addAll([key, value]),
   );
 
   /// Creates a [built_collection.BuiltMap] reference with [key] and [value]
   /// generic types.
   Reference builtMap(Reference key, Reference value) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'BuiltMap'
-          ..url = collectionUrl
-          ..types.add(key)
-          ..types.add(value),
+    (t) => t
+      ..symbol = 'BuiltMap'
+      ..url = collectionUrl
+      ..types.add(key)
+      ..types.add(value),
   );
 
   /// Creates a [built_collection.BuiltSet] reference for generic type [ref].
   Reference builtSet(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'BuiltSet'
-          ..url = collectionUrl
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'BuiltSet'
+      ..url = collectionUrl
+      ..types.add(ref),
   );
 
   /// Creates a [built_collection.BuiltSetMultimap] reference with key [key]
@@ -456,11 +444,10 @@ class BuiltValueType {
   /// a `BuiltSetMultimap<String, String>` which is the same a
   /// `Map<String, Set<String>>` when built.
   Reference builtSetMultimap(Reference key, Reference value) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'BuiltSetMultimap'
-          ..url = collectionUrl
-          ..types.addAll([key, value]),
+    (t) => t
+      ..symbol = 'BuiltSetMultimap'
+      ..url = collectionUrl
+      ..types.addAll([key, value]),
   );
 
   /// Creates a [built_value_serializer.FullType] reference.
@@ -473,30 +460,27 @@ class BuiltValueType {
 
   /// The builder for [built_collection.ListBuilder].
   Reference listBuilder(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'ListBuilder'
-          ..url = collectionUrl
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'ListBuilder'
+      ..url = collectionUrl
+      ..types.add(ref),
   );
 
   /// The builder for [built_collection.BuiltListMultimap].
   Reference listMultimapBuilder(Reference key, Reference value) =>
       TypeReference(
-        (t) =>
-            t
-              ..symbol = 'ListMultimapBuilder'
-              ..url = collectionUrl
-              ..types.addAll([key, value]),
+        (t) => t
+          ..symbol = 'ListMultimapBuilder'
+          ..url = collectionUrl
+          ..types.addAll([key, value]),
       );
 
   /// The builder for [built_collection.MapBuilder].
   Reference mapBuilder(Reference key, Reference value) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'MapBuilder'
-          ..url = collectionUrl
-          ..types.addAll([key, value]),
+    (t) => t
+      ..symbol = 'MapBuilder'
+      ..url = collectionUrl
+      ..types.addAll([key, value]),
   );
 
   /// Creates a [built_value.newBuiltValueToStringHelper] reference.
@@ -506,29 +490,26 @@ class BuiltValueType {
   /// Creates a [built_value_serializer.PrimitiveSerializer] reference for
   /// generic type [ref].
   Reference primitiveSerializer(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'PrimitiveSerializer'
-          ..url = serializerUrl
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'PrimitiveSerializer'
+      ..url = serializerUrl
+      ..types.add(ref),
   );
 
   /// The builder for [built_collection.SetBuilder].
   Reference setBuilder(Reference ref) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'SetBuilder'
-          ..url = collectionUrl
-          ..types.add(ref),
+    (t) => t
+      ..symbol = 'SetBuilder'
+      ..url = collectionUrl
+      ..types.add(ref),
   );
 
   /// The builder for [built_collection.BuiltSetMultimap].
   Reference setMultimapBuilder(Reference key, Reference value) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'SetMultimapBuilder'
-          ..url = collectionUrl
-          ..types.addAll([key, value]),
+    (t) => t
+      ..symbol = 'SetMultimapBuilder'
+      ..url = collectionUrl
+      ..types.addAll([key, value]),
   );
 
   /// Creates a [built_value_serializer.Serializers] reference.
@@ -622,11 +603,10 @@ class _Celest {
 
   /// Creates a [celest_core.Serializer] reference.
   TypeReference serializer([Reference? dartType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Serializer'
-          ..url = _coreUrl
-          ..types.addAll([if (dartType != null) dartType]),
+    (t) => t
+      ..symbol = 'Serializer'
+      ..url = _coreUrl
+      ..types.addAll([if (dartType != null) dartType]),
   );
 
   /// Creates a [celest_core.SerializationException] reference.
@@ -691,30 +671,27 @@ class _Collection {
 
   /// Creates a [collection.DelegatingList] reference.
   TypeReference delegatingList(TypeReference elementType) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'DelegatingList'
-          ..url = _url
-          ..types.add(elementType),
+    (t) => t
+      ..symbol = 'DelegatingList'
+      ..url = _url
+      ..types.add(elementType),
   );
 
   /// Creates a [collection.DelegatingMap] reference.
   TypeReference delegatingMap(Reference keyType, Reference valueType) =>
       TypeReference(
-        (t) =>
-            t
-              ..symbol = 'DelegatingMap'
-              ..url = _url
-              ..types.addAll([keyType, valueType]),
+        (t) => t
+          ..symbol = 'DelegatingMap'
+          ..url = _url
+          ..types.addAll([keyType, valueType]),
       );
 
   /// Creates a [collection.DelegatingSet] reference.
   TypeReference delegatingSet(TypeReference elementType) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'DelegatingSet'
-          ..url = _url
-          ..types.add(elementType),
+    (t) => t
+      ..symbol = 'DelegatingSet'
+      ..url = _url
+      ..types.add(elementType),
   );
 }
 
@@ -778,71 +755,63 @@ class _Libcoder {
 
   /// Creates a [libcoder.coder] reference.
   TypeReference get coder$ => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'coder'
-          ..url = _url,
+    (t) => t
+      ..symbol = 'coder'
+      ..url = _url,
   );
 
   /// Creates a [libcoder.Decoder] reference.
   TypeReference decoder([Reference? valueType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Decoder'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+    (t) => t
+      ..symbol = 'Decoder'
+      ..url = _url
+      ..types.addAll([if (valueType != null) valueType]),
   );
 
   /// Creates a [libcoder.Encoder] reference.
   TypeReference encoder([Reference? valueType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Encoder'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+    (t) => t
+      ..symbol = 'Encoder'
+      ..url = _url
+      ..types.addAll([if (valueType != null) valueType]),
   );
 
   /// Creates a [libcoder.GlobalCoder] reference.
   TypeReference get globalCoder => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'GlobalCoder'
-          ..url = _url,
+    (t) => t
+      ..symbol = 'GlobalCoder'
+      ..url = _url,
   );
 
   /// Creates a [libcoder.CoderConfig] reference.
   TypeReference coderConfig([Reference? valueType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'CoderConfig'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+    (t) => t
+      ..symbol = 'CoderConfig'
+      ..url = _url
+      ..types.addAll([if (valueType != null) valueType]),
   );
 
   /// Creates a [libcoder.Coder] reference.
   TypeReference coderProtocol([Reference? valueType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Coder'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+    (t) => t
+      ..symbol = 'Coder'
+      ..url = _url
+      ..types.addAll([if (valueType != null) valueType]),
   );
 
   /// Creates a [libcoder.FormFieldsEncoder] reference.
   TypeReference get formFieldsEncoder => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'FormFieldsEncoder'
-          ..url = _url,
+    (t) => t
+      ..symbol = 'FormFieldsEncoder'
+      ..url = _url,
   );
 
   /// Creates a [libcoder.Typeref] reference.
   TypeReference typeref([Reference? valueType]) => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Typeref'
-          ..url = _url
-          ..types.addAll([if (valueType != null) valueType]),
+    (t) => t
+      ..symbol = 'Typeref'
+      ..url = _url
+      ..types.addAll([if (valueType != null) valueType]),
   );
 }
 
@@ -958,10 +927,9 @@ class _Isolate {
 
   /// Creates an [isolate.Isolate] reference.
   Reference get isolate => TypeReference(
-    (t) =>
-        t
-          ..symbol = 'Isolate'
-          ..url = _url,
+    (t) => t
+      ..symbol = 'Isolate'
+      ..url = _url,
   );
 
   /// Creates a [isolate.SendPort] reference.

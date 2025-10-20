@@ -1001,13 +1001,12 @@ final class AsyncComplexStructReturnNullableTarget
   void init() {
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i9.AsyncError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'error': $value.error,
-              r'stackTrace': _i4.Serializers.instance.serialize<StackTrace>(
-                $value.stackTrace,
-              ),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'error': $value.error,
+          r'stackTrace': _i4.Serializers.instance.serialize<StackTrace>(
+            $value.stackTrace,
+          ),
+        },
         deserialize: ($serialized) {
           return _i9.AsyncError(
             $serialized[r'error']!,
@@ -1020,13 +1019,12 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i9.TimeoutException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-              if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
-                  case final duration?)
-                r'duration': duration,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+          if (_i4.Serializers.instance.serialize<Duration?>($value.duration)
+              case final duration?)
+            r'duration': duration,
+        },
         deserialize: ($serialized) {
           return _i9.TimeoutException(
             ($serialized[r'message'] as String?),
@@ -1042,14 +1040,13 @@ final class AsyncComplexStructReturnNullableTarget
         _i11.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.unsupportedObject case final unsupportedObject?)
-                r'unsupportedObject': unsupportedObject,
-              if ($value.cause case final cause?) r'cause': cause,
-              if ($value.partialResult case final partialResult?)
-                r'partialResult': partialResult,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.unsupportedObject case final unsupportedObject?)
+            r'unsupportedObject': unsupportedObject,
+          if ($value.cause case final cause?) r'cause': cause,
+          if ($value.partialResult case final partialResult?)
+            r'partialResult': partialResult,
+        },
         deserialize: ($serialized) {
           return _i11.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
@@ -1061,12 +1058,11 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<ArgumentError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'invalidValue': $value.invalidValue,
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'invalidValue': $value.invalidValue,
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+        },
         deserialize: ($serialized) {
           return ArgumentError(
             $serialized?[r'message'],
@@ -1077,10 +1073,9 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<AssertionError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return AssertionError($serialized?[r'message']);
         },
@@ -1088,11 +1083,10 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<ConcurrentModificationError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.modifiedObject case final modifiedObject?)
-                r'modifiedObject': modifiedObject,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.modifiedObject case final modifiedObject?)
+            r'modifiedObject': modifiedObject,
+        },
         deserialize: ($serialized) {
           return ConcurrentModificationError($serialized?[r'modifiedObject']);
         },
@@ -1100,14 +1094,11 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<Error, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if (_i4.Serializers.instance.serialize<StackTrace?>(
-                    $value.stackTrace,
-                  )
-                  case final stackTrace?)
-                r'stackTrace': stackTrace,
-            },
+        serialize: ($value) => <String, Object?>{
+          if (_i4.Serializers.instance.serialize<StackTrace?>($value.stackTrace)
+              case final stackTrace?)
+            r'stackTrace': stackTrace,
+        },
         deserialize: ($serialized) {
           return Error();
         },
@@ -1123,12 +1114,11 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<FormatException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'message': $value.message,
-              r'source': $value.source,
-              if ($value.offset case final offset?) r'offset': offset,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'message': $value.message,
+          r'source': $value.source,
+          if ($value.offset case final offset?) r'offset': offset,
+        },
         deserialize: ($serialized) {
           return FormatException(
             (($serialized?[r'message'] as String?)) ?? '',
@@ -1140,17 +1130,15 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<IndexError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.indexable case final indexable?)
-                r'indexable': indexable,
-              r'length': $value.length,
-              r'invalidValue': $value.invalidValue,
-              r'start': $value.start,
-              r'end': $value.end,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.indexable case final indexable?) r'indexable': indexable,
+          r'length': $value.length,
+          r'invalidValue': $value.invalidValue,
+          r'start': $value.start,
+          r'end': $value.end,
+        },
         deserialize: ($serialized) {
           return IndexError(
             ($serialized[r'invalidValue'] as num).toInt(),
@@ -1167,10 +1155,9 @@ final class AsyncComplexStructReturnNullableTarget
         IntegerDivisionByZeroException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return IntegerDivisionByZeroException();
         },
@@ -1186,15 +1173,14 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<RangeError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.name case final name?) r'name': name,
-              r'message': $value.message,
-              if ($value.start case final start?) r'start': start,
-              if ($value.end case final end?) r'end': end,
-              if ($value.invalidValue case final invalidValue?)
-                r'invalidValue': invalidValue,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.name case final name?) r'name': name,
+          r'message': $value.message,
+          if ($value.start case final start?) r'start': start,
+          if ($value.end case final end?) r'end': end,
+          if ($value.invalidValue case final invalidValue?)
+            r'invalidValue': invalidValue,
+        },
         deserialize: ($serialized) {
           return RangeError($serialized[r'message']);
         },
@@ -1226,10 +1212,9 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnimplementedError(($serialized?[r'message'] as String?));
         },
@@ -1237,10 +1222,9 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<UnsupportedError, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              if ($value.message case final message?) r'message': message,
-            },
+        serialize: ($value) => <String, Object?>{
+          if ($value.message case final message?) r'message': message,
+        },
         deserialize: ($serialized) {
           return UnsupportedError(($serialized[r'message'] as String));
         },
@@ -1258,197 +1242,162 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i5.ComplexStruct, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'aBigInt': _i4.Serializers.instance.serialize<BigInt>(
-                $value.aBigInt,
-              ),
-              r'aBool': $value.aBool,
-              r'aDateTime': _i4.Serializers.instance.serialize<DateTime>(
-                $value.aDateTime,
-              ),
-              r'aDouble': $value.aDouble,
-              r'aDuration': _i4.Serializers.instance.serialize<Duration>(
-                $value.aDuration,
-              ),
-              r'aListOfBigInt':
-                  $value.aListOfBigInt
-                      .map(
-                        (el) => _i4.Serializers.instance.serialize<BigInt>(el),
-                      )
-                      .toList(),
-              r'aListOfBool': $value.aListOfBool,
-              r'aListOfDateTime':
-                  $value.aListOfDateTime
-                      .map(
-                        (el) =>
-                            _i4.Serializers.instance.serialize<DateTime>(el),
-                      )
-                      .toList(),
-              r'aListOfDouble': $value.aListOfDouble,
-              r'aListOfDuration':
-                  $value.aListOfDuration
-                      .map(
-                        (el) =>
-                            _i4.Serializers.instance.serialize<Duration>(el),
-                      )
-                      .toList(),
-              r'aListOfEnum':
-                  $value.aListOfEnum
-                      .map(
-                        (el) =>
-                            _i4.Serializers.instance.serialize<_i5.MyEnum>(el),
-                      )
-                      .toList(),
-              r'aListOfInt': $value.aListOfInt,
-              r'aListOfNull': $value.aListOfNull,
-              r'aListOfRegExp':
-                  $value.aListOfRegExp
-                      .map(
-                        (el) => _i4.Serializers.instance.serialize<RegExp>(el),
-                      )
-                      .toList(),
-              r'aListOfSimpleClass':
-                  $value.aListOfSimpleClass
-                      .map(
-                        (el) => _i4.Serializers.instance
-                            .serialize<_i5.SimpleClass>(el),
-                      )
-                      .toList(),
-              r'aListOfSimpleStruct':
-                  $value.aListOfSimpleStruct
-                      .map(
-                        (el) => _i4.Serializers.instance
-                            .serialize<_i5.SimpleStruct>(el),
-                      )
-                      .toList(),
-              r'aListOfStackTrace':
-                  $value.aListOfStackTrace
-                      .map(
-                        (el) =>
-                            _i4.Serializers.instance.serialize<StackTrace>(el),
-                      )
-                      .toList(),
-              r'aListOfString': $value.aListOfString,
-              r'aListOfUint8List':
-                  $value.aListOfUint8List
-                      .map(
-                        (el) => _i4.Serializers.instance
-                            .serialize<_i13.Uint8List>(el),
-                      )
-                      .toList(),
-              r'aListOfUri':
-                  $value.aListOfUri
-                      .map((el) => _i4.Serializers.instance.serialize<Uri>(el))
-                      .toList(),
-              r'aListOfUriData':
-                  $value.aListOfUriData
-                      .map(
-                        (el) => _i4.Serializers.instance.serialize<UriData>(el),
-                      )
-                      .toList(),
-              r'aMapOfBigInt': $value.aMapOfBigInt.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<BigInt>(value),
-                ),
-              ),
-              r'aMapOfBool': $value.aMapOfBool,
-              r'aMapOfDateTime': $value.aMapOfDateTime.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<DateTime>(value),
-                ),
-              ),
-              r'aMapOfDouble': $value.aMapOfDouble,
-              r'aMapOfDuration': $value.aMapOfDuration.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<Duration>(value),
-                ),
-              ),
-              r'aMapOfEnum': $value.aMapOfEnum.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<_i5.MyEnum>(value),
-                ),
-              ),
-              r'aMapOfInt': $value.aMapOfInt,
-              r'aMapOfNull': $value.aMapOfNull,
-              r'aMapOfRegExp': $value.aMapOfRegExp.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<RegExp>(value),
-                ),
-              ),
-              r'aMapOfSimpleClass': $value.aMapOfSimpleClass.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<_i5.SimpleClass>(value),
-                ),
-              ),
-              r'aMapOfSimpleStruct': $value.aMapOfSimpleStruct.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<_i5.SimpleStruct>(value),
-                ),
-              ),
-              r'aMapOfStackTrace': $value.aMapOfStackTrace.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<StackTrace>(value),
-                ),
-              ),
-              r'aMapOfString': $value.aMapOfString,
-              r'aMapOfUint8List': $value.aMapOfUint8List.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<_i13.Uint8List>(value),
-                ),
-              ),
-              r'aMapOfUri': $value.aMapOfUri.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<Uri>(value),
-                ),
-              ),
-              r'aMapOfUriData': $value.aMapOfUriData.map(
-                (key, value) => MapEntry(
-                  key,
-                  _i4.Serializers.instance.serialize<UriData>(value),
-                ),
-              ),
-              r'aNull': $value.aNull,
-              r'aRegExp': _i4.Serializers.instance.serialize<RegExp>(
-                $value.aRegExp,
-              ),
-              r'aSimpleClass': _i4.Serializers.instance
-                  .serialize<_i5.SimpleClass>($value.aSimpleClass),
-              r'aSimpleStruct': _i4.Serializers.instance
-                  .serialize<_i5.SimpleStruct>($value.aSimpleStruct),
-              r'aStackTrace': _i4.Serializers.instance.serialize<StackTrace>(
-                $value.aStackTrace,
-              ),
-              r'aString': $value.aString,
-              r'aUint8List': _i4.Serializers.instance.serialize<_i13.Uint8List>(
-                $value.aUint8List,
-              ),
-              r'aUri': _i4.Serializers.instance.serialize<Uri>($value.aUri),
-              r'aUriData': _i4.Serializers.instance.serialize<UriData>(
-                $value.aUriData,
-              ),
-              r'anEnum': _i4.Serializers.instance.serialize<_i5.MyEnum>(
-                $value.anEnum,
-              ),
-              r'anInt': $value.anInt,
-              r'anIterableOfSimpleClass':
-                  $value.anIterableOfSimpleClass
-                      .map(
-                        (el) => _i4.Serializers.instance
-                            .serialize<_i5.SimpleClass>(el),
-                      )
-                      .toList(),
-            },
+        serialize: ($value) => <String, Object?>{
+          r'aBigInt': _i4.Serializers.instance.serialize<BigInt>(
+            $value.aBigInt,
+          ),
+          r'aBool': $value.aBool,
+          r'aDateTime': _i4.Serializers.instance.serialize<DateTime>(
+            $value.aDateTime,
+          ),
+          r'aDouble': $value.aDouble,
+          r'aDuration': _i4.Serializers.instance.serialize<Duration>(
+            $value.aDuration,
+          ),
+          r'aListOfBigInt': $value.aListOfBigInt
+              .map((el) => _i4.Serializers.instance.serialize<BigInt>(el))
+              .toList(),
+          r'aListOfBool': $value.aListOfBool,
+          r'aListOfDateTime': $value.aListOfDateTime
+              .map((el) => _i4.Serializers.instance.serialize<DateTime>(el))
+              .toList(),
+          r'aListOfDouble': $value.aListOfDouble,
+          r'aListOfDuration': $value.aListOfDuration
+              .map((el) => _i4.Serializers.instance.serialize<Duration>(el))
+              .toList(),
+          r'aListOfEnum': $value.aListOfEnum
+              .map((el) => _i4.Serializers.instance.serialize<_i5.MyEnum>(el))
+              .toList(),
+          r'aListOfInt': $value.aListOfInt,
+          r'aListOfNull': $value.aListOfNull,
+          r'aListOfRegExp': $value.aListOfRegExp
+              .map((el) => _i4.Serializers.instance.serialize<RegExp>(el))
+              .toList(),
+          r'aListOfSimpleClass': $value.aListOfSimpleClass
+              .map(
+                (el) => _i4.Serializers.instance.serialize<_i5.SimpleClass>(el),
+              )
+              .toList(),
+          r'aListOfSimpleStruct': $value.aListOfSimpleStruct
+              .map(
+                (el) =>
+                    _i4.Serializers.instance.serialize<_i5.SimpleStruct>(el),
+              )
+              .toList(),
+          r'aListOfStackTrace': $value.aListOfStackTrace
+              .map((el) => _i4.Serializers.instance.serialize<StackTrace>(el))
+              .toList(),
+          r'aListOfString': $value.aListOfString,
+          r'aListOfUint8List': $value.aListOfUint8List
+              .map(
+                (el) => _i4.Serializers.instance.serialize<_i13.Uint8List>(el),
+              )
+              .toList(),
+          r'aListOfUri': $value.aListOfUri
+              .map((el) => _i4.Serializers.instance.serialize<Uri>(el))
+              .toList(),
+          r'aListOfUriData': $value.aListOfUriData
+              .map((el) => _i4.Serializers.instance.serialize<UriData>(el))
+              .toList(),
+          r'aMapOfBigInt': $value.aMapOfBigInt.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<BigInt>(value),
+            ),
+          ),
+          r'aMapOfBool': $value.aMapOfBool,
+          r'aMapOfDateTime': $value.aMapOfDateTime.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<DateTime>(value),
+            ),
+          ),
+          r'aMapOfDouble': $value.aMapOfDouble,
+          r'aMapOfDuration': $value.aMapOfDuration.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<Duration>(value),
+            ),
+          ),
+          r'aMapOfEnum': $value.aMapOfEnum.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<_i5.MyEnum>(value),
+            ),
+          ),
+          r'aMapOfInt': $value.aMapOfInt,
+          r'aMapOfNull': $value.aMapOfNull,
+          r'aMapOfRegExp': $value.aMapOfRegExp.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<RegExp>(value),
+            ),
+          ),
+          r'aMapOfSimpleClass': $value.aMapOfSimpleClass.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<_i5.SimpleClass>(value),
+            ),
+          ),
+          r'aMapOfSimpleStruct': $value.aMapOfSimpleStruct.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<_i5.SimpleStruct>(value),
+            ),
+          ),
+          r'aMapOfStackTrace': $value.aMapOfStackTrace.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<StackTrace>(value),
+            ),
+          ),
+          r'aMapOfString': $value.aMapOfString,
+          r'aMapOfUint8List': $value.aMapOfUint8List.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<_i13.Uint8List>(value),
+            ),
+          ),
+          r'aMapOfUri': $value.aMapOfUri.map(
+            (key, value) =>
+                MapEntry(key, _i4.Serializers.instance.serialize<Uri>(value)),
+          ),
+          r'aMapOfUriData': $value.aMapOfUriData.map(
+            (key, value) => MapEntry(
+              key,
+              _i4.Serializers.instance.serialize<UriData>(value),
+            ),
+          ),
+          r'aNull': $value.aNull,
+          r'aRegExp': _i4.Serializers.instance.serialize<RegExp>(
+            $value.aRegExp,
+          ),
+          r'aSimpleClass': _i4.Serializers.instance.serialize<_i5.SimpleClass>(
+            $value.aSimpleClass,
+          ),
+          r'aSimpleStruct': _i4.Serializers.instance
+              .serialize<_i5.SimpleStruct>($value.aSimpleStruct),
+          r'aStackTrace': _i4.Serializers.instance.serialize<StackTrace>(
+            $value.aStackTrace,
+          ),
+          r'aString': $value.aString,
+          r'aUint8List': _i4.Serializers.instance.serialize<_i13.Uint8List>(
+            $value.aUint8List,
+          ),
+          r'aUri': _i4.Serializers.instance.serialize<Uri>($value.aUri),
+          r'aUriData': _i4.Serializers.instance.serialize<UriData>(
+            $value.aUriData,
+          ),
+          r'anEnum': _i4.Serializers.instance.serialize<_i5.MyEnum>(
+            $value.anEnum,
+          ),
+          r'anInt': $value.anInt,
+          r'anIterableOfSimpleClass': $value.anIterableOfSimpleClass
+              .map(
+                (el) => _i4.Serializers.instance.serialize<_i5.SimpleClass>(el),
+              )
+              .toList(),
+        },
         deserialize: ($serialized) {
           return (
             aBigInt: _i4.Serializers.instance.deserialize<BigInt>(
@@ -1462,16 +1411,12 @@ final class AsyncComplexStructReturnNullableTarget
             aDuration: _i4.Serializers.instance.deserialize<Duration>(
               $serialized[r'aDuration'],
             ),
-            aListOfBigInt:
-                ($serialized[r'aListOfBigInt'] as Iterable<Object?>)
-                    .map(
-                      (el) => _i4.Serializers.instance.deserialize<BigInt>(el),
-                    )
-                    .toList(),
-            aListOfBool:
-                ($serialized[r'aListOfBool'] as Iterable<Object?>)
-                    .map((el) => (el as bool))
-                    .toList(),
+            aListOfBigInt: ($serialized[r'aListOfBigInt'] as Iterable<Object?>)
+                .map((el) => _i4.Serializers.instance.deserialize<BigInt>(el))
+                .toList(),
+            aListOfBool: ($serialized[r'aListOfBool'] as Iterable<Object?>)
+                .map((el) => (el as bool))
+                .toList(),
             aListOfDateTime:
                 ($serialized[r'aListOfDateTime'] as Iterable<Object?>)
                     .map(
@@ -1479,10 +1424,9 @@ final class AsyncComplexStructReturnNullableTarget
                           _i4.Serializers.instance.deserialize<DateTime>(el),
                     )
                     .toList(),
-            aListOfDouble:
-                ($serialized[r'aListOfDouble'] as Iterable<Object?>)
-                    .map((el) => (el as num).toDouble())
-                    .toList(),
+            aListOfDouble: ($serialized[r'aListOfDouble'] as Iterable<Object?>)
+                .map((el) => (el as num).toDouble())
+                .toList(),
             aListOfDuration:
                 ($serialized[r'aListOfDuration'] as Iterable<Object?>)
                     .map(
@@ -1490,27 +1434,20 @@ final class AsyncComplexStructReturnNullableTarget
                           _i4.Serializers.instance.deserialize<Duration>(el),
                     )
                     .toList(),
-            aListOfEnum:
-                ($serialized[r'aListOfEnum'] as Iterable<Object?>)
-                    .map(
-                      (el) =>
-                          _i4.Serializers.instance.deserialize<_i5.MyEnum>(el),
-                    )
-                    .toList(),
-            aListOfInt:
-                ($serialized[r'aListOfInt'] as Iterable<Object?>)
-                    .map((el) => (el as num).toInt())
-                    .toList(),
-            aListOfNull:
-                ($serialized[r'aListOfNull'] as Iterable<Object?>)
-                    .map((el) => (el as Null))
-                    .toList(),
-            aListOfRegExp:
-                ($serialized[r'aListOfRegExp'] as Iterable<Object?>)
-                    .map(
-                      (el) => _i4.Serializers.instance.deserialize<RegExp>(el),
-                    )
-                    .toList(),
+            aListOfEnum: ($serialized[r'aListOfEnum'] as Iterable<Object?>)
+                .map(
+                  (el) => _i4.Serializers.instance.deserialize<_i5.MyEnum>(el),
+                )
+                .toList(),
+            aListOfInt: ($serialized[r'aListOfInt'] as Iterable<Object?>)
+                .map((el) => (el as num).toInt())
+                .toList(),
+            aListOfNull: ($serialized[r'aListOfNull'] as Iterable<Object?>)
+                .map((el) => (el as Null))
+                .toList(),
+            aListOfRegExp: ($serialized[r'aListOfRegExp'] as Iterable<Object?>)
+                .map((el) => _i4.Serializers.instance.deserialize<RegExp>(el))
+                .toList(),
             aListOfSimpleClass:
                 ($serialized[r'aListOfSimpleClass'] as Iterable<Object?>)
                     .map(
@@ -1532,10 +1469,9 @@ final class AsyncComplexStructReturnNullableTarget
                           _i4.Serializers.instance.deserialize<StackTrace>(el),
                     )
                     .toList(),
-            aListOfString:
-                ($serialized[r'aListOfString'] as Iterable<Object?>)
-                    .map((el) => (el as String))
-                    .toList(),
+            aListOfString: ($serialized[r'aListOfString'] as Iterable<Object?>)
+                .map((el) => (el as String))
+                .toList(),
             aListOfUint8List:
                 ($serialized[r'aListOfUint8List'] as Iterable<Object?>)
                     .map(
@@ -1543,10 +1479,9 @@ final class AsyncComplexStructReturnNullableTarget
                           .deserialize<_i13.Uint8List>(el),
                     )
                     .toList(),
-            aListOfUri:
-                ($serialized[r'aListOfUri'] as Iterable<Object?>)
-                    .map((el) => _i4.Serializers.instance.deserialize<Uri>(el))
-                    .toList(),
+            aListOfUri: ($serialized[r'aListOfUri'] as Iterable<Object?>)
+                .map((el) => _i4.Serializers.instance.deserialize<Uri>(el))
+                .toList(),
             aListOfUriData:
                 ($serialized[r'aListOfUriData'] as Iterable<Object?>)
                     .map(
@@ -1606,16 +1541,16 @@ final class AsyncComplexStructReturnNullableTarget
                     ),
                   ),
                 ),
-            aMapOfSimpleStruct: ($serialized[r'aMapOfSimpleStruct']
-                    as Map<String, Object?>)
-                .map(
-                  (key, value) => MapEntry(
-                    key,
-                    _i4.Serializers.instance.deserialize<_i5.SimpleStruct>(
-                      value,
+            aMapOfSimpleStruct:
+                ($serialized[r'aMapOfSimpleStruct'] as Map<String, Object?>)
+                    .map(
+                      (key, value) => MapEntry(
+                        key,
+                        _i4.Serializers.instance.deserialize<_i5.SimpleStruct>(
+                          value,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
             aMapOfStackTrace:
                 ($serialized[r'aMapOfStackTrace'] as Map<String, Object?>).map(
                   (key, value) => MapEntry(
@@ -1708,17 +1643,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.AbortedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.AbortedException(
             ($serialized?[r'message'] as String?),
@@ -1733,17 +1667,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.AlreadyExistsException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
@@ -1758,17 +1691,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.BadRequestException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.BadRequestException(
             ($serialized?[r'message'] as String?),
@@ -1783,17 +1715,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.CancelledException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.CancelledException(
             ($serialized?[r'message'] as String?),
@@ -1808,17 +1739,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.CloudException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.CloudException.fromJson($serialized);
         },
@@ -1826,17 +1756,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.DataLossError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.DataLossError(
             ($serialized?[r'message'] as String?),
@@ -1851,17 +1780,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.DeadlineExceededError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
@@ -1879,17 +1807,16 @@ final class AsyncComplexStructReturnNullableTarget
         _i6.FailedPreconditionException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
@@ -1904,17 +1831,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.InternalServerError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.InternalServerError(
             ($serialized?[r'message'] as String?),
@@ -1929,17 +1855,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.NotFoundException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.NotFoundException(
             ($serialized?[r'message'] as String?),
@@ -1954,17 +1879,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.OutOfRangeException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.OutOfRangeException(
             ($serialized?[r'message'] as String?),
@@ -1982,17 +1906,16 @@ final class AsyncComplexStructReturnNullableTarget
         _i6.PermissionDeniedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
@@ -2010,17 +1933,16 @@ final class AsyncComplexStructReturnNullableTarget
         _i6.ResourceExhaustedException,
         Map<String, Object?>?
       >(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
@@ -2035,17 +1957,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.UnauthorizedException, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.UnauthorizedException(
             ($serialized?[r'message'] as String?),
@@ -2060,17 +1981,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.UnavailableError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.UnavailableError(
             ($serialized?[r'message'] as String?),
@@ -2085,17 +2005,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.UnimplementedError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.UnimplementedError(
             ($serialized?[r'message'] as String?),
@@ -2110,17 +2029,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i6.UnknownError, Map<String, Object?>?>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i6.UnknownError(
             ($serialized?[r'message'] as String?),
@@ -2135,17 +2053,16 @@ final class AsyncComplexStructReturnNullableTarget
     );
     _i4.Serializers.instance.put(
       _i4.Serializer.define<_i12.SerializationException, Map<String, Object?>>(
-        serialize:
-            ($value) => <String, Object?>{
-              r'code': $value.code,
-              r'message': $value.message,
-              if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
-                    $value.details,
-                    const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
-                  )
-                  case final details?)
-                r'details': details,
-            },
+        serialize: ($value) => <String, Object?>{
+          r'code': $value.code,
+          r'message': $value.message,
+          if (_i4.Serializers.instance.serialize<_i14.JsonValue?>(
+                $value.details,
+                const _i4.TypeToken<_i14.JsonValue?>('JsonValue'),
+              )
+              case final details?)
+            r'details': details,
+        },
         deserialize: ($serialized) {
           return _i12.SerializationException(
             ($serialized[r'message'] as String?),

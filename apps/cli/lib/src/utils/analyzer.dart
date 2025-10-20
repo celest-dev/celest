@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
-import 'package:analyzer/dart/element/element2.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/source/source.dart';
@@ -12,6 +12,7 @@ import 'package:analyzer/src/dart/analysis/driver_based_analysis_context.dart';
 import 'package:analyzer/src/dart/analysis/search.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/type.dart';
+import 'package:analyzer/src/dart/element/type_algebra.dart';
 import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/analyzer/const_to_code_builder.dart';
 import 'package:celest_cli/src/context.dart';
@@ -23,7 +24,7 @@ import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 
-extension LibraryElementHelper on LibraryElement2 {
+extension LibraryElementHelper on LibraryElement {
   bool get isPackageCelest => switch (firstFragment.source.uri) {
     Uri(scheme: 'package', pathSegments: ['celest', ...]) => true,
     _ => false,
@@ -46,19 +47,57 @@ extension LibraryElementHelper on LibraryElement2 {
       p.isWithin(projectPaths.projectLib, firstFragment.source.fullName);
 }
 
+extension on ClassElement {
+  bool get isEnumLike {
+    // Must be a concrete class.
+    if (isAbstract) {
+      return false;
+    }
+
+    // With only private non-factory constructors.
+    for (final constructor in constructors) {
+      if (constructor.isPublic || constructor.isFactory) {
+        return false;
+      }
+    }
+
+    // With 2+ static const fields with the type of this class.
+    var numberOfElements = 0;
+    for (final field in fields) {
+      if (field.isStatic && field.isConst && field.type == thisType) {
+        numberOfElements++;
+      }
+    }
+    if (numberOfElements < 2) {
+      return false;
+    }
+
+    // No subclasses in the library.
+    for (final fragment in library.fragments) {
+      for (final class_ in fragment.classes) {
+        if (class_.element.supertype?.element == this) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+}
+
 extension ElementAnnotationHelper on ElementAnnotation {
-  bool get isCustomOverride => switch (element2) {
-    final PropertyAccessorElement2 propertyAccessor =>
-      propertyAccessor.name3 == 'customOverride' &&
-          propertyAccessor.library2.isCelestSdk,
+  bool get isCustomOverride => switch (element) {
+    final PropertyAccessorElement propertyAccessor =>
+      propertyAccessor.name == 'customOverride' &&
+          propertyAccessor.library.isCelestSdk,
     _ => false,
   };
 
-  bool get isHttpError => switch (element2) {
-    ConstructorElement2(
-      enclosingElement2: ClassElement2(:final name3, :final library2),
+  bool get isHttpError => switch (element) {
+    ConstructorElement(
+      enclosingElement: ClassElement(:final name, :final library),
     ) =>
-      name3 == 'httpError' && library2.isCelestSdk,
+      name == 'httpError' && library.isCelestSdk,
     _ => false,
   };
 }
@@ -67,7 +106,7 @@ extension DartTypeHelper on DartType {
   DartType get flattened {
     switch (this) {
       case final InterfaceType interface:
-        final typeSystem = interface.element3.library2.typeSystem;
+        final typeSystem = interface.element.library.typeSystem;
         final flattened = typeSystem.flatten(this);
         return switch ((this, flattened)) {
           // TODO(dnys1): https://github.com/dart-lang/sdk/issues/54260
@@ -94,81 +133,80 @@ extension DartTypeHelper on DartType {
   DartType get nonNullable =>
       (this as TypeImpl).withNullability(NullabilitySuffix.none);
 
-  bool get isCelestSdk => element3?.library2?.isCelestSdk ?? false;
+  bool get isCelestSdk => element?.library?.isCelestSdk ?? false;
 
   bool get isDartSdk =>
-      element3?.library2?.firstFragment.source.uri.scheme == 'dart';
+      element?.library?.firstFragment.source.uri.scheme == 'dart';
 
-  bool get isJsonExtensionType => switch (element3) {
-    ExtensionTypeElement2(:final name3?, :final library2) =>
-      name3.startsWith('Json') && library2.isCelestSdk,
+  bool get isJsonExtensionType => switch (element) {
+    ExtensionTypeElement(:final name?, :final library) =>
+      name.startsWith('Json') && library.isCelestSdk,
     _ => false,
   };
 
-  bool get isCelestVariable =>
-      element3 == typeHelper.coreTypes.celestEnvElement;
+  bool get isCelestVariable => element == typeHelper.coreTypes.celestEnvElement;
 
   bool get isCelestSecret =>
-      element3 == typeHelper.coreTypes.celestSecretElement;
+      element == typeHelper.coreTypes.celestSecretElement;
 
-  bool get isCloudAuthDatabaseMixin => switch (element3) {
-    MixinElement2(name3: final name, library2: final library) =>
+  bool get isCloudAuthDatabaseMixin => switch (element) {
+    MixinElement(name: final name, library: final library) =>
       name == 'CloudAuthDatabaseMixin' && library.isCelestSdk,
     _ => false,
   };
 
-  bool get isAuth => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuth => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'Auth' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isAuthProviderEmail => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuthProviderEmail => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_EmailAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isAuthProviderSms => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuthProviderSms => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_SmsAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isAuthProviderGitHub => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuthProviderGitHub => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_GitHubAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isAuthProviderApple => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuthProviderApple => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_AppleAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isAuthProviderGoogle => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isAuthProviderGoogle => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_GoogleAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isDatabase => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isDatabase => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'Database' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isDriftSchema => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isDriftSchema => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_DriftSchema' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isDriftGeneratedDatabase => switch (element3) {
-    ClassElement2(
-      name3: 'GeneratedDatabase',
-      library2: LibraryElement2(
+  bool get isDriftGeneratedDatabase => switch (element) {
+    ClassElement(
+      name: 'GeneratedDatabase',
+      library: LibraryElement(
         firstFragment: LibraryFragment(
           source: Source(
             uri: Uri(scheme: 'package', pathSegments: ['drift', ...]),
@@ -180,10 +218,10 @@ extension DartTypeHelper on DartType {
     _ => false,
   };
 
-  bool get isDriftQueryExecutor => switch (element3) {
-    ClassElement2(
-      name3: 'QueryExecutor',
-      library2: LibraryElement2(
+  bool get isDriftQueryExecutor => switch (element) {
+    ClassElement(
+      name: 'QueryExecutor',
+      library: LibraryElement(
         firstFragment: LibraryFragment(
           source: Source(
             uri: Uri(scheme: 'package', pathSegments: ['drift', ...]),
@@ -195,68 +233,68 @@ extension DartTypeHelper on DartType {
     _ => false,
   };
 
-  bool get isExternalAuthProviderFirebase => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isExternalAuthProviderFirebase => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_FirebaseExternalAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isExternalAuthProviderSupabase => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isExternalAuthProviderSupabase => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_SupabaseExternalAuthProvider' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isProject => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isProject => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'Project' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isProjectContext => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isProjectContext => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'ProjectContext' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isApiAuthenticated => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isApiAuthenticated => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_Authenticated' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isApiPublic => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isApiPublic => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_Public' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isHttpConfig => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isHttpConfig => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'http' && library.isCelestSdk,
     _ => false,
   };
 
-  bool get isHttpError => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isHttpError => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'httpError' && library.isCelestSdk,
     _ => false,
   };
 
-  // bool get isHttpLabel => switch (element3) {
-  //       ClassElement2(name3: final name, library2: final library) =>
+  // bool get isHttpLabel => switch (element) {
+  //       ClassElement(name: final name, library: final library) =>
   //         name == 'httpLabel' && library.isCelestSdk,
   //       _ => false,
   //     };
 
-  bool get isHttpQuery => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isHttpQuery => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'httpQuery' && library.isCelestSdk,
     _ => false,
   };
 
-  bool get isHttpHeader => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isHttpHeader => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == 'httpHeader' && library.isCelestSdk,
     _ => false,
   };
@@ -271,29 +309,29 @@ extension DartTypeHelper on DartType {
     };
   }
 
-  bool get isStaticVariable => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isStaticVariable => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_staticEnv' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isSecret => element3 == typeHelper.coreTypes.celestSecretElement;
+  bool get isSecret => element == typeHelper.coreTypes.celestSecretElement;
 
-  bool get isUserContext => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isUserContext => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_PrincipalContextKey' && library.isPackageCelest,
     _ => false,
   };
 
-  bool get isCloud => switch (element3) {
-    ClassElement2(name3: final name, library2: final library) =>
+  bool get isCloud => switch (element) {
+    ClassElement(name: final name, library: final library) =>
       name == '_Cloud' && library.isPackageCelest,
     _ => false,
   };
 
   bool get isMiddleware {
-    final el = element3;
-    if (el is! ClassElement2) {
+    final el = element;
+    if (el is! ClassElement) {
       return false;
     }
     final supertypes = el.allSupertypes;
@@ -301,21 +339,22 @@ extension DartTypeHelper on DartType {
       return false;
     }
     return supertypes.any((supertype) {
-      final supertypeElement = supertype.element3;
-      if (supertypeElement is! ClassElement2) {
+      final supertypeElement = supertype.element;
+      if (supertypeElement is! ClassElement) {
         return false;
       }
-      return supertypeElement.library2.isPackageCelest &&
-          supertypeElement.name3 == 'Middleware';
+      return supertypeElement.library.isPackageCelest &&
+          supertypeElement.name == 'Middleware';
     });
   }
 
-  bool get isEnum => element3 is EnumElement2;
-  bool get isEnumLike => switch (element3) {
-    EnumElement2() => true,
-    ClassElementImpl2(isEnumLike: true) && final element => switch (element
-        .getField2('values')) {
-      FieldElement2(
+  bool get isEnum => element is EnumElement;
+  bool get isEnumLike => switch (element) {
+    EnumElement() => true,
+    ClassElement(isEnumLike: true) && final element => switch (element.getField(
+      'values',
+    )) {
+      FieldElement(
         isStatic: true,
         isConst: true,
         type: InterfaceType(
@@ -331,11 +370,8 @@ extension DartTypeHelper on DartType {
 
   /// Used to patch over/ignore the limitations of serializing Flutter
   /// types for now.
-  bool get isFlutterType => switch (element3) {
-    ClassElement2(:final library2) => switch (library2
-        .firstFragment
-        .source
-        .uri) {
+  bool get isFlutterType => switch (element) {
+    ClassElement(:final library) => switch (library.firstFragment.source.uri) {
       // dart:ui
       Uri(scheme: 'dart', pathSegments: ['ui', ...]) => true,
       // package:flutter
@@ -380,10 +416,10 @@ extension DartTypeHelper on DartType {
     );
   }
 
-  bool get isExtensionType => element3 is ExtensionTypeElement2;
+  bool get isExtensionType => element is ExtensionTypeElement;
   bool get implementsRepresentationType {
-    final element = element3;
-    if (element is ExtensionTypeElement2) {
+    final element = this.element;
+    if (element is ExtensionTypeElement) {
       return element.allSupertypes.contains(extensionTypeErasure);
     }
     return true;
@@ -400,9 +436,9 @@ extension DartTypeHelper on DartType {
     if (isOverridden) {
       return null;
     }
-    if (element3 case final ExtensionTypeElement2 extensionType) {
+    if (element case final ExtensionTypeElement extensionType) {
       return DartTypes.celest.typeToken.constInstance(
-        [codegen.literalString(extensionType.name3!)],
+        [codegen.literalString(extensionType.name!)],
         {},
         [typeHelper.toReference(this)],
       );
@@ -414,8 +450,8 @@ extension DartTypeHelper on DartType {
     final sourceUri = switch (this) {
       // Don't consider aliases for non-record types.
       RecordType(:final alias?) =>
-        alias.element2.library2.firstFragment.source.uri,
-      _ => element3?.library2?.firstFragment.source.uri,
+        alias.element.library.firstFragment.source.uri,
+      _ => element?.library?.firstFragment.source.uri,
     };
     if (sourceUri == null) {
       return null;
@@ -434,7 +470,7 @@ extension DartTypeHelper on DartType {
     final type = this;
     final symbol = switch (type) {
       final RecordType type => type.symbol,
-      _ => element3?.name3,
+      _ => element?.name,
     };
     assert(symbol != null, 'Symbol is null for $type');
     final symbolizedUri = switch (sourceUri) {
@@ -444,14 +480,14 @@ extension DartTypeHelper on DartType {
     switch (type) {
       case InterfaceType(
             :final typeArguments,
-            element3: InterfaceElement2(typeParameters2: final typeParameters),
+            element: InterfaceElement(:final typeParameters),
           )
           when typeParameters.isNotEmpty:
         return symbolizedUri.replace(
           queryParameters: {
             for (final (index, typeParameter) in typeParameters.indexed)
-              typeParameter.name3!:
-                  typeArguments[index].instantiatedUri.toString(),
+              typeParameter.name!: typeArguments[index].instantiatedUri
+                  .toString(),
           },
         );
       default:
@@ -476,7 +512,7 @@ extension DartTypeHelper on DartType {
     if (type is! InterfaceType) {
       return _SubtypeResultX._allowed;
     }
-    final element = type.element3;
+    final element = type.element;
     var hasAllowedSubtypes = (
       allowed: true,
       disallowedTypes: <InterfaceType>{},
@@ -486,8 +522,8 @@ extension DartTypeHelper on DartType {
     for (final typeArgument in type.typeArguments) {
       hasAllowedSubtypes &= await typeArgument.hasAllowedSubtypes();
     }
-    final libraryUri = type.element3.library2.firstFragment.source.uri;
-    final libraryPath = element.library2.session.uriConverter.uriToPath(
+    final libraryUri = type.element.library.firstFragment.source.uri;
+    final libraryPath = element.library.session.uriConverter.uriToPath(
       libraryUri,
     );
     if (libraryPath == null) {
@@ -497,25 +533,15 @@ extension DartTypeHelper on DartType {
     if (!p.isWithin(projectPaths.projectRoot, libraryPath)) {
       return _SubtypeResultX._allowed;
     }
-    final subtypes =
-        typeHelper.subtypes[element] ??= switch (element3) {
-          // Don't collect subtypes for final classes.
-          // TODO(dnys1): How best to handle this? Needed for `OkShapeResult` but
-          // final classes can still reopen types and introduce new classes with
-          // new identities.
-          ClassElement2(isFinal: true) => const [],
-          // TODO(dnys1): This should work but reports errors for sealed types.
-          // ClassElementImpl() => element.allSubtypes ?? const [],
-          _ => await element.collectSubtypes(),
-        };
+    final subtypes = typeHelper.subtypes[element] ??= await type.rawSubtypes();
     for (final subtype in subtypes) {
       hasAllowedSubtypes &= await subtype.hasAllowedSubtypes();
     }
-    final allowed = switch (element3) {
-      ClassElement2(isSealed: true) =>
+    final allowed = switch (element) {
+      ClassElement(isSealed: true) =>
         // We can't instantiate a sealed class, so we need subtypes
         hasAllowedSubtypes.allowed && subtypes.isNotEmpty,
-      ClassElement2(isFinal: true) => hasAllowedSubtypes.allowed,
+      ClassElement(isFinal: true) => hasAllowedSubtypes.allowed,
       _ => hasAllowedSubtypes.allowed && subtypes.isEmpty,
     };
     return (
@@ -527,9 +553,9 @@ extension DartTypeHelper on DartType {
     );
   }
 
-  DartType? get defaultWireType => switch (extensionTypeErasure.element3) {
-    EnumElement2() => typeHelper.typeProvider.stringType,
-    InterfaceElement2() => jsonMapType,
+  DartType? get defaultWireType => switch (extensionTypeErasure.element) {
+    EnumElement() => typeHelper.typeProvider.stringType,
+    InterfaceElement() => jsonMapType,
     _ => null,
   };
 
@@ -542,13 +568,13 @@ extension DartTypeHelper on DartType {
   String? externalUri(String projectName) {
     final symbol = switch (this) {
       final RecordType type => type.symbol,
-      _ => element3?.name3,
+      _ => element?.name,
     };
     assert(symbol != null, 'Symbol is null for $this');
     final sourceUri = switch (this) {
       // Don't consider aliases for non-record types.
-      RecordType(:final alias) => alias?.element2.sourceLocation?.sourceUrl,
-      _ => element3?.sourceLocation?.sourceUrl,
+      RecordType(:final alias) => alias?.element.sourceLocation?.sourceUrl,
+      _ => element?.sourceLocation?.sourceUrl,
     };
     if (sourceUri == null) {
       // Anonymous record type.
@@ -583,18 +609,34 @@ extension _SubtypeResultX on SubtypeResult {
   );
 }
 
-extension InterfaceElementHelpers on InterfaceElement2 {
-  AnalysisDriver get _driver =>
-      (library2.session.analysisContext as DriverBasedAnalysisContext).driver;
+final _searchedFiles = SearchedFiles();
 
-  static final _searchedFiles = SearchedFiles();
+extension InterfaceTypeHelpers on InterfaceType {
+  AnalysisDriver get _driver =>
+      (element.library.session.analysisContext as DriverBasedAnalysisContext)
+          .driver;
+
+  /// Returns raw subtypes (expressed in terms of subtype type parameters),
+  /// preferring analyzer metadata when available.
+  Future<List<InterfaceType>> rawSubtypes() async {
+    // if (this case final ClassElementImpl classElement) {
+    //   if (classElement.allSubtypes case final allSubtypes?) {
+    //     return List<InterfaceType>.unmodifiable(allSubtypes);
+    //   }
+    //   if (classElement.isSealed) {
+    //     return List<InterfaceType>.unmodifiable(
+    //       classElement.directSubtypesOfSealed
+    //           .map((it) => it.thisType)
+    //           .toList(growable: false),
+    //     );
+    //   }
+    // }
+    return List<InterfaceType>.unmodifiable(await _collectRawSubtypes());
+  }
 
   /// Collects all subtypes of the given [type].
-  Future<List<InterfaceType>> collectSubtypes() async {
-    final subtypes = await _driver.search.subTypes(
-      thisType.element3,
-      _searchedFiles,
-    );
+  Future<List<InterfaceType>> _collectRawSubtypes() async {
+    final subtypes = await _driver.search.subTypes(element, _searchedFiles);
     return subtypes
         .where((res) {
           return switch (res.kind) {
@@ -607,9 +649,18 @@ extension InterfaceElementHelpers on InterfaceElement2 {
         })
         .map((res) => res.enclosingFragment)
         .whereType<ClassFragment>()
-        .map((res) => res.element.thisType)
+        .map(
+          (res) => Substitution.fromInterfaceType(
+            this,
+          ).mapInterfaceType(res.element.thisType),
+        )
         .toList();
   }
+}
+
+extension InterfaceElementHelpers on InterfaceElement {
+  AnalysisDriver get _driver =>
+      (library.session.analysisContext as DriverBasedAnalysisContext).driver;
 
   Stream<SearchResult> references() async* {
     final elementReferences = await _driver.search.references(
@@ -619,7 +670,7 @@ extension InterfaceElementHelpers on InterfaceElement2 {
     for (final reference in elementReferences) {
       yield reference;
     }
-    if (unnamedConstructor2 case final constructor?) {
+    if (unnamedConstructor case final constructor?) {
       final constructorReferences = await _driver.search.references(
         constructor,
         _searchedFiles,
@@ -635,7 +686,7 @@ extension RecordTypeHelper on RecordType {
   String get symbol {
     switch (alias) {
       case final alias?:
-        return alias.element2.displayName;
+        return alias.element.displayName;
       default:
         final reference = typeHelper.toReference(this) as codegen.RecordType;
         final uniqueHash = const ListEquality<Object>().hash([
@@ -655,22 +706,23 @@ extension NodeSourceLocation on AstNode {
   }
 }
 
-extension AnnotatableDocLines on Annotatable {
+extension AnnotatableDocLines on Element {
   List<String> get docLines => switch (documentationComment) {
-    final documentationComment? =>
-      LineSplitter.split(documentationComment).toList(),
+    final documentationComment? => LineSplitter.split(
+      documentationComment,
+    ).toList(),
     _ => const <String>[],
   };
 }
 
-extension Element2SourceLocation on Element2 {
+extension ElementSourceLocation on Element {
   FileSpan? get sourceLocation {
-    final source = library2?.firstFragment.source;
+    final source = library?.firstFragment.source;
     if (source == null || !source.exists()) {
       return null;
     }
-    final nameOffset = firstFragment.nameOffset2 ?? -1;
-    final nameLength = firstFragment.name2?.length ?? 0;
+    final nameOffset = firstFragment.nameOffset ?? -1;
+    final nameLength = firstFragment.name?.length ?? 0;
     if (nameOffset < 0) {
       return null;
     }
@@ -829,24 +881,24 @@ extension SafeExpand on FileSpan {
 }
 
 extension AnnotationIsPrivate on ElementAnnotation {
-  /// Whether the annotation references a private [element3].
-  bool get isPrivate => switch (element2) {
+  /// Whether the annotation references a private [element].
+  bool get isPrivate => switch (element) {
     null => false,
-    final PropertyAccessorElement2 propertyAccessor =>
-      propertyAccessor.variable3!.isPrivate,
-    final ConstructorElement2 constructor =>
-      constructor.enclosingElement2.isPrivate,
-    _ => unreachable('Unexpected annotation element: ${element2.runtimeType}'),
+    final PropertyAccessorElement propertyAccessor =>
+      propertyAccessor.variable.isPrivate,
+    final ConstructorElement constructor =>
+      constructor.enclosingElement.isPrivate,
+    _ => unreachable('Unexpected annotation element: ${element.runtimeType}'),
   };
 
   codegen.Expression? get toCodeBuilder {
     if (isPrivate) {
       return null;
     }
-    if (element2
-        case VariableElement2(:final type) ||
-            PropertyAccessorElement2(returnType: final type) ||
-            ConstructorElement2(returnType: final DartType type)
+    if (element
+        case VariableElement(:final type) ||
+            PropertyAccessorElement(returnType: final type) ||
+            ConstructorElement(returnType: final DartType type)
         when type == typeHelper.coreTypes.celestEnvType ||
             type == typeHelper.coreTypes.celestSecretType) {
       return null;
@@ -859,9 +911,9 @@ extension AnnotationIsPrivate on ElementAnnotation {
     if (type == null || type.isCelestSdk || type.isMiddleware) {
       return null;
     }
-    if (element2 case PropertyAccessorElement2(
-      name3: final name,
-      library2: final library,
+    if (element case PropertyAccessorElement(
+      name: final name,
+      library: final library,
     ) when library.isWithinProjectLib) {
       return codegen.refer(name!, library.firstFragment.source.uri.toString());
     }
@@ -872,10 +924,10 @@ extension AnnotationIsPrivate on ElementAnnotation {
     if (isPrivate) {
       return null;
     }
-    if (element2
-        case VariableElement2(:final type) ||
-            PropertyAccessorElement2(returnType: final type) ||
-            ConstructorElement2(returnType: final DartType type)
+    if (element
+        case VariableElement(:final type) ||
+            PropertyAccessorElement(returnType: final type) ||
+            ConstructorElement(returnType: final DartType type)
         when type == typeHelper.coreTypes.celestEnvType ||
             type == typeHelper.coreTypes.celestSecretType) {
       return null;
@@ -888,32 +940,15 @@ extension AnnotationIsPrivate on ElementAnnotation {
   }
 }
 
-extension FormalParameterDefaultTo on FormalParameterElement {
-  ParameterElementImpl get _impl => switch (firstFragment) {
-    final ParameterElementImpl impl => impl,
-    final FormalParameterElementImpl impl => impl.wrappedElement,
-    final unknown => unreachable('Unknown type: ${unknown.runtimeType}'),
-  };
-
-  /// The parameter's default value as a [codegen.Expression].
-  codegen.Expression? get defaultToExpression => _impl.defaultToExpression;
-
-  /// The parameter's default value as a [ast.DartValue].
-  ast.DartValue? get defaultToValue => _impl.defaultToValue;
-}
-
-// TODO(dnys1): Migrate to FormalParameterElement when constant eval is
-// implemented.
-extension ParameterDefaultTo on ParameterElementImpl {
+extension ParameterDefaultTo on FormalParameterElement {
   /// The parameter's default value as a [codegen.Expression].
   codegen.Expression? get defaultToExpression => switch (this) {
     // TODO(dnys1): File ticket with Dart team
     // Required, named, non-nullable parameters have a default value
     // of `null` for some reason.
     _ when isRequired && isNamed => null,
-    final ConstVariableElement constVar =>
+    final VariableElement constVar =>
       constVar.computeConstantValue()?.toCodeBuilder,
-    _ => null,
   };
 
   /// The parameter's default value as a [ast.DartValue].
@@ -922,9 +957,8 @@ extension ParameterDefaultTo on ParameterElementImpl {
     // Required, named, non-nullable parameters have a default value
     // of `null` for some reason.
     _ when isRequired && isNamed => null,
-    final ConstVariableElement constVar =>
+    final VariableElement constVar =>
       constVar.computeConstantValue()?.toDartValue,
-    _ => null,
   };
 }
 

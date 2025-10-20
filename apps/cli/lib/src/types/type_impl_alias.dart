@@ -41,7 +41,7 @@ final class _TypeImplAliasVisitor
     InstantiatedTypeAliasElement? alias,
   ) {
     return InterfaceTypeImpl(
-      element: type.element3 as InterfaceElementImpl2,
+      element: type.element as InterfaceElementImpl,
       typeArguments: type.typeArguments.cast(),
       nullabilitySuffix: type.nullabilitySuffix,
       alias: alias as InstantiatedTypeAliasElementImpl?,
@@ -80,7 +80,7 @@ final class _TypeImplAliasVisitor
     InstantiatedTypeAliasElement? alias,
   ) {
     return TypeParameterTypeImpl(
-      element3: type.element3 as TypeParameterElementImpl2,
+      element: type.element as TypeParameterElementImpl,
       nullabilitySuffix: type.nullabilitySuffix,
       alias: alias as InstantiatedTypeAliasElementImpl?,
     );

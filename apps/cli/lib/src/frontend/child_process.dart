@@ -59,11 +59,10 @@ final class ChildProcess {
       }
     }
 
-    final process =
-        _process = await processManager.start(
-          command,
-          environment: environment,
-        );
+    final process = _process = await processManager.start(
+      command,
+      environment: environment,
+    );
 
     // Capture stdout/stderr
     final commandName = command.first;

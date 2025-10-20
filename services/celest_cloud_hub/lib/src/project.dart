@@ -13,7 +13,7 @@ final ResolvedProject project = ResolvedProject(
   environmentId: kDebugMode ? 'local' : 'production',
   sdkConfig: SdkConfiguration(
     celest: Version(1, 0, 0),
-    dart: Sdk(type: SdkType.dart, version: Version(3, 7, 0)),
+    dart: Sdk(type: SdkType.dart, version: Version(3, 9, 0)),
   ),
   apis: {
     AuthenticationService.apiId: AuthenticationService.api,

@@ -133,9 +133,11 @@ final class EntrypointCompiler {
       toRoot: projectPaths.outputsDir,
     );
     final outputPath = p.join(p.dirname(entrypointPath), 'main.aot.dill');
-    final (target, platformDill, sdkRoot) = switch (resolvedProject
-        .sdkConfig
-        .targetSdk) {
+    final (
+      target,
+      platformDill,
+      sdkRoot,
+    ) = switch (resolvedProject.sdkConfig.targetSdk) {
       SdkType.flutter => (
         'flutter',
         Sdk.current.flutterPlatformDill!,

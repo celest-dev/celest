@@ -186,28 +186,18 @@
       "type": "DART",
       "version": {
         "major": 3,
-        "minor": 10,
-        "patch": 0,
-        "preRelease": [
-          75.0,
-          1.0,
-          "beta"
-        ],
-        "canonicalizedVersion": "3.10.0-75.1.beta"
+        "minor": 9,
+        "patch": 2,
+        "canonicalizedVersion": "3.9.2"
       }
     },
     "flutter": {
       "type": "FLUTTER",
       "version": {
         "major": 3,
-        "minor": 36,
-        "patch": 0,
-        "preRelease": [
-          0.0,
-          3.0,
-          "pre"
-        ],
-        "canonicalizedVersion": "3.36.0-0.3.pre"
+        "minor": 35,
+        "patch": 6,
+        "canonicalizedVersion": "3.35.6"
       }
     },
     "targetSdk": "DART",

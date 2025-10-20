@@ -5,11 +5,11 @@ homepage: https://celest.dev
 repository: https://github.com/celest-dev/celest/tree/main/apps/cli
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.9.0
 resolution: workspace
 
 dependencies:
-  analyzer: ^7.4.0
+  analyzer: ^8.4.0
   analyzer_plugin: ^0.13.0
   archive: ^4.0.4
   args: ^2.4.2
@@ -34,9 +34,9 @@ dependencies:
   crypto: ^3.0.3
   dart_console: ^4.1.1
   dart_style: ^3.0.0
-  dcli: ^7.0.1
-  dcli_terminal: ^7.0.1
-  drift: '>=2.27.0 <2.29.0'
+  dcli: ^8.1.1
+  dcli_terminal: ^8.0.0
+  drift: ^2.29.0
   email_validator: ^3.0.0
   ffi: ^2.1.4
   file: ^7.0.0
@@ -55,7 +55,7 @@ dependencies:
   mason_logger: ^0.3.0
   meta: ^1.10.0
   mustache_template: ^2.0.0
-  native_storage: ^0.3.0
+  native_storage: ^0.4.0
   os_detect: ^2.0.1
   package_config: ^2.1.0
   path: ^1.8.3
@@ -87,7 +87,7 @@ dependencies:
 
 dev_dependencies:
   benchmark_harness: ^2.2.2
-  build: ^3.0.0
+  build: ^4.0.1
   build_runner: ^2.7.0
   build_test: ^3.2.2
   built_value_generator: ^8.9.4
@@ -96,9 +96,9 @@ dev_dependencies:
   celest_test: ^0.1.0
   checks: ^0.3.0
   dart_jsonwebtoken: ^3.1.1
-  drift_dev: '>=2.27.0 <2.29.0'
-  gcloud: ^0.8.13
-  googleapis: ^14.0.0
+  drift_dev: ^2.29.0
+  gcloud: ^0.9.0
+  googleapis: ^15.0.0
   googleapis_auth: ^2.0.0
   jose: ^0.3.4
   json_serializable: ^6.8.0

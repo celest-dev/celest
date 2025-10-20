@@ -20,6 +20,7 @@ import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/pub/cached_pubspec.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
+import 'package:celest_cli/src/utils/recase.dart';
 import 'package:celest_cli/src/utils/run.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -130,7 +131,7 @@ final class CelestProject {
   String get packageName => 'celest_backend';
 
   /// The name of the client package.
-  String get clientPackageName => '${projectName}_client';
+  String get clientPackageName => '${projectName}_client'.snakeCase;
 
   final ProjectPaths projectPaths;
   AnalysisOptions _analysisOptions;
@@ -180,11 +181,10 @@ final class CelestProject {
   final CacheDatabase cacheDb;
 
   /// The [ProjectDatabase] for the current project.
-  ProjectDatabase get projectDb =>
-      _projectDb ??= ProjectDatabase(
-        projectRoot: projectPaths.projectRoot,
-        verbose: verbose,
-      );
+  ProjectDatabase get projectDb => _projectDb ??= ProjectDatabase(
+    projectRoot: projectPaths.projectRoot,
+    verbose: verbose,
+  );
   ProjectDatabase? _projectDb;
 
   late final _cachedPubspec = CachedPubspec(

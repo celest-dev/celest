@@ -73,8 +73,8 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
     required String environmentId,
     this.driftSchemas = const {},
   }) : configValues = {...configValues, 'CELEST_ENVIRONMENT': environmentId},
-       _resolvedProject =
-           ResolvedProjectBuilder()..environmentId = environmentId;
+       _resolvedProject = ResolvedProjectBuilder()
+         ..environmentId = environmentId;
 
   final ResolvedProjectBuilder _resolvedProject;
   late final ResolvedProject resolvedProject = run(() {

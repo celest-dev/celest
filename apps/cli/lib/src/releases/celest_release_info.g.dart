@@ -6,28 +6,24 @@ part of 'celest_release_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CelestReleasesInfo _$CelestReleasesInfoFromJson(Map<String, dynamic> json) =>
-    CelestReleasesInfo(
-      schemaVersion:
-          $enumDecodeNullable(
-            _$CelestReleaseSchemaVersionEnumMap,
-            json['schemaVersion'],
-          ) ??
-          CelestReleaseSchemaVersion.v1,
-      latest: CelestReleaseInfo.fromJson(
-        json['latest'] as Map<String, dynamic>,
-      ),
-      latestDev:
-          json['latestDev'] == null
-              ? null
-              : CelestReleaseInfo.fromJson(
-                json['latestDev'] as Map<String, dynamic>,
-              ),
-      releases: (json['releases'] as Map<String, dynamic>).map(
-        (k, e) =>
-            MapEntry(k, CelestReleaseInfo.fromJson(e as Map<String, dynamic>)),
-      ),
-    );
+CelestReleasesInfo _$CelestReleasesInfoFromJson(
+  Map<String, dynamic> json,
+) => CelestReleasesInfo(
+  schemaVersion:
+      $enumDecodeNullable(
+        _$CelestReleaseSchemaVersionEnumMap,
+        json['schemaVersion'],
+      ) ??
+      CelestReleaseSchemaVersion.v1,
+  latest: CelestReleaseInfo.fromJson(json['latest'] as Map<String, dynamic>),
+  latestDev: json['latestDev'] == null
+      ? null
+      : CelestReleaseInfo.fromJson(json['latestDev'] as Map<String, dynamic>),
+  releases: (json['releases'] as Map<String, dynamic>).map(
+    (k, e) =>
+        MapEntry(k, CelestReleaseInfo.fromJson(e as Map<String, dynamic>)),
+  ),
+);
 
 Map<String, dynamic> _$CelestReleasesInfoToJson(
   CelestReleasesInfo instance,

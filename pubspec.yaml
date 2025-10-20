@@ -18,8 +18,8 @@ workspace:
   - services/celest_cloud_core
 
 dependencies:
-  drift: '>=2.27.0 <2.29.0'
+  drift: ^2.29.0
 
 dev_dependencies:
-  drift_dev: '>=2.27.0 <2.29.0'
+  drift_dev: ^2.29.0
   melos: ^6.3.2

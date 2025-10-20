@@ -28,7 +28,7 @@ final class TokenCommand extends CelestCommand with Authenticate {
 
     if (jsonOutput) {
       final corkData = CedarCork.parse(cork);
-      stdout.write(jsonEncode(corkData.toJson()));
+      stdout.write(jsonEncode(corkData._toJson()));
     } else {
       stdout.write(cork);
     }
@@ -38,7 +38,7 @@ final class TokenCommand extends CelestCommand with Authenticate {
 }
 
 extension on CedarCork {
-  Map<String, Object?> toJson() => {
+  Map<String, Object?> _toJson() => {
     'id': TypeId.fromUuid(Uuid(id), 'cork'),
     'issuer': issuer.toString(),
     'bearer': bearer.toString(),

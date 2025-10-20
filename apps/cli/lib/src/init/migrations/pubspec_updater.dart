@@ -193,8 +193,10 @@ final class PubspecUpdater extends ProjectMigration {
     ProjectMigrationResult clientPubspecResult =
         const ProjectMigrationSuccess();
     if (!clientPubspecFile.existsSync()) {
-      clientPubspecResult =
-          await ProjectFile.client(projectRoot, projectName).create();
+      clientPubspecResult = await ProjectFile.client(
+        projectRoot,
+        projectName,
+      ).create();
     }
     final clientPubspecYaml = await clientPubspecFile.readAsString();
     final clientPubspec = Pubspec.parse(clientPubspecYaml);

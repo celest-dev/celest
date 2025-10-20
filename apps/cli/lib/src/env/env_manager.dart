@@ -9,13 +9,12 @@ import 'package:logging/logging.dart';
 import 'package:source_span/source_span.dart';
 import 'package:stream_channel/isolate_channel.dart';
 
-typedef _EnvRequest =
-    ({
-      int id,
-      String? name,
-      String? value,
-      List<(ast.Variable, String)>? variables,
-    });
+typedef _EnvRequest = ({
+  int id,
+  String? name,
+  String? value,
+  List<(ast.Variable, String)>? variables,
+});
 
 typedef EnvironmentID = String;
 
@@ -58,7 +57,10 @@ final class OverlayEnvManager implements EnvLoader {
 
   @override
   Future<OverlayEnvManager> spawn() async {
-    await (_base.spawn(), Future.value(_overlay?.spawn())).wait;
+    await _base.spawn();
+    if (_overlay case final overlay?) {
+      await overlay.spawn();
+    }
     return this;
   }
 
@@ -69,8 +71,11 @@ final class OverlayEnvManager implements EnvLoader {
 
   @override
   Future<Map<String, String>> readAll() async {
-    final (base, overlay) =
-        await (_base.readAll(), Future.value(_overlay?.readAll())).wait;
+    final base = await _base.readAll();
+    if (_overlay == null) {
+      return base;
+    }
+    final overlay = await _overlay.readAll();
     return {...base, ...overlay};
   }
 }
@@ -178,11 +183,15 @@ final class SingleEnvManager implements EnvLoader {
   @override
   Future<Map<String, String>> readAll() async {
     final variables = await this.variables;
-    final values = await Future.wait([
-      for (final envVar in variables)
-        valueFor(envVar.name).then((value) => MapEntry(envVar.name, value!)),
-    ]);
-    return Map.fromEntries(values);
+    final entries = <MapEntry<String, String>>[];
+    for (final envVar in variables) {
+      final value = await valueFor(envVar.name);
+      if (value == null) {
+        continue;
+      }
+      entries.add(MapEntry(envVar.name, value));
+    }
+    return Map.fromEntries(entries);
   }
 
   Future<void> close({bool force = false}) async {
@@ -225,19 +234,14 @@ final class _IsolatedEnvManager {
   final _changes = <String, String>{};
 
   Map<String, String> get env => _env;
-  List<(ast.Variable, String)> get variables =>
-      _env.entries
-          .map(
-            (entry) => (
-              ast.Variable(
-                entry.key,
-                dartName: null,
-                location: _spans[entry.key]!,
-              ),
-              entry.value,
-            ),
-          )
-          .toList();
+  List<(ast.Variable, String)> get variables => _env.entries
+      .map(
+        (entry) => (
+          ast.Variable(entry.key, dartName: null, location: _spans[entry.key]!),
+          entry.value,
+        ),
+      )
+      .toList();
 
   List<(ast.Variable, String)> reload() {
     final (env, spans) = _load();

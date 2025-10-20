@@ -147,10 +147,9 @@ sealed class ProjectFile extends ProjectMigration {
 
   @override
   bool get needsMigration {
-    final entity =
-        relativePath.endsWith('/')
-            ? projectDir.childDirectory
-            : projectDir.childFile;
+    final entity = relativePath.endsWith('/')
+        ? projectDir.childDirectory
+        : projectDir.childFile;
     return !entity(relativePath).existsSync();
   }
 }
@@ -261,10 +260,11 @@ final class PubspecFile extends ProjectFile {
           parentProject.pubspec.dependencies[projectPubspecName];
       if (existingDependency
           case null || PathDependency(path: != 'celest/client/')) {
-        updatedPubspec = YamlEditor(parentProject.pubspecYaml)..update(
-          ['dependencies', projectPubspecName],
-          {'path': 'celest/client/'},
-        );
+        updatedPubspec = YamlEditor(parentProject.pubspecYaml)
+          ..update(
+            ['dependencies', projectPubspecName],
+            {'path': 'celest/client/'},
+          );
       }
     }
     if (updatedPubspec != null) {
@@ -286,14 +286,13 @@ final class PubspecFile extends ProjectFile {
       description: 'The Celest backend for $projectDisplayName.',
       publishTo: 'none',
       environment: {'sdk': PubEnvironment.dartSdkConstraint},
-      dependencies:
-          {
-            ...ProjectDependency.backendDependencies,
-            ...{
-              for (final dependency in additionalDependencies)
-                dependency.name: dependency,
-            },
-          }.toPub(),
+      dependencies: {
+        ...ProjectDependency.backendDependencies,
+        ...{
+          for (final dependency in additionalDependencies)
+            dependency.name: dependency,
+        },
+      }.toPub(),
       devDependencies: ProjectDependency.devDependencies.toPub(),
       dependencyOverrides: ProjectDependency.localDependencyOverrides(
         projectRoot: projectRoot,

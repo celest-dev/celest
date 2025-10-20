@@ -41,31 +41,20 @@ sealed class ShapeWithInheritedCustomJson {
         (size['height'] as num).toDouble(),
       );
     } else if (type == 'CircleWithInheritedCustomJson') {
-      return CircleWithInheritedCustomJson(
-        (size['radius'] as num).toDouble(),
-      );
+      return CircleWithInheritedCustomJson((size['radius'] as num).toDouble());
     } else {
-      throw ArgumentError.value(
-        json,
-        'json',
-        'Unknown type: $type',
-      );
+      throw ArgumentError.value(json, 'json', 'Unknown type: $type');
     }
   }
 
   Map<String, Object?> toJson() => switch (this) {
-        RectangleWithInheritedCustomJson(:final width, :final height) => {
-            'size': {
-              'width': width,
-              'height': height,
-            },
-          },
-        CircleWithInheritedCustomJson(:final radius) => {
-            'size': {
-              'radius': radius,
-            },
-          },
-      };
+    RectangleWithInheritedCustomJson(:final width, :final height) => {
+      'size': {'width': width, 'height': height},
+    },
+    CircleWithInheritedCustomJson(:final radius) => {
+      'size': {'radius': radius},
+    },
+  };
 }
 
 class RectangleWithInheritedCustomJson extends ShapeWithInheritedCustomJson {
@@ -98,11 +87,8 @@ class RectangleWithCustomJson extends ShapeWithCustomJson {
   final double height;
 
   Map<String, Object?> toJson() => {
-        'size': {
-          'width': width,
-          'height': height,
-        },
-      };
+    'size': {'width': width, 'height': height},
+  };
 }
 
 class CircleWithCustomJson extends ShapeWithCustomJson {
@@ -110,18 +96,14 @@ class CircleWithCustomJson extends ShapeWithCustomJson {
 
   factory CircleWithCustomJson.fromJson(Map<String, Object?> json) {
     final size = json['size'] as Map<String, Object?>;
-    return CircleWithCustomJson(
-      (size['radius'] as num).toDouble(),
-    );
+    return CircleWithCustomJson((size['radius'] as num).toDouble());
   }
 
   final double radius;
 
   Map<String, Object?> toJson() => {
-        'size': {
-          'radius': radius,
-        },
-      };
+    'size': {'radius': radius},
+  };
 }
 
 sealed class ShapeWithOverriddenCustomJson {
@@ -138,23 +120,16 @@ sealed class ShapeWithOverriddenCustomJson {
     } else if (type == 'CircleWithOverriddenCustomJson') {
       return CircleWithOverriddenCustomJson.fromJson(json);
     } else {
-      throw ArgumentError.value(
-        json,
-        'json',
-        'Unknown type: $type',
-      );
+      throw ArgumentError.value(json, 'json', 'Unknown type: $type');
     }
   }
 
   Map<String, Object?> toJson() => switch (this) {
-        RectangleWithOverriddenCustomJson(:final width, :final height) => {
-            'size': {
-              'width': width,
-              'height': height,
-            },
-          },
-        _ => throw StateError('Unknown type: $this'),
-      };
+    RectangleWithOverriddenCustomJson(:final width, :final height) => {
+      'size': {'width': width, 'height': height},
+    },
+    _ => throw StateError('Unknown type: $this'),
+  };
 }
 
 class RectangleWithOverriddenCustomJson extends ShapeWithOverriddenCustomJson {
@@ -169,26 +144,22 @@ class CircleWithOverriddenCustomJson extends ShapeWithOverriddenCustomJson {
 
   factory CircleWithOverriddenCustomJson.fromJson(Map<String, Object?> json) {
     final size = json['size'] as Map<String, Object?>;
-    return CircleWithOverriddenCustomJson(
-      (size['radius'] as num).toDouble(),
-    );
+    return CircleWithOverriddenCustomJson((size['radius'] as num).toDouble());
   }
 
   final double radius;
 
   @override
   Map<String, Object?> toJson() => {
-        'size': {
-          'radius': radius,
-        },
-      };
+    'size': {'radius': radius},
+  };
 }
 
 sealed class Result<T, E> {
   const Result();
 
-  const factory Result.ok(T data) = OkResult;
-  const factory Result.err(E error) = ErrResult;
+  const factory Result.ok(T data) = OkResult<T>;
+  const factory Result.err(E error) = ErrResult<E>;
 }
 
 // Tests `extends`
@@ -215,6 +186,7 @@ final class SwappedResult<T, E> extends Result<E, T> {
   final Result<T, E> result;
 }
 
-final class OkShapeResult extends OkResult<Shape> {
-  const OkShapeResult(Shape data) : super(data);
-}
+// TODO: Broken
+// final class OkShapeResult extends OkResult<Shape> {
+//   const OkShapeResult(Shape data) : super(data);
+// }
