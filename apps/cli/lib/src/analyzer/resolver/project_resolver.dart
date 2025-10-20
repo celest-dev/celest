@@ -339,16 +339,65 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
   }
 
   /// Collects the environment variables of the project.
-
   Future<Set<ast.Variable>> resolveVariables() async {
-    // TODO(dnys1): Check reserved names
-    // TODO(dnys1): Check for conflict with secrets
     return _envVariableResolver.resolve();
   }
 
   /// Collects the secrets of the project.
   Future<Set<ast.Secret>> resolveSecrets() async {
     return _secretResolver.resolve();
+  }
+
+  static const Set<String> _reservedVariableNames = {'PORT'};
+  static const String _reservedPrefix = 'CELEST_';
+
+  void validateConfigurationValues({
+    required Iterable<ast.Variable> variables,
+    required Iterable<ast.Secret> secrets,
+  }) {
+    final secretsByName = {for (final secret in secrets) secret.name: secret};
+
+    final reportedReserved = <String>{};
+    final reportedSecretReserved = <String>{};
+    final reportedConflicts = <String>{};
+
+    for (final variable in variables) {
+      final name = variable.name;
+      final isReserved =
+          _reservedVariableNames.contains(name) ||
+          name.startsWith(_reservedPrefix);
+      if (isReserved && reportedReserved.add(name)) {
+        reportError(
+          'The environment variable name `$name` is reserved by Celest',
+          location: variable.location,
+        );
+      }
+
+      if (secretsByName.containsKey(name) && reportedConflicts.add(name)) {
+        final conflictingSecret = secretsByName[name]!;
+        reportError(
+          'The environment variable name `$name` conflicts with a secret of the same name.',
+          location: variable.location,
+        );
+        reportError(
+          'The secret name `$name` conflicts with an environment variable of the same name.',
+          location: conflictingSecret.location,
+        );
+      }
+    }
+
+    for (final secret in secrets) {
+      final name = secret.name;
+      final isReserved =
+          _reservedVariableNames.contains(name) ||
+          name.startsWith(_reservedPrefix);
+      if (isReserved && reportedSecretReserved.add(name)) {
+        reportError(
+          'The secret name `$name` is reserved by Celest',
+          location: secret.location,
+        );
+      }
+    }
   }
 
   /// Collects the Celest Auth component of the project.
@@ -689,7 +738,6 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       reportError('Could not resolve annotation', location: location);
       return null;
     }
-    const reservedEnvVars = ['PORT'];
     switch (annotationType) {
       case DartType(isVariable: true):
         // Check for migration
@@ -736,17 +784,6 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
           );
           return null;
         }
-        final reservedCelestVariableOutsideCelest =
-            name.toUpperCase().startsWith('CELEST_') &&
-            !(annotation.element?.library?.isCelestSdk ?? false);
-        if (reservedEnvVars.contains(name) ||
-            reservedCelestVariableOutsideCelest) {
-          reportError(
-            'The environment variable name `$name` is reserved by Celest',
-            location: parameter.sourceLocation,
-          );
-          return null;
-        }
         if (variables.none((envVar) => envVar.name == name)) {
           reportError(
             'The environment variable `$name` does not exist',
@@ -772,17 +809,6 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
           reportError(
             'The `name` field is required for secrets',
             location: location,
-          );
-          return null;
-        }
-        final reservedCelestVariableOutsideCelest =
-            name.toUpperCase().startsWith('CELEST_') &&
-            !(annotation.element?.library?.isCelestSdk ?? false);
-        if (reservedEnvVars.contains(name) ||
-            reservedCelestVariableOutsideCelest) {
-          reportError(
-            'The secret name `$name` is reserved by Celest',
-            location: parameter.sourceLocation,
           );
           return null;
         }

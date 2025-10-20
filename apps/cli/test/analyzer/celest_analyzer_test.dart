@@ -2397,6 +2397,22 @@ void sayHello(@env('PORT') int port) => 'Hello, $port';
       );
 
       testErrors(
+        name: 'env_secret_conflict',
+        projectDart: '''
+import 'package:celest/celest.dart';
+
+const sharedEnv = env('SHARED_CONFIG');
+const sharedSecret = secret('SHARED_CONFIG');
+
+const project = Project(name: 'conflict_project');
+''',
+        errors: [
+          'The environment variable name `SHARED_CONFIG` conflicts with a secret of the same name.',
+          'The secret name `SHARED_CONFIG` conflicts with an environment variable of the same name.',
+        ],
+      );
+
+      testErrors(
         name: 'multiple_env_applications',
         config: {
           '.env.local': '''

@@ -369,6 +369,13 @@ const project = Project(name: 'cache_warmup');
       ),
     );
 
+    // Reserved name and collision validation happens once all config values
+    // have been collected so we can compare across variable/secret sets.
+    resolver.validateConfigurationValues(
+      variables: variables,
+      secrets: secrets,
+    );
+
     final hasCloudAuth = auth?.providers.isNotEmpty ?? false;
     final databases = await performance.trace(
       'CelestAnalyzer',
