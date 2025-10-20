@@ -426,11 +426,18 @@ extension DartTypeHelper on DartType {
   }
 
   /// Whether this type is overridden by a custom `@override` extension type.
-  bool get isOverridden =>
-      typeHelper.overrides.containsKey(extensionTypeErasure);
+  bool get isOverridden {
+    final erasure = extensionTypeErasure;
+    return erasure is InterfaceType && typeHelper.hasOverride(erasure);
+  }
 
-  DartType get asOverriden =>
-      typeHelper.overrides[extensionTypeErasure] ?? this;
+  DartType get asOverriden {
+    final erasure = extensionTypeErasure;
+    if (erasure is InterfaceType) {
+      return typeHelper.overrideFor(erasure) ?? this;
+    }
+    return this;
+  }
 
   codegen.Expression? get typeToken {
     if (isOverridden) {
@@ -497,6 +504,25 @@ extension DartTypeHelper on DartType {
 
   /// Cache for [hasAllowedSubtypes].
   static final _hasAllowedSubtypesCache = <DartType, SubtypeResult>{};
+  static final _hasAllowedSubtypesEquality = const DartTypeEquality(
+    ignoreNullability: true,
+  );
+
+  static void clearHasAllowedSubtypesCacheFor(Iterable<DartType> types) {
+    if (types.isEmpty) {
+      return;
+    }
+    final candidates = types.toList(growable: false);
+    _hasAllowedSubtypesCache.removeWhere((key, _) {
+      for (final candidate in candidates) {
+        if (_hasAllowedSubtypesEquality.equals(candidate, key)) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
   static final _logger = Logger('DartTypeHelper');
 
   /// Ensures custom types (e.g. those defined in the current project), have

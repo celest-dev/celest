@@ -315,6 +315,10 @@ final class TypeHelper {
 
   static final _instance = TypeHelper._();
 
+  static const DartTypeEquality _typeEquality = DartTypeEquality();
+  static const DartTypeEquality _typeEqualityIgnoreNullability =
+      DartTypeEquality(ignoreNullability: true);
+
   TypeSystem? _typeSystem;
   TypeSystem get typeSystem {
     if (_typeSystem == null) {
@@ -362,16 +366,27 @@ final class TypeHelper {
 
   // TODO(dnys1): File ticket with Dart team around hashcode/equality of DartType
   final _dartTypeToReference = HashMap<DartType, codegen.Reference>(
-    equals: const DartTypeEquality().equals,
-    hashCode: const DartTypeEquality().hash,
+    equals: _typeEquality.equals,
+    hashCode: _typeEquality.hash,
   );
   final _referenceToDartType = <codegen.Reference, DartType>{};
   final _wireTypeToDartType = <String, DartType>{};
   final serializationVerdicts = HashMap<DartType, Verdict>(
-    equals: const DartTypeEquality().equals,
-    hashCode: const DartTypeEquality().hash,
+    equals: _typeEquality.equals,
+    hashCode: _typeEquality.hash,
   );
-  // final _customSerializers = <SerializationSpec, codegen.Class>{};
+
+  final Map<InterfaceElement, List<InterfaceType>> subtypes = Map.identity();
+
+  /// Maps 3p types to their extension type overrides.
+  final Map<InterfaceType, InterfaceType> _overrides = HashMap(
+    equals: _typeEqualityIgnoreNullability.equals,
+    hashCode: _typeEqualityIgnoreNullability.hash,
+  );
+
+  Map<InterfaceType, InterfaceType> get overrides => _overrides;
+
+  final Map<String, _TypeCacheBucket> _pathBuckets = {};
 
   // TODO(dnys1): Test types that are only referred to in nested fields/parameters
   /// ^^^^
@@ -386,21 +401,22 @@ final class TypeHelper {
         (b) => b.url = 'dart:io',
       );
     }
-    _dartTypeToReference[type] ??= reference;
-    _referenceToDartType[reference] ??= type;
-    _referenceToDartType[reference.toTypeReference] ??= type;
-    // Perform for nullable version of [type] so that subsequent
-    // nullable/non-nullable promotions which require [fromReference] succeed.
+    _dartTypeToReference[type] = reference;
+    _trackDartType(type);
+    _cacheReference(type, reference, storedType: type);
     if (!reference.isNullableOrFalse) {
-      _referenceToDartType[reference.withNullability(
-        true,
-      )] ??= (type as TypeImpl)
+      final nullableType = (type as TypeImpl)
           .withNullability(NullabilitySuffix.question)
           .withAlias(type.alias);
-      _referenceToDartType[reference.withNullability(false)] ??= type;
+      _cacheReference(
+        type,
+        reference.withNullability(true),
+        storedType: nullableType,
+      );
+      _cacheReference(type, reference.withNullability(false), storedType: type);
     }
     if (toUri(type) case final wireType?) {
-      _wireTypeToDartType[wireType] ??= type;
+      _cacheWireType(type, wireType);
     }
     return reference;
   }
@@ -445,7 +461,11 @@ final class TypeHelper {
   ///   all fields present. For these classes, we generate custom serialization
   ///   code.
   Verdict isSerializable(DartType type) {
-    final verdict = serializationVerdicts[type] ??= runZoned(
+    final existing = serializationVerdicts[type];
+    if (existing != null) {
+      return existing;
+    }
+    final verdict = runZoned(
       () => type.asOverriden.accept(const IsSerializable()),
       zoneValues: {
         _seenKey:
@@ -482,6 +502,8 @@ final class TypeHelper {
       return true;
     }(), 'isSerializable($type) returned an invalid verdict');
 
+    serializationVerdicts[type] = verdict;
+    _trackSerializationType(type);
     return verdict;
   }
 
@@ -501,14 +523,6 @@ final class TypeHelper {
     return const Iterable.empty();
   }
 
-  final Map<InterfaceElement, List<InterfaceType>> subtypes = Map.identity();
-
-  /// Maps 3p types to their extension type overrides.
-  final Map<InterfaceType, InterfaceType> overrides = HashMap(
-    equals: const DartTypeEquality(ignoreNullability: true).equals,
-    hashCode: const DartTypeEquality(ignoreNullability: true).hash,
-  );
-
   /// Hydrate the caches with built-in types.
   void init() {
     for (final builtInType in builtInTypeToReference.keys) {
@@ -519,14 +533,263 @@ final class TypeHelper {
 
   /// Reset all caches.
   void reset() {
+    final clearedTypes =
+        HashSet<DartType>(
+            equals: const DartTypeEquality().equals,
+            hashCode: const DartTypeEquality().hash,
+          )
+          ..addAll(_dartTypeToReference.keys)
+          ..addAll(serializationVerdicts.keys)
+          ..addAll(subtypes.values.expand((types) => types))
+          ..addAll(_overrides.values);
+    DartTypeHelper.clearHasAllowedSubtypesCacheFor(clearedTypes);
     _dartTypeToReference.clear();
     _referenceToDartType.clear();
     _wireTypeToDartType.clear();
     serializationVerdicts.clear();
     subtypes.clear();
-    overrides.clear();
+    _overrides.clear();
+    _pathBuckets.clear();
     init();
   }
+
+  List<InterfaceType> cacheSubtypes(
+    InterfaceElement element,
+    List<InterfaceType> computed,
+  ) {
+    subtypes[element] = computed;
+    _trackSubtypeKey(element);
+    for (final subtype in computed) {
+      _trackSubtypeValue(element, subtype);
+    }
+    return computed;
+  }
+
+  bool hasOverride(InterfaceType type) => _overrides.containsKey(type);
+
+  InterfaceType? overrideFor(InterfaceType type) => _overrides[type];
+
+  void setOverride(InterfaceType base, InterfaceType implementation) {
+    _overrides[base] = implementation;
+    _trackOverride(implementation);
+  }
+
+  void clearOverrides() {
+    _overrides.clear();
+    for (final bucket in _pathBuckets.values) {
+      bucket.overrideImplementations.clear();
+    }
+  }
+
+  void invalidatePaths(Iterable<String> paths) {
+    final canonicalPaths = <String>{
+      for (final path in paths)
+        if (path.isNotEmpty) p.canonicalize(path),
+    };
+    if (canonicalPaths.isEmpty) {
+      return;
+    }
+    final removedTypes = HashSet<DartType>(
+      equals: const DartTypeEquality().equals,
+      hashCode: const DartTypeEquality().hash,
+    );
+    for (final path in canonicalPaths) {
+      final bucket = _pathBuckets.remove(path);
+      if (bucket == null) {
+        continue;
+      }
+      for (final type in bucket.referenceTypes) {
+        if (_dartTypeToReference.remove(type) != null) {
+          removedTypes.add(type);
+        }
+      }
+      for (final reference in bucket.references) {
+        _referenceToDartType.remove(reference);
+      }
+      for (final wireType in bucket.wireTypes) {
+        _wireTypeToDartType.remove(wireType);
+      }
+      for (final type in bucket.serializationTypes) {
+        if (serializationVerdicts.remove(type) != null) {
+          removedTypes.add(type);
+        }
+      }
+      for (final element in bucket.subtypeKeys) {
+        final removed = subtypes.remove(element);
+        if (removed != null) {
+          removedTypes.addAll(removed);
+        }
+      }
+      bucket.subtypesByElement.forEach((element, trackedSubtypes) {
+        final existing = subtypes[element];
+        if (existing == null) {
+          return;
+        }
+        existing.removeWhere(
+          (candidate) => trackedSubtypes.any(
+            (tracked) => const DartTypeEquality().equals(candidate, tracked),
+          ),
+        );
+        if (existing.isEmpty) {
+          subtypes.remove(element);
+        }
+      });
+      if (bucket.overrideImplementations.isNotEmpty) {
+        _overrides.removeWhere(
+          (_, implementation) => bucket.overrideImplementations.any(
+            (tracked) => const DartTypeEquality(
+              ignoreNullability: true,
+            ).equals(implementation, tracked),
+          ),
+        );
+      }
+    }
+    if (removedTypes.isNotEmpty) {
+      DartTypeHelper.clearHasAllowedSubtypesCacheFor(removedTypes);
+    }
+  }
+
+  void _cacheReference(
+    DartType owner,
+    codegen.Reference reference, {
+    required DartType storedType,
+  }) {
+    _referenceToDartType.putIfAbsent(reference, () => storedType);
+    _trackReference(owner, reference);
+    _trackDartType(storedType);
+  }
+
+  void _cacheWireType(DartType type, String wireType) {
+    _wireTypeToDartType.putIfAbsent(wireType, () => type);
+    _trackWireType(type, wireType);
+  }
+
+  void _trackDartType(DartType type) {
+    final path = _pathForType(type);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).referenceTypes.add(type);
+  }
+
+  void _trackReference(DartType owner, codegen.Reference reference) {
+    final path = _pathForType(owner);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).references.add(reference);
+  }
+
+  void _trackWireType(DartType type, String wireType) {
+    final path = _pathForType(type);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).wireTypes.add(wireType);
+  }
+
+  void _trackSerializationType(DartType type) {
+    final path = _pathForType(type);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).serializationTypes.add(type);
+  }
+
+  void _trackSubtypeKey(InterfaceElement element) {
+    final path = _pathForElement(element);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).subtypeKeys.add(element);
+  }
+
+  void _trackSubtypeValue(InterfaceElement host, InterfaceType subtype) {
+    final path = _pathForType(subtype);
+    if (path == null) {
+      return;
+    }
+    final bucket = _bucketFor(path);
+    final trackedSubtypes = bucket.subtypesByElement.putIfAbsent(
+      host,
+      () => HashSet<InterfaceType>(
+        equals: _typeEquality.equals,
+        hashCode: _typeEquality.hash,
+      ),
+    );
+    trackedSubtypes.add(subtype);
+    _trackDartType(subtype);
+  }
+
+  void _trackOverride(InterfaceType implementation) {
+    final path = _pathForType(implementation);
+    if (path == null) {
+      return;
+    }
+    _bucketFor(path).overrideImplementations.add(implementation);
+  }
+
+  _TypeCacheBucket _bucketFor(String path) =>
+      _pathBuckets.putIfAbsent(path, _TypeCacheBucket.new);
+
+  String? _pathForType(DartType type) {
+    if (type is InterfaceType) {
+      return _pathForElement(type.element);
+    }
+    if (type is RecordType) {
+      return switch (type.alias) {
+        final alias? => _pathForElement(alias.element),
+        _ => null,
+      };
+    }
+    if (type is TypeParameterType) {
+      return _pathForElement(type.element);
+    }
+    if (type is FunctionType) {
+      return _pathForElement(type.element ?? type.alias?.element);
+    }
+    return _pathForElement(type.element);
+  }
+
+  String? _pathForElement(Element? element) {
+    if (element == null) {
+      return null;
+    }
+    final fragment = element.firstFragment.libraryFragment;
+    final source = fragment?.source ?? element.library?.firstFragment.source;
+    final fullName = source?.fullName;
+    if (fullName == null) {
+      return null;
+    }
+    final canonical = p.canonicalize(fullName);
+    return _shouldTrackPath(canonical) ? canonical : null;
+  }
+
+  bool _shouldTrackPath(String path) {
+    final root = p.canonicalize(projectPaths.projectRoot);
+    return p.isWithin(root, path);
+  }
+}
+
+class _TypeCacheBucket {
+  _TypeCacheBucket();
+
+  final Set<DartType> referenceTypes = HashSet<DartType>(
+    equals: TypeHelper._typeEquality.equals,
+    hashCode: TypeHelper._typeEquality.hash,
+  );
+  final Set<DartType> serializationTypes = HashSet<DartType>(
+    equals: TypeHelper._typeEquality.equals,
+    hashCode: TypeHelper._typeEquality.hash,
+  );
+  final Set<codegen.Reference> references = <codegen.Reference>{};
+  final Set<String> wireTypes = <String>{};
+  final Set<InterfaceElement> subtypeKeys = <InterfaceElement>{};
+  final Map<InterfaceElement, Set<InterfaceType>> subtypesByElement = {};
+  final Set<InterfaceType> overrideImplementations = HashSet<InterfaceType>(
+    equals: TypeHelper._typeEqualityIgnoreNullability.equals,
+    hashCode: TypeHelper._typeEqualityIgnoreNullability.hash,
+  );
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {

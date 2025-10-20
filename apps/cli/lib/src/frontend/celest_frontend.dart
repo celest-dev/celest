@@ -229,11 +229,7 @@ final class CelestFrontend with CloudRepository {
 
         try {
           logger.finest('Reloading with watcher events');
-
-          // TODO(dnys1): Improve cache invalidation to only invalidate
-          // necessary types.
-          typeHelper.reset();
-          _changedPaths = await _invalidateAllProjectFiles();
+          _changedPaths = await _invalidateChangedPaths(changedPaths);
           reloadComplete.complete();
         } on Object catch (e, st) {
           reloadComplete.completeError(e, st);
@@ -265,10 +261,26 @@ final class CelestFrontend with CloudRepository {
     await _cancelPendingOperations();
   }
 
-  // TODO(dnys1): There is a marked difference in behavior when invalidating
-  // just the changed paths, vs invalidating all project files. To be
-  // safe, we invalidate all files on every reload. This is not ideal, but
-  // it's the safest option for now.
+  /// Invalidates the TypeHelper and analyzer state for the provided paths.
+  Future<Set<String>> _invalidateChangedPaths(Set<String> paths) async {
+    if (paths.isEmpty) {
+      logger.finest('No changed paths to invalidate.');
+      return const <String>{};
+    }
+    final reloadablePaths = {
+      for (final path in paths)
+        if (_isReloadablePath(path)) path,
+    };
+    if (reloadablePaths.isEmpty) {
+      logger.finest('No reloadable paths detected in change set.');
+      return const <String>{};
+    }
+    logger.finest('Invalidating paths: $reloadablePaths');
+    typeHelper.invalidatePaths(reloadablePaths);
+    final changed = await celestProject.invalidate(reloadablePaths);
+    return {...reloadablePaths, ...changed};
+  }
+
   Future<Set<String>> _invalidateAllProjectFiles() async {
     final allProjectFiles = await fileSystem
         .directory(projectPaths.projectRoot)
