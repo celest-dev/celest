@@ -10,6 +10,7 @@ import 'package:celest_cli/src/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:file/memory.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
@@ -140,6 +141,23 @@ void main() {
         () => LocalApiRunner.deleteLegacyConfigFile(outputsDir),
         returnsNormally,
       );
+    });
+  });
+
+  group('levelForVmLogValue', () {
+    test('returns matching level when recognised', () {
+      expect(
+        LocalApiRunner.levelForVmLogValue(Level.WARNING.value),
+        Level.WARNING,
+      );
+    });
+
+    test('defaults to INFO for unknown positive values', () {
+      expect(LocalApiRunner.levelForVmLogValue(4242), Level.INFO);
+    });
+
+    test('defaults to FINE when level is null', () {
+      expect(LocalApiRunner.levelForVmLogValue(null), Level.FINE);
     });
   });
 }

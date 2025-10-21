@@ -9,7 +9,6 @@ import 'package:celest_cli/src/process/port_finder.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
 import 'package:celest_cli/src/utils/process.dart';
-import 'package:celest_cli/src/utils/run.dart';
 import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -320,6 +319,23 @@ final class LocalApiRunner {
     r'Connect to the Dart VM service at ([^\s]+) to debug.',
   );
 
+  /// Maps VM service log level integers to [Level] instances. When the VM
+  /// reports an unrecognised value, the method logs the occurrence and falls
+  /// back to [Level.INFO] for positive values to keep log streaming resilient.
+  @visibleForTesting
+  static Level levelForVmLogValue(int? level) {
+    if (level == null) {
+      return Level.FINE;
+    }
+    for (final candidate in Level.LEVELS) {
+      if (candidate.value == level) {
+        return candidate;
+      }
+    }
+    _logger.finer('Unknown VM log level "$level"; defaulting to INFO.');
+    return level >= Level.INFO.value ? Level.INFO : Level.FINE;
+  }
+
   /// Waits for the main Isolate to be available, resume it, then return its ID.
   static Future<void> _waitForIsolatesAndResume(VmService vmService) async {
     var vm = await vmService.getVM();
@@ -468,11 +484,7 @@ final class LocalApiRunner {
         final loggerName =
             record.loggerName?.valueAsString ?? defaultLoggerName;
         final logger = Logger(loggerName);
-        final level =
-            record.level?.let(
-              (level) => Level.LEVELS.firstWhere((l) => l.value == level),
-            ) ??
-            Level.FINE;
+        final level = levelForVmLogValue(record.level);
         if (!logger.isLoggable(level)) {
           return;
         }
