@@ -96,7 +96,6 @@ Future<CelestProject> newProject({
     packageConfigJson,
     p.toUri(p.join(d.sandbox, name)),
   );
-  print(packageConfigJson.toString());
   final project = d.dir(name, [
     d.dir('.dart_tool', [
       d.file('package_config.json', packageConfigJson.toString()),
@@ -277,9 +276,6 @@ void testErrors({
       warnings: actualWarnings,
     ) = await analyzer
         .analyzeProject();
-    for (final error in actualErrors) {
-      print(error);
-    }
     expect(
       actualErrors.map((e) => e.toString()),
       unorderedEquals(
@@ -515,6 +511,22 @@ SwappedResult<Shape, String> swappedResult(Result<Shape, String> result) =>
       ''',
         errors: ['The project name cannot be empty.'],
       );
+
+      test('ignores missing generated imports', () async {
+        celestProject = await newProject(
+          name: 'project_missing_generated',
+          projectDart: '''
+import 'package:celest/celest.dart';
+import 'package:project_missing_generated/src/generated/missing.dart';
+
+const project = Project(name: 'project_missing_generated');
+''',
+        );
+        final analyzer = CelestAnalyzer();
+        final result = await analyzer.analyzeProject();
+        expect(result, isA<AnalysisSuccessResult>());
+        expect(analyzer.errors, isEmpty);
+      });
     });
 
     group('apis', () {

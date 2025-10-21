@@ -130,18 +130,35 @@ const project = Project(name: 'cache_warmup');
       case CompileTimeErrorCode.uriDoesNotExist:
         final regex = RegExp(r'''Target of URI doesn't exist: '(.+?)'\.''');
         final match = regex.firstMatch(error.message);
-        final uri = match?.group(1);
-        if (uri == null) {
+        final uriString = match?.group(1);
+        if (uriString == null) {
           return false;
         }
-        final path = context.currentSession.uriConverter.uriToPath(
-          Uri.parse(uri),
-        );
-        if (path == null) {
-          _logger.fine('Failed to convert URI to path: $uri');
-          return false;
-        }
-        return p.isWithin(projectPaths.generatedDir, path);
+        final uri = Uri.parse(uriString);
+        final resolvedPath = context.currentSession.uriConverter.uriToPath(uri);
+        final isInGeneratedDir =
+            resolvedPath != null &&
+            p.isWithin(projectPaths.generatedDir, resolvedPath);
+        final pathSegments = uri.pathSegments;
+        final normalizedSegments =
+            uri.scheme == 'package' && pathSegments.isNotEmpty
+            ? pathSegments.sublist(1)
+            : pathSegments;
+        final hasGeneratedPrefix =
+            normalizedSegments.isNotEmpty &&
+            (normalizedSegments.first == 'generated' ||
+                (normalizedSegments.length >= 2 &&
+                    normalizedSegments[0] == 'src' &&
+                    normalizedSegments[1] == 'generated'));
+        final isGeneratedPackageUri =
+            uri.scheme == 'package' && hasGeneratedPrefix;
+        final isGeneratedRelativeUri =
+            uri.scheme.isEmpty &&
+            (uri.path.startsWith('generated/') ||
+                uri.path.startsWith('src/generated/'));
+        return isInGeneratedDir ||
+            isGeneratedPackageUri ||
+            isGeneratedRelativeUri;
     }
 
     return false;
@@ -191,6 +208,9 @@ const project = Project(name: 'cache_warmup');
 
   @override
   void onDiagnostic(Diagnostic error) {
+    if (_missingCodegenError(error)) {
+      return;
+    }
     final severity = _severityFrom(error.severity);
     final message = _formatDiagnosticMessage(error);
     final location = _spanForDiagnostic(error);
@@ -470,16 +490,19 @@ const project = Project(name: 'cache_warmup');
       reportError('Failed to parse project.dart file');
       return null;
     }
-    final projectErrors = projectLibrary.units
+    final projectDiagnostics = projectLibrary.units
         .expand((unit) => unit.diagnostics)
         .where((error) => error.severity == Severity.error)
         .toList();
+    final projectErrors = <Diagnostic>[];
+    for (final diagnostic in projectDiagnostics) {
+      if (_missingCodegenError(diagnostic)) {
+        continue;
+      }
+      projectErrors.add(diagnostic);
+    }
     if (projectErrors.isNotEmpty) {
       for (final projectError in projectErrors) {
-        _logger.finest(
-          'ERROR (project.dart): type=${projectError.diagnosticCode.type} '
-          'name=${projectError.diagnosticCode.name}',
-        );
         reportError(
           projectError.message,
           location: projectError.source.toSpan(
@@ -491,19 +514,7 @@ const project = Project(name: 'cache_warmup');
       }
       return null;
     }
-    _logger.finer('Resolved project file');
-    // TODO(dnys1): Some errors are okay, for example if generated files haven't
-    // been updated yet and references a resource that doesn't exist yet.
-    // if (projectFile.errors.isNotEmpty) {
-    //   reportError(
-    //     'Project file has errors:\n${projectFile.errors.join('\n')}',
-    //     SourceLocation(
-    //       path: projectFileRelativePath,
-    //       line: 0,
-    //       column: 0,
-    //     ),
-    //   );
-    // }
+    _logger.finer('Resolving project...');
     return resolver.resolveProject(
       projectLibrary: projectLibrary,
       environmentId: environmentId,
@@ -596,11 +607,18 @@ const project = Project(name: 'cache_warmup');
           .where((it) => fileSystem.file(it).existsSync())
           .map(resolveLibrary),
     );
-    final authErrors = authLibraries
+    final authDiagnostics = authLibraries
         .expand((library) => library.units)
         .expand((unit) => unit.diagnostics)
         .where((error) => error.severity == Severity.error)
         .toList();
+    final authErrors = <Diagnostic>[];
+    for (final diagnostic in authDiagnostics) {
+      if (_missingCodegenError(diagnostic)) {
+        continue;
+      }
+      authErrors.add(diagnostic);
+    }
     if (authErrors.isNotEmpty) {
       for (final authError in authErrors) {
         reportError(
@@ -694,6 +712,7 @@ const project = Project(name: 'cache_warmup');
     final end = length != null && length > 0 ? offset + length : null;
     try {
       return source.toSpan(offset, end);
+      // ignore: avoid_catching_errors
     } on RangeError catch (error, stackTrace) {
       _logger.finer(
         'Failed to compute diagnostic span for ${source.fullName}',
