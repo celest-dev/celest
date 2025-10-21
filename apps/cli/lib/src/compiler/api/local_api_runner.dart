@@ -8,9 +8,9 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/process/port_finder.dart';
 import 'package:celest_cli/src/sdk/dart_sdk.dart';
 import 'package:celest_cli/src/utils/error.dart';
-import 'package:celest_cli/src/utils/json.dart';
 import 'package:celest_cli/src/utils/process.dart';
 import 'package:celest_cli/src/utils/run.dart';
+import 'package:file/file.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:vm_service/vm_service.dart';
@@ -225,22 +225,18 @@ final class LocalApiRunner {
 
     port = await portFinder.checkOrUpdatePort(port, excluding: [vmServicePort]);
     _logger.finer('Starting local API on port $port...');
-    final celestConfig = prettyPrintJson(
-      resolvedProject.toProto().toProto3Json(),
-    );
-    await fileSystem
-        .directory(projectPaths.outputsDir)
-        .childFile('celest.json')
-        .writeAsString(celestConfig);
+    final outputsDir = fileSystem.directory(projectPaths.outputsDir);
+    deleteLegacyConfigFile(outputsDir);
+    final celestConfig = encodeResolvedProject(resolvedProject);
+    final environment = <String, String>{...configValues}
+      ..remove('CELEST_CONFIG')
+      ..['PORT'] = platform.environment['PORT'] ?? '$port'
+      ..['CELEST_ENVIRONMENT'] = environmentId
+      ..['CELEST_CONFIG_JSON'] = celestConfig;
     final localApiProcess = await processManager.start(
       command,
       workingDirectory: projectPaths.outputsDir,
-      environment: {
-        ...configValues,
-        // The HTTP port to serve Celest on.
-        'PORT': platform.environment['PORT'] ?? '$port',
-        'CELEST_ENVIRONMENT': environmentId,
-      },
+      environment: environment,
     );
 
     final runner = LocalApiRunner._(
@@ -288,6 +284,32 @@ final class LocalApiRunner {
     runner._stdoutSub = Stream<String>.empty().listen((_) {});
     runner._stderrSub = Stream<String>.empty().listen((_) {});
     return runner;
+  }
+
+  /// Encodes the resolved project into a compact JSON string suitable for
+  /// transporting via environment variables.
+  @visibleForTesting
+  static String encodeResolvedProject(ast.ResolvedProject project) {
+    return jsonEncode(project.toProto().toProto3Json());
+  }
+
+  /// Removes the legacy `celest.json` file from the provided outputs
+  /// directory, ignoring errors while logging them for troubleshooting.
+  @visibleForTesting
+  static void deleteLegacyConfigFile(Directory outputsDirectory) {
+    final legacyConfig = outputsDirectory.childFile('celest.json');
+    if (!legacyConfig.existsSync()) {
+      return;
+    }
+    try {
+      legacyConfig.deleteSync();
+    } on Object catch (error, stackTrace) {
+      _logger.finer(
+        'Failed to delete legacy celest.json at ${legacyConfig.path}',
+        error,
+        stackTrace,
+      );
+    }
   }
 
   static final _vmServicePattern = RegExp(

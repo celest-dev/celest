@@ -4,11 +4,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:async/async.dart';
+import 'package:celest_ast/celest_ast.dart' as ast;
 import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/project/project_paths.dart';
+import 'package:file/memory.dart';
 import 'package:path/path.dart' as p;
+import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -99,6 +102,44 @@ void main() {
       );
       expect(client.acceptCount, 0);
       expect(client.rejectCount, 1);
+    });
+  });
+
+  group('configuration helpers', () {
+    test('encodeResolvedProject produces equivalent JSON map', () {
+      final project = ast.ResolvedProject(
+        projectId: 'proj',
+        environmentId: 'local',
+        sdkConfig: ast.SdkConfiguration(
+          celest: Version(1, 0, 0),
+          dart: ast.Sdk(type: ast.SdkType.dart, version: Version(3, 5, 0)),
+        ),
+      );
+
+      final json = LocalApiRunner.encodeResolvedProject(project);
+
+      expect(jsonDecode(json), equals(project.toProto().toProto3Json()));
+    });
+
+    test('deleteLegacyConfigFile removes celest.json when present', () {
+      final fs = MemoryFileSystem();
+      final outputsDir = fs.directory('/outputs')..createSync(recursive: true);
+      final configFile = outputsDir.childFile('celest.json')
+        ..writeAsStringSync('secret');
+
+      LocalApiRunner.deleteLegacyConfigFile(outputsDir);
+
+      expect(configFile.existsSync(), isFalse);
+    });
+
+    test('deleteLegacyConfigFile is tolerant when file missing', () {
+      final fs = MemoryFileSystem();
+      final outputsDir = fs.directory('/outputs')..createSync(recursive: true);
+
+      expect(
+        () => LocalApiRunner.deleteLegacyConfigFile(outputsDir),
+        returnsNormally,
+      );
     });
   });
 }
