@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:celest_cli/src/compiler/api/local_api_runner.dart';
 import 'package:celest_cli/src/compiler/frontend_server_client.dart';
 import 'package:celest_cli/src/context.dart';
@@ -38,6 +41,7 @@ void main() {
         reloadHook: (isolateId, rootLibUri) async {
           reloads.add('$isolateId::$rootLibUri');
         },
+        localApiProcess: _NoopProcess(),
       );
 
       await runner.hotReload([
@@ -62,7 +66,8 @@ void main() {
       final runner = LocalApiRunner.testing(
         client: client,
         isolateIds: const ['isolate-1'],
-        reloadHook: (_, __) async {},
+        reloadHook: (_, _) async {},
+        localApiProcess: _NoopProcess(),
       );
 
       await expectLater(
@@ -82,7 +87,8 @@ void main() {
       final runner = LocalApiRunner.testing(
         client: client,
         isolateIds: const ['isolate-1'],
-        reloadHook: (_, __) async => throw StateError('reload failed'),
+        reloadHook: (_, _) async => throw StateError('reload failed'),
+        localApiProcess: _NoopProcess(),
       );
 
       await expectLater(
@@ -156,4 +162,56 @@ class FakeFrontendServerClient implements FrontendServerClient {
     required int line,
     required String moduleName,
   }) => throw UnimplementedError();
+}
+
+class _NoopIOSink extends NullStreamSink<List<int>> implements IOSink {
+  @override
+  Encoding encoding = SystemEncoding();
+
+  @override
+  Future<void> flush() async {
+    // No-op
+  }
+
+  @override
+  void write(Object? object) {
+    // No-op
+  }
+
+  @override
+  void writeAll(Iterable<dynamic> objects, [String separator = '']) {
+    // No-op
+  }
+
+  @override
+  void writeCharCode(int charCode) {
+    // No-op
+  }
+
+  @override
+  void writeln([Object? object = '']) {
+    // No-op
+  }
+}
+
+class _NoopProcess implements Process {
+  _NoopProcess();
+
+  @override
+  IOSink get stdin => _NoopIOSink();
+
+  @override
+  Stream<List<int>> get stdout => const Stream<List<int>>.empty();
+
+  @override
+  Stream<List<int>> get stderr => const Stream<List<int>>.empty();
+
+  @override
+  Future<int> get exitCode => Future.value(0);
+
+  @override
+  int get pid => 0;
+
+  @override
+  bool kill([ProcessSignal signal = ProcessSignal.sigterm]) => true;
 }

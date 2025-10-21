@@ -273,16 +273,17 @@ final class LocalApiRunner {
     bool verbose = false,
     String path = '',
     int port = 0,
+    required Process localApiProcess,
   }) {
     final runner = LocalApiRunner._(
       path: path,
       verbose: verbose,
       port: port,
       client: client,
-      localApiProcess: _NoopProcess(),
+      localApiProcess: localApiProcess,
     );
     runner.isolateIdsProvider = () async => List<String>.from(isolateIds);
-    runner.reloadSourcesHook = reloadHook ?? (_, __) async {};
+    runner.reloadSourcesHook = reloadHook ?? (_, _) async {};
     runner._vmService = null;
     runner._stdoutSub = Stream<String>.empty().listen((_) {});
     runner._stderrSub = Stream<String>.empty().listen((_) {});
@@ -611,30 +612,6 @@ final class LocalApiRunner {
     ]);
     _logger.finer('Shut down local API.');
   }
-}
-
-class _NoopProcess implements Process {
-  _NoopProcess();
-
-  final _stdinController = StreamController<List<int>>();
-
-  @override
-  IOSink get stdin => IOSink(_stdinController.sink);
-
-  @override
-  Stream<List<int>> get stdout => const Stream<List<int>>.empty();
-
-  @override
-  Stream<List<int>> get stderr => const Stream<List<int>>.empty();
-
-  @override
-  Future<int> get exitCode => Future.value(0);
-
-  @override
-  int get pid => 0;
-
-  @override
-  bool kill([ProcessSignal signal = ProcessSignal.sigterm]) => true;
 }
 
 final class CompilationException implements Exception {
