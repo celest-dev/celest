@@ -4,13 +4,23 @@
 })
 library;
 
-import 'dart:io' show Platform;
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io'
+    show
+        IOSink,
+        Platform,
+        Process,
+        ProcessResult,
+        ProcessSignal,
+        ProcessStartMode;
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
 import 'package:celest_cli/src/pub/pub_action.dart';
 import 'package:celest_cli/src/sdk/versions.dart';
 import 'package:file/file.dart';
+import 'package:process/process.dart';
 import 'package:test/test.dart';
 
 import '../common.dart';
@@ -24,7 +34,7 @@ void main() {
       expect(res.exitCode, 0);
     });
 
-    final matrix = [
+    final List<(PubAction, String)> matrix = [
       (PubAction.get, 'flutter'),
       (PubAction.get, Platform.resolvedExecutable),
       (PubAction.upgrade, 'flutter'),
@@ -130,5 +140,148 @@ dependencies:
         });
       });
     }
+
+    group('timeouts', () {
+      late ProcessManager originalProcessManager;
+
+      setUp(() {
+        originalProcessManager = processManager;
+      });
+
+      tearDown(() {
+        processManager = originalProcessManager;
+      });
+
+      test('exits when command does not complete in time', () async {
+        final fakeProcess = _FakeProcess();
+        final fakeManager = _FakeProcessManager(() => fakeProcess);
+        processManager = fakeManager;
+
+        final tempDir = fileSystem.systemTempDirectory.createTempSync(
+          'celest_cli_timeout_test',
+        );
+        addTearDown(() {
+          try {
+            tempDir.deleteSync(recursive: true);
+          } catch (_) {}
+        });
+        tempDir
+            .childFile('pubspec.yaml')
+            .writeAsStringSync('name: timeout_test');
+
+        await expectLater(
+          runPub(
+            exe: Platform.resolvedExecutable,
+            action: PubAction.get,
+            workingDirectory: tempDir.path,
+            timeout: const Duration(milliseconds: 100),
+          ),
+          throwsA(
+            isA<CliException>().having(
+              (error) => error.toString(),
+              'message',
+              contains('Timed out waiting for `pub get`.'),
+            ),
+          ),
+        );
+
+        expect(fakeProcess.wasKilled, isTrue);
+        expect(
+          fakeManager.recordedCommands.single,
+          equals([Platform.resolvedExecutable, 'pub', 'get']),
+        );
+      });
+    });
   });
+}
+
+class _FakeProcessManager implements ProcessManager {
+  _FakeProcessManager(this._processFactory);
+
+  final Process Function() _processFactory;
+  final List<List<String>> recordedCommands = [];
+
+  @override
+  Future<Process> start(
+    List<Object> command, {
+    String? workingDirectory,
+    Map<String, String>? environment,
+    bool runInShell = false,
+    bool includeParentEnvironment = true,
+    ProcessStartMode mode = ProcessStartMode.normal,
+  }) async {
+    recordedCommands.add(command.map((value) => value.toString()).toList());
+    return _processFactory();
+  }
+
+  @override
+  bool canRun(dynamic executable, {String? workingDirectory}) => true;
+
+  @override
+  Future<ProcessResult> run(
+    List<Object> command, {
+    String? workingDirectory,
+    Map<String, String>? environment,
+    bool includeParentEnvironment = true,
+    bool runInShell = false,
+    Encoding? stdoutEncoding,
+    Encoding? stderrEncoding,
+  }) => throw UnimplementedError();
+
+  @override
+  ProcessResult runSync(
+    List<Object> command, {
+    String? workingDirectory,
+    Map<String, String>? environment,
+    bool includeParentEnvironment = true,
+    bool runInShell = false,
+    Encoding? stdoutEncoding,
+    Encoding? stderrEncoding,
+  }) => throw UnimplementedError();
+
+  @override
+  bool killPid(int pid, [ProcessSignal signal = ProcessSignal.sigterm]) =>
+      false;
+}
+
+class _FakeProcess implements Process {
+  _FakeProcess();
+
+  final _stdoutController = StreamController<List<int>>.broadcast();
+  final _stderrController = StreamController<List<int>>.broadcast();
+  final _stdinController = StreamController<List<int>>();
+  late final IOSink _stdinSink = IOSink(_stdinController.sink);
+  final _exitCodeCompleter = Completer<int>();
+  bool _wasKilled = false;
+
+  bool get wasKilled => _wasKilled;
+
+  @override
+  IOSink get stdin => _stdinSink;
+
+  @override
+  Stream<List<int>> get stdout => _stdoutController.stream;
+
+  @override
+  Stream<List<int>> get stderr => _stderrController.stream;
+
+  @override
+  int get pid => 1;
+
+  @override
+  Future<int> get exitCode => _exitCodeCompleter.future;
+
+  @override
+  bool kill([ProcessSignal signal = ProcessSignal.sigterm]) {
+    if (_exitCodeCompleter.isCompleted) {
+      return false;
+    }
+    _wasKilled = true;
+    _stdinSink.close();
+    _stdoutController.close();
+    _stderrController.close();
+    _stdinController.close();
+    _exitCodeCompleter.complete(255);
+    return true;
+  }
 }

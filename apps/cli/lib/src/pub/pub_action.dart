@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/exceptions.dart';
@@ -51,6 +52,7 @@ Future<void> runPub({
   required PubAction action,
   required String workingDirectory,
   @visibleForTesting bool verbose = false,
+  Duration timeout = const Duration(minutes: 5),
 }) async {
   exe ??= kDebugMode
       ? Sdk.current.dart
@@ -74,15 +76,30 @@ Future<void> runPub({
     workingDirectory: workingDirectory,
   );
 
-  // TODO(dnys1): Remove when fixed in pub https://github.com/dart-lang/sdk/issues/55289
-  // and we can rely on the exit code taking a reasonable amount of time.
-
-  // TODO(dnys1): Add timeout which can happen when device is connected
-  // to internet but not reachable.
-
   // Must be sync so that completer only completes once before `finally` block
   // cancels subscription.
   final completer = Completer<void>.sync();
+
+  // Give the command a bounded amount of time so we do not hang indefinitely
+  // when the network is technically connected but unreachable.
+  Timer? timeoutTimer;
+  if (timeout != Duration.zero) {
+    timeoutTimer = Timer(timeout, () {
+      if (completer.isCompleted) {
+        return;
+      }
+      final message =
+          'Timed out waiting for `pub ${action.name}`. Please verify your '
+          'network connectivity or run `$exe pub ${action.name}` manually in '
+          '$workingDirectory.';
+      logger.warning(
+        'Terminating `${command.join(' ')}` after waiting ${timeout.inSeconds}s',
+      );
+      process.kill(ProcessSignal.sigterm);
+      completer.completeError(CliException(message));
+    });
+  }
+
   final stdout = process.stdout.lines.listen((line) {
     logger.finest('stdout: $line');
     if (action.matcher.hasMatch(line)) {
@@ -138,6 +155,7 @@ Future<void> runPub({
     // await dumpPackageConfig();
     rethrow;
   } finally {
+    timeoutTimer?.cancel();
     unawaited(stdout.cancel());
     unawaited(stderr.cancel());
   }
