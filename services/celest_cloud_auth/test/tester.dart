@@ -19,6 +19,7 @@ import 'package:celest_cloud_auth/src/util/typeid.dart';
 import 'package:celest_core/_internal.dart';
 import 'package:checks/checks.dart';
 import 'package:corks_cedar/corks_cedar.dart';
+import 'package:file/file.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
@@ -30,11 +31,14 @@ export 'checks.dart';
 const roleAdmin = EntityUid.of('Celest::Role', 'admin');
 const roleAuthenticated = EntityUid.of('Celest::Role', 'authenticated');
 const roleAnonymous = EntityUid.of('Celest::Role', 'anonymous');
+const roleEditor = EntityUid.of('Celest::Role', 'editor');
+const roleViewer = EntityUid.of('Celest::Role', 'viewer');
 
 // Users
 const userAlice = EntityUid.of('Celest::User', 'alice');
 const userBob = EntityUid.of('Celest::User', 'bob');
 const userCharlie = EntityUid.of('Celest::User', 'charlie');
+const userDiana = EntityUid.of('Celest::User', 'diana');
 
 // Actions
 const actionCreate = EntityUid.of('Celest::Action', 'create');
@@ -145,6 +149,7 @@ final class AuthorizationTester {
     Entity(uid: userAlice, parents: [roleAdmin]),
     Entity(uid: userBob, parents: [roleAuthenticated]),
     Entity(uid: userCharlie, parents: [roleAnonymous]),
+    Entity(uid: userDiana, parents: [roleViewer]),
   ];
 
   final ResolvedProject project;
@@ -152,6 +157,7 @@ final class AuthorizationTester {
   final bool persistData;
 
   late CelestCloudAuth _authService;
+  Directory? _activePersistDirectory;
 
   AuthenticationService get authenticationService =>
       _authService.authenticationService;
@@ -204,31 +210,35 @@ final class AuthorizationTester {
   Otp? lastSentCode;
 
   Future<void> start() async {
+    final rootContext = Context.root;
+    final captureEmailProvider = EmailOtpProvider(
+      (otp) async => lastSentCode = otp,
+    );
+    rootContext
+      ..setLocal(ContextKey.project, project)
+      ..setLocal(ContextKey.environment, Environment(project.environmentId))
+      ..setLocal(env.environment, 'local')
+      ..setLocal(contextKeyEmailOtpProvider, captureEmailProvider);
+
     final initCompleter = Completer<void>();
     _service = await serve(
       targets: {},
       config: project,
       port: 0,
       setup: (context) async {
-        context.put(env.environment, 'local');
-        context.put(
-          contextKeyEmailOtpProvider,
-          EmailOtpProvider((otp) async => lastSentCode = otp),
-        );
-        context.put(ContextKey.project, project);
-
         CloudAuthDatabase db;
         if (persistData) {
-          final directory = context.fileSystem.currentDirectory
-              .childDirectory('.dart_tool')
-              .childDirectory('celest');
-          if (directory.existsSync()) {
-            directory.deleteSync(recursive: true);
-          }
-          directory.createSync();
-          db = CloudAuthDatabase.localDir(directory, verbose: true);
+          _activePersistDirectory = context.fileSystem.systemTempDirectory
+              .createTempSync('celest_cloud_auth_test_');
+          final directory = _activePersistDirectory!;
+          db = CloudAuthDatabase.localDir(
+            directory,
+            project: project,
+            verbose: true,
+          );
         } else {
-          db = CloudAuthDatabase.memory(verbose: true);
+          _activePersistDirectory = null;
+          db = CloudAuthDatabase.memory(project: project, verbose: true);
         }
         _authService = await CelestCloudAuth.test(db: db);
 
@@ -250,6 +260,16 @@ final class AuthorizationTester {
       lastSentCode = null;
       await _service.close();
       await _authService.close();
+      final directory = _activePersistDirectory;
+      if (directory != null) {
+        try {
+          await directory.delete(recursive: true);
+        } on Object {
+          // Ignored: best-effort cleanup of the temp database directory.
+        } finally {
+          _activePersistDirectory = null;
+        }
+      }
     });
 
     t.setUp(start);

@@ -1,3 +1,4 @@
+import 'package:cedar/cedar.dart';
 import 'package:celest_cloud/celest_cloud.dart' as pb;
 import 'package:celest_cloud_auth/src/context.dart';
 import 'package:celest_cloud_auth/src/model/interop.dart';
@@ -35,15 +36,15 @@ void main() {
         );
 
         await tester.httpTest(cork: cork, {
-          // Passes authorization since we have a valid cork but fails since we
-          // have no record of the user in the DB.
-          route: expectStatus(404),
+          // Denied at authorization because anonymous principals cannot invoke
+          // user endpoints.
+          route: expectStatus(403),
         });
 
         final cloud = tester.cloud(cork: cork);
         await check(
           cloud.users.get('users/$userId'),
-        ).throws<NotFoundException>();
+        ).throws<PermissionDeniedException>();
       });
 
       test('authenticated', () async {
@@ -239,8 +240,6 @@ void main() {
           );
 
           await tester.httpTest(cork: cork, query: request, {
-            // Passes authorization but fails authentication since we have no
-            // record of the user in the DB.
             route: expectStatus(403),
           });
 
@@ -295,6 +294,26 @@ void main() {
                   ..has((it) => it.users, 'users').length.equals(1)
                   ..has((it) => it.users.first.userId, 'userId').equals(userId),
           );
+        });
+
+        test('admin request includes API container resource', () async {
+          const guardPolicy = '''
+@id("test.list.resource.guard")
+forbid (
+    principal in Celest::Role::"admin",
+    action == Celest::Action::"list",
+    resource
+) unless { resource == Celest::Api::"celest.cloud.auth.v1alpha1.Users" };
+''';
+          await tester.db.upsertPolicySet(PolicySet.parse(guardPolicy));
+
+          final (user, cork) = await tester.createUser(
+            roles: const [roleAdmin],
+          );
+
+          await tester.httpTest(cork: cork, query: request, {
+            route: expectStatus(200),
+          });
         });
       });
     });
@@ -377,8 +396,6 @@ void main() {
           );
 
           await tester.httpTest(cork: cork, body: request, {
-            // Passes authorization but fails authentication since we have no
-            // record of the user in the DB.
             selfRoute: expectStatus(403),
           });
 
@@ -536,7 +553,7 @@ void main() {
             roles: const [roleAnonymous],
           );
 
-          await tester.httpTest(cork: cork, {selfRoute: expectStatus(200)});
+          await tester.httpTest(cork: cork, {selfRoute: expectStatus(403)});
         });
 
         test('anonymous (cloud)', () async {
@@ -546,7 +563,9 @@ void main() {
           );
 
           final cloud = tester.cloud(cork: cork);
-          await check(cloud.users.delete('users/$userId')).completes();
+          await check(
+            cloud.users.delete('users/$userId'),
+          ).throws<PermissionDeniedException>();
         });
 
         test('authenticated', () async {

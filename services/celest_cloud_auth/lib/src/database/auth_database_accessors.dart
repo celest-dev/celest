@@ -1,4 +1,3 @@
-import 'package:async/async.dart';
 import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
@@ -177,9 +176,17 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
       uid: CelestRole.authenticated,
       parents: [CelestRole.anonymous],
     ),
+    CelestRole.viewer: const Entity(
+      uid: CelestRole.viewer,
+      parents: [CelestRole.authenticated],
+    ),
+    CelestRole.editor: const Entity(
+      uid: CelestRole.editor,
+      parents: [CelestRole.viewer],
+    ),
     CelestRole.admin: const Entity(
       uid: CelestRole.admin,
-      parents: [CelestRole.authenticated],
+      parents: [CelestRole.editor],
     ),
     CelestRole.owner: const Entity(
       uid: CelestRole.owner,
@@ -454,13 +461,11 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     return result;
   }
 
-  final _effectivePolicySetCache = AsyncCache<PolicySet>(
-    const Duration(hours: 1),
-  );
+  late final _PolicySetCache _policySetCache = _PolicySetCache(db);
 
   /// The effective [PolicySet] for the project.
   Future<PolicySet> get effectivePolicySet {
-    return _effectivePolicySetCache.fetch(loadEffectivePolicySet);
+    return _policySetCache.fetch(loadEffectivePolicySet);
   }
 
   /// Loads the effective policy set from the database.
@@ -722,7 +727,7 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
         );
       }
     });
-    _effectivePolicySetCache.invalidate();
+    _policySetCache.invalidate();
   }
 
   /// Creates a new [entity] in the database.
@@ -898,6 +903,55 @@ class CloudAuthDatabaseAccessors extends DatabaseAccessor<GeneratedDatabase>
     return cloudAuthUsersDrift
         .lookupUserByPhone(phoneNumber: phoneNumber)
         .getSingleOrNull();
+  }
+}
+
+final class _PolicySetCache {
+  _PolicySetCache(this._db);
+
+  final GeneratedDatabase _db;
+
+  PolicySet? _cached;
+  int? _dataVersion;
+  Future<PolicySet>? _pending;
+
+  Future<PolicySet> fetch(Future<PolicySet> Function() loader) async {
+    final version = await _readDataVersion();
+    final cached = _cached;
+    if (cached != null && _dataVersion == version) {
+      return cached;
+    }
+
+    _pending ??= _reload(loader);
+    return _pending!;
+  }
+
+  Future<PolicySet> _reload(Future<PolicySet> Function() loader) async {
+    try {
+      while (true) {
+        final before = await _readDataVersion();
+        final loaded = await loader();
+        final after = await _readDataVersion();
+        if (before == after) {
+          _cached = loaded;
+          _dataVersion = after;
+          return loaded;
+        }
+      }
+    } finally {
+      _pending = null;
+    }
+  }
+
+  void invalidate() {
+    _cached = null;
+    _dataVersion = null;
+    _pending = null;
+  }
+
+  Future<int> _readDataVersion() async {
+    final row = await _db.customSelect('PRAGMA data_version').getSingle();
+    return row.data.values.single as int;
   }
 }
 

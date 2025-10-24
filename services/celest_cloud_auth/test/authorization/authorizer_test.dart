@@ -3,6 +3,7 @@ import 'package:cedar/cedar.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_cloud_auth/src/authorization/authorizer.dart';
 import 'package:celest_cloud_auth/src/database/auth_database.dart';
+import 'package:celest_cloud_auth/src/users/users_repository.dart';
 import 'package:logging/logging.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
@@ -13,11 +14,14 @@ import '../tester.dart';
 const roleAdmin = EntityUid.of('Celest::Role', 'admin');
 const roleAuthenticated = EntityUid.of('Celest::Role', 'authenticated');
 const roleAnonymous = EntityUid.of('Celest::Role', 'anonymous');
+const roleEditor = EntityUid.of('Celest::Role', 'editor');
+const roleViewer = EntityUid.of('Celest::Role', 'viewer');
 
 // Users
 const userAlice = EntityUid.of('Celest::User', 'alice');
 const userBob = EntityUid.of('Celest::User', 'bob');
 const userCharlie = EntityUid.of('Celest::User', 'charlie');
+const userDiana = EntityUid.of('Celest::User', 'diana');
 
 // Actions
 const actionCreate = EntityUid.of('Celest::Action', 'create');
@@ -54,7 +58,7 @@ Policy forbidUnless(
 );
 
 void main() {
-  Logger.root.level = Level.ALL;
+  Logger.root.level = Level.WARNING;
   Logger.root.onRecord.listen((record) {
     print('${record.level.name}: ${record.message}');
   });
@@ -62,6 +66,39 @@ void main() {
   group('Authorizer', () {
     late CloudAuthDatabase db;
     late Authorizer authorizer;
+
+    group('core roles', () {
+      late CloudAuthDatabase roleDb;
+      late UsersRepository users;
+
+      setUp(() async {
+        roleDb = CloudAuthDatabase.memory(project: defaultProject);
+        await roleDb.ping();
+        users = UsersRepository(db: roleDb);
+      });
+
+      tearDown(() async {
+        await roleDb.close();
+      });
+
+      test('viewer and editor roles are assignable', () async {
+        final anonymous = await users.createAnonymousUser();
+
+        await roleDb.cloudAuth.setUserRoles(
+          userId: anonymous.userId,
+          roles: const [roleViewer],
+        );
+        var updated = await roleDb.cloudAuth.getUser(userId: anonymous.userId);
+        expect(updated!.roles, contains(roleViewer));
+
+        await roleDb.cloudAuth.setUserRoles(
+          userId: anonymous.userId,
+          roles: const [roleEditor],
+        );
+        updated = await roleDb.cloudAuth.getUser(userId: anonymous.userId);
+        expect(updated!.roles, contains(roleEditor));
+      });
+    });
 
     Future<void> createEntities(List<Entity> entities) async {
       for (final entity in entities) {
@@ -116,6 +153,7 @@ void main() {
         Entity(uid: userAlice, parents: [roleAdmin]),
         Entity(uid: userBob, parents: [roleAuthenticated]),
         Entity(uid: userCharlie, parents: [roleAnonymous]),
+        Entity(uid: userDiana, parents: [roleViewer]),
         Entity(uid: functionAuthenticated, parents: [apiTest]),
         Entity(uid: functionAdmin, parents: [apiTest]),
         Entity(uid: functionPublic, parents: [apiTest]),
@@ -198,6 +236,33 @@ void main() {
             action: actionInvoke,
             resource: functionPublic,
             principal: userBob,
+          ),
+          expected: Decision.allow,
+        ),
+        (
+          description: 'viewer can invoke admin function via viewer policy',
+          request: AuthorizationRequest(
+            action: actionInvoke,
+            resource: functionAdmin,
+            principal: userDiana,
+          ),
+          expected: Decision.allow,
+        ),
+        (
+          description: 'viewer can invoke authenticated function',
+          request: AuthorizationRequest(
+            action: actionInvoke,
+            resource: functionAuthenticated,
+            principal: userDiana,
+          ),
+          expected: Decision.allow,
+        ),
+        (
+          description: 'viewer can invoke public function',
+          request: AuthorizationRequest(
+            action: actionInvoke,
+            resource: functionPublic,
+            principal: userDiana,
           ),
           expected: Decision.allow,
         ),

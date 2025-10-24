@@ -127,7 +127,7 @@ extension type UsersService._(_Deps _deps) implements Object {
     policySet: PolicySet(
       templateLinks: [
         TemplateLink(
-          templateId: 'cloud.functions.anonymous',
+          templateId: 'cloud.functions.authenticated',
           newId: apiId,
           values: {SlotId.resource: apiUid},
         ),
@@ -254,6 +254,7 @@ extension type UsersService._(_Deps _deps) implements Object {
     final principal = context.get(ContextKey.principal);
     await _authorizer.expectAuthorized(
       principal: principal?.uid,
+      resource: UsersService.apiUid,
       action: CelestAction.list,
     );
     final response = await listUsers(
