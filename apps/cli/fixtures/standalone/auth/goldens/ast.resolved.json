@@ -560,7 +560,7 @@
         "templates": {},
         "templateLinks": [
           {
-            "templateId": "cloud.functions.anonymous",
+            "templateId": "cloud.functions.authenticated",
             "newId": "celest.cloud.auth.v1alpha1.Users",
             "values": {
               "?resource": "Celest::Api::\"celest.cloud.auth.v1alpha1.Users\""
@@ -626,7 +626,7 @@
   ],
   "secrets": [],
   "databases": {
-    "CloudAuthDatabase": {
+    "cloudAuth": {
       "databaseId": "CloudAuthDatabase",
       "schema": {
         "$": "ResolvedDriftDatabaseSchema",

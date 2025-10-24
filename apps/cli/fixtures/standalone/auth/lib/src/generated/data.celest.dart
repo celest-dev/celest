@@ -5,7 +5,9 @@
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/src/core/context.dart' as _$celest;
+import 'package:celest/src/runtime/data/database_registry.dart' as _$celest;
 import 'package:celest_cloud_auth/src/database/auth_database.dart' as _$celest;
+import 'package:drift/src/runtime/api/runtime_api.dart' as _$drift_runtime_api;
 
 /// The data services for the Celest backend.
 ///
@@ -21,4 +23,22 @@ class CelestData {
   /// The context key for the [cloudAuth] instance.
   static _$celest.ContextKey<_$celest.CloudAuthDatabase> get cloudAuth$Key =>
       const _$celest.ContextKey('CloudAuthDatabase');
+
+  /// All database connections registered in the current Celest context.
+  List<_$drift_runtime_api.GeneratedDatabase> list() =>
+      _$celest.CelestDatabaseRegistry.of(_$celest.Context.current).list();
+
+  /// Returns the database connection registered under [name].
+  ///
+  /// The lookup matches either the Dart variable name or the database identifier.
+  _$drift_runtime_api.GeneratedDatabase byName(String name) =>
+      _$celest.CelestDatabaseRegistry.of(_$celest.Context.current).byName(name);
+
+  /// Returns the database connection registered under [name], if any.
+  ///
+  /// The lookup matches either the Dart variable name or the database identifier.
+  _$drift_runtime_api.GeneratedDatabase? maybeByName(String name) =>
+      _$celest.CelestDatabaseRegistry.of(
+        _$celest.Context.current,
+      ).maybeByName(name);
 }

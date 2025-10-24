@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:celest_core/celest_core.dart' as _$celest;
+import 'package:celest_core/src/auth/user.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
@@ -254,6 +255,14 @@ void initSerializers({_$celest.Serializers? serializers}) {
         serialize: ($value) => <String, Object?>{r'message': $value.message},
         deserialize: ($serialized) {
           return IsolateSpawnException(($serialized[r'message'] as String));
+        },
+      ),
+    );
+    _$celest.Serializers.instance.put(
+      _$celest.Serializer.define<_$celest.User, Map<String, Object?>>(
+        serialize: ($value) => $value.toJson(),
+        deserialize: ($serialized) {
+          return _$celest.User.fromJson($serialized);
         },
       ),
     );

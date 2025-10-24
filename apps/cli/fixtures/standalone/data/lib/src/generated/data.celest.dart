@@ -5,7 +5,10 @@
 library; // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:celest/src/core/context.dart' as _$celest;
+import 'package:celest/src/runtime/data/database_registry.dart' as _$celest;
+import 'package:celest_backend/src/database/log_database.dart';
 import 'package:celest_backend/src/database/task_database.dart';
+import 'package:drift/src/runtime/api/runtime_api.dart' as _$drift_runtime_api;
 
 /// The data services for the Celest backend.
 ///
@@ -20,4 +23,30 @@ class CelestData {
   /// The context key for the [database] instance.
   static _$celest.ContextKey<TaskDatabase> get database$Key =>
       const _$celest.ContextKey('TaskDatabase');
+
+  /// The `LogDatabase` instance for this project.
+  LogDatabase get logsDatabase =>
+      _$celest.Context.current.expect(logsDatabase$Key);
+
+  /// The context key for the [logsDatabase] instance.
+  static _$celest.ContextKey<LogDatabase> get logsDatabase$Key =>
+      const _$celest.ContextKey('LogDatabase');
+
+  /// All database connections registered in the current Celest context.
+  List<_$drift_runtime_api.GeneratedDatabase> list() =>
+      _$celest.CelestDatabaseRegistry.of(_$celest.Context.current).list();
+
+  /// Returns the database connection registered under [name].
+  ///
+  /// The lookup matches either the Dart variable name or the database identifier.
+  _$drift_runtime_api.GeneratedDatabase byName(String name) =>
+      _$celest.CelestDatabaseRegistry.of(_$celest.Context.current).byName(name);
+
+  /// Returns the database connection registered under [name], if any.
+  ///
+  /// The lookup matches either the Dart variable name or the database identifier.
+  _$drift_runtime_api.GeneratedDatabase? maybeByName(String name) =>
+      _$celest.CelestDatabaseRegistry.of(
+        _$celest.Context.current,
+      ).maybeByName(name);
 }

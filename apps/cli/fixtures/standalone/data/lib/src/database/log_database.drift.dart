@@ -10,29 +10,27 @@ import 'package:celest_cloud_auth/src/database/schema/cloud_auth_meta.drift.dart
     as i4;
 import 'package:celest_cloud_auth/src/database/schema/cloud_auth_core.drift.dart'
     as i5;
-import 'package:celest_backend/src/database/task_database.drift.dart' as i6;
+import 'package:celest_backend/src/database/log_database.drift.dart' as i6;
 import 'package:drift/internal/modular.dart' as i7;
-import 'package:celest_backend/src/database/task_database.dart' as i8;
+import 'package:celest_backend/src/database/log_database.dart' as i8;
 import 'package:drift/src/runtime/query_builder/query_builder.dart' as i9;
 
-typedef $$TasksTableCreateCompanionBuilder =
-    i6.TasksCompanion Function({
+typedef $$LogsTableCreateCompanionBuilder =
+    i6.LogsCompanion Function({
       i0.Value<int> id,
-      required String title,
-      required i8.Priority priority,
-      i0.Value<bool> completed,
+      required String message,
+      i0.Value<DateTime> createdAt,
     });
-typedef $$TasksTableUpdateCompanionBuilder =
-    i6.TasksCompanion Function({
+typedef $$LogsTableUpdateCompanionBuilder =
+    i6.LogsCompanion Function({
       i0.Value<int> id,
-      i0.Value<String> title,
-      i0.Value<i8.Priority> priority,
-      i0.Value<bool> completed,
+      i0.Value<String> message,
+      i0.Value<DateTime> createdAt,
     });
 
-class $$TasksTableFilterComposer
-    extends i0.Composer<i0.GeneratedDatabase, i6.$TasksTable> {
-  $$TasksTableFilterComposer({
+class $$LogsTableFilterComposer
+    extends i0.Composer<i0.GeneratedDatabase, i6.$LogsTable> {
+  $$LogsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -44,26 +42,20 @@ class $$TasksTableFilterComposer
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnFilters<String> get title => $composableBuilder(
-    column: $table.title,
+  i0.ColumnFilters<String> get message => $composableBuilder(
+    column: $table.message,
     builder: (column) => i0.ColumnFilters(column),
   );
 
-  i0.ColumnWithTypeConverterFilters<i8.Priority, i8.Priority, String>
-  get priority => $composableBuilder(
-    column: $table.priority,
-    builder: (column) => i0.ColumnWithTypeConverterFilters(column),
-  );
-
-  i0.ColumnFilters<bool> get completed => $composableBuilder(
-    column: $table.completed,
+  i0.ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => i0.ColumnFilters(column),
   );
 }
 
-class $$TasksTableOrderingComposer
-    extends i0.Composer<i0.GeneratedDatabase, i6.$TasksTable> {
-  $$TasksTableOrderingComposer({
+class $$LogsTableOrderingComposer
+    extends i0.Composer<i0.GeneratedDatabase, i6.$LogsTable> {
+  $$LogsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -75,25 +67,20 @@ class $$TasksTableOrderingComposer
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get title => $composableBuilder(
-    column: $table.title,
+  i0.ColumnOrderings<String> get message => $composableBuilder(
+    column: $table.message,
     builder: (column) => i0.ColumnOrderings(column),
   );
 
-  i0.ColumnOrderings<String> get priority => $composableBuilder(
-    column: $table.priority,
-    builder: (column) => i0.ColumnOrderings(column),
-  );
-
-  i0.ColumnOrderings<bool> get completed => $composableBuilder(
-    column: $table.completed,
+  i0.ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => i0.ColumnOrderings(column),
   );
 }
 
-class $$TasksTableAnnotationComposer
-    extends i0.Composer<i0.GeneratedDatabase, i6.$TasksTable> {
-  $$TasksTableAnnotationComposer({
+class $$LogsTableAnnotationComposer
+    extends i0.Composer<i0.GeneratedDatabase, i6.$LogsTable> {
+  $$LogsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -103,68 +90,61 @@ class $$TasksTableAnnotationComposer
   i0.GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  i0.GeneratedColumn<String> get title =>
-      $composableBuilder(column: $table.title, builder: (column) => column);
+  i0.GeneratedColumn<String> get message =>
+      $composableBuilder(column: $table.message, builder: (column) => column);
 
-  i0.GeneratedColumnWithTypeConverter<i8.Priority, String> get priority =>
-      $composableBuilder(column: $table.priority, builder: (column) => column);
-
-  i0.GeneratedColumn<bool> get completed =>
-      $composableBuilder(column: $table.completed, builder: (column) => column);
+  i0.GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 }
 
-class $$TasksTableTableManager
+class $$LogsTableTableManager
     extends
         i0.RootTableManager<
           i0.GeneratedDatabase,
-          i6.$TasksTable,
-          i6.Task,
-          i6.$$TasksTableFilterComposer,
-          i6.$$TasksTableOrderingComposer,
-          i6.$$TasksTableAnnotationComposer,
-          $$TasksTableCreateCompanionBuilder,
-          $$TasksTableUpdateCompanionBuilder,
+          i6.$LogsTable,
+          i6.Log,
+          i6.$$LogsTableFilterComposer,
+          i6.$$LogsTableOrderingComposer,
+          i6.$$LogsTableAnnotationComposer,
+          $$LogsTableCreateCompanionBuilder,
+          $$LogsTableUpdateCompanionBuilder,
           (
-            i6.Task,
-            i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>,
+            i6.Log,
+            i0.BaseReferences<i0.GeneratedDatabase, i6.$LogsTable, i6.Log>,
           ),
-          i6.Task,
+          i6.Log,
           i0.PrefetchHooks Function()
         > {
-  $$TasksTableTableManager(i0.GeneratedDatabase db, i6.$TasksTable table)
+  $$LogsTableTableManager(i0.GeneratedDatabase db, i6.$LogsTable table)
     : super(
         i0.TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              i6.$$TasksTableFilterComposer($db: db, $table: table),
+              i6.$$LogsTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              i6.$$TasksTableOrderingComposer($db: db, $table: table),
+              i6.$$LogsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              i6.$$TasksTableAnnotationComposer($db: db, $table: table),
+              i6.$$LogsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                i0.Value<String> title = const i0.Value.absent(),
-                i0.Value<i8.Priority> priority = const i0.Value.absent(),
-                i0.Value<bool> completed = const i0.Value.absent(),
-              }) => i6.TasksCompanion(
+                i0.Value<String> message = const i0.Value.absent(),
+                i0.Value<DateTime> createdAt = const i0.Value.absent(),
+              }) => i6.LogsCompanion(
                 id: id,
-                title: title,
-                priority: priority,
-                completed: completed,
+                message: message,
+                createdAt: createdAt,
               ),
           createCompanionCallback:
               ({
                 i0.Value<int> id = const i0.Value.absent(),
-                required String title,
-                required i8.Priority priority,
-                i0.Value<bool> completed = const i0.Value.absent(),
-              }) => i6.TasksCompanion.insert(
+                required String message,
+                i0.Value<DateTime> createdAt = const i0.Value.absent(),
+              }) => i6.LogsCompanion.insert(
                 id: id,
-                title: title,
-                priority: priority,
-                completed: completed,
+                message: message,
+                createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), i0.BaseReferences(db, table, e)))
@@ -174,27 +154,24 @@ class $$TasksTableTableManager
       );
 }
 
-typedef $$TasksTableProcessedTableManager =
+typedef $$LogsTableProcessedTableManager =
     i0.ProcessedTableManager<
       i0.GeneratedDatabase,
-      i6.$TasksTable,
-      i6.Task,
-      i6.$$TasksTableFilterComposer,
-      i6.$$TasksTableOrderingComposer,
-      i6.$$TasksTableAnnotationComposer,
-      $$TasksTableCreateCompanionBuilder,
-      $$TasksTableUpdateCompanionBuilder,
-      (
-        i6.Task,
-        i0.BaseReferences<i0.GeneratedDatabase, i6.$TasksTable, i6.Task>,
-      ),
-      i6.Task,
+      i6.$LogsTable,
+      i6.Log,
+      i6.$$LogsTableFilterComposer,
+      i6.$$LogsTableOrderingComposer,
+      i6.$$LogsTableAnnotationComposer,
+      $$LogsTableCreateCompanionBuilder,
+      $$LogsTableUpdateCompanionBuilder,
+      (i6.Log, i0.BaseReferences<i0.GeneratedDatabase, i6.$LogsTable, i6.Log>),
+      i6.Log,
       i0.PrefetchHooks Function()
     >;
 
-abstract class $TaskDatabase extends i0.GeneratedDatabase {
-  $TaskDatabase(i0.QueryExecutor e) : super(e);
-  $TaskDatabaseManager get managers => $TaskDatabaseManager(this);
+abstract class $LogDatabase extends i0.GeneratedDatabase {
+  $LogDatabase(i0.QueryExecutor e) : super(e);
+  $LogDatabaseManager get managers => $LogDatabaseManager(this);
   late final i1.CloudAuthUsers cloudAuthUsers = i1.CloudAuthUsers(this);
   late final i2.CedarTypes cedarTypes = i2.CedarTypes(this);
   late final i2.CedarEntities cedarEntities = i2.CedarEntities(this);
@@ -232,7 +209,7 @@ abstract class $TaskDatabase extends i0.GeneratedDatabase {
       i2.CedarPolicyTemplateLinks(this);
   late final i2.CedarAuthorizationLogs cedarAuthorizationLogs =
       i2.CedarAuthorizationLogs(this);
-  late final i6.$TasksTable tasks = i6.$TasksTable(this);
+  late final i6.$LogsTable logs = i6.$LogsTable(this);
   i2.CedarDrift get cedarDrift =>
       i7.ReadDatabaseContainer(this).accessor<i2.CedarDrift>(i2.CedarDrift.new);
   i5.CloudAuthCoreDrift get cloudAuthCoreDrift => i7.ReadDatabaseContainer(
@@ -296,7 +273,7 @@ abstract class $TaskDatabase extends i0.GeneratedDatabase {
     i2.cedarPolicyTemplateLinksFkPrincipalIdx,
     i2.cedarPolicyTemplateLinksFkResourceIdx,
     cedarAuthorizationLogs,
-    tasks,
+    logs,
   ];
   @override
   i0.StreamQueryUpdateRules
@@ -635,9 +612,9 @@ abstract class $TaskDatabase extends i0.GeneratedDatabase {
   ]);
 }
 
-class $TaskDatabaseManager {
-  final $TaskDatabase _db;
-  $TaskDatabaseManager(this._db);
+class $LogDatabaseManager {
+  final $LogDatabase _db;
+  $LogDatabaseManager(this._db);
   i1.$CloudAuthUsersTableManager get cloudAuthUsers =>
       i1.$CloudAuthUsersTableManager(_db, _db.cloudAuthUsers);
   i2.$CedarTypesTableManager get cedarTypes =>
@@ -677,15 +654,15 @@ class $TaskDatabaseManager {
       .$CedarPolicyTemplateLinksTableManager(_db, _db.cedarPolicyTemplateLinks);
   i2.$CedarAuthorizationLogsTableManager get cedarAuthorizationLogs =>
       i2.$CedarAuthorizationLogsTableManager(_db, _db.cedarAuthorizationLogs);
-  i6.$$TasksTableTableManager get tasks =>
-      i6.$$TasksTableTableManager(_db, _db.tasks);
+  i6.$$LogsTableTableManager get logs =>
+      i6.$$LogsTableTableManager(_db, _db.logs);
 }
 
-class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
+class $LogsTable extends i8.Logs with i0.TableInfo<$LogsTable, i6.Log> {
   @override
   final i0.GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TasksTable(this.attachedDatabase, [this._alias]);
+  $LogsTable(this.attachedDatabase, [this._alias]);
   static const i0.VerificationMeta _idMeta = const i0.VerificationMeta('id');
   @override
   late final i0.GeneratedColumn<int> id = i0.GeneratedColumn<int>(
@@ -699,55 +676,44 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const i0.VerificationMeta _titleMeta = const i0.VerificationMeta(
-    'title',
+  static const i0.VerificationMeta _messageMeta = const i0.VerificationMeta(
+    'message',
   );
   @override
-  late final i0.GeneratedColumn<String> title = i0.GeneratedColumn<String>(
-    'title',
+  late final i0.GeneratedColumn<String> message = i0.GeneratedColumn<String>(
+    'message',
     aliasedName,
     false,
     additionalChecks: i0.GeneratedColumn.checkTextLength(
       minTextLength: 1,
-      maxTextLength: 100,
+      maxTextLength: 255,
     ),
     type: i0.DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const i0.VerificationMeta _createdAtMeta = const i0.VerificationMeta(
+    'createdAt',
+  );
   @override
-  late final i0.GeneratedColumnWithTypeConverter<i8.Priority, String> priority =
-      i0.GeneratedColumn<String>(
-        'priority',
+  late final i0.GeneratedColumn<DateTime> createdAt =
+      i0.GeneratedColumn<DateTime>(
+        'created_at',
         aliasedName,
         false,
-        type: i0.DriftSqlType.string,
-        requiredDuringInsert: true,
-      ).withConverter<i8.Priority>(i6.$TasksTable.$converterpriority);
-  static const i0.VerificationMeta _completedMeta = const i0.VerificationMeta(
-    'completed',
-  );
+        type: i0.DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+        defaultValue: i9.currentDateAndTime,
+      );
   @override
-  late final i0.GeneratedColumn<bool> completed = i0.GeneratedColumn<bool>(
-    'completed',
-    aliasedName,
-    false,
-    type: i0.DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: i0.GeneratedColumn.constraintIsAlways(
-      'CHECK ("completed" IN (0, 1))',
-    ),
-    defaultValue: const i9.Constant(false),
-  );
-  @override
-  List<i0.GeneratedColumn> get $columns => [id, title, priority, completed];
+  List<i0.GeneratedColumn> get $columns => [id, message, createdAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'tasks';
+  static const String $name = 'logs';
   @override
   i0.VerificationContext validateIntegrity(
-    i0.Insertable<i6.Task> instance, {
+    i0.Insertable<i6.Log> instance, {
     bool isInserting = false,
   }) {
     final context = i0.VerificationContext();
@@ -755,18 +721,18 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('title')) {
+    if (data.containsKey('message')) {
       context.handle(
-        _titleMeta,
-        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+        _messageMeta,
+        message.isAcceptableOrUnknown(data['message']!, _messageMeta),
       );
     } else if (isInserting) {
-      context.missing(_titleMeta);
+      context.missing(_messageMeta);
     }
-    if (data.containsKey('completed')) {
+    if (data.containsKey('created_at')) {
       context.handle(
-        _completedMeta,
-        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
     }
     return context;
@@ -775,85 +741,66 @@ class $TasksTable extends i8.Tasks with i0.TableInfo<$TasksTable, i6.Task> {
   @override
   Set<i0.GeneratedColumn> get $primaryKey => {id};
   @override
-  i6.Task map(Map<String, dynamic> data, {String? tablePrefix}) {
+  i6.Log map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return i6.Task(
+    return i6.Log(
       id: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      title: attachedDatabase.typeMapping.read(
+      message: attachedDatabase.typeMapping.read(
         i0.DriftSqlType.string,
-        data['${effectivePrefix}title'],
+        data['${effectivePrefix}message'],
       )!,
-      priority: i6.$TasksTable.$converterpriority.fromSql(
-        attachedDatabase.typeMapping.read(
-          i0.DriftSqlType.string,
-          data['${effectivePrefix}priority'],
-        )!,
-      ),
-      completed: attachedDatabase.typeMapping.read(
-        i0.DriftSqlType.bool,
-        data['${effectivePrefix}completed'],
+      createdAt: attachedDatabase.typeMapping.read(
+        i0.DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
       )!,
     );
   }
 
   @override
-  $TasksTable createAlias(String alias) {
-    return $TasksTable(attachedDatabase, alias);
+  $LogsTable createAlias(String alias) {
+    return $LogsTable(attachedDatabase, alias);
   }
-
-  static i0.JsonTypeConverter2<i8.Priority, String, String> $converterpriority =
-      const i0.EnumNameConverter<i8.Priority>(i8.Priority.values);
 }
 
-class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
+class Log extends i0.DataClass implements i0.Insertable<i6.Log> {
+  /// Primary key for the log entry.
   final int id;
-  final String title;
-  final i8.Priority priority;
-  final bool completed;
-  const Task({
-    required this.id,
-    required this.title,
-    required this.priority,
-    required this.completed,
-  });
+
+  /// Human readable description of the event.
+  final String message;
+
+  /// Creation timestamp recorded for each entry.
+  final DateTime createdAt;
+  const Log({required this.id, required this.message, required this.createdAt});
   @override
   Map<String, i0.Expression> toColumns(bool nullToAbsent) {
     final map = <String, i0.Expression>{};
     map['id'] = i0.Variable<int>(id);
-    map['title'] = i0.Variable<String>(title);
-    {
-      map['priority'] = i0.Variable<String>(
-        i6.$TasksTable.$converterpriority.toSql(priority),
-      );
-    }
-    map['completed'] = i0.Variable<bool>(completed);
+    map['message'] = i0.Variable<String>(message);
+    map['created_at'] = i0.Variable<DateTime>(createdAt);
     return map;
   }
 
-  i6.TasksCompanion toCompanion(bool nullToAbsent) {
-    return i6.TasksCompanion(
+  i6.LogsCompanion toCompanion(bool nullToAbsent) {
+    return i6.LogsCompanion(
       id: i0.Value(id),
-      title: i0.Value(title),
-      priority: i0.Value(priority),
-      completed: i0.Value(completed),
+      message: i0.Value(message),
+      createdAt: i0.Value(createdAt),
     );
   }
 
-  factory Task.fromJson(
+  factory Log.fromJson(
     Map<String, dynamic> json, {
     i0.ValueSerializer? serializer,
   }) {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
-    return Task(
+    return Log(
       id: serializer.fromJson<int>(json['id']),
-      title: serializer.fromJson<String>(json['title']),
-      priority: i6.$TasksTable.$converterpriority.fromJson(
-        serializer.fromJson<String>(json['priority']),
-      ),
-      completed: serializer.fromJson<bool>(json['completed']),
+      message: serializer.fromJson<String>(json['message']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
   @override
@@ -861,100 +808,80 @@ class Task extends i0.DataClass implements i0.Insertable<i6.Task> {
     serializer ??= i0.driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'title': serializer.toJson<String>(title),
-      'priority': serializer.toJson<String>(
-        i6.$TasksTable.$converterpriority.toJson(priority),
-      ),
-      'completed': serializer.toJson<bool>(completed),
+      'message': serializer.toJson<String>(message),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
-  i6.Task copyWith({
-    int? id,
-    String? title,
-    i8.Priority? priority,
-    bool? completed,
-  }) => i6.Task(
+  i6.Log copyWith({int? id, String? message, DateTime? createdAt}) => i6.Log(
     id: id ?? this.id,
-    title: title ?? this.title,
-    priority: priority ?? this.priority,
-    completed: completed ?? this.completed,
+    message: message ?? this.message,
+    createdAt: createdAt ?? this.createdAt,
   );
-  Task copyWithCompanion(i6.TasksCompanion data) {
-    return Task(
+  Log copyWithCompanion(i6.LogsCompanion data) {
+    return Log(
       id: data.id.present ? data.id.value : this.id,
-      title: data.title.present ? data.title.value : this.title,
-      priority: data.priority.present ? data.priority.value : this.priority,
-      completed: data.completed.present ? data.completed.value : this.completed,
+      message: data.message.present ? data.message.value : this.message,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('Task(')
+    return (StringBuffer('Log(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('priority: $priority, ')
-          ..write('completed: $completed')
+          ..write('message: $message, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, priority, completed);
+  int get hashCode => Object.hash(id, message, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is i6.Task &&
+      (other is i6.Log &&
           other.id == this.id &&
-          other.title == this.title &&
-          other.priority == this.priority &&
-          other.completed == this.completed);
+          other.message == this.message &&
+          other.createdAt == this.createdAt);
 }
 
-class TasksCompanion extends i0.UpdateCompanion<i6.Task> {
+class LogsCompanion extends i0.UpdateCompanion<i6.Log> {
   final i0.Value<int> id;
-  final i0.Value<String> title;
-  final i0.Value<i8.Priority> priority;
-  final i0.Value<bool> completed;
-  const TasksCompanion({
+  final i0.Value<String> message;
+  final i0.Value<DateTime> createdAt;
+  const LogsCompanion({
     this.id = const i0.Value.absent(),
-    this.title = const i0.Value.absent(),
-    this.priority = const i0.Value.absent(),
-    this.completed = const i0.Value.absent(),
+    this.message = const i0.Value.absent(),
+    this.createdAt = const i0.Value.absent(),
   });
-  TasksCompanion.insert({
+  LogsCompanion.insert({
     this.id = const i0.Value.absent(),
-    required String title,
-    required i8.Priority priority,
-    this.completed = const i0.Value.absent(),
-  }) : title = i0.Value(title),
-       priority = i0.Value(priority);
-  static i0.Insertable<i6.Task> custom({
+    required String message,
+    this.createdAt = const i0.Value.absent(),
+  }) : message = i0.Value(message);
+  static i0.Insertable<i6.Log> custom({
     i0.Expression<int>? id,
-    i0.Expression<String>? title,
-    i0.Expression<String>? priority,
-    i0.Expression<bool>? completed,
+    i0.Expression<String>? message,
+    i0.Expression<DateTime>? createdAt,
   }) {
     return i0.RawValuesInsertable({
       if (id != null) 'id': id,
-      if (title != null) 'title': title,
-      if (priority != null) 'priority': priority,
-      if (completed != null) 'completed': completed,
+      if (message != null) 'message': message,
+      if (createdAt != null) 'created_at': createdAt,
     });
   }
 
-  i6.TasksCompanion copyWith({
+  i6.LogsCompanion copyWith({
     i0.Value<int>? id,
-    i0.Value<String>? title,
-    i0.Value<i8.Priority>? priority,
-    i0.Value<bool>? completed,
+    i0.Value<String>? message,
+    i0.Value<DateTime>? createdAt,
   }) {
-    return i6.TasksCompanion(
+    return i6.LogsCompanion(
       id: id ?? this.id,
-      title: title ?? this.title,
-      priority: priority ?? this.priority,
-      completed: completed ?? this.completed,
+      message: message ?? this.message,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -964,27 +891,21 @@ class TasksCompanion extends i0.UpdateCompanion<i6.Task> {
     if (id.present) {
       map['id'] = i0.Variable<int>(id.value);
     }
-    if (title.present) {
-      map['title'] = i0.Variable<String>(title.value);
+    if (message.present) {
+      map['message'] = i0.Variable<String>(message.value);
     }
-    if (priority.present) {
-      map['priority'] = i0.Variable<String>(
-        i6.$TasksTable.$converterpriority.toSql(priority.value),
-      );
-    }
-    if (completed.present) {
-      map['completed'] = i0.Variable<bool>(completed.value);
+    if (createdAt.present) {
+      map['created_at'] = i0.Variable<DateTime>(createdAt.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('TasksCompanion(')
+    return (StringBuffer('LogsCompanion(')
           ..write('id: $id, ')
-          ..write('title: $title, ')
-          ..write('priority: $priority, ')
-          ..write('completed: $completed')
+          ..write('message: $message, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }

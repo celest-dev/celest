@@ -1,23 +1,23 @@
 // ignore_for_file: type=lint, unused_local_variable, unnecessary_cast, unnecessary_import, deprecated_member_use, invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i9;
-import 'dart:convert' as _i11;
-import 'dart:isolate' as _i10;
+import 'dart:async' as _i10;
+import 'dart:convert' as _i12;
+import 'dart:isolate' as _i11;
 
-import 'package:celest/celest.dart' as _i8;
+import 'package:celest/celest.dart' as _i9;
 import 'package:celest/src/core/context.dart' as _i3;
-import 'package:celest/src/runtime/data/celest_database.dart' as _i15;
+import 'package:celest/src/runtime/data/celest_database.dart' as _i16;
+import 'package:celest/src/runtime/data/database_registry.dart' as _i15;
 import 'package:celest/src/runtime/serve.dart' as _i1;
 import 'package:celest_backend/src/functions/authenticated_lib.dart' as _i5;
-import 'package:celest_backend/src/generated/cloud.celest.dart' as _i18;
-import 'package:celest_backend/src/generated/data.celest.dart' as _i17;
+import 'package:celest_backend/src/generated/data.celest.dart' as _i18;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart' as _i2;
-import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i16;
+import 'package:celest_cloud_auth/src/database/auth_database.dart' as _i17;
 import 'package:celest_core/celest_core.dart' as _i6;
-import 'package:celest_core/src/auth/user.dart' as _i13;
-import 'package:celest_core/src/exception/cloud_exception.dart' as _i7;
-import 'package:celest_core/src/exception/serialization_exception.dart' as _i12;
+import 'package:celest_core/src/auth/user.dart' as _i7;
+import 'package:celest_core/src/exception/cloud_exception.dart' as _i8;
+import 'package:celest_core/src/exception/serialization_exception.dart' as _i13;
 import 'package:celest_core/src/serialization/json_value.dart' as _i14;
 import 'package:shelf/shelf.dart' as _i4;
 
@@ -41,14 +41,14 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
   }) async {
     try {
       final response = await _i5.sayHello(
-        user: _i3.context.expect(_i3.ContextKey.principal),
+        user: _i6.Serializers.instance.deserialize<_i7.User>(request[r'user']),
       );
       return _i4.Response(
         200,
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(response),
       );
-    } on _i7.AbortedException catch (e, st) {
+    } on _i8.AbortedException catch (e, st) {
       const statusCode = 409;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -58,11 +58,11 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.AbortedException',
-              'value': _i6.Serializers.instance.serialize<_i7.AbortedException>(
+              'value': _i6.Serializers.instance.serialize<_i8.AbortedException>(
                 e,
               ),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -75,7 +75,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.AlreadyExistsException catch (e, st) {
+    } on _i8.AlreadyExistsException catch (e, st) {
       const statusCode = 409;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -86,9 +86,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.AlreadyExistsException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.AlreadyExistsException>(e),
+                  .serialize<_i8.AlreadyExistsException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -113,7 +113,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.AssertionError',
               'value': _i6.Serializers.instance.serialize<AssertionError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -126,7 +126,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i9.AsyncError catch (e, st) {
+    } on _i10.AsyncError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -136,9 +136,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.async.AsyncError',
-              'value': _i6.Serializers.instance.serialize<_i9.AsyncError>(e),
+              'value': _i6.Serializers.instance.serialize<_i10.AsyncError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -151,7 +151,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.CancelledException catch (e, st) {
+    } on _i8.CancelledException catch (e, st) {
       const statusCode = 499;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -162,9 +162,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.CancelledException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.CancelledException>(e),
+                  .serialize<_i8.CancelledException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -190,7 +190,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               'value': _i6.Serializers.instance
                   .serialize<ConcurrentModificationError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -203,7 +203,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.DataLossError catch (e, st) {
+    } on _i8.DataLossError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -213,9 +213,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.DataLossError',
-              'value': _i6.Serializers.instance.serialize<_i7.DataLossError>(e),
+              'value': _i6.Serializers.instance.serialize<_i8.DataLossError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -228,7 +228,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.DeadlineExceededError catch (e, st) {
+    } on _i8.DeadlineExceededError catch (e, st) {
       const statusCode = 504;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -239,9 +239,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.DeadlineExceededError',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.DeadlineExceededError>(e),
+                  .serialize<_i8.DeadlineExceededError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -254,7 +254,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.FailedPreconditionException catch (e, st) {
+    } on _i8.FailedPreconditionException catch (e, st) {
       const statusCode = 412;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -265,9 +265,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.FailedPreconditionException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.FailedPreconditionException>(e),
+                  .serialize<_i8.FailedPreconditionException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -292,7 +292,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.IndexError',
               'value': _i6.Serializers.instance.serialize<IndexError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -318,7 +318,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               'value': _i6.Serializers.instance
                   .serialize<IntegerDivisionByZeroException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -331,7 +331,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.InternalServerError catch (e, st) {
+    } on _i8.InternalServerError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -342,9 +342,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.InternalServerError',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.InternalServerError>(e),
+                  .serialize<_i8.InternalServerError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -357,7 +357,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i10.IsolateSpawnException catch (e, st) {
+    } on _i11.IsolateSpawnException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -368,9 +368,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'dart.isolate.IsolateSpawnException',
               'value': _i6.Serializers.instance
-                  .serialize<_i10.IsolateSpawnException>(e),
+                  .serialize<_i11.IsolateSpawnException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -383,7 +383,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i11.JsonUnsupportedObjectError catch (e, st) {
+    } on _i12.JsonUnsupportedObjectError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.toString(), e, st);
       final status = {
@@ -394,9 +394,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'dart.convert.JsonUnsupportedObjectError',
               'value': _i6.Serializers.instance
-                  .serialize<_i11.JsonUnsupportedObjectError>(e),
+                  .serialize<_i12.JsonUnsupportedObjectError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -409,7 +409,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.NotFoundException catch (e, st) {
+    } on _i8.NotFoundException catch (e, st) {
       const statusCode = 404;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -420,9 +420,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.NotFoundException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.NotFoundException>(e),
+                  .serialize<_i8.NotFoundException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -447,7 +447,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.OutOfMemoryError',
               'value': _i6.Serializers.instance.serialize<OutOfMemoryError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -460,7 +460,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.OutOfRangeException catch (e, st) {
+    } on _i8.OutOfRangeException catch (e, st) {
       const statusCode = 416;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -471,9 +471,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.OutOfRangeException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.OutOfRangeException>(e),
+                  .serialize<_i8.OutOfRangeException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -486,7 +486,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.PermissionDeniedException catch (e, st) {
+    } on _i8.PermissionDeniedException catch (e, st) {
       const statusCode = 403;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -497,9 +497,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.PermissionDeniedException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.PermissionDeniedException>(e),
+                  .serialize<_i8.PermissionDeniedException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -524,7 +524,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.RangeError',
               'value': _i6.Serializers.instance.serialize<RangeError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -549,7 +549,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.ArgumentError',
               'value': _i6.Serializers.instance.serialize<ArgumentError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -562,7 +562,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.ResourceExhaustedException catch (e, st) {
+    } on _i8.ResourceExhaustedException catch (e, st) {
       const statusCode = 429;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -573,9 +573,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.ResourceExhaustedException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.ResourceExhaustedException>(e),
+                  .serialize<_i8.ResourceExhaustedException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -588,7 +588,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i12.SerializationException catch (e, st) {
+    } on _i13.SerializationException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -599,9 +599,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.SerializationException',
               'value': _i6.Serializers.instance
-                  .serialize<_i12.SerializationException>(e),
+                  .serialize<_i13.SerializationException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -614,7 +614,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.BadRequestException catch (e, st) {
+    } on _i8.BadRequestException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -625,9 +625,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.BadRequestException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.BadRequestException>(e),
+                  .serialize<_i8.BadRequestException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -652,7 +652,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.FormatException',
               'value': _i6.Serializers.instance.serialize<FormatException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -679,7 +679,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
                 e,
               ),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -704,7 +704,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.StateError',
               'value': _i6.Serializers.instance.serialize<StateError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -717,7 +717,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i9.TimeoutException catch (e, st) {
+    } on _i10.TimeoutException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -727,11 +727,10 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'dart.async.TimeoutException',
-              'value': _i6.Serializers.instance.serialize<_i9.TimeoutException>(
-                e,
-              ),
+              'value': _i6.Serializers.instance
+                  .serialize<_i10.TimeoutException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -756,7 +755,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.TypeError',
               'value': _i6.Serializers.instance.serialize<TypeError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -769,7 +768,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.UnauthorizedException catch (e, st) {
+    } on _i8.UnauthorizedException catch (e, st) {
       const statusCode = 401;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -780,9 +779,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.UnauthorizedException',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.UnauthorizedException>(e),
+                  .serialize<_i8.UnauthorizedException>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -795,7 +794,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.UnavailableError catch (e, st) {
+    } on _i8.UnavailableError catch (e, st) {
       const statusCode = 503;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -805,11 +804,11 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.UnavailableError',
-              'value': _i6.Serializers.instance.serialize<_i7.UnavailableError>(
+              'value': _i6.Serializers.instance.serialize<_i8.UnavailableError>(
                 e,
               ),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -822,7 +821,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.UnimplementedError catch (e, st) {
+    } on _i8.UnimplementedError catch (e, st) {
       const statusCode = 501;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -833,9 +832,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             {
               '@type': 'celest.core.v1.UnimplementedError',
               'value': _i6.Serializers.instance
-                  .serialize<_i7.UnimplementedError>(e),
+                  .serialize<_i8.UnimplementedError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -862,7 +861,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
                 e,
               ),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -875,7 +874,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.UnknownError catch (e, st) {
+    } on _i8.UnknownError catch (e, st) {
       const statusCode = 500;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -885,9 +884,9 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.UnknownError',
-              'value': _i6.Serializers.instance.serialize<_i7.UnknownError>(e),
+              'value': _i6.Serializers.instance.serialize<_i8.UnknownError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -900,7 +899,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
         headers: const {'Content-Type': 'application/json'},
         body: _i6.JsonUtf8.encode(status),
       );
-    } on _i7.CloudException catch (e, st) {
+    } on _i8.CloudException catch (e, st) {
       const statusCode = 400;
       _i3.context.logger.severe(e.message, e, st);
       final status = {
@@ -910,11 +909,11 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           'details': [
             {
               '@type': 'celest.core.v1.CloudException',
-              'value': _i6.Serializers.instance.serialize<_i7.CloudException>(
+              'value': _i6.Serializers.instance.serialize<_i8.CloudException>(
                 e,
               ),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -939,7 +938,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.Exception',
               'value': _i6.Serializers.instance.serialize<Exception>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -964,7 +963,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.UnsupportedError',
               'value': _i6.Serializers.instance.serialize<UnsupportedError>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -989,7 +988,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
               '@type': 'dart.core.Error',
               'value': _i6.Serializers.instance.serialize<Error>(e),
             },
-            if (_i3.context.environment != _i8.Environment.production)
+            if (_i3.context.environment != _i9.Environment.production)
               {
                 '@type': 'dart.core.StackTrace',
                 'value': _i6.Serializers.instance.serialize<StackTrace>(st),
@@ -1008,7 +1007,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
   @override
   void init() {
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i9.AsyncError, Map<String, Object?>>(
+      _i6.Serializer.define<_i10.AsyncError, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           r'error': $value.error,
           r'stackTrace': _i6.Serializers.instance.serialize<StackTrace>(
@@ -1016,7 +1015,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
           ),
         },
         deserialize: ($serialized) {
-          return _i9.AsyncError(
+          return _i10.AsyncError(
             $serialized[r'error']!,
             _i6.Serializers.instance.deserialize<StackTrace?>(
               $serialized[r'stackTrace'],
@@ -1026,7 +1025,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i9.TimeoutException, Map<String, Object?>>(
+      _i6.Serializer.define<_i10.TimeoutException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           if ($value.message case final message?) r'message': message,
           if (_i6.Serializers.instance.serialize<Duration?>($value.duration)
@@ -1034,7 +1033,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'duration': duration,
         },
         deserialize: ($serialized) {
-          return _i9.TimeoutException(
+          return _i10.TimeoutException(
             ($serialized[r'message'] as String?),
             _i6.Serializers.instance.deserialize<Duration?>(
               $serialized[r'duration'],
@@ -1045,7 +1044,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i6.Serializers.instance.put(
       _i6.Serializer.define<
-        _i11.JsonUnsupportedObjectError,
+        _i12.JsonUnsupportedObjectError,
         Map<String, Object?>
       >(
         serialize: ($value) => <String, Object?>{
@@ -1056,7 +1055,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'partialResult': partialResult,
         },
         deserialize: ($serialized) {
-          return _i11.JsonUnsupportedObjectError(
+          return _i12.JsonUnsupportedObjectError(
             $serialized[r'unsupportedObject'],
             cause: $serialized[r'cause'],
             partialResult: ($serialized[r'partialResult'] as String?),
@@ -1239,25 +1238,25 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i10.IsolateSpawnException, Map<String, Object?>>(
+      _i6.Serializer.define<_i11.IsolateSpawnException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{r'message': $value.message},
         deserialize: ($serialized) {
-          return _i10.IsolateSpawnException(
+          return _i11.IsolateSpawnException(
             ($serialized[r'message'] as String),
           );
         },
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i13.User, Map<String, Object?>>(
+      _i6.Serializer.define<_i7.User, Map<String, Object?>>(
         serialize: ($value) => $value.toJson(),
         deserialize: ($serialized) {
-          return _i13.User.fromJson($serialized);
+          return _i7.User.fromJson($serialized);
         },
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.AbortedException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.AbortedException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1269,7 +1268,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.AbortedException(
+          return _i8.AbortedException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1281,7 +1280,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.AlreadyExistsException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.AlreadyExistsException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1293,7 +1292,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.AlreadyExistsException(
+          return _i8.AlreadyExistsException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1305,7 +1304,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.BadRequestException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.BadRequestException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1317,7 +1316,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.BadRequestException(
+          return _i8.BadRequestException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1329,7 +1328,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.CancelledException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.CancelledException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1341,7 +1340,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.CancelledException(
+          return _i8.CancelledException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1353,7 +1352,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.CloudException, Map<String, Object?>>(
+      _i6.Serializer.define<_i8.CloudException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1365,12 +1364,12 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.CloudException.fromJson($serialized);
+          return _i8.CloudException.fromJson($serialized);
         },
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.DataLossError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.DataLossError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1382,7 +1381,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.DataLossError(
+          return _i8.DataLossError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1394,7 +1393,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.DeadlineExceededError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.DeadlineExceededError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1406,7 +1405,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.DeadlineExceededError(
+          return _i8.DeadlineExceededError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1419,7 +1418,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i6.Serializers.instance.put(
       _i6.Serializer.define<
-        _i7.FailedPreconditionException,
+        _i8.FailedPreconditionException,
         Map<String, Object?>?
       >(
         serialize: ($value) => <String, Object?>{
@@ -1433,7 +1432,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.FailedPreconditionException(
+          return _i8.FailedPreconditionException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1445,7 +1444,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.InternalServerError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.InternalServerError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1457,7 +1456,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.InternalServerError(
+          return _i8.InternalServerError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1469,7 +1468,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.NotFoundException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.NotFoundException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1481,7 +1480,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.NotFoundException(
+          return _i8.NotFoundException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1493,7 +1492,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.OutOfRangeException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.OutOfRangeException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1505,7 +1504,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.OutOfRangeException(
+          return _i8.OutOfRangeException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1518,7 +1517,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i6.Serializers.instance.put(
       _i6.Serializer.define<
-        _i7.PermissionDeniedException,
+        _i8.PermissionDeniedException,
         Map<String, Object?>?
       >(
         serialize: ($value) => <String, Object?>{
@@ -1532,7 +1531,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.PermissionDeniedException(
+          return _i8.PermissionDeniedException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1545,7 +1544,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
     );
     _i6.Serializers.instance.put(
       _i6.Serializer.define<
-        _i7.ResourceExhaustedException,
+        _i8.ResourceExhaustedException,
         Map<String, Object?>?
       >(
         serialize: ($value) => <String, Object?>{
@@ -1559,7 +1558,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.ResourceExhaustedException(
+          return _i8.ResourceExhaustedException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1571,7 +1570,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.UnauthorizedException, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.UnauthorizedException, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1583,7 +1582,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.UnauthorizedException(
+          return _i8.UnauthorizedException(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1595,7 +1594,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.UnavailableError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.UnavailableError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1607,7 +1606,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.UnavailableError(
+          return _i8.UnavailableError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1619,7 +1618,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.UnimplementedError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.UnimplementedError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1631,7 +1630,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.UnimplementedError(
+          return _i8.UnimplementedError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1643,7 +1642,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i7.UnknownError, Map<String, Object?>?>(
+      _i6.Serializer.define<_i8.UnknownError, Map<String, Object?>?>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1655,7 +1654,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i7.UnknownError(
+          return _i8.UnknownError(
             ($serialized?[r'message'] as String?),
             _i6.Serializers.instance.deserialize<_i14.JsonValue?>(
               $serialized?[r'details'],
@@ -1667,7 +1666,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
       ),
     );
     _i6.Serializers.instance.put(
-      _i6.Serializer.define<_i12.SerializationException, Map<String, Object?>>(
+      _i6.Serializer.define<_i13.SerializationException, Map<String, Object?>>(
         serialize: ($value) => <String, Object?>{
           r'code': $value.code,
           r'message': $value.message,
@@ -1679,7 +1678,7 @@ final class SayHelloTarget extends _i1.CloudFunctionHttpTarget {
             r'details': details,
         },
         deserialize: ($serialized) {
-          return _i12.SerializationException(
+          return _i13.SerializationException(
             ($serialized[r'message'] as String?),
           );
         },
@@ -1705,23 +1704,37 @@ Future<void> start() async {
   await _i1.serve(
     targets: {'/': SayHelloTarget()},
     setup: (_i3.Context context) async {
-      final cloudAuth = await _i15.CelestDatabase.create(
+      final $databases = _i15.CelestDatabaseRegistry();
+      context.put(_i15.CelestDatabaseRegistry.contextKey, $databases);
+      final _cloudAuthCelestDatabase = await _i16.CelestDatabase.create(
         context,
         name: 'CloudAuthDatabase',
-        factory: _i16.CloudAuthDatabase.new,
-        hostnameVariable: const _i8.env('CLOUD_AUTH_DATABASE_HOST'),
-        tokenSecret: const _i8.secret('CLOUD_AUTH_DATABASE_TOKEN'),
+        factory: _i17.CloudAuthDatabase.new,
+        hostnameVariable: const _i9.env('CLOUD_AUTH_DATABASE_HOST'),
+        tokenSecret: const _i9.secret('CLOUD_AUTH_DATABASE_TOKEN'),
       );
-      context.put(_i17.CelestData.cloudAuth$Key, await cloudAuth.connect());
-      final $cloudAuth = await _i2.CelestCloudAuth.create(
-        database: _i18.celest.data.cloudAuth,
+      final cloudAuth = await _cloudAuthCelestDatabase.connect();
+      context.put(_i18.CelestData.cloudAuth$Key, cloudAuth);
+      $databases.register(
+        databaseId: 'CloudAuthDatabase',
+        dartName: 'cloudAuth',
+        displayName: 'CloudAuthDatabase',
+        database: _cloudAuthCelestDatabase,
+        connection: cloudAuth,
       );
-      context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
-      context.put(_i2.CelestCloudAuth.contextKey, $cloudAuth);
-      if (context.environment == _i8.Environment.local) {
-        final $studio = cloudAuth.createStudio();
+      if (context.environment == _i9.Environment.local) {
+        final $studio = _cloudAuthCelestDatabase.createStudio(
+          pageTitle: 'CloudAuthDatabase',
+        );
+        context.router.mount(
+          '/_admin/studio/cloud-auth-database',
+          $studio.call,
+        );
         context.router.mount('/_admin/studio', $studio.call);
       }
+      final $cloudAuth = await _i2.CelestCloudAuth.create(database: cloudAuth);
+      context.router.mount('/v1alpha1/auth/', $cloudAuth.handler);
+      context.put(_i2.CelestCloudAuth.contextKey, $cloudAuth);
     },
   );
 }

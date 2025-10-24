@@ -28,6 +28,7 @@ import 'package:drift/src/remote/communication.dart' as _$drift_communication;
 import 'package:drift/src/runtime/cancellation_zone.dart'
     as _$drift_cancellation_zone;
 import 'package:drift/src/runtime/exceptions.dart' as _$drift_exceptions;
+import 'package:hrana/src/exception.dart' as _$hrana_exception;
 import 'package:http/src/abortable.dart' as _$http_abortable;
 import 'package:http/src/exception.dart' as _$http_exception;
 import 'package:mustache_template/src/template_exception.dart'
@@ -589,6 +590,12 @@ class CelestFunctionsTasks {
               .deserialize<_$drift_communication.ConnectionClosedException>(
                 errorValue,
               ),
+          stackTrace,
+        );
+      case 'hrana.ConnectionClosed':
+        Error.throwWithStackTrace(
+          _$celest.Serializers.instance
+              .deserialize<_$hrana_exception.ConnectionClosed>(errorValue),
           stackTrace,
         );
       default:

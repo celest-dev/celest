@@ -11,6 +11,7 @@ import 'dart:isolate';
 import 'package:auth_client/auth_client.dart';
 import 'package:celest/celest.dart' as _$celest;
 import 'package:celest_core/celest_core.dart' as _$celest;
+import 'package:celest_core/src/auth/user.dart' as _$celest;
 import 'package:celest_core/src/exception/cloud_exception.dart' as _$celest;
 import 'package:celest_core/src/exception/serialization_exception.dart'
     as _$celest;
@@ -291,13 +292,16 @@ class CelestFunctionsAuthenticatedLib {
   }
 
   @_$celest.CloudFunction(api: 'authenticated_lib', function: 'sayHello')
-  Future<String> sayHello() async {
+  Future<String> sayHello({required _$celest.User user}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/authenticated-lib/say-hello'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: _$celest.JsonUtf8.encode({
+        r'user': _$celest.Serializers.instance.serialize<_$celest.User>(user),
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -310,10 +314,13 @@ class CelestFunctionsAuthenticatedLib {
   }
 
   @_$celest.CloudFunction(api: 'authenticated_lib', function: 'streamHello')
-  Stream<String> streamHello() {
+  Stream<String> streamHello({required _$celest.User user}) {
     final $channel = celest.eventClient.connect(
       celest.baseUri.resolve('/authenticated-lib/stream-hello'),
     );
+    $channel.sink.add({
+      r'user': _$celest.Serializers.instance.serialize<_$celest.User>(user),
+    });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
@@ -591,13 +598,16 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'sayHelloAuthenticated')
-  Future<String> sayHelloAuthenticated() async {
+  Future<String> sayHelloAuthenticated({required _$celest.User user}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-authenticated'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: _$celest.JsonUtf8.encode({
+        r'user': _$celest.Serializers.instance.serialize<_$celest.User>(user),
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -610,10 +620,13 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'streamHelloAuthenticated')
-  Stream<String> streamHelloAuthenticated() {
+  Stream<String> streamHelloAuthenticated({required _$celest.User user}) {
     final $channel = celest.eventClient.connect(
       celest.baseUri.resolve('/lib/stream-hello-authenticated'),
     );
+    $channel.sink.add({
+      r'user': _$celest.Serializers.instance.serialize<_$celest.User>(user),
+    });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
@@ -623,13 +636,16 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'sayHelloPublic')
-  Future<String> sayHelloPublic() async {
+  Future<String> sayHelloPublic({_$celest.User? user}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello-public'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: _$celest.JsonUtf8.encode({
+        r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -642,10 +658,13 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'streamHelloPublic')
-  Stream<String> streamHelloPublic() {
+  Stream<String> streamHelloPublic({_$celest.User? user}) {
     final $channel = celest.eventClient.connect(
       celest.baseUri.resolve('/lib/stream-hello-public'),
     );
+    $channel.sink.add({
+      r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+    });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
@@ -655,13 +674,16 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'sayHello')
-  Future<String> sayHello() async {
+  Future<String> sayHello({_$celest.User? user}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/lib/say-hello'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: _$celest.JsonUtf8.encode({
+        r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -674,10 +696,13 @@ class CelestFunctionsLib {
   }
 
   @_$celest.CloudFunction(api: 'lib', function: 'streamHello')
-  Stream<String> streamHello() {
+  Stream<String> streamHello({_$celest.User? user}) {
     final $channel = celest.eventClient.connect(
       celest.baseUri.resolve('/lib/stream-hello'),
     );
+    $channel.sink.add({
+      r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+    });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);
@@ -955,13 +980,16 @@ class CelestFunctionsPublicLib {
   }
 
   @_$celest.CloudFunction(api: 'public_lib', function: 'sayHello')
-  Future<String> sayHello() async {
+  Future<String> sayHello({_$celest.User? user}) async {
     final $response = await celest.httpClient.post(
       celest.baseUri.resolve('/public-lib/say-hello'),
       headers: const {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: _$celest.JsonUtf8.encode({
+        r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+      }),
     );
     final $body = _$celest.JsonUtf8.decode($response.bodyBytes);
     if ($response.statusCode != 200) {
@@ -974,10 +1002,13 @@ class CelestFunctionsPublicLib {
   }
 
   @_$celest.CloudFunction(api: 'public_lib', function: 'streamHello')
-  Stream<String> streamHello() {
+  Stream<String> streamHello({_$celest.User? user}) {
     final $channel = celest.eventClient.connect(
       celest.baseUri.resolve('/public-lib/stream-hello'),
     );
+    $channel.sink.add({
+      r'user': _$celest.Serializers.instance.serialize<_$celest.User?>(user),
+    });
     return $channel.stream.map(($event) {
       if ($event is Map<String, Object?> && $event.containsKey('@status')) {
         _throwError(body: $event);

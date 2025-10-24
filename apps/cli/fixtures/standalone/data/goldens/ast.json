@@ -619,6 +619,12 @@
           "symbol": "ConnectionClosedException",
           "url": "package:drift/src/remote/communication.dart",
           "isNullable": false
+        },
+        {
+          "$": "TypeReference",
+          "symbol": "ConnectionClosed",
+          "url": "package:hrana/src/exception.dart",
+          "isNullable": false
         }
       ],
       "location": {
@@ -641,7 +647,7 @@
   "variables": [],
   "secrets": [],
   "databases": {
-    "TaskDatabase": {
+    "database": {
       "name": "TaskDatabase",
       "dartName": "database",
       "docs": [],
@@ -655,15 +661,15 @@
         "version": 1,
         "location": {
           "start": {
-            "offset": 218,
+            "offset": 268,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 11,
+            "line": 8,
             "column": 6
           },
           "end": {
-            "offset": 226,
+            "offset": 276,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 11,
+            "line": 8,
             "column": 14
           },
           "text": "database"
@@ -674,15 +680,15 @@
         "hostname": {
           "location": {
             "start": {
-              "offset": 218,
+              "offset": 268,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 11,
+              "line": 8,
               "column": 6
             },
             "end": {
-              "offset": 226,
+              "offset": 276,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 11,
+              "line": 8,
               "column": 14
             },
             "text": "database"
@@ -693,15 +699,15 @@
         "token": {
           "location": {
             "start": {
-              "offset": 218,
+              "offset": 268,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 11,
+              "line": 8,
               "column": 6
             },
             "end": {
-              "offset": 226,
+              "offset": 276,
               "uri": "package:celest_backend/src/project.dart",
-              "line": 11,
+              "line": 8,
               "column": 14
             },
             "text": "database"
@@ -712,18 +718,103 @@
       },
       "location": {
         "start": {
-          "offset": 218,
+          "offset": 268,
           "uri": "package:celest_backend/src/project.dart",
-          "line": 11,
+          "line": 8,
           "column": 6
         },
         "end": {
-          "offset": 226,
+          "offset": 276,
           "uri": "package:celest_backend/src/project.dart",
-          "line": 11,
+          "line": 8,
           "column": 14
         },
         "text": "database"
+      }
+    },
+    "logsDatabase": {
+      "name": "LogDatabase",
+      "dartName": "logsDatabase",
+      "docs": [],
+      "schema": {
+        "$": "DriftDatabaseSchema",
+        "declaration": {
+          "symbol": "LogDatabase",
+          "url": "package:celest_backend/src/database/log_database.dart",
+          "isNullable": false
+        },
+        "version": 1,
+        "location": {
+          "start": {
+            "offset": 332,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 10,
+            "column": 6
+          },
+          "end": {
+            "offset": 344,
+            "uri": "package:celest_backend/src/project.dart",
+            "line": 10,
+            "column": 18
+          },
+          "text": "logsDatabase"
+        }
+      },
+      "config": {
+        "$": "CelestDatabaseConfig",
+        "hostname": {
+          "location": {
+            "start": {
+              "offset": 332,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 10,
+              "column": 6
+            },
+            "end": {
+              "offset": 344,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 10,
+              "column": 18
+            },
+            "text": "logsDatabase"
+          },
+          "name": "LOG_DATABASE_HOST",
+          "docs": []
+        },
+        "token": {
+          "location": {
+            "start": {
+              "offset": 332,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 10,
+              "column": 6
+            },
+            "end": {
+              "offset": 344,
+              "uri": "package:celest_backend/src/project.dart",
+              "line": 10,
+              "column": 18
+            },
+            "text": "logsDatabase"
+          },
+          "name": "LOG_DATABASE_TOKEN",
+          "docs": []
+        }
+      },
+      "location": {
+        "start": {
+          "offset": 332,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 10,
+          "column": 6
+        },
+        "end": {
+          "offset": 344,
+          "uri": "package:celest_backend/src/project.dart",
+          "line": 10,
+          "column": 18
+        },
+        "text": "logsDatabase"
       }
     }
   },
@@ -731,7 +822,7 @@
     "celest": "1.0.14",
     "dart": {
       "type": "dart",
-      "version": "3.10.0-75.1.beta",
+      "version": "3.9.2",
       "enabledExperiments": []
     },
     "targetSdk": "dart",
@@ -740,21 +831,21 @@
     ],
     "flutter": {
       "type": "flutter",
-      "version": "3.36.0-0.3.pre",
+      "version": "3.35.6",
       "enabledExperiments": []
     }
   },
   "location": {
     "start": {
-      "offset": 109,
+      "offset": 173,
       "uri": "project.dart",
-      "line": 3,
+      "line": 4,
       "column": 6
     },
     "end": {
-      "offset": 140,
+      "offset": 204,
       "uri": "project.dart",
-      "line": 3,
+      "line": 4,
       "column": 37
     },
     "text": "project = Project(name: 'data')"
@@ -767,15 +858,15 @@
         "type": "EMAIL_OTP",
         "location": {
           "start": {
-            "offset": 149,
+            "offset": 213,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 5,
+            "line": 6,
             "column": 6
           },
           "end": {
-            "offset": 153,
+            "offset": 217,
             "uri": "package:celest_backend/src/project.dart",
-            "line": 5,
+            "line": 6,
             "column": 10
           },
           "text": "auth"
@@ -785,15 +876,15 @@
     "externalProviders": [],
     "location": {
       "start": {
-        "offset": 149,
+        "offset": 213,
         "uri": "package:celest_backend/src/project.dart",
-        "line": 5,
+        "line": 6,
         "column": 6
       },
       "end": {
-        "offset": 153,
+        "offset": 217,
         "uri": "package:celest_backend/src/project.dart",
-        "line": 5,
+        "line": 6,
         "column": 10
       },
       "text": "auth"

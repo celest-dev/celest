@@ -30,16 +30,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -58,10 +87,6 @@
                   "column": 31
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               }
             }
           ],
@@ -175,16 +200,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -203,10 +257,6 @@
                   "column": 31
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               }
             }
           ],
@@ -321,16 +371,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -349,10 +428,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -473,16 +548,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -501,10 +605,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -626,16 +726,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -654,10 +783,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -743,16 +868,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -771,10 +925,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -1126,16 +1276,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -1154,10 +1333,6 @@
                   "column": 31
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               }
             }
           ],
@@ -1236,16 +1411,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -1264,10 +1468,6 @@
                   "column": 31
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               }
             }
           ],
@@ -1612,16 +1812,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -1640,10 +1869,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -1729,16 +1954,45 @@
                 {
                   "$": "DartInstance",
                   "classRef": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "V",
+                        "bound": {
+                          "$": "TypeReference",
+                          "symbol": "Object",
+                          "url": "dart:core",
+                          "isNullable": true
+                        }
+                      }
+                    ],
                     "isNullable": false
                   },
                   "constructor": "new",
-                  "positionalArguments": {},
+                  "positionalArguments": {
+                    "label": {
+                      "$": "DartString",
+                      "value": "principal",
+                      "staticType": {
+                        "symbol": "String",
+                        "url": "dart:core"
+                      }
+                    }
+                  },
                   "namedArguments": {},
                   "staticType": {
-                    "symbol": "_PrincipalContextKey",
+                    "symbol": "ContextKey",
                     "url": "package:celest/src/core/context.dart",
+                    "types": [
+                      {
+                        "$": "TypeReference",
+                        "symbol": "User",
+                        "url": "package:celest_core/src/auth/user.dart",
+                        "isNullable": false
+                      }
+                    ],
                     "isNullable": false
                   }
                 }
@@ -1757,10 +2011,6 @@
                   "column": 23
                 },
                 "text": "user"
-              },
-              "references": {
-                "name": "$user",
-                "type": "userContext"
               },
               "defaultTo": {
                 "$": "DartNull",
@@ -2074,7 +2324,7 @@
   "variables": [],
   "secrets": [],
   "databases": {
-    "CloudAuthDatabase": {
+    "cloudAuth": {
       "name": "CloudAuthDatabase",
       "dartName": "cloudAuth",
       "docs": [],
