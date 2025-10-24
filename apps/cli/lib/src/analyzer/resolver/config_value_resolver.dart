@@ -72,9 +72,14 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
   final CelestErrorReporter errorReporter;
   final ConfigValueFactory<T> factory;
 
+  final Set<String> _celestProvidedNames = {};
+
+  Set<String> get celestProvidedNames => _celestProvidedNames;
+
   static final Logger _logger = Logger('ConfigValueResolver');
 
   Future<ConfigVarSet<T>> resolve() async {
+    _celestProvidedNames.clear();
     final variables = ConfigVarSet<T>();
     final references = await configValueElement.references().toList();
     for (final reference in references) {
@@ -90,17 +95,19 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         .whereType<TopLevelVariableElement>();
     final topLevelResolutions =
         <
-          (
+          ({
+            TopLevelVariableElement element,
             String dartName,
             Iterable<String> docs,
-            Future<(String, String?, FileSpan?)?> resolution,
-          )
+            Future<(String, String?, FileSpan?)?> future,
+          })
         >[];
     for (final variable in topLevelDefinitions) {
       topLevelResolutions.add((
-        variable.name!,
-        variable.docLines,
-        resolveVariable(
+        element: variable,
+        dartName: variable.name!,
+        docs: variable.docLines,
+        future: resolveVariable(
           variable: variable,
           value: variable.computeConstantValue(),
           location: variable.sourceLocation,
@@ -108,26 +115,36 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
       ));
     }
     final topLevelVariables = await Future.wait(
-      topLevelResolutions.map((it) => it.$3),
+      topLevelResolutions.map((it) => it.future),
       eagerError: true,
     );
-    variables.addAll(
-      topLevelVariables.nonNulls.mapIndexed((index, it) {
-        final (name, value, location) = it;
-        return factory(
+    final defaultSpan = SourceFile.fromString('').span(0);
+    for (var index = 0; index < topLevelVariables.length; index++) {
+      final result = topLevelVariables[index];
+      if (result == null) {
+        continue;
+      }
+      final resolution = topLevelResolutions[index];
+      final (name, value, location) = result;
+      if (resolution.element.library.isPackageCelest) {
+        _celestProvidedNames.add(name);
+      }
+      variables.add(
+        factory(
           name,
-          dartName: topLevelResolutions[index].$1,
-          docs: topLevelResolutions[index].$2,
+          dartName: resolution.dartName,
+          docs: resolution.docs,
           value: value,
-          location: location ?? SourceFile.fromString('').span(0),
-        );
-      }),
-    );
+          location: location ?? defaultSpan,
+        ),
+      );
+    }
 
     final parameters = references
         .map((ref) => ref.enclosingFragment.element)
         .whereType<FormalParameterElement>();
-    final parameterResolutions = <Future<(String, String?, FileSpan?)?>>[];
+    final parameterResolutions =
+        <({Element element, Future<(String, String?, FileSpan?)?> future})>[];
     for (final parameter in parameters) {
       for (final metadata in parameter.metadata.annotations) {
         _logger.finer(
@@ -139,40 +156,53 @@ final class ConfigValueResolver<T extends ast.ConfigurationVariable> {
         switch (element) {
           case ConstructorElement(enclosingElement: final enclosingElement)
               when enclosingElement == configValueElement:
-            parameterResolutions.add(
-              resolveVariable(
+            parameterResolutions.add((
+              element: element,
+              future: resolveVariable(
                 variable: element,
                 value: metadata.computeConstantValue(),
                 location: location,
               ),
-            );
+            ));
           case PropertyAccessorElement(:final returnType)
               when returnType == configValueElement.thisType:
-            parameterResolutions.add(
-              resolveVariable(
+            parameterResolutions.add((
+              element: element,
+              future: resolveVariable(
                 variable: element,
                 value: metadata.computeConstantValue(),
                 location: location,
               ),
-            );
+            ));
         }
       }
     }
     final parameterVariables = await Future.wait(
-      parameterResolutions,
+      parameterResolutions.map((it) => it.future),
       eagerError: true,
     );
-    variables.addAll(
-      parameterVariables.nonNulls.map((it) {
-        final (name, value, location) = it;
-        return factory(
+    for (var index = 0; index < parameterVariables.length; index++) {
+      final result = parameterVariables[index];
+      if (result == null) {
+        continue;
+      }
+      final resolution = parameterResolutions[index];
+      final element = resolution.element;
+      final (name, value, location) = result;
+      if (element is PropertyAccessorElement) {
+        if (element.library.isPackageCelest) {
+          _celestProvidedNames.add(name);
+        }
+      }
+      variables.add(
+        factory(
           name,
           dartName: null,
           value: value,
-          location: location ?? SourceFile.fromString('').span(0),
-        );
-      }),
-    );
+          location: location ?? defaultSpan,
+        ),
+      );
+    }
 
     return variables;
   }

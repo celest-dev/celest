@@ -356,6 +356,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     required Iterable<ast.Secret> secrets,
   }) {
     final secretsByName = {for (final secret in secrets) secret.name: secret};
+    final celestProvided = _envVariableResolver.celestProvidedNames;
 
     final reportedReserved = <String>{};
     final reportedSecretReserved = <String>{};
@@ -366,7 +367,8 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       final isReserved =
           _reservedVariableNames.contains(name) ||
           name.startsWith(_reservedPrefix);
-      if (isReserved && reportedReserved.add(name)) {
+      final providedByCelest = celestProvided.contains(name);
+      if (isReserved && !providedByCelest && reportedReserved.add(name)) {
         reportError(
           'The environment variable name `$name` is reserved by Celest',
           location: variable.location,

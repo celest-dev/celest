@@ -369,7 +369,7 @@ final class TypeHelper {
     equals: _typeEquality.equals,
     hashCode: _typeEquality.hash,
   );
-  final _referenceToDartType = <codegen.Reference, DartType>{};
+  final _referenceToDartType = <_ReferenceCacheKey, DartType>{};
   final _wireTypeToDartType = <String, DartType>{};
   final serializationVerdicts = HashMap<DartType, Verdict>(
     equals: _typeEquality.equals,
@@ -422,7 +422,8 @@ final class TypeHelper {
   }
 
   DartType fromReference(codegen.Reference reference) {
-    final dartType = _referenceToDartType[reference];
+    final key = _ReferenceCacheKey.from(reference);
+    final dartType = _referenceToDartType[key];
     if (dartType == null) {
       throw unreachable(
         'Reference $reference was not found in the cache. Did you forget to '
@@ -654,7 +655,8 @@ final class TypeHelper {
     codegen.Reference reference, {
     required DartType storedType,
   }) {
-    _referenceToDartType.putIfAbsent(reference, () => storedType);
+    final key = _ReferenceCacheKey.from(reference);
+    _referenceToDartType.putIfAbsent(key, () => storedType);
     _trackReference(owner, reference);
     _trackDartType(storedType);
   }
@@ -677,7 +679,7 @@ final class TypeHelper {
     if (path == null) {
       return;
     }
-    _bucketFor(path).references.add(reference);
+    _bucketFor(path).references.add(_ReferenceCacheKey.from(reference));
   }
 
   void _trackWireType(DartType type, String wireType) {
@@ -782,7 +784,7 @@ class _TypeCacheBucket {
     equals: TypeHelper._typeEquality.equals,
     hashCode: TypeHelper._typeEquality.hash,
   );
-  final Set<codegen.Reference> references = <codegen.Reference>{};
+  final Set<_ReferenceCacheKey> references = HashSet<_ReferenceCacheKey>();
   final Set<String> wireTypes = <String>{};
   final Set<InterfaceElement> subtypeKeys = <InterfaceElement>{};
   final Map<InterfaceElement, Set<InterfaceType>> subtypesByElement = {};
@@ -790,6 +792,92 @@ class _TypeCacheBucket {
     equals: TypeHelper._typeEqualityIgnoreNullability.equals,
     hashCode: TypeHelper._typeEqualityIgnoreNullability.hash,
   );
+}
+
+extension type const _ReferenceCacheKey._(String value) {
+  static _ReferenceCacheKey from(codegen.Reference reference) =>
+      _ReferenceCacheKey._(_referenceCacheKey(reference));
+
+  static String _referenceCacheKey(codegen.Reference reference) {
+    if (reference is codegen.TypeReference) {
+      final buffer = StringBuffer('type(')
+        ..write(reference.url ?? '')
+        ..write('|')
+        ..write(reference.symbol)
+        ..write('|')
+        ..write((reference.isNullable ?? false) ? '1' : '0');
+      final bound = reference.bound;
+      if (bound != null) {
+        buffer
+          ..write('|bound=')
+          ..write(_referenceCacheKey(bound));
+      }
+      if (reference.types.isNotEmpty) {
+        buffer
+          ..write('|args=')
+          ..write(reference.types.map(_referenceCacheKey).join(','));
+      }
+      buffer.write(')');
+      return buffer.toString();
+    }
+    if (reference is codegen.RecordType) {
+      final buffer = StringBuffer('record(')
+        ..write((reference.isNullable ?? false) ? '1' : '0')
+        ..write('|pos=')
+        ..write(
+          reference.positionalFieldTypes.map(_referenceCacheKey).join(','),
+        )
+        ..write('|named=');
+      final namedEntries = reference.namedFieldTypes.entries.toList()
+        ..sort((a, b) => a.key.compareTo(b.key));
+      buffer
+        ..write(
+          namedEntries
+              .map((entry) => '${entry.key}:${_referenceCacheKey(entry.value)}')
+              .join(','),
+        )
+        ..write(')');
+      return buffer.toString();
+    }
+    if (reference is codegen.FunctionType) {
+      final buffer = StringBuffer('function(')
+        ..write((reference.isNullable ?? false) ? '1' : '0')
+        ..write('|return=')
+        ..write(
+          reference.returnType != null
+              ? _referenceCacheKey(reference.returnType!)
+              : 'null',
+        )
+        ..write('|required=')
+        ..write(reference.requiredParameters.map(_referenceCacheKey).join(','))
+        ..write('|optional=')
+        ..write(reference.optionalParameters.map(_referenceCacheKey).join(','))
+        ..write('|named=');
+      final namedEntries = reference.namedParameters.entries.toList()
+        ..sort((a, b) => a.key.compareTo(b.key));
+      buffer
+        ..write(
+          namedEntries
+              .map((entry) => '${entry.key}:${_referenceCacheKey(entry.value)}')
+              .join(','),
+        )
+        ..write('|namedRequired=');
+      final namedRequiredEntries =
+          reference.namedRequiredParameters.entries.toList()
+            ..sort((a, b) => a.key.compareTo(b.key));
+      buffer
+        ..write(
+          namedRequiredEntries
+              .map((entry) => '${entry.key}:${_referenceCacheKey(entry.value)}')
+              .join(','),
+        )
+        ..write('|types=')
+        ..write(reference.types.map(_referenceCacheKey).join(','))
+        ..write(')');
+      return buffer.toString();
+    }
+    return reference.toString();
+  }
 }
 
 final class _TypeToCodeBuilder implements TypeVisitor<codegen.Reference> {

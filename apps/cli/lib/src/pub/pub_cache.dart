@@ -86,7 +86,7 @@ final class PubCache {
     final allVersions = <Version>[];
     for (final packageVersion in packageVersions) {
       final basename = p.basename(packageVersion.path);
-      if (!basename.startsWith(packageName)) {
+      if (!basename.startsWith('$packageName-')) {
         continue;
       }
       final versionString = basename.substring(packageName.length + 1 /* - */);

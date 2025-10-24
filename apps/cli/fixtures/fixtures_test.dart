@@ -190,6 +190,7 @@ class TestRunner {
           projectDb: ProjectDatabase.memory(),
         );
         analyzer = CelestAnalyzer();
+        await analyzer.init(migrateProject: false);
         goldensDir.createSync();
         client = Client();
 

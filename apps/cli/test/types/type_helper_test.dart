@@ -8,6 +8,7 @@ import 'package:celest_cli/src/context.dart';
 import 'package:celest_cli/src/project/celest_project.dart';
 import 'package:celest_cli/src/project/project_paths.dart';
 import 'package:celest_cli/src/utils/analyzer.dart';
+import 'package:celest_cli/src/utils/reference.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
@@ -140,6 +141,41 @@ final class Circle extends Shape {
         () => typeHelper.fromWireType(shapeWireType),
         throwsA(isA<Error>()),
       );
+    });
+
+    test('fromReference resolves structurally equivalent references', () async {
+      const projectName = 'type_helper_reference_cache';
+      celestProject = await newProject(
+        name: projectName,
+        models: 'class Dummy { const Dummy(); }',
+      );
+      final originalPaths = celestProject.projectPaths;
+      final canonicalPaths = ProjectPaths(
+        io.Directory(originalPaths.projectRoot).resolveSymbolicLinksSync(),
+        parentAppRoot: originalPaths.parentAppRoot,
+        clientDir: originalPaths.clientRoot,
+        outputsDir: originalPaths.outputsDir,
+      );
+      projectPaths = canonicalPaths;
+      addTearDown(() => projectPaths = null);
+
+      final analyzer = CelestAnalyzer();
+      await analyzer.analyzeProject();
+
+      final dateTimeType = typeHelper.coreTypes.dateTimeType;
+      final baseReference = typeHelper.toReference(dateTimeType);
+      final nonNullableReference = baseReference.withNullability(false);
+      final nullableReference = baseReference.withNullability(true);
+
+      final resolvedBase = typeHelper.fromReference(baseReference);
+      final resolvedNonNullable = typeHelper.fromReference(
+        nonNullableReference,
+      );
+      final resolvedNullable = typeHelper.fromReference(nullableReference);
+
+      expect(typeHelper.typeSystem.isNullable(resolvedBase), isFalse);
+      expect(typeHelper.typeSystem.isNullable(resolvedNonNullable), isFalse);
+      expect(typeHelper.typeSystem.isNullable(resolvedNullable), isTrue);
     });
 
     test('ignores paths outside the project root', () async {

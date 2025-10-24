@@ -97,6 +97,12 @@ Future<CelestProject> newProject({
       relativeRoot: false,
     ),
     Package(
+      'drift',
+      p.toUri(pubCache.latestVersionPath('drift')!),
+      packageUriRoot: Uri.parse('lib/'),
+      relativeRoot: false,
+    ),
+    Package(
       'json_annotation',
       p.toUri(pubCache.latestVersionPath('json_annotation')!),
       packageUriRoot: Uri.parse('lib/'),
@@ -366,6 +372,149 @@ void main() {
       final error = analyzer.errors.single;
       expect(error.message, contains('Test diagnostic message'));
       expect(error.location, isNotNull);
+    });
+
+    group('lifecycle', () {
+      test('reset clears TypeHelper state between analyzer runs', () async {
+        celestProject = await newProject(
+          name: 'reset_clears_type_helper_state',
+        );
+        final analyzerA = CelestAnalyzer();
+        await analyzerA.init(migrateProject: false);
+
+        final envType = typeHelper.coreTypes.celestEnvType;
+        typeHelper.setOverride(envType, envType);
+        expect(typeHelper.hasOverride(envType), isTrue);
+
+        analyzerA.reset();
+        expect(typeHelper.overrides, isEmpty);
+
+        final analyzerB = CelestAnalyzer();
+        expect(identical(analyzerA, analyzerB), isTrue);
+        await analyzerB.init(migrateProject: false);
+
+        final newEnvType = typeHelper.coreTypes.celestEnvType;
+        expect(typeHelper.hasOverride(newEnvType), isFalse);
+
+        final result = await analyzerB.analyzeProject();
+        expect(result, isA<AnalysisSuccessResult>());
+        expect(typeHelper.overrides, isEmpty);
+      });
+    });
+
+    group('databases', () {
+      testNoErrors(
+        name: 'collects_multiple_databases',
+        projectDart: '''
+import 'package:celest/celest.dart';
+import 'package:collects_multiple_databases/src/database/first.dart';
+import 'package:collects_multiple_databases/src/database/second.dart';
+
+const project = Project(name: 'collects_multiple_databases');
+
+const firstDatabase = Database(
+  schema: Schema.drift(FirstDatabase),
+);
+
+const secondDatabase = Database(
+  schema: Schema.drift(SecondDatabase),
+);
+''',
+        lib: {
+          'src': {
+            'database': {
+              'first.dart': _generatedDatabaseStub('FirstDatabase'),
+              'second.dart': _generatedDatabaseStub('SecondDatabase'),
+            },
+          },
+        },
+        expectProject: (project) {
+          final databases = project.databases;
+          expect(databases.length, 2);
+          final first = databases.values.singleWhere(
+            (db) => db.name == 'FirstDatabase',
+          );
+          final second = databases.values.singleWhere(
+            (db) => db.name == 'SecondDatabase',
+          );
+          final firstConfig =
+              (first.config as CelestDatabaseConfig).hostname.name;
+          final secondConfig =
+              (second.config as CelestDatabaseConfig).hostname.name;
+          expect(first.dartName, 'firstDatabase');
+          expect(second.dartName, 'secondDatabase');
+          expect(firstConfig, 'FIRST_DATABASE_HOST');
+          expect(secondConfig, 'SECOND_DATABASE_HOST');
+        },
+      );
+
+      testNoErrors(
+        name: 'allows_duplicate_handles_for_same_schema',
+        projectDart: '''
+import 'package:celest/celest.dart';
+import 'package:allows_duplicate_handles_for_same_schema/src/database/shared.dart';
+
+const project = Project(name: 'allows_duplicate_handles_for_same_schema');
+
+const firstHandle = Database(
+  schema: Schema.drift(SharedDatabase),
+);
+
+const secondHandle = Database(
+  schema: Schema.drift(SharedDatabase),
+);
+''',
+        lib: {
+          'src': {
+            'database': {
+              'shared.dart': _generatedDatabaseStub('SharedDatabase'),
+            },
+          },
+        },
+        expectProject: (project) {
+          final databases = project.databases;
+          expect(databases.length, 2);
+          final hostnames = databases.values
+              .map((db) => (db.config as CelestDatabaseConfig).hostname.name)
+              .toList();
+          final tokens = databases.values
+              .map((db) => (db.config as CelestDatabaseConfig).token.name)
+              .toList();
+          expect(hostnames, everyElement(equals('SHARED_DATABASE_HOST')));
+          expect(tokens, everyElement(equals('SHARED_DATABASE_TOKEN')));
+        },
+      );
+
+      testErrors(
+        name: 'errors_on_duplicate_env_for_distinct_schemas',
+        projectDart: '''
+import 'package:celest/celest.dart';
+import 'package:errors_on_duplicate_env_for_distinct_schemas/src/database/first_shared.dart' as first;
+import 'package:errors_on_duplicate_env_for_distinct_schemas/src/database/second_shared.dart' as second;
+
+const project = Project(name: 'errors_on_duplicate_env_for_distinct_schemas');
+
+const firstHandle = Database(
+  schema: Schema.drift(first.SharedDatabase),
+);
+
+const secondHandle = Database(
+  schema: Schema.drift(second.SharedDatabase),
+);
+''',
+        lib: {
+          'src': {
+            'database': {
+              'first_shared.dart': _generatedDatabaseStub('SharedDatabase'),
+              'second_shared.dart': _generatedDatabaseStub('SharedDatabase'),
+            },
+          },
+        },
+        errors: const [
+          'Duplicate hostname environment variable `SHARED_DATABASE_HOST` detected for databases. Each database must use a unique environment variable.',
+          'Duplicate token secret `SHARED_DATABASE_TOKEN` detected for databases. Each database must use a unique secret name.',
+        ],
+      );
     });
 
     group('part files', () {
@@ -2430,6 +2579,24 @@ const auth = Auth(
               NodeReference(name: 'MY_NAME', type: NodeType.variable),
               NodeReference(name: 'MY_AGE', type: NodeType.variable),
             ]),
+          );
+        },
+      );
+
+      testNoErrors(
+        name: 'celest_reserved',
+        apis: {
+          'greeting.dart': r'''
+      import 'package:celest/celest.dart';
+
+      @cloud
+      void sayHello(@env.environment String currentEnvironment) {}
+''',
+        },
+        expectProject: (project) {
+          expect(
+            project.variables.map((env) => env.name),
+            contains('CELEST_ENVIRONMENT'),
           );
         },
       );
