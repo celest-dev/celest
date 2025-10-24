@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io' show HandshakeException, HttpClient, SocketException;
 
-import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/environment.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:celest_core/_internal.dart';
@@ -26,232 +25,390 @@ Context get context => Context.current;
 /// A per-request context object which propogates request information and common
 /// accessors to the Celest server environment.
 /// {@endtemplate}
-final class Context {
-  /// {@macro celest.runtime.celest_context}
-  Context._(this._zone);
-
+extension type Context._(Zone _zone) {
   /// The [Context] for the given [zone].
   factory Context.of(Zone zone) {
-    return _contexts[zone] ??= Context._(zone);
+    final context = Context._(zone);
+    context._ensureData();
+    return context;
   }
 
   /// All context objects by their [Zone].
   ///
   /// Contexts are attached to a zone such that they are disposed
   /// when the Zone in which they were created is disposed.
-  static final Expando<Context> _contexts = Expando('contexts');
+  static final Expando<_ContextData> _state = Expando('_zone_context_state');
+  static final Object _nullSentinel = Object();
+  static const Map<ContextKey<Object?>, Object> _emptyValues = {};
 
-  static Context? _root;
+  /// The [Context] for the current [Zone].
+  static Context get current {
+    final context = Context._(Zone.current);
+    context._ensureData();
+    return context;
+  }
 
-  /// The root [Context].
+  /// The [Context] attached to [Zone.root].
   static Context get root {
-    return _root ??= Context.of(Zone.root);
+    final context = Context._(Zone.root);
+    context._ensureData();
+    return context;
   }
 
-  /// Sets the root [Context] for the current execution scope.
-  static set root(Context value) {
-    if (_root != null && kReleaseMode) {
-      throw UnsupportedError(
-        'Cannot set the root context after it has already been set',
-      );
-    }
-    _root = value;
+  /// Runs [body] within a child zone that inherits from [parent] and applies
+  /// the provided [overrides].
+  static FutureOr<R> run<R>({
+    Context? parent,
+    ContextOverrides overrides = const <ContextKey<Object?>, Object?>{},
+    required FutureOr<R> Function(Context context) body,
+  }) {
+    final Context parentContext = parent ?? Context.current;
+    final Zone childZone = parentContext._zone.fork();
+    _state[childZone] = _ContextData(
+      parent: parentContext,
+      values: _normalize(overrides),
+      callbacks: <PostRequestCallback>[],
+    );
+    return childZone.run(() => body(Context.current));
   }
 
-  /// The [Context] for the current execution scope.
-  static Context get current => Context.of(Zone.current);
-
-  /// Context-specific values.
-  final Map<ContextKey<Object>, Object> _values = {};
-
-  /// The zone in which this context was created.
-  final Zone _zone;
-
-  /// Retrieves the value in this context for the given [key].
-  Object? operator [](ContextKey<Object> key) {
-    return _values[key];
-  }
-
-  /// Sets the value of the given [key] in this context.
-  void operator []=(ContextKey<Object> key, Object? value) {
-    if (identical(this, root) && !identical(Zone.current, root._zone)) {
-      throw UnsupportedError('Cannot set values on the root context');
-    }
-    if (value == null) {
-      _values.remove(key);
-    } else {
-      _values[key] = value;
-    }
-  }
-
-  /// The parent [Context] to `this`.
-  Context? get parent {
-    if (identical(this, root)) {
-      return null;
-    }
-    Zone? parent = _zone.parent;
-    while (parent != null) {
-      if (_contexts[parent] case final parentContext?) {
-        return parentContext;
+  /// Installs the current zone as a root context for the duration of [body].
+  static FutureOr<R> withCurrentZoneAsRoot<R>({
+    ContextOverrides overrides = const <ContextKey<Object?>, Object?>{},
+    required FutureOr<R> Function(Context root) body,
+  }) {
+    final Zone zone = Zone.current;
+    final _ContextData? previous = _state[zone];
+    final installed = _ContextData(
+      parent: null,
+      values: _normalize(overrides),
+      callbacks: <PostRequestCallback>[],
+    );
+    _state[zone] = installed;
+    try {
+      final FutureOr<R> result = body(Context._(zone));
+      if (result is Future<R>) {
+        return result.whenComplete(() => _restoreState(zone, previous));
       }
-      parent = parent.parent;
+      _restoreState(zone, previous);
+      return result;
+    } on Object {
+      _restoreState(zone, previous);
+      rethrow;
     }
-    return root;
   }
 
-  /// The platform of the current context.
+  static void _restoreState(Zone zone, _ContextData? previous) {
+    if (previous != null) {
+      _state[zone] = previous;
+    } else {
+      _state[zone] = null;
+    }
+  }
+
+  static Map<ContextKey<Object?>, Object> _normalize(
+    ContextOverrides overrides,
+  ) {
+    if (overrides.isEmpty) {
+      return _emptyValues;
+    }
+    return Map<ContextKey<Object?>, Object>.unmodifiable({
+      for (final MapEntry<ContextKey<Object?>, Object?> entry
+          in overrides.entries)
+        entry.key: entry.value ?? _nullSentinel,
+    });
+  }
+
+  _ContextData get _data => _ensureData();
+
+  _ContextData _ensureData() {
+    final _ContextData? existing = _state[_zone];
+    if (existing != null) {
+      return existing;
+    }
+    final Context? inheritedParent = _nearestAncestorWithState(_zone);
+    final data = _ContextData(
+      parent: inheritedParent,
+      values: _emptyValues,
+      callbacks: <PostRequestCallback>[],
+    );
+    _state[_zone] = data;
+    return data;
+  }
+
+  static Context? _nearestAncestorWithState(Zone zone) {
+    Zone? cursor = zone.parent;
+    while (cursor != null) {
+      final _ContextData? parentData = _state[cursor];
+      if (parentData != null) {
+        return Context._(cursor);
+      }
+      cursor = cursor.parent;
+    }
+    return null;
+  }
+
+  /// The underlying [Zone].
+  Zone get zone => _zone;
+
+  /// The parent [Context], if any.
+  Context? get parent => _data.parent;
+
+  /// Whether this context wraps [Zone.root].
+  bool get isRoot => identical(_zone, Zone.root);
+
+  /// The platform for the current context.
   Platform get platform => get(ContextKey.platform) ?? const LocalPlatform();
 
-  /// The file system of the current context.
+  /// The file system for the current context.
   FileSystem get fileSystem =>
       get(ContextKey.fileSystem) ?? const LocalFileSystem();
 
-  /// Whether Celest is running in the cloud.
-  bool get isRunningInCloud => get(env.googleProjectId) != null;
+  /// Whether the current context is running within Celest Cloud.
+  bool get isRunningInCloud {
+    final Environment? environmentValue = get(ContextKey.environment);
+    if (environmentValue != null) {
+      return environmentValue != Environment.local;
+    }
+    final String? environmentVariable =
+        platform.environment['CELEST_ENVIRONMENT'];
+    if (environmentVariable != null) {
+      return environmentVariable != Environment.local;
+    }
+    return googleProjectId != null ||
+        platform.environment.containsKey('K_SERVICE') ||
+        platform.environment.containsKey('FUNCTION_TARGET') ||
+        platform.environment.containsKey('CLOUD_RUN_JOB');
+  }
 
-  /// The Google project ID for the current context.
-  ///
-  /// This will be set when running in Celest Cloud and will be `null` otherwise
-  /// unless explicitly set in the environment.
-  String? get googleProjectId => get(env.googleProjectId);
+  /// The Google Cloud project ID for the current context, if any.
+  String? get googleProjectId {
+    return get(ContextKey.googleProjectId) ??
+        get(ContextKey.project)?.projectId ??
+        platform.environment['CELEST_GOOGLE_PROJECT_ID'] ??
+        platform.environment['GOOGLE_CLOUD_PROJECT'] ??
+        platform.environment['GCLOUD_PROJECT'] ??
+        platform.environment['GCP_PROJECT'];
+  }
 
-  /// The shelf [shelf.Request] object which triggered the current function invocation.
-  shelf.Request get currentRequest => expect(ContextKey.currentRequest);
+  /// The current request associated with this context.
+  shelf.Request get currentRequest =>
+      expect<shelf.Request>(ContextKey.currentRequest);
 
-  /// The [Traceparent] for the current request.
+  /// The tracing information associated with the current request.
   Traceparent? get currentTrace => get(ContextKey.currentTrace);
 
-  /// The Celest [Environment] of the running service.
-  Environment get environment => expect(env.environment) as Environment;
+  /// The Celest environment for the current context.
+  Environment get environment => expect<Environment>(ContextKey.environment);
 
   /// The resolved project configuration for the current context.
-  ResolvedProject get project => expect(ContextKey.project);
+  ResolvedProject get project => expect<ResolvedProject>(ContextKey.project);
 
   /// The HTTP client for the current context.
   http.Client get httpClient =>
       get(ContextKey.httpClient) ?? _defaultHttpClient;
 
-  /// The default HTTP client.
-  static final http.Client _defaultHttpClient = http.RetryClient(
-    http.IOClient(
-      HttpClient()
-        ..idleTimeout = const Duration(seconds: 5)
-        ..connectionTimeout = const Duration(seconds: 5),
-    ),
-    retries: 3,
-    when: (response) {
-      return switch (response.statusCode) {
-        HttpStatus.gatewayTimeout ||
-        HttpStatus.internalServerError ||
-        HttpStatus.requestTimeout ||
-        HttpStatus.serviceUnavailable => true,
-        _ => false,
-      };
-    },
-    whenError: (error, stackTrace) {
-      context.logger.warning('HTTP client error', error, stackTrace);
-      return switch (error) {
-        SocketException() || HandshakeException() || TimeoutException() => true,
-        _ => false,
-      };
-    },
-    onRetry: (request, response, retryCount) {
-      context.logger.warning(
-        'Retrying request to ${request.url} (retry=$retryCount)',
-      );
-    },
-  );
-
   /// The logger for the current context.
   Logger get logger => get(ContextKey.logger) ?? Logger.root;
 
-  /// Logs a message at the [Level.INFO] level.
+  /// Logs a message at the [Level.INFO] level using the current logger.
   void log(String message) {
     logger.info(message);
   }
 
-  /// The [Router] for the current context.
-  Router get router => expect(ContextKey.router);
+  /// The router registered for the current context.
+  Router get router => expect<Router>(ContextKey.router);
 
-  (Context, V)? _get<V extends Object>(ContextKey<V> key) {
-    if (key.read(this) case final value?) {
-      return (this, value);
+  /// Checks whether [key] is present in the current context only.
+  bool containsLocal<V extends Object?>(ContextKey<V> key) {
+    return _data.values.containsKey(key);
+  }
+
+  /// Checks whether [key] is present in this context or any ancestor.
+  bool contains<V extends Object?>(ContextKey<V> key) {
+    if (containsLocal(key)) {
+      return true;
     }
-    return parent?._get(key);
+    final Context? parentContext = parent;
+    return parentContext?.contains(key) ?? false;
   }
 
-  /// The value for the given [key] in the current [Context].
-  V? get<V extends Object>(ContextKey<V> key) {
-    return _get(key)?.$2;
+  /// Retrieves the value for [key], traversing ancestors as needed.
+  V? get<V extends Object?>(ContextKey<V> key) {
+    final Map<ContextKey<Object?>, Object> local = _data.values;
+    if (local.containsKey(key)) {
+      final Object stored = local[key]!;
+      return identical(stored, _nullSentinel) ? null : stored as V;
+    }
+    final Context? parentContext = parent;
+    return parentContext?.get(key);
   }
 
-  /// Expects a value present in this [Context] for the given [key].
-  ///
-  /// Throws a [StateError] if the value is not present.
-  V expect<V extends Object>(ContextKey<V> key) {
+  /// Retrieves the value for [key] or throws if it is absent.
+  V expect<V extends Object?>(ContextKey<V> key) {
     final V? value = get(key);
     if (value == null) {
-      throw StateError('Expected value for key "$key" in context');
+      throw StateError('Missing context value for key $key');
     }
     return value;
   }
 
-  /// Sets the value of [key] in the current [Context].
-  V put<V extends Object>(ContextKey<V> key, V value) {
-    key.set(this, value);
-    return value;
-  }
-
-  /// Sets the value of [key] in this [Context] if it is not already set.
-  void putIfAbsent<V extends Object>(ContextKey<V> key, V Function() value) {
-    if (get(key) == null) {
-      put(key, value());
+  /// Returns the overrides applied in the current zone only.
+  ContextOverrides snapshotLocal() {
+    final Map<ContextKey<Object?>, Object> local = _data.values;
+    if (local.isEmpty) {
+      return const <ContextKey<Object?>, Object?>{};
     }
+    return Map<ContextKey<Object?>, Object?>.unmodifiable({
+      for (final MapEntry<ContextKey<Object?>, Object> entry in local.entries)
+        entry.key: identical(entry.value, _nullSentinel) ? null : entry.value,
+    });
   }
 
-  /// Updates the value of [key] in place.
-  void update<V extends Object>(
+  /// Returns a snapshot of this context merged with its ancestors.
+  ContextOverrides snapshot() {
+    final Map<ContextKey<Object?>, Object?> result = {};
+    final Context? parentContext = parent;
+    if (parentContext != null) {
+      result.addAll(parentContext.snapshot());
+    }
+    result.addAll(snapshotLocal());
+    return Map<ContextKey<Object?>, Object?>.unmodifiable(result);
+  }
+
+  /// Creates a child context with [overrides] and runs [body] inside it.
+  FutureOr<R> bind<R>({
+    ContextOverrides overrides = const <ContextKey<Object?>, Object?>{},
+    required FutureOr<R> Function(Context context) body,
+  }) {
+    return Context.run(parent: this, overrides: overrides, body: body);
+  }
+
+  /// Overrides a single [key] with [value] for the duration of [body].
+  FutureOr<R> overrideValue<R, V extends Object?>(
     ContextKey<V> key,
-    V Function(V? value) update,
+    V? value,
+    FutureOr<R> Function(Context context) body,
   ) {
-    final (Context context, V? value) = _get(key) ?? (this, null);
-    final V updated = update(value);
-    context.put(key, updated);
+    return bind(overrides: {key: value}, body: body);
   }
 
-  /// Removes [key] and its associated value, if present, from the [Context].
-  ///
-  /// Returns the value associated with [key] before it was removed. Returns
-  /// `null` if [key] was not in the map.
-  ///
-  /// **NOTE**: This will not remove the value from parent contexts, meaning
-  /// that [get] may still return a value for the given [key] if it is present
-  /// in a parent context.
-  V? remove<V extends Object>(ContextKey<V> key) {
-    return _values.remove(key) as V?;
+  /// Clears [key] locally for the duration of [body].
+  FutureOr<R> clearValue<R, V extends Object?>(
+    ContextKey<V> key,
+    FutureOr<R> Function(Context context) body,
+  ) {
+    return bind(overrides: {key: null}, body: body);
   }
 
-  final List<PostRequestCallback> _postRequestCallbacks = [];
+  /// Sets [key] to [value] in the current context without affecting parents.
+  @Deprecated('Use setLocal instead')
+  void put<V extends Object?>(ContextKey<V> key, V? value) {
+    setLocal(key, value);
+  }
+
+  /// Sets [key] to [value] in the current context without affecting parents.
+  void setLocal<V extends Object?>(ContextKey<V> key, V? value) {
+    final _ContextData data = _data;
+    final Map<ContextKey<Object?>, Object> current = data.values;
+    final updated =
+        identical(current, _emptyValues)
+            ? <ContextKey<Object?>, Object>{}
+            : Map<ContextKey<Object?>, Object>.from(current);
+    updated[key] = value ?? _nullSentinel;
+    _state[_zone] = _ContextData(
+      parent: data.parent,
+      values: Map<ContextKey<Object?>, Object>.unmodifiable(updated),
+      callbacks: List<PostRequestCallback>.from(data.callbacks),
+    );
+  }
 
   /// Registers a callback to be run after the current context completes.
   void after(
     FutureOr<void> Function(shelf.Response) callback, {
     FutureOr<void> Function(Object e, StackTrace st)? onError,
   }) {
-    _postRequestCallbacks.add((
-      onResponse: _zone.bindUnaryCallback((response) => callback(response)),
-      onError: onError == null ? null : _zone.bindBinaryCallback(onError),
-    ));
+    final ZoneUnaryCallback<FutureOr<void>, shelf.Response> boundCallback =
+        _zone.bindUnaryCallback(callback);
+    final ZoneBinaryCallback<FutureOr<void>, Object, StackTrace>? boundOnError =
+        onError == null ? null : _zone.bindBinaryCallback(onError);
+    _data.callbacks.add((onResponse: boundCallback, onError: boundOnError));
+  }
+
+  /// Runs registered post-request callbacks in LIFO order.
+  Future<void> runPostRequestCallbacks(shelf.Response response) async {
+    final _ContextData data = _data;
+    if (data.callbacks.isEmpty) {
+      return;
+    }
+    final callbacks = List<PostRequestCallback>.from(data.callbacks);
+    _state[_zone] = _ContextData(
+      parent: data.parent,
+      values: data.values,
+      callbacks: <PostRequestCallback>[],
+    );
+    for (final PostRequestCallback callback in callbacks.reversed) {
+      try {
+        await callback.onResponse(response);
+      } on Object catch (error, stackTrace) {
+        logger.shout(
+          'An error occurred while running a post-request callback',
+          error,
+          stackTrace,
+        );
+        final FutureOr<void> Function(Object e, StackTrace st)? handler =
+            callback.onError;
+        if (handler != null) {
+          await handler(error, stackTrace);
+        } else {
+          Zone.current.handleUncaughtError(error, stackTrace);
+        }
+      }
+    }
+  }
+
+  /// Runs registered post-request error callbacks in LIFO order.
+  Future<void> runPostRequestErrorCallbacks(
+    Object error,
+    StackTrace stackTrace,
+  ) async {
+    final _ContextData data = _data;
+    if (data.callbacks.isEmpty) {
+      return;
+    }
+    final callbacks = List<PostRequestCallback>.from(data.callbacks);
+    _state[_zone] = _ContextData(
+      parent: data.parent,
+      values: data.values,
+      callbacks: <PostRequestCallback>[],
+    );
+    for (final PostRequestCallback callback in callbacks.reversed) {
+      final FutureOr<void> Function(Object e, StackTrace st)? handler =
+          callback.onError;
+      if (handler == null) {
+        continue;
+      }
+      try {
+        await handler(error, stackTrace);
+      } on Object catch (callbackError, callbackStackTrace) {
+        logger.shout(
+          'An error occurred while running a post-request callback',
+          callbackError,
+          callbackStackTrace,
+        );
+        Zone.current.handleUncaughtError(callbackError, callbackStackTrace);
+      }
+    }
   }
 }
 
 /// {@template celest.runtime.context_key}
-/// A key for a typed value stored in a [Context].
+/// A typed key used to store values inside a [Context].
 /// {@endtemplate}
 @immutable
-abstract interface class ContextKey<V extends Object> {
+class ContextKey<V extends Object?> {
   /// {@macro celest.runtime.context_key}
-  const factory ContextKey([String? label]) = _ContextKey<V>;
+  const ContextKey([this.label]);
 
   /// The context key for the current [shelf.Request].
   static const ContextKey<shelf.Request> currentRequest = ContextKey(
@@ -264,7 +421,7 @@ abstract interface class ContextKey<V extends Object> {
   );
 
   /// The context key for the current [User].
-  static const ContextKey<User> principal = _PrincipalContextKey();
+  static const ContextKey<User> principal = ContextKey('principal');
 
   /// The context key for the context [http.Client].
   static const ContextKey<http.Client> httpClient = ContextKey('http client');
@@ -287,51 +444,48 @@ abstract interface class ContextKey<V extends Object> {
   /// to dynamically add/remove routes at runtime.
   static const ContextKey<Router> router = ContextKey('router');
 
-  /// Reads the value for `this` from the given [context].
-  V? read(Context context);
+  /// The context key for the current [Environment].
+  static const ContextKey<Environment> environment = ContextKey('environment');
 
-  /// Sets the value for `this` in the given [context].
-  void set(Context context, V? value);
-}
+  /// The context key for the current Google Cloud project ID, if available.
+  static const ContextKey<String> googleProjectId = ContextKey(
+    'google project id',
+  );
 
-final class _ContextKey<V extends Object> implements ContextKey<V> {
-  const _ContextKey([this.label]);
-
+  /// An optional label for debugging purposes.
   final String? label;
-
-  @override
-  V? read(Context context) {
-    return context[this] as V?;
-  }
-
-  @override
-  void set(Context context, V? value) {
-    context[this] = value;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is _ContextKey<V> && other.label == label;
-  }
-
-  @override
-  int get hashCode => Object.hash(_ContextKey<V>, label);
 
   @override
   String toString() {
     if (label case final label?) {
       return label;
     }
-    if (kDebugMode || !context.environment.isProduction) {
-      return '<$V>';
-    }
-    return '<removed>';
+    return kReleaseMode ? '<removed>' : '<$V>';
   }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is ContextKey<V> && other.label == label;
+  }
+
+  @override
+  int get hashCode => Object.hash(ContextKey, label);
 }
 
-final class _PrincipalContextKey extends _ContextKey<User> {
-  const _PrincipalContextKey() : super('principal');
+/// Convenient alias for context overrides.
+typedef ContextOverrides = Map<ContextKey<Object?>, Object?>;
+
+final class _ContextData {
+  _ContextData({
+    required this.parent,
+    required this.values,
+    List<PostRequestCallback>? callbacks,
+  }) : callbacks = callbacks ?? <PostRequestCallback>[];
+
+  final Context? parent;
+  final Map<ContextKey<Object?>, Object> values;
+  final List<PostRequestCallback> callbacks;
 }
 
 /// A callback to be run after the current context completes.
@@ -341,25 +495,33 @@ typedef PostRequestCallback =
       FutureOr<void> Function(Object e, StackTrace st)? onError,
     });
 
-/// {@template celest.runtime.post_request_callbacks}
-/// The context key for post-request callbacks.
-/// {@endtemplate}
-final class PostRequestCallbacks
-    implements ContextKey<List<PostRequestCallback>> {
-  /// {@macro celest.runtime.post_request_callbacks}
-  const PostRequestCallbacks();
-
-  @override
-  List<PostRequestCallback> read(Context context) {
-    return context._postRequestCallbacks;
-  }
-
-  @override
-  void set(Context context, List<PostRequestCallback>? value) {
-    if (value == null) {
-      context._postRequestCallbacks.clear();
-    } else {
-      context._postRequestCallbacks.addAll(value);
-    }
-  }
-}
+/// The default HTTP client used when no client is configured in the context.
+final http.Client _defaultHttpClient = http.RetryClient(
+  http.IOClient(
+    HttpClient()
+      ..idleTimeout = const Duration(seconds: 5)
+      ..connectionTimeout = const Duration(seconds: 5),
+  ),
+  retries: 3,
+  when: (response) {
+    return switch (response.statusCode) {
+      HttpStatus.gatewayTimeout ||
+      HttpStatus.internalServerError ||
+      HttpStatus.requestTimeout ||
+      HttpStatus.serviceUnavailable => true,
+      _ => false,
+    };
+  },
+  whenError: (error, stackTrace) {
+    Context.current.logger.warning('HTTP client error', error, stackTrace);
+    return switch (error) {
+      SocketException() || HandshakeException() || TimeoutException() => true,
+      _ => false,
+    };
+  },
+  onRetry: (request, response, retryCount) {
+    Context.current.logger.warning(
+      'Retrying request to ${request.url} (retry=$retryCount)',
+    );
+  },
+);

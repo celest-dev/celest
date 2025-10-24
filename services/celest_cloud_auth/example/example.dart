@@ -11,7 +11,7 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 Future<void> main() async {
-  context.put(ContextKey.project, exampleProject);
+  context.setLocal(ContextKey.project, exampleProject);
 
   final database = CloudAuthDatabase.memory();
   final cloudAuth = await CelestCloudAuth.create(database: database);

@@ -29,7 +29,7 @@ export 'package:celest_cloud_auth/src/users/users_service.dart';
 /// The Celest authentication and authorization service.
 final class CelestCloudAuth {
   CelestCloudAuth._({required this.db, required this.cryptoKeys}) {
-    celest.context.put(contextKey, this);
+    celest.context.setLocal(contextKey, this);
   }
 
   /// Returns the [CelestCloudAuth] instance from the given [context].
@@ -72,7 +72,7 @@ final class CelestCloudAuth {
   }) async {
     final cryptoKeys = await CryptoKeyRepository.create(db: database);
     if (emailProvider != null) {
-      celest.context.put(contextKeyEmailOtpProvider, emailProvider);
+      celest.context.setLocal(contextKeyEmailOtpProvider, emailProvider);
     }
     return CelestCloudAuth._(db: database, cryptoKeys: cryptoKeys);
   }

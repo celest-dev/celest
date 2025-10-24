@@ -43,54 +43,51 @@ Future<CelestService> serve({
   FutureOr<void> Function(Context context)? setup,
   int? port,
 }) async {
-  Context.root = Context.of(Zone.current);
-
-  await configure(config: config);
-
-  final router = Router();
-  Context.root.put(ContextKey.router, router);
-  if (setup != null) {
-    try {
-      await setup(Context.root);
-    } on Object catch (e, st) {
-      Logger.root.severe('Failed to setup', e, st);
-      rethrow;
-    }
-  }
-  for (final MapEntry(key: route, value: target) in targets.entries) {
-    target.apply(router, route);
-  }
-  router.get('/v1/healthz', (_) => Response.ok('OK'));
-
-  final Handler pipeline = const Pipeline()
-      .addMiddleware(const RootMiddleware().call)
-      .addMiddleware(const CorsMiddleware().call)
-      .addMiddleware(const CloudExceptionMiddleware().call)
-      .addHandler(router.call);
-  port ??= switch (Platform.environment['PORT']) {
-    final String port? =>
-      int.tryParse(port) ?? (throw StateError('Invalid PORT set: "$port"')),
-    _ => defaultCelestPort,
-  };
-  final HttpServer server = await shelf_io.serve(
-    pipeline,
-    InternetAddress.anyIPv4,
-    port,
-    poweredByHeader: 'Celest, the Flutter cloud platform',
-  );
-  print('Serving on http://localhost:${server.port}');
-  unawaited(
-    StreamGroup.merge([
-      ProcessSignal.sigint.watch(),
-      if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
-    ]).first.then((signal) {
-      if (context.isRunningInCloud) {
-        print('Received signal $signal');
+  final ContextOverrides overrides = await configure(config: config);
+  return Context.run(
+    overrides: {...overrides, ContextKey.router: Router()},
+    body: (context) async {
+      if (setup != null) {
+        try {
+          await setup(context);
+        } on Object catch (e, st) {
+          Logger.root.severe('Failed to setup', e, st);
+          rethrow;
+        }
       }
-      return server.close(force: true);
-    }),
+      for (final MapEntry(key: route, value: target) in targets.entries) {
+        target.apply(context.router, route);
+      }
+      context.router.get('/v1/healthz', (_) => Response.ok('OK'));
+
+      final Handler pipeline = const Pipeline()
+          .addMiddleware(const RootMiddleware().call)
+          .addMiddleware(const CorsMiddleware().call)
+          .addMiddleware(const CloudExceptionMiddleware().call)
+          .addHandler(context.router.call);
+      port ??= switch (Platform.environment['PORT']) {
+        final String port? =>
+          int.tryParse(port) ?? (throw StateError('Invalid PORT set: "$port"')),
+        _ => defaultCelestPort,
+      };
+      final HttpServer server = await shelf_io.serve(
+        pipeline,
+        InternetAddress.anyIPv4,
+        port!,
+        poweredByHeader: 'Celest, the Flutter cloud platform',
+      );
+      print('Serving on http://localhost:${server.port}');
+      unawaited(
+        StreamGroup.merge([
+          ProcessSignal.sigint.watch(),
+          if (!Platform.isWindows) ProcessSignal.sigterm.watch(),
+        ]).first.then((signal) {
+          return server.close(force: true);
+        }),
+      );
+      return CelestService._(server);
+    },
   );
-  return CelestService._(server);
 }
 
 /// {@template celest.runtime.celest_service}

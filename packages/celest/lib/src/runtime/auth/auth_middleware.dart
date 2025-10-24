@@ -37,7 +37,12 @@ abstract base class AuthMiddleware implements Middleware {
         throw const CloudException.unauthorized();
       }
       if (user != null) {
-        context.put(ContextKey.principal, user);
+        return context.bind(
+          body: (_) {
+            return inner(request);
+          },
+          overrides: {ContextKey.principal: user},
+        );
       }
       return inner(request);
     };

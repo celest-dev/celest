@@ -1,10 +1,12 @@
 @TestOn('vm')
 library;
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
+import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/configuration.dart';
 import 'package:celest_ast/celest_ast.dart';
 import 'package:file/memory.dart';
@@ -53,6 +55,20 @@ final testProject = ResolvedProject(
 );
 
 void main() {
+  Future<void> withConfiguredRoot({
+    required Map<ContextKey<Object?>, Object?> overrides,
+    required Future<void> Function(Context root) body,
+  }) async {
+    await Context.withCurrentZoneAsRoot<void>(
+      overrides: overrides,
+      body: (root) async {
+        final ContextOverrides configurationOverrides = await configure();
+        configurationOverrides.forEach(root.setLocal);
+        await body(root);
+      },
+    );
+  }
+
   group('configure', () {
     test('loads ./celest.json', () async {
       final platform = FakePlatform(
@@ -66,15 +82,22 @@ void main() {
         jsonEncode(testProject.toProto().toProto3Json()),
       );
 
-      context.put(ContextKey.platform, platform);
-      context.put(ContextKey.fileSystem, fileSystem);
-      Context.root = context;
-
-      await configure();
-
-      expect(context.project, equals(testProject));
-      expect(context.get(const env('HELLO_WORLD')), equals('hello'));
-      expect(context.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+      await withConfiguredRoot(
+        overrides: {
+          ContextKey.platform: platform,
+          ContextKey.fileSystem: fileSystem,
+        },
+        body: (root) async {
+          expect(root.project, equals(testProject));
+          expect(
+            root.environment,
+            equals(Environment(testProject.environmentId)),
+          );
+          expect(root.googleProjectId, equals(testProject.projectId));
+          expect(root.get(const env('HELLO_WORLD')), equals('hello'));
+          expect(root.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+        },
+      );
     });
 
     test('loads CELEST_CONFIG', () async {
@@ -89,15 +112,22 @@ void main() {
         jsonEncode(testProject.toProto().toProto3Json()),
       );
 
-      context.put(ContextKey.platform, platform);
-      context.put(ContextKey.fileSystem, fileSystem);
-      Context.root = context;
-
-      await configure();
-
-      expect(context.project, equals(testProject));
-      expect(context.get(const env('HELLO_WORLD')), equals('hello'));
-      expect(context.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+      await withConfiguredRoot(
+        overrides: {
+          ContextKey.platform: platform,
+          ContextKey.fileSystem: fileSystem,
+        },
+        body: (root) async {
+          expect(root.project, equals(testProject));
+          expect(
+            root.environment,
+            equals(Environment(testProject.environmentId)),
+          );
+          expect(root.googleProjectId, equals(testProject.projectId));
+          expect(root.get(const env('HELLO_WORLD')), equals('hello'));
+          expect(root.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+        },
+      );
     });
 
     test('loads CELEST_CONFIG_JSON', () async {
@@ -110,14 +140,19 @@ void main() {
         script: Uri.parse('file:///app/test.aot'),
       );
 
-      context.put(ContextKey.platform, platform);
-      Context.root = context;
-
-      await configure();
-
-      expect(context.project, equals(testProject));
-      expect(context.get(const env('HELLO_WORLD')), equals('hello'));
-      expect(context.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+      await withConfiguredRoot(
+        overrides: {ContextKey.platform: platform},
+        body: (root) async {
+          expect(root.project, equals(testProject));
+          expect(
+            root.environment,
+            equals(Environment(testProject.environmentId)),
+          );
+          expect(root.googleProjectId, equals(testProject.projectId));
+          expect(root.get(const env('HELLO_WORLD')), equals('hello'));
+          expect(root.get(const secret('HELLO_WORLD_SECRET')), equals('world'));
+        },
+      );
     });
 
     test('fails hard when missing', () async {
@@ -127,11 +162,15 @@ void main() {
       );
       final fileSystem = MemoryFileSystem.test();
 
-      context.put(ContextKey.platform, platform);
-      context.put(ContextKey.fileSystem, fileSystem);
-      Context.root = context;
-
-      await expectLater(configure(), throwsStateError);
+      await Context.withCurrentZoneAsRoot(
+        overrides: {
+          ContextKey.platform: platform,
+          ContextKey.fileSystem: fileSystem,
+        },
+        body: (_) async {
+          await expectLater(configure(), throwsStateError);
+        },
+      );
     });
   });
 }

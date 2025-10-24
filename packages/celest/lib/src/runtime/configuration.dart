@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:celest/src/config/config_values.dart';
 import 'package:celest/src/core/context.dart';
+import 'package:celest/src/core/environment.dart';
 import 'package:celest/src/runtime/http/logging.dart';
 import 'package:celest_ast/celest_ast.dart';
 // ignore: implementation_imports
@@ -48,10 +49,10 @@ Future<Map<String, Object?>?> _loadJsonFromFileSystem(
 }
 
 /// Configures the environment in which Celest is running.
-Future<void> configure({ResolvedProject? config}) async {
+Future<ContextOverrides> configure({ResolvedProject? config}) async {
   configureLogging();
 
-  final Context rootContext = Context.root;
+  final Context rootContext = Context.current;
 
   if (config == null) {
     final Map<String, Object?>? configJson =
@@ -72,12 +73,17 @@ Future<void> configure({ResolvedProject? config}) async {
     ..config('Loaded project configuration')
     ..config(config);
 
-  rootContext.put(ContextKey.project, config);
-
+  final contextOverrides = <ContextKey<Object?>, Object?>{
+    ContextKey.project: config,
+    ContextKey.environment: Environment(config.environmentId),
+    env.environment: config.environmentId,
+    ContextKey.googleProjectId: rootContext.googleProjectId ?? config.projectId,
+  };
   for (final ResolvedVariable(:name, :value) in config.variables) {
-    rootContext.put(env(name), value);
+    contextOverrides[env(name)] = value;
   }
   for (final ResolvedSecret(:name, :value) in config.secrets) {
-    rootContext.put(secret(name), value);
+    contextOverrides[secret(name)] = value;
   }
+  return contextOverrides;
 }

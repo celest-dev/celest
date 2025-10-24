@@ -15,7 +15,12 @@ extension type Context._(core.Context _ctx) implements core.Context {
   static Context get root => Context._(core.Context.root);
 
   static set root(core.Context ctx) {
-    core.Context.root = ctx;
+    final core.Context root = core.Context.root;
+    final overrides = ctx.snapshot();
+    for (final MapEntry<core.ContextKey<Object?>, Object?> entry
+        in overrides.entries) {
+      root.setLocal(entry.key, entry.value);
+    }
   }
 
   static Context get current => Context._(core.Context.current);
@@ -52,7 +57,8 @@ extension type Context._(core.Context _ctx) implements core.Context {
       return flyApi;
     }
     final flyApi = FlyApiClient(authToken: flyAuthToken, orgSlug: flyOrgSlug);
-    return _ctx.put(contextKey, flyApi);
+    _ctx.setLocal(contextKey, flyApi);
+    return flyApi;
   }
 
   FlyGql get flyGql {
@@ -67,7 +73,8 @@ extension type Context._(core.Context _ctx) implements core.Context {
       ).concat(HttpLink('https://api.fly.io/graphql')),
     );
     final flyGql = FlyGql(client);
-    return _ctx.put(contextKey, flyGql);
+    _ctx.setLocal(contextKey, flyGql);
+    return flyGql;
   }
 
   FlyCtl get flyCtl {
@@ -76,7 +83,8 @@ extension type Context._(core.Context _ctx) implements core.Context {
       return flyCtl;
     }
     final flyCtl = FlyCtl(flyAuthToken: flyAuthToken);
-    return _ctx.put(contextKey, flyCtl);
+    _ctx.setLocal(contextKey, flyCtl);
+    return flyCtl;
   }
 
   String? get tursoApiToken {
@@ -98,7 +106,8 @@ extension type Context._(core.Context _ctx) implements core.Context {
       authToken: tursoApiToken,
       orgSlug: tursoOrgSlug,
     );
-    return _ctx.put(contextKey, tursoApi);
+    _ctx.setLocal(contextKey, tursoApi);
+    return tursoApi;
   }
 
   Entity get rootOrg {

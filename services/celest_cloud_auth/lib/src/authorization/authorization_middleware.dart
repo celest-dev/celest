@@ -67,7 +67,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
     return (request) async {
       final user = await authenticate(request);
       if (user != null) {
-        context.put(ContextKey.principal, user);
+        context.setLocal(ContextKey.principal, user);
       }
       return inner(request);
     };
@@ -92,7 +92,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
       );
     }
     final (route, routeParameters) = result;
-    context.put(contextKeyRouteParameters, routeParameters);
+    context.setLocal(contextKeyRouteParameters, routeParameters);
 
     final (user, principal) = await extractPrincipal(request);
 
@@ -140,7 +140,7 @@ extension type AuthorizationMiddleware._(_Deps _deps) implements Object {
       throw const UnauthorizedException('Invalid cork signature');
     }
 
-    context.put(contextKeyCork, cork);
+    context.setLocal(contextKeyCork, cork);
     switch (cork.bearer) {
       case EntityUid(type: 'Celest::Session', id: final sessionId):
         final sessionTid = TypeId.tryDecode<Session>(sessionId);

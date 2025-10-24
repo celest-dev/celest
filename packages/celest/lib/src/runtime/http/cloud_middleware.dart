@@ -188,8 +188,8 @@ final class RootMiddleware implements Middleware {
       requestZone.runGuarded(() async {
         requestContext =
             Context.current
-              ..put(ContextKey.currentRequest, request)
-              ..put(ContextKey.currentTrace, request.trace);
+              ..setLocal(ContextKey.currentRequest, request)
+              ..setLocal(ContextKey.currentTrace, request.trace);
         final Response response = await inner(request);
         if (!completer.isCompleted) {
           completer.complete(response);
@@ -198,66 +198,13 @@ final class RootMiddleware implements Middleware {
 
       try {
         final Response response = await completer.future;
-        await _postRequest(requestContext, response);
+        await requestContext.runPostRequestCallbacks(response);
         return response;
       } on Object catch (error, stackTrace) {
-        await _postRequestError(requestContext, error, stackTrace);
+        await requestContext.runPostRequestErrorCallbacks(error, stackTrace);
         rethrow;
       }
     };
-  }
-
-  Future<void> _postRequest(Context context, Response response) async {
-    final List<PostRequestCallback>? callbacks = context.get(
-      const PostRequestCallbacks(),
-    );
-    if (callbacks case final callbacks? when callbacks.isNotEmpty) {
-      for (final PostRequestCallback callback in callbacks.reversed) {
-        try {
-          if (callback.onResponse(response) case final Future<void> future) {
-            await future;
-          }
-        } on Object catch (e, st) {
-          context.logger.shout(
-            'An error occurred while running a post-request callback',
-            e,
-            st,
-          );
-        }
-      }
-      callbacks.clear();
-    }
-  }
-
-  Future<void> _postRequestError(
-    Context context,
-    Object error,
-    StackTrace stackTrace,
-  ) async {
-    final List<PostRequestCallback>? callbacks = context.get(
-      const PostRequestCallbacks(),
-    );
-    if (callbacks case final callbacks? when callbacks.isNotEmpty) {
-      for (final PostRequestCallback callback in callbacks.reversed) {
-        final FutureOr<void> Function(Object e, StackTrace st)? onError =
-            callback.onError;
-        if (onError == null) {
-          continue;
-        }
-        try {
-          if (onError(error, stackTrace) case final Future<void> future) {
-            await future;
-          }
-        } on Object catch (e, st) {
-          context.logger.shout(
-            'An error occurred while running a post-request callback',
-            e,
-            st,
-          );
-        }
-      }
-      callbacks.clear();
-    }
   }
 }
 

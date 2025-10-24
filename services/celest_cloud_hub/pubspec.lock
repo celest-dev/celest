@@ -5,26 +5,26 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: da0d9209ca76bde579f2da330aeb9df62b6319c834fa7baae052021b0462401f
+      sha256: c209688d9f5a5f26b2fb47a188131a6fb9e876ae9e47af3737c0b4f58a93470d
       url: "https://pub.dev"
     source: hosted
-    version: "85.0.0"
+    version: "91.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "974859dc0ff5f37bc4313244b3218c791810d03ab3470a579580279ba971a48d"
+      sha256: a40a0cee526a7e1f387c6847bd8a5ccbf510a75952ef8a28338e989558072cb0
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.1"
+    version: "8.4.0"
   analyzer_plugin:
     dependency: transitive
     description:
       name: analyzer_plugin
-      sha256: a5ab7590c27b779f3d4de67f31c4109dbe13dd7339f86461a6f2a8ab2594d8ce
+      sha256: "08cfefa90b4f4dd3b447bda831cecf644029f9f8e22820f6ee310213ebe2dd53"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.4"
+    version: "0.13.10"
   archive:
     dependency: "direct main"
     description:
@@ -143,7 +143,7 @@ packages:
       path: "../../packages/celest"
       relative: true
     source: path
-    version: "1.0.6"
+    version: "1.0.7"
   celest_ast:
     dependency: "direct main"
     description:
@@ -171,21 +171,21 @@ packages:
       path: "../../packages/celest_cloud"
       relative: true
     source: path
-    version: "0.1.9"
+    version: "0.1.10"
   celest_cloud_auth:
     dependency: "direct main"
     description:
       path: "../celest_cloud_auth"
       relative: true
     source: path
-    version: "0.3.4"
+    version: "0.3.5"
   celest_cloud_core:
     dependency: "direct main"
     description:
       path: "../celest_cloud_core"
       relative: true
     source: path
-    version: "0.1.0"
+    version: "0.1.1"
   celest_core:
     dependency: "direct main"
     description:
@@ -388,42 +388,42 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "8a0e5fba27e8ee025d2ffb4ee820b4e6e2cf5e4246a6b1a477eb66866947e0bb"
+      sha256: c87dfe3d56f183ffe9106a18aebc6db431fc7c98c31a54b952a77f3d54a85697
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.2"
   dcli:
     dependency: transitive
     description:
       name: dcli
-      sha256: ea0eb92d25db5b03ff5b4307913779954e603dec51d9d129d3dae1bced1bf5b3
+      sha256: "583459aac5db4bd4a858fe84dc982cd6ca612ea27b562747cb6a899e9040251b"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.5"
+    version: "8.1.1"
   dcli_common:
     dependency: transitive
     description:
       name: dcli_common
-      sha256: "7385095109829de997967e704bc9f0f2570de763bfe9eb4c497cc44fd91df8e5"
+      sha256: "6e36a9e2137c5de64c5cfc2f18d824554459e65c6092daf036643574cc9902cf"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.2"
+    version: "8.0.0"
   dcli_core:
     dependency: transitive
     description:
       name: dcli_core
-      sha256: "2843396a9fd0b6c31c30fe930fd7af4ea592cba5c9a856b5d099bd19169226ac"
+      sha256: "69d030fdca204cd8636ccc7b8e09468d327051298f2ed24cdfe088588f38b5e7"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.3"
+    version: "8.0.0"
   dcli_terminal:
     dependency: transitive
     description:
       name: dcli_terminal
-      sha256: d34ba19905db65bc848c1ee28d8115c68f802e970726f100e4f8e062de92226a
+      sha256: "4837ba720a540c395feb48307b4fa8e5932d8c202fe5768cdb0bc46110b7761b"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.3"
+    version: "8.0.0"
   decimal:
     dependency: transitive
     description:
@@ -436,18 +436,18 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: "6aaea757f53bb035e8a3baedf3d1d53a79d6549a6c13d84f7546509da9372c7c"
+      sha256: "83290a32ae006a7535c5ecf300722cb77177250d9df4ee2becc5fa8a36095114"
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.1"
+    version: "2.29.0"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: "2fc05ad458a7c562755bf0cae11178dfc58387a416829b78d4da5155a61465fd"
+      sha256: "6019f827544e77524ffd5134ae0cb75dfd92ef5ef3e269872af92840c929cd43"
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.1"
+    version: "2.29.0"
   drift_hrana:
     dependency: transitive
     description:
@@ -820,10 +820,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: ce2cf974ccdee13be2a510832d7fba0b94b364e0b0395dee42abaa51b855be27
+      sha256: "33a040668b31b320aafa4822b7b1e177e163fc3c1e835c6750319d4ab23aa6fe"
       url: "https://pub.dev"
     source: hosted
-    version: "6.10.0"
+    version: "6.11.1"
   libcoder:
     dependency: transitive
     description:
@@ -900,10 +900,10 @@ packages:
     dependency: transitive
     description:
       name: native_storage
-      sha256: "095fe184564bf7b9fd5643aa7b6beb262eaa2fec7eff7542659721d5675f745a"
+      sha256: d2f92ae292aa2ad71b45095805fd15430d2f517ac2bfb54fa148f78554e515a1
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   native_synchronization_temp:
     dependency: transitive
     description:
@@ -1044,10 +1044,10 @@ packages:
     dependency: transitive
     description:
       name: pubspec_manager
-      sha256: "416609635f6c53ab759223ae66e71282e61a863c13ec47d60381e4b8046c2a71"
+      sha256: "48f425bb06cb38bb8bda84e70794cb373416033519668bcf481efbda1c10d9a1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "3.0.1"
   pubspec_parse:
     dependency: transitive
     description:
@@ -1228,10 +1228,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "7c859c803cf7e9a84d6db918bac824545045692bbe94a6386bd3a45132235d09"
+      sha256: "54eea43e36dd3769274c3108625f9ea1a382f8d2ac8b16f3e4589d9bd9b0e16c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.41.1"
+    version: "0.42.0"
   stack_trace:
     dependency: "direct main"
     description:
@@ -1593,5 +1593,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=3.9.0-21.0.dev <4.0.0"
-  flutter: ">=3.19.0"
+  dart: ">=3.9.0 <4.0.0"
+  flutter: ">=3.27.0"

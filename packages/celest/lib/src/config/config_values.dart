@@ -1,8 +1,13 @@
 import 'package:celest/src/core/context.dart';
+import 'package:meta/meta.dart';
 
 /// A configuration value that can be used to configure a Celest backend.
-sealed class ConfigurationValue implements ContextKey<String> {
-  const ConfigurationValue._(this.name);
+@immutable
+sealed class ConfigurationValue extends ContextKey<String> {
+  const ConfigurationValue._(this.type, this.name) : super('$type:$name');
+
+  /// The type of configuration value (e.g. `env`, `secret`).
+  final String type;
 
   /// The name of the configuration value in the environment.
   final String name;
@@ -19,20 +24,23 @@ sealed class ConfigurationValue implements ContextKey<String> {
     }
   }
 
-  @override
+  /// Reads and decodes the value for `this` from the given [context].
+  ///
+  /// Returns `null` if the value is not set.
   String? read(Context context) {
-    if (rawValue(context) case final rawValue?) {
-      return _decodeValue(rawValue);
+    final String? raw = rawValue(context);
+    if (raw == null) {
+      return null;
     }
-    return null;
+    return _decodeValue(raw);
   }
 
   /// Reads the raw value for `this` from the given [context].
   ///
   /// Unlike [read], this will not decode `data:` URIs.
   String? rawValue(Context context) {
-    if (context[this] case final value?) {
-      return value as String;
+    if (context.get(this) case final value?) {
+      return value;
     }
     if (context.platform.environment[name] case final platformValue?) {
       return platformValue;
@@ -40,10 +48,9 @@ sealed class ConfigurationValue implements ContextKey<String> {
     return null;
   }
 
-  @override
-  void set(Context context, String? value) {
-    context[this] = value;
-  }
+  // void set(Context context, String? value) {
+  //   context.setLocal(key, value);
+  // }
 }
 
 /// {@template celest.config.environment_variable}
@@ -56,7 +63,7 @@ sealed class ConfigurationValue implements ContextKey<String> {
 /// environments.
 final class env extends ConfigurationValue {
   /// {@macro celest.config.environment_variable}
-  const env(super.name) : super._();
+  const env(String name) : super._('env', name);
 
   /// A static environment variable with a fixed value across all environments.
   const factory env.static(String name, String value) = _staticEnv;
@@ -65,12 +72,6 @@ final class env extends ConfigurationValue {
   ///
   /// For example, `production`.
   static const env environment = env('CELEST_ENVIRONMENT');
-
-  /// The GCP project ID, when running in Celest Cloud.
-  ///
-  /// This is only set when running in Celest Cloud but may be specified
-  /// manually to enable integration with Google Cloud services.
-  static const env googleProjectId = env('CELEST_GOOGLE_CLOUD_PROJECT');
 
   @override
   String toString() => 'env($name)';
@@ -98,7 +99,7 @@ final class _staticEnv extends env {
 /// {@endtemplate}
 final class secret extends ConfigurationValue {
   /// {@macro celest.config.secret}
-  const secret(super.name) : super._();
+  const secret(String name) : super._('secret', name);
 
   @override
   String toString() => 'secret($name)';

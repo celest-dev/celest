@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:celest/src/core/context.dart';
 import 'package:celest_cloud/celest_cloud.dart' show CelestCloud;
 import 'package:celest_cloud_auth/celest_cloud_auth.dart';
 import 'package:celest_cloud_auth/src/util/typeid.dart';
+import 'package:celest_cloud_hub/src/context.dart';
 import 'package:celest_cloud_hub/src/database/cloud_hub_database.dart';
 import 'package:celest_cloud_hub/src/project.dart';
 import 'package:celest_core/_internal.dart';
@@ -64,8 +64,8 @@ class E2ETester {
   }
 
   Future<void> start() async {
-    Context.root = Context.of(Zone.current);
-    Context.root.put(ContextKey.project, project);
+    Context.root = Context.current;
+    Context.root.setLocal(ContextKey.project, project);
 
     databasePath = await getDatabasePath();
     database = CloudHubDatabase.localFile(databasePath, verbose: true);
