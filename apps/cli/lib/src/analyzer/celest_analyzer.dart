@@ -422,7 +422,7 @@ const project = Project(name: 'cache_warmup');
     );
     if (databases.isNotEmpty) {
       for (final database in databases) {
-        _project.databases[database.name] = database;
+        _project.databases[database.dartName] = database;
       }
     } else if (hasCloudAuth) {
       final cloudAuthElement = await helper.getClass(
@@ -432,7 +432,7 @@ const project = Project(name: 'cache_warmup');
       if (cloudAuthElement == null) {
         throw StateError('Failed to resolve CloudAuthDatabase');
       }
-      _project.databases['CloudAuthDatabase'] = ast.Database(
+      _project.databases['cloudAuth'] = ast.Database(
         name: 'CloudAuthDatabase',
         dartName: 'cloudAuth',
         schema: ast.DriftDatabaseSchema(
@@ -646,6 +646,7 @@ const project = Project(name: 'cache_warmup');
     return null;
   }
 
+  /// Resolves every database declared in `project.dart`.
   Future<List<ast.Database>> _resolveDatabases({
     required bool hasCloudAuth,
   }) async {
@@ -654,12 +655,12 @@ const project = Project(name: 'cache_warmup');
       return const [];
     }
     final databaseLibrary = await resolveLibrary(databaseFile.path);
-    final database = await resolver.resolveDatabase(
+    final databases = await resolver.resolveDatabases(
       databaseFilepath: databaseFile.path,
       databaseLibrary: databaseLibrary,
       hasCloudAuth: hasCloudAuth,
     );
-    return database == null ? const [] : [database];
+    return databases;
   }
 
   Future<void> _applyMigrations() async {

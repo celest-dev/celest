@@ -1396,7 +1396,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
   }
 
   /// Collects the Celest Data components of the project.
-  Future<ast.Database?> resolveDatabase({
+  Future<List<ast.Database>> resolveDatabases({
     required String databaseFilepath,
     required ResolvedLibraryResult databaseLibrary,
     required bool hasCloudAuth,
@@ -1404,27 +1404,91 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     final (topLevelConstants, hasErrors) = databaseLibrary.element
         .topLevelConstants(errorReporter: _errorReporter);
     if (hasErrors) {
-      return null;
+      return const [];
     }
-    final databaseDefinition = topLevelConstants.firstWhereOrNull(
-      (el) => el.element.type.isDatabase,
-    );
-    if (databaseDefinition == null) {
+
+    final databaseConstants = topLevelConstants
+        .where((element) => element.element.type.isDatabase)
+        .toList();
+    if (databaseConstants.isEmpty) {
       _logger.finest('No `Database` definition found in $databaseFilepath');
-      return null;
+      return const [];
     }
 
-    final (element: databaseDefinitionElement, value: databaseDefinitionValue) =
-        databaseDefinition;
+    final databases = <ast.Database>[];
+    final seenDartNames = <String>{};
+    final seenHostnames = <String, InterfaceType>{};
+    final seenTokens = <String, InterfaceType>{};
 
-    // Validate `database` variable.
-    final databaseDefinitionLocation =
-        databaseDefinitionElement.sourceLocation!;
-    final databaseSchema = databaseDefinitionValue.getField('schema');
+    for (final databaseConstant in databaseConstants) {
+      final builtDatabase = await _buildDatabase(
+        constant: databaseConstant,
+        hasCloudAuth: hasCloudAuth,
+      );
+      if (builtDatabase == null) {
+        continue;
+      }
+      final database = builtDatabase.database;
+      final driftType = builtDatabase.driftType;
+      if (!seenDartNames.add(database.dartName)) {
+        reportError(
+          'Duplicate database variable `${database.dartName}` detected. '
+          'Rename one of the `Database` definitions to avoid conflicts.',
+          location: database.location,
+        );
+        continue;
+      }
+      final config = database.config as ast.CelestDatabaseConfig;
+      final hostname = config.hostname.name;
+      final existingHostnameType = seenHostnames[hostname];
+      var hasConflict = false;
+      if (existingHostnameType != null &&
+          !_isSameDatabaseType(existingHostnameType, driftType)) {
+        reportError(
+          'Duplicate hostname environment variable `$hostname` detected for databases. '
+          'Each database must use a unique environment variable.',
+          location: database.location,
+        );
+        hasConflict = true;
+      } else {
+        seenHostnames.putIfAbsent(hostname, () => driftType);
+      }
+      final token = config.token.name;
+      final existingTokenType = seenTokens[token];
+      if (existingTokenType != null &&
+          !_isSameDatabaseType(existingTokenType, driftType)) {
+        reportError(
+          'Duplicate token secret `$token` detected for databases. '
+          'Each database must use a unique secret name.',
+          location: database.location,
+        );
+        hasConflict = true;
+      } else {
+        seenTokens.putIfAbsent(token, () => driftType);
+      }
+      if (hasConflict) {
+        continue;
+      }
+      databases.add(database);
+    }
+
+    return databases;
+  }
+
+  /// Builds an [ast.Database] from the provided [constant] definition.
+  Future<({ast.Database database, InterfaceType driftType})?> _buildDatabase({
+    required TopLevelConstant constant,
+    required bool hasCloudAuth,
+  }) async {
+    final databaseElement = constant.element;
+    final databaseValue = constant.value;
+
+    final databaseLocation = databaseElement.sourceLocation!;
+    final databaseSchema = databaseValue.getField('schema');
     if (databaseSchema == null) {
       reportError(
         'The `schema` field is required on `Database` definitions',
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       );
       return null;
     }
@@ -1434,7 +1498,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       reportError(
         'Invalid schema type: $schemaType.\n'
         'Only `Schema.drift` is supported for database definitions currently.',
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       );
       return null;
     }
@@ -1445,38 +1509,37 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     if (driftDatabaseType is! InterfaceType) {
       reportError(
         'Failed to resolve the Dart type passed to `Schema.drift`',
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       );
       return null;
     }
 
     final isSubtypeOfDriftDatabase = driftDatabaseType.allSupertypes.any(
-      (type) => type.isDriftGeneratedDatabase,
+      (InterfaceType type) => type.isDriftGeneratedDatabase,
     );
     if (!isSubtypeOfDriftDatabase) {
       reportError(
         'The type passed to `Schema.drift` must be a subtype of `GeneratedDatabase` '
         'from the `drift` package',
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       );
       return null;
     }
 
     // Find a constructor we can use
     final constructor = driftDatabaseType.element.constructors.firstWhereOrNull(
-      (ctor) =>
-          ctor.name == 'new' &&
-          (ctor.formalParameters
-                  .elementAtOrNull(0)
-                  ?.type
-                  .isDriftQueryExecutor ??
-              false),
+      (ConstructorElement ctor) {
+        final firstParameter = ctor.formalParameters.elementAtOrNull(0);
+        final acceptsQueryExecutor =
+            firstParameter != null && firstParameter.type.isDriftQueryExecutor;
+        return ctor.name == 'new' && acceptsQueryExecutor;
+      },
     );
     if (constructor == null) {
       reportError(
         '$driftDatabaseType must have an unnamed constructor that takes a single `QueryExecutor` '
         'parameter like `$driftDatabaseType(super.e)` or `$driftDatabaseType(QueryExecutor e)`',
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       );
       return null;
     }
@@ -1488,27 +1551,33 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
 
     final schemaTypeReference = typeHelper.toReference(driftDatabaseType);
     final databaseName = schemaTypeReference.symbol!;
-    return ast.Database(
+    final database = ast.Database(
       name: databaseName,
-      dartName: databaseDefinitionElement.name!,
-      docs: databaseDefinitionElement.docLines,
+      dartName: databaseElement.name!,
+      docs: databaseElement.docLines,
       schema: ast.DriftDatabaseSchema(
         version: await resolveSchemaVersion(databaseClass),
         declaration: schemaTypeReference.toTypeReference,
-        location: databaseDefinitionLocation,
+        location: databaseLocation,
       ),
       config: ast.CelestDatabaseConfig(
         hostname: ast.Variable(
           '${databaseName.screamingCase}_HOST',
-          location: databaseDefinitionLocation,
+          location: databaseLocation,
         ),
         token: ast.Secret(
           '${databaseName.screamingCase}_TOKEN',
-          location: databaseDefinitionLocation,
+          location: databaseLocation,
         ),
       ),
-      location: databaseDefinitionLocation,
+      location: databaseLocation,
     );
+    return (database: database, driftType: driftDatabaseType);
+  }
+
+  /// Determines whether [a] and [b] refer to the same generated Drift type.
+  bool _isSameDatabaseType(InterfaceType a, InterfaceType b) {
+    return TypeChecker.fromStatic(a).isExactlyType(b);
   }
 }
 

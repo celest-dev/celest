@@ -43,19 +43,4 @@ const celest.ContextKey<EmailOtpProvider> contextKeyEmailOtpProvider =
 
 /// The context key for the current request's route parameters.
 const celest.ContextKey<Map<String, String>> contextKeyRouteParameters =
-    _RouteParametersContextKey();
-
-final class _RouteParametersContextKey
-    implements celest.ContextKey<Map<String, String>> {
-  const _RouteParametersContextKey();
-
-  @override
-  Map<String, String>? read(celest.Context context) {
-    return context[this] as Map<String, String>?;
-  }
-
-  @override
-  void set(celest.Context context, Map<String, String>? value) {
-    context[this] = value;
-  }
-}
+    celest.ContextKey('route parameters');

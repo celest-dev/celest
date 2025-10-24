@@ -31,6 +31,25 @@ import 'package:celest/celest.dart';
 const project = Project(name: '$name');
 ''';
 
+/// Creates a minimal [GeneratedDatabase] implementation for analyzer tests.
+String _generatedDatabaseStub(String className) =>
+    '''
+import 'package:drift/drift.dart';
+
+class $className extends GeneratedDatabase {
+  $className(QueryExecutor executor) : super(executor);
+
+  @override
+  int get schemaVersion => 1;
+
+  @override
+  Iterable<TableInfo<Table, Object?>> get allTables => const [];
+
+  @override
+  List<DatabaseSchemaEntity> get allSchemaEntities => const [];
+}
+''';
+
 Future<CelestProject> newProject({
   required String name,
   String? pubspecYaml,

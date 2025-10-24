@@ -112,7 +112,7 @@ final class ProjectLinker extends AstVisitorWithArg<Node?, AstNode> {
       _resolvedProject.auth.replace(visitAuth(auth, project));
     }
     for (final database in project.databases.values) {
-      _resolvedProject.databases[database.name] = visitDatabase(
+      _resolvedProject.databases[database.dartName] = visitDatabase(
         database,
         project,
       );

@@ -31,6 +31,10 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
 
   /// {@template celest.runtime.celest_database.create}
   /// Connects to a Celest database.
+  ///
+  /// Optional [uriOverride] and [tokenOverride] values allow callers to supply
+  /// explicit connection credentials when environment configuration is not
+  /// available.
   /// {@endtemplate}
   static Future<CelestDatabase<Database>>
   create<Database extends GeneratedDatabase>(
@@ -40,16 +44,19 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
     required env hostnameVariable,
     required secret tokenSecret,
     String? path,
+    Uri? uriOverride,
+    String? tokenOverride,
   }) async {
-    Uri? uri;
-    final String? host = context.get(hostnameVariable);
+    var uri = uriOverride;
+    String? host = hostnameVariable.read(context);
     if (path != null) {
       uri = Uri.file(path);
-    } else if (host != null) {
+    } else if (uri == null && host != null) {
       uri = Uri.tryParse(host);
-    } else {
+    } else if (uri == null) {
       if (context.environment == Environment.local) {
         uri = await resolveDatabaseUri(name);
+        host = uri.toString();
       } else {
         throw StateError(
           'Missing database hostname for $name. '
@@ -70,7 +77,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
       case Uri(scheme: 'file'):
         return FileDatabase(path: uri.toFilePath(), factory: factory);
       case Uri(scheme: 'ws' || 'wss' || 'http' || 'https' || 'libsql'):
-        final String? token = context.get(tokenSecret);
+        final String? token = tokenOverride ?? tokenSecret.read(context);
         if (token == null) {
           if (context.environment != Environment.local) {
             _logger.warning(
@@ -144,7 +151,7 @@ sealed class CelestDatabase<Database extends GeneratedDatabase> {
   });
 
   /// Creates a DB Studio handler for the database.
-  CelestDbStudio createStudio();
+  CelestDbStudio createStudio({String? pageTitle});
 }
 
 /// {@template celest.runtime.in_memory_database}
@@ -173,8 +180,11 @@ final class InMemoryDatabase<Database extends GeneratedDatabase>
   }
 
   @override
-  CelestDbStudio createStudio() {
-    return CelestDbStudio.from(driver: NativeDriver.memory());
+  CelestDbStudio createStudio({String? pageTitle}) {
+    return CelestDbStudio.from(
+      pageTitle: pageTitle ?? CelestDbStudio.defaultTitle,
+      driver: NativeDriver.memory(),
+    );
   }
 }
 
@@ -217,8 +227,11 @@ final class FileDatabase<Database extends GeneratedDatabase>
   }
 
   @override
-  CelestDbStudio createStudio() {
-    return CelestDbStudio.from(driver: NativeDriver.file(path));
+  CelestDbStudio createStudio({String? pageTitle}) {
+    return CelestDbStudio.from(
+      pageTitle: pageTitle ?? CelestDbStudio.defaultTitle,
+      driver: NativeDriver.file(path),
+    );
   }
 }
 
@@ -255,8 +268,11 @@ final class LibsqlDatabase<Database extends GeneratedDatabase>
   }
 
   @override
-  CelestDbStudio createStudio() {
+  CelestDbStudio createStudio({String? pageTitle}) {
     final driver = HranaDriver(_client);
-    return CelestDbStudio.from(driver: driver);
+    return CelestDbStudio.from(
+      pageTitle: pageTitle ?? CelestDbStudio.defaultTitle,
+      driver: driver,
+    );
   }
 }

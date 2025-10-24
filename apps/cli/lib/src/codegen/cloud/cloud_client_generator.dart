@@ -381,7 +381,88 @@ final class CloudClientGenerator {
               ]).code;
           }),
         ],
+        if (project.databases.isNotEmpty) _listDatabasesMethod,
+        if (project.databases.isNotEmpty) _byNameMethod,
+        if (project.databases.isNotEmpty) _maybeByNameMethod,
       ]);
+  });
+
+  Method get _listDatabasesMethod => Method((m) {
+    m
+      ..name = 'list'
+      ..returns = DartTypes.core.list(DartTypes.drift.generatedDatabase)
+      ..docs.addAll([
+        '/// All database connections registered in the current Celest context.',
+      ])
+      ..lambda = true
+      ..body =
+          refer(
+                'CelestDatabaseRegistry',
+                'package:celest/src/runtime/data/database_registry.dart',
+              )
+              .property('of')
+              .call([DartTypes.celest.context.property('current')])
+              .property('list')
+              .call([])
+              .code;
+  });
+
+  Method get _byNameMethod => Method((m) {
+    m
+      ..name = 'byName'
+      ..returns = DartTypes.drift.generatedDatabase
+      ..docs.addAll([
+        '/// Returns the database connection registered under [name].',
+        '///',
+        '/// The lookup matches either the Dart variable name or the database identifier.',
+      ])
+      ..lambda = true
+      ..requiredParameters.add(
+        Parameter(
+          (p) => p
+            ..name = 'name'
+            ..type = DartTypes.core.string,
+        ),
+      )
+      ..body =
+          refer(
+                'CelestDatabaseRegistry',
+                'package:celest/src/runtime/data/database_registry.dart',
+              )
+              .property('of')
+              .call([DartTypes.celest.context.property('current')])
+              .property('byName')
+              .call([refer('name')])
+              .code;
+  });
+
+  Method get _maybeByNameMethod => Method((m) {
+    m
+      ..name = 'maybeByName'
+      ..returns = DartTypes.drift.generatedDatabase.nullable
+      ..docs.addAll([
+        '/// Returns the database connection registered under [name], if any.',
+        '///',
+        '/// The lookup matches either the Dart variable name or the database identifier.',
+      ])
+      ..lambda = true
+      ..requiredParameters.add(
+        Parameter(
+          (p) => p
+            ..name = 'name'
+            ..type = DartTypes.core.string,
+        ),
+      )
+      ..body =
+          refer(
+                'CelestDatabaseRegistry',
+                'package:celest/src/runtime/data/database_registry.dart',
+              )
+              .property('of')
+              .call([DartTypes.celest.context.property('current')])
+              .property('maybeByName')
+              .call([refer('name')])
+              .code;
   });
 
   late final _authClass = Class((b) {
