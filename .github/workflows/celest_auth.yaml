@@ -90,7 +90,7 @@ jobs:
           sleep 5 # Give some time for the video to save
       - name: Upload test video recording
         if: steps.test-ios.outcome == 'failure'  # Only upload if tests failed
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # 4.6.2
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         with:
           name: test-recording
           path: /tmp/test.mp4
