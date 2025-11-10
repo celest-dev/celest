@@ -74,7 +74,7 @@ jobs:
 
       # Set up QEMU for multi-platform builds (needed for ARM on x86 runners)
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # 3.6.0
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # 3.7.0
         with:
           platforms: arm64
 
