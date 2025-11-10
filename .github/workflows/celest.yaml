@@ -121,7 +121,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Test (API 35)
-        uses: ReactiveCircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # 2.34.0
+        uses: ReactiveCircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b # 2.35.0
         with:
           # Matches Flutter compileSdkVersion
           api-level: 35
@@ -129,7 +129,7 @@ jobs:
           working-directory: packages/celest/example
           script: dart run $CELEST start --verbose -- flutter test -d emulator integration_test
       # - name: Test (API 24)
-      #   uses: ReactiveCircus/android-emulator-runner@1dcd0090116d15e7c562f8db72807de5e036a4ed # 2.34.0
+      #   uses: ReactiveCircus/android-emulator-runner@b530d96654c385303d652368551fb075bc2f0b6b # 2.35.0
       #   with:
       #     # Minimum supported API level
       #     api-level: 24
