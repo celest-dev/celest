@@ -427,9 +427,14 @@ final class CelestFrontend with CloudRepository {
                   project.name,
                   localUri,
                 ),
-                productionUri: await isolatedSecureStorage.getProductionUri(
-                  project.name,
-                ),
+                productionUri: project.productionUrl != null
+                    ? await isolatedSecureStorage.setProductionUri(
+                        project.name,
+                        Uri.parse(project.productionUrl!),
+                      )
+                    : await isolatedSecureStorage.getProductionUri(
+                        project.name,
+                      ),
               ),
             );
 
@@ -646,6 +651,21 @@ final class CelestFrontend with CloudRepository {
             performance.captureError(e, stackTrace: st);
             return 1;
           }
+          // During build with Dockerfile, it's useful to also regenerate client code
+          // so that the production url can be captured too.
+          await _generateClientCode(
+            project: project,
+            resolvedProject: resolvedProject,
+            projectUris: (
+              localUri: await isolatedSecureStorage.getLocalUri(project.name),
+              productionUri: project.productionUrl != null
+                  ? await isolatedSecureStorage.setProductionUri(
+                      project.name,
+                      Uri.parse(project.productionUrl!),
+                    )
+                  : await isolatedSecureStorage.getProductionUri(project.name),
+            ),
+          );
 
           currentProgress.complete(
             'Celest project has been built for deployment',
@@ -1086,6 +1106,7 @@ final class CelestFrontend with CloudRepository {
     );
   });
 
+  /// Generates client code for [project] and writes to the [project] client directory.
   Future<void> _generateClientCode({
     required ast.Project project,
     required ast.ResolvedProject resolvedProject,

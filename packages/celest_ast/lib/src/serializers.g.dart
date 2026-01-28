@@ -7,7 +7,7 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers =
-    (new Serializers().toBuilder()
+    (Serializers().toBuilder()
           ..add(Api.serializer)
           ..add(ApiAuthenticated.serializer)
           ..add(ApiHttpConfig.serializer)
@@ -74,216 +74,216 @@ Serializers _$serializers =
           ..add(Variable.serializer)
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ApiMetadata)]),
-            () => new ListBuilder<ApiMetadata>(),
+            () => ListBuilder<ApiMetadata>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(CloudFunction),
             ]),
-            () => new MapBuilder<String, CloudFunction>(),
+            () => MapBuilder<String, CloudFunction>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
-            () => new ListBuilder<String>(),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [const FullType(Reference)]),
-            () => new SetBuilder<Reference>(),
+            () => SetBuilder<Reference>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(AuthProvider)]),
-            () => new ListBuilder<AuthProvider>(),
+            () => ListBuilder<AuthProvider>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ExternalAuthProvider),
             ]),
-            () => new ListBuilder<ExternalAuthProvider>(),
+            () => ListBuilder<ExternalAuthProvider>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(DartValue)]),
-            () => new ListBuilder<DartValue>(),
+            () => ListBuilder<DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(DartValue)]),
-            () => new ListBuilder<DartValue>(),
+            () => ListBuilder<DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(DartValue)]),
-            () => new ListBuilder<DartValue>(),
+            () => ListBuilder<DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(DartValue),
             ]),
-            () => new MapBuilder<String, DartValue>(),
+            () => MapBuilder<String, DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(Reference)]),
-            () => new ListBuilder<Reference>(),
+            () => ListBuilder<Reference>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(CloudFunctionParameter),
             ]),
-            () => new ListBuilder<CloudFunctionParameter>(),
+            () => ListBuilder<CloudFunctionParameter>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ApiMetadata)]),
-            () => new ListBuilder<ApiMetadata>(),
+            () => ListBuilder<ApiMetadata>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(DartValue)]),
-            () => new ListBuilder<DartValue>(),
+            () => ListBuilder<DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
-            () => new ListBuilder<String>(),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ResolvedAuthProvider),
             ]),
-            () => new ListBuilder<ResolvedAuthProvider>(),
+            () => ListBuilder<ResolvedAuthProvider>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ResolvedExternalAuthProvider),
             ]),
-            () => new ListBuilder<ResolvedExternalAuthProvider>(),
+            () => ListBuilder<ResolvedExternalAuthProvider>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [
               const FullType(ResolvedHttpRoute),
             ]),
-            () => new ListBuilder<ResolvedHttpRoute>(),
+            () => ListBuilder<ResolvedHttpRoute>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(TypeReference),
               const FullType(int),
             ]),
-            () => new MapBuilder<TypeReference, int>(),
+            () => MapBuilder<TypeReference, int>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
-            () => new ListBuilder<String>(),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
-            () => new ListBuilder<String>(),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(String)]),
-            () => new ListBuilder<String>(),
+            () => ListBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(DartValue),
               const FullType(DartValue),
             ]),
-            () => new MapBuilder<DartValue, DartValue>(),
+            () => MapBuilder<DartValue, DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(Api),
             ]),
-            () => new MapBuilder<String, Api>(),
+            () => MapBuilder<String, Api>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(Variable)]),
-            () => new ListBuilder<Variable>(),
+            () => ListBuilder<Variable>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(Secret)]),
-            () => new ListBuilder<Secret>(),
+            () => ListBuilder<Secret>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(Database),
             ]),
-            () => new MapBuilder<String, Database>(),
+            () => MapBuilder<String, Database>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(DartValue),
             ]),
-            () => new MapBuilder<String, DartValue>(),
+            () => MapBuilder<String, DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(DartValue),
             ]),
-            () => new MapBuilder<String, DartValue>(),
+            () => MapBuilder<String, DartValue>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(Policy),
             ]),
-            () => new MapBuilder<String, Policy>(),
+            () => MapBuilder<String, Policy>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(Policy),
             ]),
-            () => new MapBuilder<String, Policy>(),
+            () => MapBuilder<String, Policy>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(TemplateLink)]),
-            () => new ListBuilder<TemplateLink>(),
+            () => ListBuilder<TemplateLink>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(ResolvedApi),
             ]),
-            () => new MapBuilder<String, ResolvedApi>(),
+            () => MapBuilder<String, ResolvedApi>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ResolvedVariable)]),
-            () => new ListBuilder<ResolvedVariable>(),
+            () => ListBuilder<ResolvedVariable>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltList, const [const FullType(ResolvedSecret)]),
-            () => new ListBuilder<ResolvedSecret>(),
+            () => ListBuilder<ResolvedSecret>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(ResolvedDatabase),
             ]),
-            () => new MapBuilder<String, ResolvedDatabase>(),
+            () => MapBuilder<String, ResolvedDatabase>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(ResolvedCloudFunction),
             ]),
-            () => new MapBuilder<String, ResolvedCloudFunction>(),
+            () => MapBuilder<String, ResolvedCloudFunction>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [const FullType(FeatureFlag)]),
-            () => new SetBuilder<FeatureFlag>(),
+            () => SetBuilder<FeatureFlag>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [const FullType(String)]),
-            () => new SetBuilder<String>(),
+            () => SetBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [const FullType(String)]),
-            () => new SetBuilder<String>(),
+            () => SetBuilder<String>(),
           )
           ..addBuilderFactory(
             const FullType(BuiltSet, const [const FullType(String)]),
-            () => new SetBuilder<String>(),
+            () => SetBuilder<String>(),
           ))
         .build();
 

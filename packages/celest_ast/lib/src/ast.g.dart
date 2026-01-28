@@ -19,11 +19,11 @@ Region _$RegionValueOf(String name) {
     case 'asiaPacific':
       return _$asiaPacific;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<Region> _$RegionValues = new BuiltSet<Region>(const <Region>[
+final BuiltSet<Region> _$RegionValues = BuiltSet<Region>(const <Region>[
   _$northAmerica,
   _$europe,
   _$asiaPacific,
@@ -46,11 +46,11 @@ StreamType _$StreamTypeValueOf(String name) {
     case 'bidirectional':
       return _$bidirectional;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<StreamType> _$StreamTypeValues = new BuiltSet<StreamType>(
+final BuiltSet<StreamType> _$StreamTypeValues = BuiltSet<StreamType>(
   const <StreamType>[
     _$unidirectionalServer,
     _$unidirectionalClient,
@@ -83,12 +83,12 @@ AuthProviderType _$AuthProviderTypeValueOf(String name) {
     case 'supabase':
       return _$supabase;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<AuthProviderType> _$AuthProviderTypeValues =
-    new BuiltSet<AuthProviderType>(const <AuthProviderType>[
+    BuiltSet<AuthProviderType>(const <AuthProviderType>[
       _$emailOtp,
       _$smsOtp,
       _$google,
@@ -143,11 +143,11 @@ NodeType _$valueOf(String name) {
     case 'httpLabel':
       return _$httpLabel;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<NodeType> _$values = new BuiltSet<NodeType>(const <NodeType>[
+final BuiltSet<NodeType> _$values = BuiltSet<NodeType>(const <NodeType>[
   _$project,
   _$api,
   _$apiPublic,
@@ -170,12 +170,12 @@ DatabaseSchemaType _$DatabaseSchemaTypeValueOf(String name) {
     case 'drift':
       return _$drift;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<DatabaseSchemaType> _$DatabaseSchemaTypeValues =
-    new BuiltSet<DatabaseSchemaType>(const <DatabaseSchemaType>[_$drift]);
+    BuiltSet<DatabaseSchemaType>(const <DatabaseSchemaType>[_$drift]);
 
 const DatabaseProviderType _$celest = const DatabaseProviderType._('celest');
 
@@ -184,61 +184,60 @@ DatabaseProviderType _$databaseProviderTypeValueOf(String name) {
     case 'celest':
       return _$celest;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<DatabaseProviderType> _$databaseProviderType =
-    new BuiltSet<DatabaseProviderType>(const <DatabaseProviderType>[_$celest]);
+    BuiltSet<DatabaseProviderType>(const <DatabaseProviderType>[_$celest]);
 
-Serializer<Region> _$regionSerializer = new _$RegionSerializer();
-Serializer<Project> _$projectSerializer = new _$ProjectSerializer();
-Serializer<Api> _$apiSerializer = new _$ApiSerializer();
-Serializer<ApiPublic> _$apiPublicSerializer = new _$ApiPublicSerializer();
+Serializer<Region> _$regionSerializer = _$RegionSerializer();
+Serializer<Project> _$projectSerializer = _$ProjectSerializer();
+Serializer<Api> _$apiSerializer = _$ApiSerializer();
+Serializer<ApiPublic> _$apiPublicSerializer = _$ApiPublicSerializer();
 Serializer<ApiAuthenticated> _$apiAuthenticatedSerializer =
-    new _$ApiAuthenticatedSerializer();
+    _$ApiAuthenticatedSerializer();
 Serializer<ApiMiddleware> _$apiMiddlewareSerializer =
-    new _$ApiMiddlewareSerializer();
+    _$ApiMiddlewareSerializer();
 Serializer<ApiHttpConfig> _$apiHttpConfigSerializer =
-    new _$ApiHttpConfigSerializer();
-Serializer<ApiHttpError> _$apiHttpErrorSerializer =
-    new _$ApiHttpErrorSerializer();
+    _$ApiHttpConfigSerializer();
+Serializer<ApiHttpError> _$apiHttpErrorSerializer = _$ApiHttpErrorSerializer();
 Serializer<CloudFunctionParameter> _$cloudFunctionParameterSerializer =
-    new _$CloudFunctionParameterSerializer();
-Serializer<StreamType> _$streamTypeSerializer = new _$StreamTypeSerializer();
+    _$CloudFunctionParameterSerializer();
+Serializer<StreamType> _$streamTypeSerializer = _$StreamTypeSerializer();
 Serializer<CloudFunction> _$cloudFunctionSerializer =
-    new _$CloudFunctionSerializer();
-Serializer<Variable> _$variableSerializer = new _$VariableSerializer();
-Serializer<Secret> _$secretSerializer = new _$SecretSerializer();
-Serializer<Auth> _$authSerializer = new _$AuthSerializer();
+    _$CloudFunctionSerializer();
+Serializer<Variable> _$variableSerializer = _$VariableSerializer();
+Serializer<Secret> _$secretSerializer = _$SecretSerializer();
+Serializer<Auth> _$authSerializer = _$AuthSerializer();
 Serializer<AuthProviderType> _$authProviderTypeSerializer =
-    new _$AuthProviderTypeSerializer();
+    _$AuthProviderTypeSerializer();
 Serializer<EmailAuthProvider> _$emailAuthProviderSerializer =
-    new _$EmailAuthProviderSerializer();
+    _$EmailAuthProviderSerializer();
 Serializer<SmsAuthProvider> _$smsAuthProviderSerializer =
-    new _$SmsAuthProviderSerializer();
+    _$SmsAuthProviderSerializer();
 Serializer<GoogleAuthProvider> _$googleAuthProviderSerializer =
-    new _$GoogleAuthProviderSerializer();
+    _$GoogleAuthProviderSerializer();
 Serializer<AppleAuthProvider> _$appleAuthProviderSerializer =
-    new _$AppleAuthProviderSerializer();
+    _$AppleAuthProviderSerializer();
 Serializer<GitHubAuthProvider> _$gitHubAuthProviderSerializer =
-    new _$GitHubAuthProviderSerializer();
+    _$GitHubAuthProviderSerializer();
 Serializer<FirebaseExternalAuthProvider>
 _$firebaseExternalAuthProviderSerializer =
-    new _$FirebaseExternalAuthProviderSerializer();
+    _$FirebaseExternalAuthProviderSerializer();
 Serializer<SupabaseExternalAuthProvider>
 _$supabaseExternalAuthProviderSerializer =
-    new _$SupabaseExternalAuthProviderSerializer();
-Serializer<NodeType> _$nodeTypeSerializer = new _$NodeTypeSerializer();
+    _$SupabaseExternalAuthProviderSerializer();
+Serializer<NodeType> _$nodeTypeSerializer = _$NodeTypeSerializer();
 Serializer<NodeReference> _$nodeReferenceSerializer =
-    new _$NodeReferenceSerializer();
+    _$NodeReferenceSerializer();
 Serializer<DatabaseSchemaType> _$databaseSchemaTypeSerializer =
-    new _$DatabaseSchemaTypeSerializer();
+    _$DatabaseSchemaTypeSerializer();
 Serializer<DriftDatabaseSchema> _$driftDatabaseSchemaSerializer =
-    new _$DriftDatabaseSchemaSerializer();
-Serializer<Database> _$databaseSerializer = new _$DatabaseSerializer();
+    _$DriftDatabaseSchemaSerializer();
+Serializer<Database> _$databaseSerializer = _$DatabaseSerializer();
 Serializer<CelestDatabaseConfig> _$celestDatabaseConfigSerializer =
-    new _$CelestDatabaseConfigSerializer();
+    _$CelestDatabaseConfigSerializer();
 
 class _$RegionSerializer implements PrimitiveSerializer<Region> {
   @override
@@ -344,6 +343,14 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
           serializers.serialize(value, specifiedType: const FullType(Region)),
         );
     }
+    value = object.productionUrl;
+    if (value != null) {
+      result
+        ..add('productionUrl')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
+    }
     value = object.auth;
     if (value != null) {
       result
@@ -361,7 +368,7 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ProjectBuilder();
+    final result = ProjectBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -400,6 +407,14 @@ class _$ProjectSerializer implements StructuredSerializer<Project> {
                     specifiedType: const FullType(Region),
                   )
                   as Region?;
+          break;
+        case 'productionUrl':
+          result.productionUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'reference':
           result.reference =
@@ -543,7 +558,7 @@ class _$ApiSerializer implements StructuredSerializer<Api> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiBuilder();
+    final result = ApiBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -647,7 +662,7 @@ class _$ApiPublicSerializer implements StructuredSerializer<ApiPublic> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiPublicBuilder();
+    final result = ApiPublicBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -700,7 +715,7 @@ class _$ApiAuthenticatedSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiAuthenticatedBuilder();
+    final result = ApiAuthenticatedBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -757,7 +772,7 @@ class _$ApiMiddlewareSerializer implements StructuredSerializer<ApiMiddleware> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiMiddlewareBuilder();
+    final result = ApiMiddlewareBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -827,7 +842,7 @@ class _$ApiHttpConfigSerializer implements StructuredSerializer<ApiHttpConfig> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiHttpConfigBuilder();
+    final result = ApiHttpConfigBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -905,7 +920,7 @@ class _$ApiHttpErrorSerializer implements StructuredSerializer<ApiHttpError> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ApiHttpErrorBuilder();
+    final result = ApiHttpErrorBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1021,7 +1036,7 @@ class _$CloudFunctionParameterSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new CloudFunctionParameterBuilder();
+    final result = CloudFunctionParameterBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1217,7 +1232,7 @@ class _$CloudFunctionSerializer implements StructuredSerializer<CloudFunction> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new CloudFunctionBuilder();
+    final result = CloudFunctionBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1389,7 +1404,7 @@ class _$VariableSerializer implements StructuredSerializer<Variable> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new VariableBuilder();
+    final result = VariableBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1493,7 +1508,7 @@ class _$SecretSerializer implements StructuredSerializer<Secret> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new SecretBuilder();
+    final result = SecretBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1586,7 +1601,7 @@ class _$AuthSerializer implements StructuredSerializer<Auth> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new AuthBuilder();
+    final result = AuthBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1711,7 +1726,7 @@ class _$EmailAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new EmailAuthProviderBuilder();
+    final result = EmailAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1787,7 +1802,7 @@ class _$SmsAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new SmsAuthProviderBuilder();
+    final result = SmsAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1873,7 +1888,7 @@ class _$GoogleAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new GoogleAuthProviderBuilder();
+    final result = GoogleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1987,7 +2002,7 @@ class _$AppleAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new AppleAuthProviderBuilder();
+    final result = AppleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2109,7 +2124,7 @@ class _$GitHubAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new GitHubAuthProviderBuilder();
+    final result = GitHubAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2211,7 +2226,7 @@ class _$FirebaseExternalAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new FirebaseExternalAuthProviderBuilder();
+    final result = FirebaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2312,7 +2327,7 @@ class _$SupabaseExternalAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new SupabaseExternalAuthProviderBuilder();
+    final result = SupabaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2421,7 +2436,7 @@ class _$NodeReferenceSerializer implements StructuredSerializer<NodeReference> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new NodeReferenceBuilder();
+    final result = NodeReferenceBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2514,7 +2529,7 @@ class _$DriftDatabaseSchemaSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DriftDatabaseSchemaBuilder();
+    final result = DriftDatabaseSchemaBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2607,7 +2622,7 @@ class _$DatabaseSerializer implements StructuredSerializer<Database> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DatabaseBuilder();
+    final result = DatabaseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2711,7 +2726,7 @@ class _$CelestDatabaseConfigSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new CelestDatabaseConfigBuilder();
+    final result = CelestDatabaseConfigBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2754,6 +2769,8 @@ class _$Project extends Project {
   @override
   final Region? primaryRegion;
   @override
+  final String? productionUrl;
+  @override
   final Reference reference;
   @override
   final BuiltMap<String, Api> apis;
@@ -2771,13 +2788,14 @@ class _$Project extends Project {
   final FileSpan location;
 
   factory _$Project([void Function(ProjectBuilder)? updates]) =>
-      (new ProjectBuilder()..update(updates))._build();
+      (ProjectBuilder()..update(updates))._build();
 
   _$Project._({
     required this.name,
     required this.environment,
     this.displayName,
     this.primaryRegion,
+    this.productionUrl,
     required this.reference,
     required this.apis,
     required this.variables,
@@ -2786,28 +2804,13 @@ class _$Project extends Project {
     required this.databases,
     required this.sdkConfig,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'Project', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-      environment,
-      r'Project',
-      'environment',
-    );
-    BuiltValueNullFieldError.checkNotNull(reference, r'Project', 'reference');
-    BuiltValueNullFieldError.checkNotNull(apis, r'Project', 'apis');
-    BuiltValueNullFieldError.checkNotNull(variables, r'Project', 'variables');
-    BuiltValueNullFieldError.checkNotNull(secrets, r'Project', 'secrets');
-    BuiltValueNullFieldError.checkNotNull(databases, r'Project', 'databases');
-    BuiltValueNullFieldError.checkNotNull(sdkConfig, r'Project', 'sdkConfig');
-    BuiltValueNullFieldError.checkNotNull(location, r'Project', 'location');
-  }
-
+  }) : super._();
   @override
   Project rebuild(void Function(ProjectBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProjectBuilder toBuilder() => new ProjectBuilder()..replace(this);
+  ProjectBuilder toBuilder() => ProjectBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2817,6 +2820,7 @@ class _$Project extends Project {
         environment == other.environment &&
         displayName == other.displayName &&
         primaryRegion == other.primaryRegion &&
+        productionUrl == other.productionUrl &&
         reference == other.reference &&
         apis == other.apis &&
         variables == other.variables &&
@@ -2834,6 +2838,7 @@ class _$Project extends Project {
     _$hash = $jc(_$hash, environment.hashCode);
     _$hash = $jc(_$hash, displayName.hashCode);
     _$hash = $jc(_$hash, primaryRegion.hashCode);
+    _$hash = $jc(_$hash, productionUrl.hashCode);
     _$hash = $jc(_$hash, reference.hashCode);
     _$hash = $jc(_$hash, apis.hashCode);
     _$hash = $jc(_$hash, variables.hashCode);
@@ -2853,6 +2858,7 @@ class _$Project extends Project {
           ..add('environment', environment)
           ..add('displayName', displayName)
           ..add('primaryRegion', primaryRegion)
+          ..add('productionUrl', productionUrl)
           ..add('reference', reference)
           ..add('apis', apis)
           ..add('variables', variables)
@@ -2885,39 +2891,43 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
   set primaryRegion(Region? primaryRegion) =>
       _$this._primaryRegion = primaryRegion;
 
+  String? _productionUrl;
+  String? get productionUrl => _$this._productionUrl;
+  set productionUrl(String? productionUrl) =>
+      _$this._productionUrl = productionUrl;
+
   Reference? _reference;
   Reference? get reference => _$this._reference;
   set reference(Reference? reference) => _$this._reference = reference;
 
   MapBuilder<String, Api>? _apis;
   MapBuilder<String, Api> get apis =>
-      _$this._apis ??= new MapBuilder<String, Api>();
+      _$this._apis ??= MapBuilder<String, Api>();
   set apis(MapBuilder<String, Api>? apis) => _$this._apis = apis;
 
   ListBuilder<Variable>? _variables;
   ListBuilder<Variable> get variables =>
-      _$this._variables ??= new ListBuilder<Variable>();
+      _$this._variables ??= ListBuilder<Variable>();
   set variables(ListBuilder<Variable>? variables) =>
       _$this._variables = variables;
 
   ListBuilder<Secret>? _secrets;
-  ListBuilder<Secret> get secrets =>
-      _$this._secrets ??= new ListBuilder<Secret>();
+  ListBuilder<Secret> get secrets => _$this._secrets ??= ListBuilder<Secret>();
   set secrets(ListBuilder<Secret>? secrets) => _$this._secrets = secrets;
 
   AuthBuilder? _auth;
-  AuthBuilder get auth => _$this._auth ??= new AuthBuilder();
+  AuthBuilder get auth => _$this._auth ??= AuthBuilder();
   set auth(AuthBuilder? auth) => _$this._auth = auth;
 
   MapBuilder<String, Database>? _databases;
   MapBuilder<String, Database> get databases =>
-      _$this._databases ??= new MapBuilder<String, Database>();
+      _$this._databases ??= MapBuilder<String, Database>();
   set databases(MapBuilder<String, Database>? databases) =>
       _$this._databases = databases;
 
   SdkConfigurationBuilder? _sdkConfig;
   SdkConfigurationBuilder get sdkConfig =>
-      _$this._sdkConfig ??= new SdkConfigurationBuilder();
+      _$this._sdkConfig ??= SdkConfigurationBuilder();
   set sdkConfig(SdkConfigurationBuilder? sdkConfig) =>
       _$this._sdkConfig = sdkConfig;
 
@@ -2934,6 +2944,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
       _environment = $v.environment;
       _displayName = $v.displayName;
       _primaryRegion = $v.primaryRegion;
+      _productionUrl = $v.productionUrl;
       _reference = $v.reference;
       _apis = $v.apis.toBuilder();
       _variables = $v.variables.toBuilder();
@@ -2949,7 +2960,6 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
 
   @override
   void replace(Project other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Project;
   }
 
@@ -2966,7 +2976,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Project._(
+          _$Project._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
               r'Project',
@@ -2979,6 +2989,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
             ),
             displayName: displayName,
             primaryRegion: primaryRegion,
+            productionUrl: productionUrl,
             reference: BuiltValueNullFieldError.checkNotNull(
               reference,
               r'Project',
@@ -3012,7 +3023,7 @@ class ProjectBuilder implements Builder<Project, ProjectBuilder> {
         _$failedField = 'sdkConfig';
         sdkConfig.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'Project',
           _$failedField,
           e.toString(),
@@ -3040,7 +3051,7 @@ class _$Api extends Api {
   final FileSpan location;
 
   factory _$Api([void Function(ApiBuilder)? updates]) =>
-      (new ApiBuilder()..update(updates))._build();
+      (ApiBuilder()..update(updates))._build();
 
   _$Api._({
     required this.name,
@@ -3049,25 +3060,13 @@ class _$Api extends Api {
     required this.docs,
     required this.exceptionTypes,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name');
-    BuiltValueNullFieldError.checkNotNull(metadata, r'Api', 'metadata');
-    BuiltValueNullFieldError.checkNotNull(functions, r'Api', 'functions');
-    BuiltValueNullFieldError.checkNotNull(docs, r'Api', 'docs');
-    BuiltValueNullFieldError.checkNotNull(
-      exceptionTypes,
-      r'Api',
-      'exceptionTypes',
-    );
-    BuiltValueNullFieldError.checkNotNull(location, r'Api', 'location');
-  }
-
+  }) : super._();
   @override
   Api rebuild(void Function(ApiBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiBuilder toBuilder() => new ApiBuilder()..replace(this);
+  ApiBuilder toBuilder() => ApiBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3116,23 +3115,23 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
-      _$this._metadata ??= new ListBuilder<ApiMetadata>();
+      _$this._metadata ??= ListBuilder<ApiMetadata>();
   set metadata(ListBuilder<ApiMetadata>? metadata) =>
       _$this._metadata = metadata;
 
   MapBuilder<String, CloudFunction>? _functions;
   MapBuilder<String, CloudFunction> get functions =>
-      _$this._functions ??= new MapBuilder<String, CloudFunction>();
+      _$this._functions ??= MapBuilder<String, CloudFunction>();
   set functions(MapBuilder<String, CloudFunction>? functions) =>
       _$this._functions = functions;
 
   ListBuilder<String>? _docs;
-  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  ListBuilder<String> get docs => _$this._docs ??= ListBuilder<String>();
   set docs(ListBuilder<String>? docs) => _$this._docs = docs;
 
   SetBuilder<Reference>? _exceptionTypes;
   SetBuilder<Reference> get exceptionTypes =>
-      _$this._exceptionTypes ??= new SetBuilder<Reference>();
+      _$this._exceptionTypes ??= SetBuilder<Reference>();
   set exceptionTypes(SetBuilder<Reference>? exceptionTypes) =>
       _$this._exceptionTypes = exceptionTypes;
 
@@ -3158,7 +3157,6 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
 
   @override
   void replace(Api other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Api;
   }
 
@@ -3175,7 +3173,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Api._(
+          _$Api._(
             name: BuiltValueNullFieldError.checkNotNull(name, r'Api', 'name'),
             metadata: metadata.build(),
             functions: functions.build(),
@@ -3199,11 +3197,7 @@ class ApiBuilder implements Builder<Api, ApiBuilder> {
         _$failedField = 'exceptionTypes';
         exceptionTypes.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-          r'Api',
-          _$failedField,
-          e.toString(),
-        );
+        throw BuiltValueNestedFieldError(r'Api', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -3217,18 +3211,15 @@ class _$ApiPublic extends ApiPublic {
   final FileSpan location;
 
   factory _$ApiPublic([void Function(ApiPublicBuilder)? updates]) =>
-      (new ApiPublicBuilder()..update(updates))._build();
+      (ApiPublicBuilder()..update(updates))._build();
 
-  _$ApiPublic._({required this.location}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(location, r'ApiPublic', 'location');
-  }
-
+  _$ApiPublic._({required this.location}) : super._();
   @override
   ApiPublic rebuild(void Function(ApiPublicBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiPublicBuilder toBuilder() => new ApiPublicBuilder()..replace(this);
+  ApiPublicBuilder toBuilder() => ApiPublicBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3271,7 +3262,6 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
 
   @override
   void replace(ApiPublic other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ApiPublic;
   }
 
@@ -3286,7 +3276,7 @@ class ApiPublicBuilder implements Builder<ApiPublic, ApiPublicBuilder> {
   _$ApiPublic _build() {
     final _$result =
         _$v ??
-        new _$ApiPublic._(
+        _$ApiPublic._(
           location: BuiltValueNullFieldError.checkNotNull(
             location,
             r'ApiPublic',
@@ -3304,23 +3294,16 @@ class _$ApiAuthenticated extends ApiAuthenticated {
 
   factory _$ApiAuthenticated([
     void Function(ApiAuthenticatedBuilder)? updates,
-  ]) => (new ApiAuthenticatedBuilder()..update(updates))._build();
+  ]) => (ApiAuthenticatedBuilder()..update(updates))._build();
 
-  _$ApiAuthenticated._({required this.location}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'ApiAuthenticated',
-      'location',
-    );
-  }
-
+  _$ApiAuthenticated._({required this.location}) : super._();
   @override
   ApiAuthenticated rebuild(void Function(ApiAuthenticatedBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   ApiAuthenticatedBuilder toBuilder() =>
-      new ApiAuthenticatedBuilder()..replace(this);
+      ApiAuthenticatedBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3364,7 +3347,6 @@ class ApiAuthenticatedBuilder
 
   @override
   void replace(ApiAuthenticated other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ApiAuthenticated;
   }
 
@@ -3379,7 +3361,7 @@ class ApiAuthenticatedBuilder
   _$ApiAuthenticated _build() {
     final _$result =
         _$v ??
-        new _$ApiAuthenticated._(
+        _$ApiAuthenticated._(
           location: BuiltValueNullFieldError.checkNotNull(
             location,
             r'ApiAuthenticated',
@@ -3398,23 +3380,15 @@ class _$ApiMiddleware extends ApiMiddleware {
   final FileSpan location;
 
   factory _$ApiMiddleware([void Function(ApiMiddlewareBuilder)? updates]) =>
-      (new ApiMiddlewareBuilder()..update(updates))._build();
+      (ApiMiddlewareBuilder()..update(updates))._build();
 
-  _$ApiMiddleware._({required this.type, required this.location}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'ApiMiddleware', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'ApiMiddleware',
-      'location',
-    );
-  }
-
+  _$ApiMiddleware._({required this.type, required this.location}) : super._();
   @override
   ApiMiddleware rebuild(void Function(ApiMiddlewareBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiMiddlewareBuilder toBuilder() => new ApiMiddlewareBuilder()..replace(this);
+  ApiMiddlewareBuilder toBuilder() => ApiMiddlewareBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3468,7 +3442,6 @@ class ApiMiddlewareBuilder
 
   @override
   void replace(ApiMiddleware other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ApiMiddleware;
   }
 
@@ -3483,7 +3456,7 @@ class ApiMiddlewareBuilder
   _$ApiMiddleware _build() {
     final _$result =
         _$v ??
-        new _$ApiMiddleware._(
+        _$ApiMiddleware._(
           type: BuiltValueNullFieldError.checkNotNull(
             type,
             r'ApiMiddleware',
@@ -3509,32 +3482,19 @@ class _$ApiHttpConfig extends ApiHttpConfig {
   final FileSpan location;
 
   factory _$ApiHttpConfig([void Function(ApiHttpConfigBuilder)? updates]) =>
-      (new ApiHttpConfigBuilder()..update(updates))._build();
+      (ApiHttpConfigBuilder()..update(updates))._build();
 
   _$ApiHttpConfig._({
     required this.method,
     required this.statusCode,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(method, r'ApiHttpConfig', 'method');
-    BuiltValueNullFieldError.checkNotNull(
-      statusCode,
-      r'ApiHttpConfig',
-      'statusCode',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'ApiHttpConfig',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   ApiHttpConfig rebuild(void Function(ApiHttpConfigBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiHttpConfigBuilder toBuilder() => new ApiHttpConfigBuilder()..replace(this);
+  ApiHttpConfigBuilder toBuilder() => ApiHttpConfigBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3596,7 +3556,6 @@ class ApiHttpConfigBuilder
 
   @override
   void replace(ApiHttpConfig other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ApiHttpConfig;
   }
 
@@ -3611,7 +3570,7 @@ class ApiHttpConfigBuilder
   _$ApiHttpConfig _build() {
     final _$result =
         _$v ??
-        new _$ApiHttpConfig._(
+        _$ApiHttpConfig._(
           method: BuiltValueNullFieldError.checkNotNull(
             method,
             r'ApiHttpConfig',
@@ -3642,32 +3601,19 @@ class _$ApiHttpError extends ApiHttpError {
   final FileSpan location;
 
   factory _$ApiHttpError([void Function(ApiHttpErrorBuilder)? updates]) =>
-      (new ApiHttpErrorBuilder()..update(updates))._build();
+      (ApiHttpErrorBuilder()..update(updates))._build();
 
   _$ApiHttpError._({
     required this.type,
     required this.statusCode,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'ApiHttpError', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      statusCode,
-      r'ApiHttpError',
-      'statusCode',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'ApiHttpError',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   ApiHttpError rebuild(void Function(ApiHttpErrorBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ApiHttpErrorBuilder toBuilder() => new ApiHttpErrorBuilder()..replace(this);
+  ApiHttpErrorBuilder toBuilder() => ApiHttpErrorBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3703,7 +3649,7 @@ class ApiHttpErrorBuilder
   _$ApiHttpError? _$v;
 
   TypeReferenceBuilder? _type;
-  TypeReferenceBuilder get type => _$this._type ??= new TypeReferenceBuilder();
+  TypeReferenceBuilder get type => _$this._type ??= TypeReferenceBuilder();
   set type(TypeReferenceBuilder? type) => _$this._type = type;
 
   int? _statusCode;
@@ -3729,7 +3675,6 @@ class ApiHttpErrorBuilder
 
   @override
   void replace(ApiHttpError other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ApiHttpError;
   }
 
@@ -3746,7 +3691,7 @@ class ApiHttpErrorBuilder
     try {
       _$result =
           _$v ??
-          new _$ApiHttpError._(
+          _$ApiHttpError._(
             type: type.build(),
             statusCode: BuiltValueNullFieldError.checkNotNull(
               statusCode,
@@ -3765,7 +3710,7 @@ class ApiHttpErrorBuilder
         _$failedField = 'type';
         type.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ApiHttpError',
           _$failedField,
           e.toString(),
@@ -3802,7 +3747,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
 
   factory _$CloudFunctionParameter([
     void Function(CloudFunctionParameterBuilder)? updates,
-  ]) => (new CloudFunctionParameterBuilder()..update(updates))._build();
+  ]) => (CloudFunctionParameterBuilder()..update(updates))._build();
 
   _$CloudFunctionParameter._({
     required this.name,
@@ -3815,44 +3760,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
     this.defaultToExpression,
     this.defaultTo,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      name,
-      r'CloudFunctionParameter',
-      'name',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'CloudFunctionParameter',
-      'type',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      required,
-      r'CloudFunctionParameter',
-      'required',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      named,
-      r'CloudFunctionParameter',
-      'named',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      annotationExpressions,
-      r'CloudFunctionParameter',
-      'annotationExpressions',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      annotations,
-      r'CloudFunctionParameter',
-      'annotations',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'CloudFunctionParameter',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   CloudFunctionParameter rebuild(
     void Function(CloudFunctionParameterBuilder) updates,
@@ -3860,7 +3768,7 @@ class _$CloudFunctionParameter extends CloudFunctionParameter {
 
   @override
   CloudFunctionParameterBuilder toBuilder() =>
-      new CloudFunctionParameterBuilder()..replace(this);
+      CloudFunctionParameterBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3934,19 +3842,19 @@ class CloudFunctionParameterBuilder
 
   NodeReferenceBuilder? _references;
   NodeReferenceBuilder get references =>
-      _$this._references ??= new NodeReferenceBuilder();
+      _$this._references ??= NodeReferenceBuilder();
   set references(NodeReferenceBuilder? references) =>
       _$this._references = references;
 
   ListBuilder<Expression>? _annotationExpressions;
   ListBuilder<Expression> get annotationExpressions =>
-      _$this._annotationExpressions ??= new ListBuilder<Expression>();
+      _$this._annotationExpressions ??= ListBuilder<Expression>();
   set annotationExpressions(ListBuilder<Expression>? annotationExpressions) =>
       _$this._annotationExpressions = annotationExpressions;
 
   ListBuilder<DartValue>? _annotations;
   ListBuilder<DartValue> get annotations =>
-      _$this._annotations ??= new ListBuilder<DartValue>();
+      _$this._annotations ??= ListBuilder<DartValue>();
   set annotations(ListBuilder<DartValue>? annotations) =>
       _$this._annotations = annotations;
 
@@ -3985,7 +3893,6 @@ class CloudFunctionParameterBuilder
 
   @override
   void replace(CloudFunctionParameter other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CloudFunctionParameter;
   }
 
@@ -4002,7 +3909,7 @@ class CloudFunctionParameterBuilder
     try {
       _$result =
           _$v ??
-          new _$CloudFunctionParameter._(
+          _$CloudFunctionParameter._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
               r'CloudFunctionParameter',
@@ -4044,7 +3951,7 @@ class CloudFunctionParameterBuilder
         _$failedField = 'annotations';
         annotations.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'CloudFunctionParameter',
           _$failedField,
           e.toString(),
@@ -4084,7 +3991,7 @@ class _$CloudFunction extends CloudFunction {
   final FileSpan location;
 
   factory _$CloudFunction([void Function(CloudFunctionBuilder)? updates]) =>
-      (new CloudFunctionBuilder()..update(updates))._build();
+      (CloudFunctionBuilder()..update(updates))._build();
 
   _$CloudFunction._({
     required this.name,
@@ -4099,58 +4006,13 @@ class _$CloudFunction extends CloudFunction {
     required this.annotations,
     required this.docs,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'CloudFunction', 'name');
-    BuiltValueNullFieldError.checkNotNull(apiName, r'CloudFunction', 'apiName');
-    BuiltValueNullFieldError.checkNotNull(
-      typeParameters,
-      r'CloudFunction',
-      'typeParameters',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      parameters,
-      r'CloudFunction',
-      'parameters',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      returnType,
-      r'CloudFunction',
-      'returnType',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      flattenedReturnType,
-      r'CloudFunction',
-      'flattenedReturnType',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      metadata,
-      r'CloudFunction',
-      'metadata',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      annotationExpressions,
-      r'CloudFunction',
-      'annotationExpressions',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      annotations,
-      r'CloudFunction',
-      'annotations',
-    );
-    BuiltValueNullFieldError.checkNotNull(docs, r'CloudFunction', 'docs');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'CloudFunction',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   CloudFunction rebuild(void Function(CloudFunctionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CloudFunctionBuilder toBuilder() => new CloudFunctionBuilder()..replace(this);
+  CloudFunctionBuilder toBuilder() => CloudFunctionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4222,13 +4084,13 @@ class CloudFunctionBuilder
 
   ListBuilder<Reference>? _typeParameters;
   ListBuilder<Reference> get typeParameters =>
-      _$this._typeParameters ??= new ListBuilder<Reference>();
+      _$this._typeParameters ??= ListBuilder<Reference>();
   set typeParameters(ListBuilder<Reference>? typeParameters) =>
       _$this._typeParameters = typeParameters;
 
   ListBuilder<CloudFunctionParameter>? _parameters;
   ListBuilder<CloudFunctionParameter> get parameters =>
-      _$this._parameters ??= new ListBuilder<CloudFunctionParameter>();
+      _$this._parameters ??= ListBuilder<CloudFunctionParameter>();
   set parameters(ListBuilder<CloudFunctionParameter>? parameters) =>
       _$this._parameters = parameters;
 
@@ -4247,24 +4109,24 @@ class CloudFunctionBuilder
 
   ListBuilder<ApiMetadata>? _metadata;
   ListBuilder<ApiMetadata> get metadata =>
-      _$this._metadata ??= new ListBuilder<ApiMetadata>();
+      _$this._metadata ??= ListBuilder<ApiMetadata>();
   set metadata(ListBuilder<ApiMetadata>? metadata) =>
       _$this._metadata = metadata;
 
   ListBuilder<Expression>? _annotationExpressions;
   ListBuilder<Expression> get annotationExpressions =>
-      _$this._annotationExpressions ??= new ListBuilder<Expression>();
+      _$this._annotationExpressions ??= ListBuilder<Expression>();
   set annotationExpressions(ListBuilder<Expression>? annotationExpressions) =>
       _$this._annotationExpressions = annotationExpressions;
 
   ListBuilder<DartValue>? _annotations;
   ListBuilder<DartValue> get annotations =>
-      _$this._annotations ??= new ListBuilder<DartValue>();
+      _$this._annotations ??= ListBuilder<DartValue>();
   set annotations(ListBuilder<DartValue>? annotations) =>
       _$this._annotations = annotations;
 
   ListBuilder<String>? _docs;
-  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  ListBuilder<String> get docs => _$this._docs ??= ListBuilder<String>();
   set docs(ListBuilder<String>? docs) => _$this._docs = docs;
 
   FileSpan? _location;
@@ -4295,7 +4157,6 @@ class CloudFunctionBuilder
 
   @override
   void replace(CloudFunction other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CloudFunction;
   }
 
@@ -4312,7 +4173,7 @@ class CloudFunctionBuilder
     try {
       _$result =
           _$v ??
-          new _$CloudFunction._(
+          _$CloudFunction._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
               r'CloudFunction',
@@ -4363,7 +4224,7 @@ class CloudFunctionBuilder
         _$failedField = 'docs';
         docs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'CloudFunction',
           _$failedField,
           e.toString(),
@@ -4389,7 +4250,7 @@ class _$Variable extends Variable {
   final BuiltList<String> docs;
 
   factory _$Variable([void Function(VariableBuilder)? updates]) =>
-      (new VariableBuilder()..update(updates))._build();
+      (VariableBuilder()..update(updates))._build();
 
   _$Variable._({
     this.value,
@@ -4397,18 +4258,13 @@ class _$Variable extends Variable {
     required this.name,
     this.dartName,
     required this.docs,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(location, r'Variable', 'location');
-    BuiltValueNullFieldError.checkNotNull(name, r'Variable', 'name');
-    BuiltValueNullFieldError.checkNotNull(docs, r'Variable', 'docs');
-  }
-
+  }) : super._();
   @override
   Variable rebuild(void Function(VariableBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  VariableBuilder toBuilder() => new VariableBuilder()..replace(this);
+  VariableBuilder toBuilder() => VariableBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4465,7 +4321,7 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
   set dartName(String? dartName) => _$this._dartName = dartName;
 
   ListBuilder<String>? _docs;
-  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  ListBuilder<String> get docs => _$this._docs ??= ListBuilder<String>();
   set docs(ListBuilder<String>? docs) => _$this._docs = docs;
 
   VariableBuilder();
@@ -4485,7 +4341,6 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
 
   @override
   void replace(Variable other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Variable;
   }
 
@@ -4502,7 +4357,7 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Variable._(
+          _$Variable._(
             value: value,
             location: BuiltValueNullFieldError.checkNotNull(
               location,
@@ -4523,7 +4378,7 @@ class VariableBuilder implements Builder<Variable, VariableBuilder> {
         _$failedField = 'docs';
         docs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'Variable',
           _$failedField,
           e.toString(),
@@ -4547,25 +4402,20 @@ class _$Secret extends Secret {
   final BuiltList<String> docs;
 
   factory _$Secret([void Function(SecretBuilder)? updates]) =>
-      (new SecretBuilder()..update(updates))._build();
+      (SecretBuilder()..update(updates))._build();
 
   _$Secret._({
     required this.location,
     required this.name,
     this.dartName,
     required this.docs,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(location, r'Secret', 'location');
-    BuiltValueNullFieldError.checkNotNull(name, r'Secret', 'name');
-    BuiltValueNullFieldError.checkNotNull(docs, r'Secret', 'docs');
-  }
-
+  }) : super._();
   @override
   Secret rebuild(void Function(SecretBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SecretBuilder toBuilder() => new SecretBuilder()..replace(this);
+  SecretBuilder toBuilder() => SecretBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4615,7 +4465,7 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
   set dartName(String? dartName) => _$this._dartName = dartName;
 
   ListBuilder<String>? _docs;
-  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  ListBuilder<String> get docs => _$this._docs ??= ListBuilder<String>();
   set docs(ListBuilder<String>? docs) => _$this._docs = docs;
 
   SecretBuilder();
@@ -4634,7 +4484,6 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
 
   @override
   void replace(Secret other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Secret;
   }
 
@@ -4651,7 +4500,7 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Secret._(
+          _$Secret._(
             location: BuiltValueNullFieldError.checkNotNull(
               location,
               r'Secret',
@@ -4671,7 +4520,7 @@ class SecretBuilder implements Builder<Secret, SecretBuilder> {
         _$failedField = 'docs';
         docs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'Secret',
           _$failedField,
           e.toString(),
@@ -4693,28 +4542,19 @@ class _$Auth extends Auth {
   final FileSpan location;
 
   factory _$Auth([void Function(AuthBuilder)? updates]) =>
-      (new AuthBuilder()..update(updates))._build();
+      (AuthBuilder()..update(updates))._build();
 
   _$Auth._({
     required this.providers,
     required this.externalProviders,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(providers, r'Auth', 'providers');
-    BuiltValueNullFieldError.checkNotNull(
-      externalProviders,
-      r'Auth',
-      'externalProviders',
-    );
-    BuiltValueNullFieldError.checkNotNull(location, r'Auth', 'location');
-  }
-
+  }) : super._();
   @override
   Auth rebuild(void Function(AuthBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AuthBuilder toBuilder() => new AuthBuilder()..replace(this);
+  AuthBuilder toBuilder() => AuthBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4750,13 +4590,13 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
 
   ListBuilder<AuthProvider>? _providers;
   ListBuilder<AuthProvider> get providers =>
-      _$this._providers ??= new ListBuilder<AuthProvider>();
+      _$this._providers ??= ListBuilder<AuthProvider>();
   set providers(ListBuilder<AuthProvider>? providers) =>
       _$this._providers = providers;
 
   ListBuilder<ExternalAuthProvider>? _externalProviders;
   ListBuilder<ExternalAuthProvider> get externalProviders =>
-      _$this._externalProviders ??= new ListBuilder<ExternalAuthProvider>();
+      _$this._externalProviders ??= ListBuilder<ExternalAuthProvider>();
   set externalProviders(ListBuilder<ExternalAuthProvider>? externalProviders) =>
       _$this._externalProviders = externalProviders;
 
@@ -4779,7 +4619,6 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
 
   @override
   void replace(Auth other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Auth;
   }
 
@@ -4796,7 +4635,7 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Auth._(
+          _$Auth._(
             providers: providers.build(),
             externalProviders: externalProviders.build(),
             location: BuiltValueNullFieldError.checkNotNull(
@@ -4813,11 +4652,7 @@ class AuthBuilder implements Builder<Auth, AuthBuilder> {
         _$failedField = 'externalProviders';
         externalProviders.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-          r'Auth',
-          _$failedField,
-          e.toString(),
-        );
+        throw BuiltValueNestedFieldError(r'Auth', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -4862,29 +4697,20 @@ class _$EmailAuthProvider extends EmailAuthProvider {
 
   factory _$EmailAuthProvider([
     void Function(EmailAuthProviderBuilder)? updates,
-  ]) => (new EmailAuthProviderBuilder()..update(updates))._build();
+  ]) => (EmailAuthProviderBuilder()..update(updates))._build();
 
   _$EmailAuthProvider._({
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'EmailAuthProvider', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'EmailAuthProvider', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'EmailAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   EmailAuthProvider rebuild(void Function(EmailAuthProviderBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   EmailAuthProviderBuilder toBuilder() =>
-      new EmailAuthProviderBuilder()..replace(this);
+      EmailAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4948,7 +4774,6 @@ class EmailAuthProviderBuilder
 
   @override
   void replace(covariant EmailAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EmailAuthProvider;
   }
 
@@ -4964,7 +4789,7 @@ class EmailAuthProviderBuilder
     EmailAuthProvider._finalize(this);
     final _$result =
         _$v ??
-        new _$EmailAuthProvider._(
+        _$EmailAuthProvider._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,
             r'EmailAuthProvider',
@@ -4995,29 +4820,19 @@ class _$SmsAuthProvider extends SmsAuthProvider {
   final FileSpan location;
 
   factory _$SmsAuthProvider([void Function(SmsAuthProviderBuilder)? updates]) =>
-      (new SmsAuthProviderBuilder()..update(updates))._build();
+      (SmsAuthProviderBuilder()..update(updates))._build();
 
   _$SmsAuthProvider._({
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'SmsAuthProvider', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'SmsAuthProvider', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'SmsAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   SmsAuthProvider rebuild(void Function(SmsAuthProviderBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SmsAuthProviderBuilder toBuilder() =>
-      new SmsAuthProviderBuilder()..replace(this);
+  SmsAuthProviderBuilder toBuilder() => SmsAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -5081,7 +4896,6 @@ class SmsAuthProviderBuilder
 
   @override
   void replace(covariant SmsAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SmsAuthProvider;
   }
 
@@ -5097,7 +4911,7 @@ class SmsAuthProviderBuilder
     SmsAuthProvider._finalize(this);
     final _$result =
         _$v ??
-        new _$SmsAuthProvider._(
+        _$SmsAuthProvider._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,
             r'SmsAuthProvider',
@@ -5133,7 +4947,7 @@ class _$GoogleAuthProvider extends GoogleAuthProvider {
 
   factory _$GoogleAuthProvider([
     void Function(GoogleAuthProviderBuilder)? updates,
-  ]) => (new GoogleAuthProviderBuilder()..update(updates))._build();
+  ]) => (GoogleAuthProviderBuilder()..update(updates))._build();
 
   _$GoogleAuthProvider._({
     required this.clientId,
@@ -5141,26 +4955,7 @@ class _$GoogleAuthProvider extends GoogleAuthProvider {
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'GoogleAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      clientSecret,
-      r'GoogleAuthProvider',
-      'clientSecret',
-    );
-    BuiltValueNullFieldError.checkNotNull(name, r'GoogleAuthProvider', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'GoogleAuthProvider', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'GoogleAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   GoogleAuthProvider rebuild(
     void Function(GoogleAuthProviderBuilder) updates,
@@ -5168,7 +4963,7 @@ class _$GoogleAuthProvider extends GoogleAuthProvider {
 
   @override
   GoogleAuthProviderBuilder toBuilder() =>
-      new GoogleAuthProviderBuilder()..replace(this);
+      GoogleAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -5212,13 +5007,12 @@ class GoogleAuthProviderBuilder
   _$GoogleAuthProvider? _$v;
 
   SecretBuilder? _clientId;
-  SecretBuilder get clientId => _$this._clientId ??= new SecretBuilder();
+  SecretBuilder get clientId => _$this._clientId ??= SecretBuilder();
   set clientId(covariant SecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   SecretBuilder? _clientSecret;
-  SecretBuilder get clientSecret =>
-      _$this._clientSecret ??= new SecretBuilder();
+  SecretBuilder get clientSecret => _$this._clientSecret ??= SecretBuilder();
   set clientSecret(covariant SecretBuilder? clientSecret) =>
       _$this._clientSecret = clientSecret;
 
@@ -5251,7 +5045,6 @@ class GoogleAuthProviderBuilder
 
   @override
   void replace(covariant GoogleAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GoogleAuthProvider;
   }
 
@@ -5269,7 +5062,7 @@ class GoogleAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$GoogleAuthProvider._(
+          _$GoogleAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             name: BuiltValueNullFieldError.checkNotNull(
@@ -5296,7 +5089,7 @@ class GoogleAuthProviderBuilder
         _$failedField = 'clientSecret';
         clientSecret.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'GoogleAuthProvider',
           _$failedField,
           e.toString(),
@@ -5327,7 +5120,7 @@ class _$AppleAuthProvider extends AppleAuthProvider {
 
   factory _$AppleAuthProvider([
     void Function(AppleAuthProviderBuilder)? updates,
-  ]) => (new AppleAuthProviderBuilder()..update(updates))._build();
+  ]) => (AppleAuthProviderBuilder()..update(updates))._build();
 
   _$AppleAuthProvider._({
     required this.clientId,
@@ -5337,39 +5130,14 @@ class _$AppleAuthProvider extends AppleAuthProvider {
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'AppleAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      teamId,
-      r'AppleAuthProvider',
-      'teamId',
-    );
-    BuiltValueNullFieldError.checkNotNull(keyId, r'AppleAuthProvider', 'keyId');
-    BuiltValueNullFieldError.checkNotNull(
-      privateKey,
-      r'AppleAuthProvider',
-      'privateKey',
-    );
-    BuiltValueNullFieldError.checkNotNull(name, r'AppleAuthProvider', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'AppleAuthProvider', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'AppleAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   AppleAuthProvider rebuild(void Function(AppleAuthProviderBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   AppleAuthProviderBuilder toBuilder() =>
-      new AppleAuthProviderBuilder()..replace(this);
+      AppleAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -5419,20 +5187,20 @@ class AppleAuthProviderBuilder
   _$AppleAuthProvider? _$v;
 
   SecretBuilder? _clientId;
-  SecretBuilder get clientId => _$this._clientId ??= new SecretBuilder();
+  SecretBuilder get clientId => _$this._clientId ??= SecretBuilder();
   set clientId(covariant SecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   SecretBuilder? _teamId;
-  SecretBuilder get teamId => _$this._teamId ??= new SecretBuilder();
+  SecretBuilder get teamId => _$this._teamId ??= SecretBuilder();
   set teamId(covariant SecretBuilder? teamId) => _$this._teamId = teamId;
 
   SecretBuilder? _keyId;
-  SecretBuilder get keyId => _$this._keyId ??= new SecretBuilder();
+  SecretBuilder get keyId => _$this._keyId ??= SecretBuilder();
   set keyId(covariant SecretBuilder? keyId) => _$this._keyId = keyId;
 
   SecretBuilder? _privateKey;
-  SecretBuilder get privateKey => _$this._privateKey ??= new SecretBuilder();
+  SecretBuilder get privateKey => _$this._privateKey ??= SecretBuilder();
   set privateKey(covariant SecretBuilder? privateKey) =>
       _$this._privateKey = privateKey;
 
@@ -5467,7 +5235,6 @@ class AppleAuthProviderBuilder
 
   @override
   void replace(covariant AppleAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AppleAuthProvider;
   }
 
@@ -5485,7 +5252,7 @@ class AppleAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$AppleAuthProvider._(
+          _$AppleAuthProvider._(
             clientId: clientId.build(),
             teamId: teamId.build(),
             keyId: keyId.build(),
@@ -5518,7 +5285,7 @@ class AppleAuthProviderBuilder
         _$failedField = 'privateKey';
         privateKey.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'AppleAuthProvider',
           _$failedField,
           e.toString(),
@@ -5545,7 +5312,7 @@ class _$GitHubAuthProvider extends GitHubAuthProvider {
 
   factory _$GitHubAuthProvider([
     void Function(GitHubAuthProviderBuilder)? updates,
-  ]) => (new GitHubAuthProviderBuilder()..update(updates))._build();
+  ]) => (GitHubAuthProviderBuilder()..update(updates))._build();
 
   _$GitHubAuthProvider._({
     required this.clientId,
@@ -5553,26 +5320,7 @@ class _$GitHubAuthProvider extends GitHubAuthProvider {
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'GitHubAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      clientSecret,
-      r'GitHubAuthProvider',
-      'clientSecret',
-    );
-    BuiltValueNullFieldError.checkNotNull(name, r'GitHubAuthProvider', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'GitHubAuthProvider', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'GitHubAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   GitHubAuthProvider rebuild(
     void Function(GitHubAuthProviderBuilder) updates,
@@ -5580,7 +5328,7 @@ class _$GitHubAuthProvider extends GitHubAuthProvider {
 
   @override
   GitHubAuthProviderBuilder toBuilder() =>
-      new GitHubAuthProviderBuilder()..replace(this);
+      GitHubAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -5624,13 +5372,12 @@ class GitHubAuthProviderBuilder
   _$GitHubAuthProvider? _$v;
 
   SecretBuilder? _clientId;
-  SecretBuilder get clientId => _$this._clientId ??= new SecretBuilder();
+  SecretBuilder get clientId => _$this._clientId ??= SecretBuilder();
   set clientId(covariant SecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   SecretBuilder? _clientSecret;
-  SecretBuilder get clientSecret =>
-      _$this._clientSecret ??= new SecretBuilder();
+  SecretBuilder get clientSecret => _$this._clientSecret ??= SecretBuilder();
   set clientSecret(covariant SecretBuilder? clientSecret) =>
       _$this._clientSecret = clientSecret;
 
@@ -5663,7 +5410,6 @@ class GitHubAuthProviderBuilder
 
   @override
   void replace(covariant GitHubAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GitHubAuthProvider;
   }
 
@@ -5681,7 +5427,7 @@ class GitHubAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$GitHubAuthProvider._(
+          _$GitHubAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             name: BuiltValueNullFieldError.checkNotNull(
@@ -5708,7 +5454,7 @@ class GitHubAuthProviderBuilder
         _$failedField = 'clientSecret';
         clientSecret.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'GitHubAuthProvider',
           _$failedField,
           e.toString(),
@@ -5733,36 +5479,14 @@ class _$FirebaseExternalAuthProvider extends FirebaseExternalAuthProvider {
 
   factory _$FirebaseExternalAuthProvider([
     void Function(FirebaseExternalAuthProviderBuilder)? updates,
-  ]) => (new FirebaseExternalAuthProviderBuilder()..update(updates))._build();
+  ]) => (FirebaseExternalAuthProviderBuilder()..update(updates))._build();
 
   _$FirebaseExternalAuthProvider._({
     required this.projectId,
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      projectId,
-      r'FirebaseExternalAuthProvider',
-      'projectId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      name,
-      r'FirebaseExternalAuthProvider',
-      'name',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'FirebaseExternalAuthProvider',
-      'type',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'FirebaseExternalAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   FirebaseExternalAuthProvider rebuild(
     void Function(FirebaseExternalAuthProviderBuilder) updates,
@@ -5770,7 +5494,7 @@ class _$FirebaseExternalAuthProvider extends FirebaseExternalAuthProvider {
 
   @override
   FirebaseExternalAuthProviderBuilder toBuilder() =>
-      new FirebaseExternalAuthProviderBuilder()..replace(this);
+      FirebaseExternalAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -5814,7 +5538,7 @@ class FirebaseExternalAuthProviderBuilder
   _$FirebaseExternalAuthProvider? _$v;
 
   VariableBuilder? _projectId;
-  VariableBuilder get projectId => _$this._projectId ??= new VariableBuilder();
+  VariableBuilder get projectId => _$this._projectId ??= VariableBuilder();
   set projectId(covariant VariableBuilder? projectId) =>
       _$this._projectId = projectId;
 
@@ -5846,7 +5570,6 @@ class FirebaseExternalAuthProviderBuilder
 
   @override
   void replace(covariant FirebaseExternalAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$FirebaseExternalAuthProvider;
   }
 
@@ -5864,7 +5587,7 @@ class FirebaseExternalAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$FirebaseExternalAuthProvider._(
+          _$FirebaseExternalAuthProvider._(
             projectId: projectId.build(),
             name: BuiltValueNullFieldError.checkNotNull(
               name,
@@ -5888,7 +5611,7 @@ class FirebaseExternalAuthProviderBuilder
         _$failedField = 'projectId';
         projectId.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'FirebaseExternalAuthProvider',
           _$failedField,
           e.toString(),
@@ -5915,7 +5638,7 @@ class _$SupabaseExternalAuthProvider extends SupabaseExternalAuthProvider {
 
   factory _$SupabaseExternalAuthProvider([
     void Function(SupabaseExternalAuthProviderBuilder)? updates,
-  ]) => (new SupabaseExternalAuthProviderBuilder()..update(updates))._build();
+  ]) => (SupabaseExternalAuthProviderBuilder()..update(updates))._build();
 
   _$SupabaseExternalAuthProvider._({
     required this.projectUrl,
@@ -5923,29 +5646,7 @@ class _$SupabaseExternalAuthProvider extends SupabaseExternalAuthProvider {
     required this.name,
     required this.type,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      projectUrl,
-      r'SupabaseExternalAuthProvider',
-      'projectUrl',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      name,
-      r'SupabaseExternalAuthProvider',
-      'name',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'SupabaseExternalAuthProvider',
-      'type',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'SupabaseExternalAuthProvider',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   SupabaseExternalAuthProvider rebuild(
     void Function(SupabaseExternalAuthProviderBuilder) updates,
@@ -5953,7 +5654,7 @@ class _$SupabaseExternalAuthProvider extends SupabaseExternalAuthProvider {
 
   @override
   SupabaseExternalAuthProviderBuilder toBuilder() =>
-      new SupabaseExternalAuthProviderBuilder()..replace(this);
+      SupabaseExternalAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6000,13 +5701,12 @@ class SupabaseExternalAuthProviderBuilder
   _$SupabaseExternalAuthProvider? _$v;
 
   VariableBuilder? _projectUrl;
-  VariableBuilder get projectUrl =>
-      _$this._projectUrl ??= new VariableBuilder();
+  VariableBuilder get projectUrl => _$this._projectUrl ??= VariableBuilder();
   set projectUrl(covariant VariableBuilder? projectUrl) =>
       _$this._projectUrl = projectUrl;
 
   SecretBuilder? _jwtSecret;
-  SecretBuilder get jwtSecret => _$this._jwtSecret ??= new SecretBuilder();
+  SecretBuilder get jwtSecret => _$this._jwtSecret ??= SecretBuilder();
   set jwtSecret(covariant SecretBuilder? jwtSecret) =>
       _$this._jwtSecret = jwtSecret;
 
@@ -6039,7 +5739,6 @@ class SupabaseExternalAuthProviderBuilder
 
   @override
   void replace(covariant SupabaseExternalAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SupabaseExternalAuthProvider;
   }
 
@@ -6057,7 +5756,7 @@ class SupabaseExternalAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$SupabaseExternalAuthProvider._(
+          _$SupabaseExternalAuthProvider._(
             projectUrl: projectUrl.build(),
             jwtSecret: _jwtSecret?.build(),
             name: BuiltValueNullFieldError.checkNotNull(
@@ -6084,7 +5783,7 @@ class SupabaseExternalAuthProviderBuilder
         _$failedField = 'jwtSecret';
         _jwtSecret?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'SupabaseExternalAuthProvider',
           _$failedField,
           e.toString(),
@@ -6104,19 +5803,15 @@ class _$NodeReference extends NodeReference {
   final NodeType type;
 
   factory _$NodeReference([void Function(NodeReferenceBuilder)? updates]) =>
-      (new NodeReferenceBuilder()..update(updates))._build();
+      (NodeReferenceBuilder()..update(updates))._build();
 
-  _$NodeReference._({required this.name, required this.type}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'NodeReference', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'NodeReference', 'type');
-  }
-
+  _$NodeReference._({required this.name, required this.type}) : super._();
   @override
   NodeReference rebuild(void Function(NodeReferenceBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  NodeReferenceBuilder toBuilder() => new NodeReferenceBuilder()..replace(this);
+  NodeReferenceBuilder toBuilder() => NodeReferenceBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6168,7 +5863,6 @@ class NodeReferenceBuilder
 
   @override
   void replace(NodeReference other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$NodeReference;
   }
 
@@ -6183,7 +5877,7 @@ class NodeReferenceBuilder
   _$NodeReference _build() {
     final _$result =
         _$v ??
-        new _$NodeReference._(
+        _$NodeReference._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,
             r'NodeReference',
@@ -6210,30 +5904,13 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
 
   factory _$DriftDatabaseSchema([
     void Function(DriftDatabaseSchemaBuilder)? updates,
-  ]) => (new DriftDatabaseSchemaBuilder()..update(updates))._build();
+  ]) => (DriftDatabaseSchemaBuilder()..update(updates))._build();
 
   _$DriftDatabaseSchema._({
     required this.declaration,
     required this.version,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      declaration,
-      r'DriftDatabaseSchema',
-      'declaration',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      version,
-      r'DriftDatabaseSchema',
-      'version',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      location,
-      r'DriftDatabaseSchema',
-      'location',
-    );
-  }
-
+  }) : super._();
   @override
   DriftDatabaseSchema rebuild(
     void Function(DriftDatabaseSchemaBuilder) updates,
@@ -6241,7 +5918,7 @@ class _$DriftDatabaseSchema extends DriftDatabaseSchema {
 
   @override
   DriftDatabaseSchemaBuilder toBuilder() =>
-      new DriftDatabaseSchemaBuilder()..replace(this);
+      DriftDatabaseSchemaBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6278,7 +5955,7 @@ class DriftDatabaseSchemaBuilder
 
   TypeReferenceBuilder? _declaration;
   TypeReferenceBuilder get declaration =>
-      _$this._declaration ??= new TypeReferenceBuilder();
+      _$this._declaration ??= TypeReferenceBuilder();
   set declaration(TypeReferenceBuilder? declaration) =>
       _$this._declaration = declaration;
 
@@ -6305,7 +5982,6 @@ class DriftDatabaseSchemaBuilder
 
   @override
   void replace(DriftDatabaseSchema other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DriftDatabaseSchema;
   }
 
@@ -6322,7 +5998,7 @@ class DriftDatabaseSchemaBuilder
     try {
       _$result =
           _$v ??
-          new _$DriftDatabaseSchema._(
+          _$DriftDatabaseSchema._(
             declaration: declaration.build(),
             version: BuiltValueNullFieldError.checkNotNull(
               version,
@@ -6341,7 +6017,7 @@ class DriftDatabaseSchemaBuilder
         _$failedField = 'declaration';
         declaration.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DriftDatabaseSchema',
           _$failedField,
           e.toString(),
@@ -6369,7 +6045,7 @@ class _$Database extends Database {
   final FileSpan location;
 
   factory _$Database([void Function(DatabaseBuilder)? updates]) =>
-      (new DatabaseBuilder()..update(updates))._build();
+      (DatabaseBuilder()..update(updates))._build();
 
   _$Database._({
     required this.name,
@@ -6378,21 +6054,13 @@ class _$Database extends Database {
     required this.schema,
     required this.config,
     required this.location,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'Database', 'name');
-    BuiltValueNullFieldError.checkNotNull(dartName, r'Database', 'dartName');
-    BuiltValueNullFieldError.checkNotNull(docs, r'Database', 'docs');
-    BuiltValueNullFieldError.checkNotNull(schema, r'Database', 'schema');
-    BuiltValueNullFieldError.checkNotNull(config, r'Database', 'config');
-    BuiltValueNullFieldError.checkNotNull(location, r'Database', 'location');
-  }
-
+  }) : super._();
   @override
   Database rebuild(void Function(DatabaseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DatabaseBuilder toBuilder() => new DatabaseBuilder()..replace(this);
+  DatabaseBuilder toBuilder() => DatabaseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6444,7 +6112,7 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
   set dartName(String? dartName) => _$this._dartName = dartName;
 
   ListBuilder<String>? _docs;
-  ListBuilder<String> get docs => _$this._docs ??= new ListBuilder<String>();
+  ListBuilder<String> get docs => _$this._docs ??= ListBuilder<String>();
   set docs(ListBuilder<String>? docs) => _$this._docs = docs;
 
   DatabaseSchema? _schema;
@@ -6477,7 +6145,6 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
 
   @override
   void replace(Database other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Database;
   }
 
@@ -6494,7 +6161,7 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Database._(
+          _$Database._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
               r'Database',
@@ -6528,7 +6195,7 @@ class DatabaseBuilder implements Builder<Database, DatabaseBuilder> {
         _$failedField = 'docs';
         docs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'Database',
           _$failedField,
           e.toString(),
@@ -6549,22 +6216,10 @@ class _$CelestDatabaseConfig extends CelestDatabaseConfig {
 
   factory _$CelestDatabaseConfig([
     void Function(CelestDatabaseConfigBuilder)? updates,
-  ]) => (new CelestDatabaseConfigBuilder()..update(updates))._build();
+  ]) => (CelestDatabaseConfigBuilder()..update(updates))._build();
 
   _$CelestDatabaseConfig._({required this.hostname, required this.token})
-    : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      hostname,
-      r'CelestDatabaseConfig',
-      'hostname',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      token,
-      r'CelestDatabaseConfig',
-      'token',
-    );
-  }
-
+    : super._();
   @override
   CelestDatabaseConfig rebuild(
     void Function(CelestDatabaseConfigBuilder) updates,
@@ -6572,7 +6227,7 @@ class _$CelestDatabaseConfig extends CelestDatabaseConfig {
 
   @override
   CelestDatabaseConfigBuilder toBuilder() =>
-      new CelestDatabaseConfigBuilder()..replace(this);
+      CelestDatabaseConfigBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6605,11 +6260,11 @@ class CelestDatabaseConfigBuilder
   _$CelestDatabaseConfig? _$v;
 
   VariableBuilder? _hostname;
-  VariableBuilder get hostname => _$this._hostname ??= new VariableBuilder();
+  VariableBuilder get hostname => _$this._hostname ??= VariableBuilder();
   set hostname(VariableBuilder? hostname) => _$this._hostname = hostname;
 
   SecretBuilder? _token;
-  SecretBuilder get token => _$this._token ??= new SecretBuilder();
+  SecretBuilder get token => _$this._token ??= SecretBuilder();
   set token(SecretBuilder? token) => _$this._token = token;
 
   CelestDatabaseConfigBuilder();
@@ -6626,7 +6281,6 @@ class CelestDatabaseConfigBuilder
 
   @override
   void replace(CelestDatabaseConfig other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CelestDatabaseConfig;
   }
 
@@ -6643,7 +6297,7 @@ class CelestDatabaseConfigBuilder
     try {
       _$result =
           _$v ??
-          new _$CelestDatabaseConfig._(
+          _$CelestDatabaseConfig._(
             hostname: hostname.build(),
             token: token.build(),
           );
@@ -6655,7 +6309,7 @@ class CelestDatabaseConfigBuilder
         _$failedField = 'token';
         token.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'CelestDatabaseConfig',
           _$failedField,
           e.toString(),

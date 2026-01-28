@@ -16,11 +16,11 @@ SdkType _$SdkTypeValueOf(String name) {
     case 'flutter':
       return _$flutter;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<SdkType> _$SdkTypeValues = new BuiltSet<SdkType>(const <SdkType>[
+final BuiltSet<SdkType> _$SdkTypeValues = BuiltSet<SdkType>(const <SdkType>[
   _$dart,
   _$flutter,
 ]);
@@ -32,19 +32,19 @@ FeatureFlag _$FeatureFlagValueOf(String name) {
     case 'streaming':
       return _$streaming;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<FeatureFlag> _$FeatureFlagValues = new BuiltSet<FeatureFlag>(
+final BuiltSet<FeatureFlag> _$FeatureFlagValues = BuiltSet<FeatureFlag>(
   const <FeatureFlag>[_$streaming],
 );
 
-Serializer<SdkType> _$sdkTypeSerializer = new _$SdkTypeSerializer();
+Serializer<SdkType> _$sdkTypeSerializer = _$SdkTypeSerializer();
 Serializer<SdkConfiguration> _$sdkConfigurationSerializer =
-    new _$SdkConfigurationSerializer();
-Serializer<Sdk> _$sdkSerializer = new _$SdkSerializer();
-Serializer<FeatureFlag> _$featureFlagSerializer = new _$FeatureFlagSerializer();
+    _$SdkConfigurationSerializer();
+Serializer<Sdk> _$sdkSerializer = _$SdkSerializer();
+Serializer<FeatureFlag> _$featureFlagSerializer = _$FeatureFlagSerializer();
 
 class _$SdkTypeSerializer implements PrimitiveSerializer<SdkType> {
   @override
@@ -117,7 +117,7 @@ class _$SdkConfigurationSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new SdkConfigurationBuilder();
+    final result = SdkConfigurationBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -210,7 +210,7 @@ class _$SdkSerializer implements StructuredSerializer<Sdk> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new SdkBuilder();
+    final result = SdkBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -287,7 +287,7 @@ class _$SdkConfiguration extends SdkConfiguration {
 
   factory _$SdkConfiguration([
     void Function(SdkConfigurationBuilder)? updates,
-  ]) => (new SdkConfigurationBuilder()..update(updates))._build();
+  ]) => (SdkConfigurationBuilder()..update(updates))._build();
 
   _$SdkConfiguration._({
     required this.celest,
@@ -295,32 +295,14 @@ class _$SdkConfiguration extends SdkConfiguration {
     this.flutter,
     required this.targetSdk,
     required this.featureFlags,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      celest,
-      r'SdkConfiguration',
-      'celest',
-    );
-    BuiltValueNullFieldError.checkNotNull(dart, r'SdkConfiguration', 'dart');
-    BuiltValueNullFieldError.checkNotNull(
-      targetSdk,
-      r'SdkConfiguration',
-      'targetSdk',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      featureFlags,
-      r'SdkConfiguration',
-      'featureFlags',
-    );
-  }
-
+  }) : super._();
   @override
   SdkConfiguration rebuild(void Function(SdkConfigurationBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   SdkConfigurationBuilder toBuilder() =>
-      new SdkConfigurationBuilder()..replace(this);
+      SdkConfigurationBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -366,11 +348,11 @@ class SdkConfigurationBuilder
   set celest(Version? celest) => _$this._celest = celest;
 
   SdkBuilder? _dart;
-  SdkBuilder get dart => _$this._dart ??= new SdkBuilder();
+  SdkBuilder get dart => _$this._dart ??= SdkBuilder();
   set dart(SdkBuilder? dart) => _$this._dart = dart;
 
   SdkBuilder? _flutter;
-  SdkBuilder get flutter => _$this._flutter ??= new SdkBuilder();
+  SdkBuilder get flutter => _$this._flutter ??= SdkBuilder();
   set flutter(SdkBuilder? flutter) => _$this._flutter = flutter;
 
   SdkType? _targetSdk;
@@ -379,7 +361,7 @@ class SdkConfigurationBuilder
 
   SetBuilder<FeatureFlag>? _featureFlags;
   SetBuilder<FeatureFlag> get featureFlags =>
-      _$this._featureFlags ??= new SetBuilder<FeatureFlag>();
+      _$this._featureFlags ??= SetBuilder<FeatureFlag>();
   set featureFlags(SetBuilder<FeatureFlag>? featureFlags) =>
       _$this._featureFlags = featureFlags;
 
@@ -400,7 +382,6 @@ class SdkConfigurationBuilder
 
   @override
   void replace(SdkConfiguration other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SdkConfiguration;
   }
 
@@ -417,7 +398,7 @@ class SdkConfigurationBuilder
     try {
       _$result =
           _$v ??
-          new _$SdkConfiguration._(
+          _$SdkConfiguration._(
             celest: BuiltValueNullFieldError.checkNotNull(
               celest,
               r'SdkConfiguration',
@@ -443,7 +424,7 @@ class SdkConfigurationBuilder
         _$failedField = 'featureFlags';
         featureFlags.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'SdkConfiguration',
           _$failedField,
           e.toString(),
@@ -465,28 +446,19 @@ class _$Sdk extends Sdk {
   final BuiltSet<String> enabledExperiments;
 
   factory _$Sdk([void Function(SdkBuilder)? updates]) =>
-      (new SdkBuilder()..update(updates))._build();
+      (SdkBuilder()..update(updates))._build();
 
   _$Sdk._({
     required this.type,
     required this.version,
     required this.enabledExperiments,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type');
-    BuiltValueNullFieldError.checkNotNull(version, r'Sdk', 'version');
-    BuiltValueNullFieldError.checkNotNull(
-      enabledExperiments,
-      r'Sdk',
-      'enabledExperiments',
-    );
-  }
-
+  }) : super._();
   @override
   Sdk rebuild(void Function(SdkBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SdkBuilder toBuilder() => new SdkBuilder()..replace(this);
+  SdkBuilder toBuilder() => SdkBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -530,7 +502,7 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
 
   SetBuilder<String>? _enabledExperiments;
   SetBuilder<String> get enabledExperiments =>
-      _$this._enabledExperiments ??= new SetBuilder<String>();
+      _$this._enabledExperiments ??= SetBuilder<String>();
   set enabledExperiments(SetBuilder<String>? enabledExperiments) =>
       _$this._enabledExperiments = enabledExperiments;
 
@@ -549,7 +521,6 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
 
   @override
   void replace(Sdk other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Sdk;
   }
 
@@ -566,7 +537,7 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
     try {
       _$result =
           _$v ??
-          new _$Sdk._(
+          _$Sdk._(
             type: BuiltValueNullFieldError.checkNotNull(type, r'Sdk', 'type'),
             version: BuiltValueNullFieldError.checkNotNull(
               version,
@@ -581,11 +552,7 @@ class SdkBuilder implements Builder<Sdk, SdkBuilder> {
         _$failedField = 'enabledExperiments';
         enabledExperiments.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
-          r'Sdk',
-          _$failedField,
-          e.toString(),
-        );
+        throw BuiltValueNestedFieldError(r'Sdk', _$failedField, e.toString());
       }
       rethrow;
     }

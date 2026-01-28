@@ -33,6 +33,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
     required String environment,
     String? displayName,
     Region? primaryRegion,
+    String? productionUrl,
     required Reference reference,
     required FileSpan location,
     Map<String, Api> apis = const {},
@@ -47,6 +48,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
       environment: environment,
       displayName: displayName,
       primaryRegion: primaryRegion,
+      productionUrl: productionUrl,
       reference: reference,
       location: location,
       apis: apis.build(),
@@ -66,6 +68,7 @@ abstract class Project implements Built<Project, ProjectBuilder>, AstNode {
   String get environment;
   String? get displayName;
   Region? get primaryRegion;
+  String? get productionUrl;
   Reference get reference;
   BuiltMap<String, Api> get apis;
   BuiltList<Variable> get variables;

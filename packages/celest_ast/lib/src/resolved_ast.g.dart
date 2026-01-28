@@ -7,46 +7,45 @@ part of 'resolved_ast.dart';
 // **************************************************************************
 
 Serializer<ResolvedProject> _$resolvedProjectSerializer =
-    new _$ResolvedProjectSerializer();
-Serializer<ResolvedApi> _$resolvedApiSerializer = new _$ResolvedApiSerializer();
+    _$ResolvedProjectSerializer();
+Serializer<ResolvedApi> _$resolvedApiSerializer = _$ResolvedApiSerializer();
 Serializer<ResolvedCloudFunction> _$resolvedCloudFunctionSerializer =
-    new _$ResolvedCloudFunctionSerializer();
+    _$ResolvedCloudFunctionSerializer();
 Serializer<ResolvedHttpConfig> _$resolvedHttpConfigSerializer =
-    new _$ResolvedHttpConfigSerializer();
+    _$ResolvedHttpConfigSerializer();
 Serializer<ResolvedStreamConfig> _$resolvedStreamConfigSerializer =
-    new _$ResolvedStreamConfigSerializer();
+    _$ResolvedStreamConfigSerializer();
 Serializer<ResolvedHttpRoute> _$resolvedHttpRouteSerializer =
-    new _$ResolvedHttpRouteSerializer();
+    _$ResolvedHttpRouteSerializer();
 Serializer<ResolvedVariable> _$resolvedVariableSerializer =
-    new _$ResolvedVariableSerializer();
+    _$ResolvedVariableSerializer();
 Serializer<ResolvedSecret> _$resolvedSecretSerializer =
-    new _$ResolvedSecretSerializer();
-Serializer<ResolvedAuth> _$resolvedAuthSerializer =
-    new _$ResolvedAuthSerializer();
+    _$ResolvedSecretSerializer();
+Serializer<ResolvedAuth> _$resolvedAuthSerializer = _$ResolvedAuthSerializer();
 Serializer<ResolvedEmailAuthProvider> _$resolvedEmailAuthProviderSerializer =
-    new _$ResolvedEmailAuthProviderSerializer();
+    _$ResolvedEmailAuthProviderSerializer();
 Serializer<ResolvedSmsAuthProvider> _$resolvedSmsAuthProviderSerializer =
-    new _$ResolvedSmsAuthProviderSerializer();
+    _$ResolvedSmsAuthProviderSerializer();
 Serializer<ResolvedGoogleAuthProvider> _$resolvedGoogleAuthProviderSerializer =
-    new _$ResolvedGoogleAuthProviderSerializer();
+    _$ResolvedGoogleAuthProviderSerializer();
 Serializer<ResolvedAppleAuthProvider> _$resolvedAppleAuthProviderSerializer =
-    new _$ResolvedAppleAuthProviderSerializer();
+    _$ResolvedAppleAuthProviderSerializer();
 Serializer<ResolvedGitHubAuthProvider> _$resolvedGitHubAuthProviderSerializer =
-    new _$ResolvedGitHubAuthProviderSerializer();
+    _$ResolvedGitHubAuthProviderSerializer();
 Serializer<ResolvedFirebaseExternalAuthProvider>
 _$resolvedFirebaseExternalAuthProviderSerializer =
-    new _$ResolvedFirebaseExternalAuthProviderSerializer();
+    _$ResolvedFirebaseExternalAuthProviderSerializer();
 Serializer<ResolvedSupabaseExternalAuthProvider>
 _$resolvedSupabaseExternalAuthProviderSerializer =
-    new _$ResolvedSupabaseExternalAuthProviderSerializer();
+    _$ResolvedSupabaseExternalAuthProviderSerializer();
 Serializer<ResolvedDriftDatabaseSchema>
 _$resolvedDriftDatabaseSchemaSerializer =
-    new _$ResolvedDriftDatabaseSchemaSerializer();
+    _$ResolvedDriftDatabaseSchemaSerializer();
 Serializer<ResolvedDatabase> _$resolvedDatabaseSerializer =
-    new _$ResolvedDatabaseSerializer();
+    _$ResolvedDatabaseSerializer();
 Serializer<ResolvedCelestDatabaseConfig>
 _$resolvedCelestDatabaseConfigSerializer =
-    new _$ResolvedCelestDatabaseConfigSerializer();
+    _$ResolvedCelestDatabaseConfigSerializer();
 
 class _$ResolvedProjectSerializer
     implements StructuredSerializer<ResolvedProject> {
@@ -129,7 +128,7 @@ class _$ResolvedProjectSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedProjectBuilder();
+    final result = ResolvedProjectBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -270,7 +269,7 @@ class _$ResolvedApiSerializer implements StructuredSerializer<ResolvedApi> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedApiBuilder();
+    final result = ResolvedApiBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -388,7 +387,7 @@ class _$ResolvedCloudFunctionSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedCloudFunctionBuilder();
+    final result = ResolvedCloudFunctionBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -515,7 +514,7 @@ class _$ResolvedHttpConfigSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedHttpConfigBuilder();
+    final result = ResolvedHttpConfigBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -607,7 +606,7 @@ class _$ResolvedStreamConfigSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedStreamConfigBuilder();
+    final result = ResolvedStreamConfigBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -662,7 +661,7 @@ class _$ResolvedHttpRouteSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedHttpRouteBuilder();
+    final result = ResolvedHttpRouteBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -725,7 +724,7 @@ class _$ResolvedVariableSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedVariableBuilder();
+    final result = ResolvedVariableBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -788,7 +787,7 @@ class _$ResolvedSecretSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedSecretBuilder();
+    final result = ResolvedSecretBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -857,7 +856,7 @@ class _$ResolvedAuthSerializer implements StructuredSerializer<ResolvedAuth> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedAuthBuilder();
+    final result = ResolvedAuthBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -932,7 +931,7 @@ class _$ResolvedEmailAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedEmailAuthProviderBuilder();
+    final result = ResolvedEmailAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1001,7 +1000,7 @@ class _$ResolvedSmsAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedSmsAuthProviderBuilder();
+    final result = ResolvedSmsAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1080,7 +1079,7 @@ class _$ResolvedGoogleAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedGoogleAuthProviderBuilder();
+    final result = ResolvedGoogleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1187,7 +1186,7 @@ class _$ResolvedAppleAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedAppleAuthProviderBuilder();
+    final result = ResolvedAppleAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1302,7 +1301,7 @@ class _$ResolvedGitHubAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedGitHubAuthProviderBuilder();
+    final result = ResolvedGitHubAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1394,7 +1393,7 @@ class _$ResolvedFirebaseExternalAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedFirebaseExternalAuthProviderBuilder();
+    final result = ResolvedFirebaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1488,7 +1487,7 @@ class _$ResolvedSupabaseExternalAuthProviderSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedSupabaseExternalAuthProviderBuilder();
+    final result = ResolvedSupabaseExternalAuthProviderBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1582,7 +1581,7 @@ class _$ResolvedDriftDatabaseSchemaSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedDriftDatabaseSchemaBuilder();
+    final result = ResolvedDriftDatabaseSchemaBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1669,7 +1668,7 @@ class _$ResolvedDatabaseSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedDatabaseBuilder();
+    final result = ResolvedDatabaseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1746,7 +1745,7 @@ class _$ResolvedCelestDatabaseConfigSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new ResolvedCelestDatabaseConfigBuilder();
+    final result = ResolvedCelestDatabaseConfigBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -1798,7 +1797,7 @@ class _$ResolvedProject extends ResolvedProject {
   final SdkConfiguration sdkConfig;
 
   factory _$ResolvedProject([void Function(ResolvedProjectBuilder)? updates]) =>
-      (new ResolvedProjectBuilder()..update(updates))._build();
+      (ResolvedProjectBuilder()..update(updates))._build();
 
   _$ResolvedProject._({
     required this.projectId,
@@ -1809,47 +1808,13 @@ class _$ResolvedProject extends ResolvedProject {
     this.auth,
     required this.databases,
     required this.sdkConfig,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      projectId,
-      r'ResolvedProject',
-      'projectId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      environmentId,
-      r'ResolvedProject',
-      'environmentId',
-    );
-    BuiltValueNullFieldError.checkNotNull(apis, r'ResolvedProject', 'apis');
-    BuiltValueNullFieldError.checkNotNull(
-      variables,
-      r'ResolvedProject',
-      'variables',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      secrets,
-      r'ResolvedProject',
-      'secrets',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      databases,
-      r'ResolvedProject',
-      'databases',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      sdkConfig,
-      r'ResolvedProject',
-      'sdkConfig',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedProject rebuild(void Function(ResolvedProjectBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ResolvedProjectBuilder toBuilder() =>
-      new ResolvedProjectBuilder()..replace(this);
+  ResolvedProjectBuilder toBuilder() => ResolvedProjectBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1910,34 +1875,34 @@ class ResolvedProjectBuilder
 
   MapBuilder<String, ResolvedApi>? _apis;
   MapBuilder<String, ResolvedApi> get apis =>
-      _$this._apis ??= new MapBuilder<String, ResolvedApi>();
+      _$this._apis ??= MapBuilder<String, ResolvedApi>();
   set apis(MapBuilder<String, ResolvedApi>? apis) => _$this._apis = apis;
 
   ListBuilder<ResolvedVariable>? _variables;
   ListBuilder<ResolvedVariable> get variables =>
-      _$this._variables ??= new ListBuilder<ResolvedVariable>();
+      _$this._variables ??= ListBuilder<ResolvedVariable>();
   set variables(ListBuilder<ResolvedVariable>? variables) =>
       _$this._variables = variables;
 
   ListBuilder<ResolvedSecret>? _secrets;
   ListBuilder<ResolvedSecret> get secrets =>
-      _$this._secrets ??= new ListBuilder<ResolvedSecret>();
+      _$this._secrets ??= ListBuilder<ResolvedSecret>();
   set secrets(ListBuilder<ResolvedSecret>? secrets) =>
       _$this._secrets = secrets;
 
   ResolvedAuthBuilder? _auth;
-  ResolvedAuthBuilder get auth => _$this._auth ??= new ResolvedAuthBuilder();
+  ResolvedAuthBuilder get auth => _$this._auth ??= ResolvedAuthBuilder();
   set auth(ResolvedAuthBuilder? auth) => _$this._auth = auth;
 
   MapBuilder<String, ResolvedDatabase>? _databases;
   MapBuilder<String, ResolvedDatabase> get databases =>
-      _$this._databases ??= new MapBuilder<String, ResolvedDatabase>();
+      _$this._databases ??= MapBuilder<String, ResolvedDatabase>();
   set databases(MapBuilder<String, ResolvedDatabase>? databases) =>
       _$this._databases = databases;
 
   SdkConfigurationBuilder? _sdkConfig;
   SdkConfigurationBuilder get sdkConfig =>
-      _$this._sdkConfig ??= new SdkConfigurationBuilder();
+      _$this._sdkConfig ??= SdkConfigurationBuilder();
   set sdkConfig(SdkConfigurationBuilder? sdkConfig) =>
       _$this._sdkConfig = sdkConfig;
 
@@ -1961,7 +1926,6 @@ class ResolvedProjectBuilder
 
   @override
   void replace(ResolvedProject other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedProject;
   }
 
@@ -1978,7 +1942,7 @@ class ResolvedProjectBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedProject._(
+          _$ResolvedProject._(
             projectId: BuiltValueNullFieldError.checkNotNull(
               projectId,
               r'ResolvedProject',
@@ -2012,7 +1976,7 @@ class ResolvedProjectBuilder
         _$failedField = 'sdkConfig';
         sdkConfig.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedProject',
           _$failedField,
           e.toString(),
@@ -2034,27 +1998,19 @@ class _$ResolvedApi extends ResolvedApi {
   final cedar.PolicySet? policySet;
 
   factory _$ResolvedApi([void Function(ResolvedApiBuilder)? updates]) =>
-      (new ResolvedApiBuilder()..update(updates))._build();
+      (ResolvedApiBuilder()..update(updates))._build();
 
   _$ResolvedApi._({
     required this.apiId,
     required this.functions,
     this.policySet,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(apiId, r'ResolvedApi', 'apiId');
-    BuiltValueNullFieldError.checkNotNull(
-      functions,
-      r'ResolvedApi',
-      'functions',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedApi rebuild(void Function(ResolvedApiBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ResolvedApiBuilder toBuilder() => new ResolvedApiBuilder()..replace(this);
+  ResolvedApiBuilder toBuilder() => ResolvedApiBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2094,13 +2050,13 @@ class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
 
   MapBuilder<String, ResolvedCloudFunction>? _functions;
   MapBuilder<String, ResolvedCloudFunction> get functions =>
-      _$this._functions ??= new MapBuilder<String, ResolvedCloudFunction>();
+      _$this._functions ??= MapBuilder<String, ResolvedCloudFunction>();
   set functions(MapBuilder<String, ResolvedCloudFunction>? functions) =>
       _$this._functions = functions;
 
   cedar.PolicySetBuilder? _policySet;
   cedar.PolicySetBuilder get policySet =>
-      _$this._policySet ??= new cedar.PolicySetBuilder();
+      _$this._policySet ??= cedar.PolicySetBuilder();
   set policySet(cedar.PolicySetBuilder? policySet) =>
       _$this._policySet = policySet;
 
@@ -2119,7 +2075,6 @@ class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
 
   @override
   void replace(ResolvedApi other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedApi;
   }
 
@@ -2136,7 +2091,7 @@ class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
     try {
       _$result =
           _$v ??
-          new _$ResolvedApi._(
+          _$ResolvedApi._(
             apiId: BuiltValueNullFieldError.checkNotNull(
               apiId,
               r'ResolvedApi',
@@ -2153,7 +2108,7 @@ class ResolvedApiBuilder implements Builder<ResolvedApi, ResolvedApiBuilder> {
         _$failedField = 'policySet';
         _policySet?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedApi',
           _$failedField,
           e.toString(),
@@ -2184,7 +2139,7 @@ class _$ResolvedCloudFunction extends ResolvedCloudFunction {
 
   factory _$ResolvedCloudFunction([
     void Function(ResolvedCloudFunctionBuilder)? updates,
-  ]) => (new ResolvedCloudFunctionBuilder()..update(updates))._build();
+  ]) => (ResolvedCloudFunctionBuilder()..update(updates))._build();
 
   _$ResolvedCloudFunction._({
     required this.functionId,
@@ -2194,34 +2149,7 @@ class _$ResolvedCloudFunction extends ResolvedCloudFunction {
     required this.variables,
     required this.secrets,
     this.policySet,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      functionId,
-      r'ResolvedCloudFunction',
-      'functionId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      apiId,
-      r'ResolvedCloudFunction',
-      'apiId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      httpConfig,
-      r'ResolvedCloudFunction',
-      'httpConfig',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      variables,
-      r'ResolvedCloudFunction',
-      'variables',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      secrets,
-      r'ResolvedCloudFunction',
-      'secrets',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedCloudFunction rebuild(
     void Function(ResolvedCloudFunctionBuilder) updates,
@@ -2229,7 +2157,7 @@ class _$ResolvedCloudFunction extends ResolvedCloudFunction {
 
   @override
   ResolvedCloudFunctionBuilder toBuilder() =>
-      new ResolvedCloudFunctionBuilder()..replace(this);
+      ResolvedCloudFunctionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2286,29 +2214,28 @@ class ResolvedCloudFunctionBuilder
 
   ResolvedHttpConfigBuilder? _httpConfig;
   ResolvedHttpConfigBuilder get httpConfig =>
-      _$this._httpConfig ??= new ResolvedHttpConfigBuilder();
+      _$this._httpConfig ??= ResolvedHttpConfigBuilder();
   set httpConfig(ResolvedHttpConfigBuilder? httpConfig) =>
       _$this._httpConfig = httpConfig;
 
   ResolvedStreamConfigBuilder? _streamConfig;
   ResolvedStreamConfigBuilder get streamConfig =>
-      _$this._streamConfig ??= new ResolvedStreamConfigBuilder();
+      _$this._streamConfig ??= ResolvedStreamConfigBuilder();
   set streamConfig(ResolvedStreamConfigBuilder? streamConfig) =>
       _$this._streamConfig = streamConfig;
 
   SetBuilder<String>? _variables;
   SetBuilder<String> get variables =>
-      _$this._variables ??= new SetBuilder<String>();
+      _$this._variables ??= SetBuilder<String>();
   set variables(SetBuilder<String>? variables) => _$this._variables = variables;
 
   SetBuilder<String>? _secrets;
-  SetBuilder<String> get secrets =>
-      _$this._secrets ??= new SetBuilder<String>();
+  SetBuilder<String> get secrets => _$this._secrets ??= SetBuilder<String>();
   set secrets(SetBuilder<String>? secrets) => _$this._secrets = secrets;
 
   cedar.PolicySetBuilder? _policySet;
   cedar.PolicySetBuilder get policySet =>
-      _$this._policySet ??= new cedar.PolicySetBuilder();
+      _$this._policySet ??= cedar.PolicySetBuilder();
   set policySet(cedar.PolicySetBuilder? policySet) =>
       _$this._policySet = policySet;
 
@@ -2331,7 +2258,6 @@ class ResolvedCloudFunctionBuilder
 
   @override
   void replace(ResolvedCloudFunction other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedCloudFunction;
   }
 
@@ -2348,7 +2274,7 @@ class ResolvedCloudFunctionBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedCloudFunction._(
+          _$ResolvedCloudFunction._(
             functionId: BuiltValueNullFieldError.checkNotNull(
               functionId,
               r'ResolvedCloudFunction',
@@ -2379,7 +2305,7 @@ class ResolvedCloudFunctionBuilder
         _$failedField = 'policySet';
         _policySet?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedCloudFunction',
           _$failedField,
           e.toString(),
@@ -2404,36 +2330,14 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
 
   factory _$ResolvedHttpConfig([
     void Function(ResolvedHttpConfigBuilder)? updates,
-  ]) => (new ResolvedHttpConfigBuilder()..update(updates))._build();
+  ]) => (ResolvedHttpConfigBuilder()..update(updates))._build();
 
   _$ResolvedHttpConfig._({
     required this.route,
     required this.additionalRoutes,
     required this.status,
     required this.statusMappings,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      route,
-      r'ResolvedHttpConfig',
-      'route',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      additionalRoutes,
-      r'ResolvedHttpConfig',
-      'additionalRoutes',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      status,
-      r'ResolvedHttpConfig',
-      'status',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      statusMappings,
-      r'ResolvedHttpConfig',
-      'statusMappings',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedHttpConfig rebuild(
     void Function(ResolvedHttpConfigBuilder) updates,
@@ -2441,7 +2345,7 @@ class _$ResolvedHttpConfig extends ResolvedHttpConfig {
 
   @override
   ResolvedHttpConfigBuilder toBuilder() =>
-      new ResolvedHttpConfigBuilder()..replace(this);
+      ResolvedHttpConfigBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2481,12 +2385,12 @@ class ResolvedHttpConfigBuilder
 
   ResolvedHttpRouteBuilder? _route;
   ResolvedHttpRouteBuilder get route =>
-      _$this._route ??= new ResolvedHttpRouteBuilder();
+      _$this._route ??= ResolvedHttpRouteBuilder();
   set route(ResolvedHttpRouteBuilder? route) => _$this._route = route;
 
   ListBuilder<ResolvedHttpRoute>? _additionalRoutes;
   ListBuilder<ResolvedHttpRoute> get additionalRoutes =>
-      _$this._additionalRoutes ??= new ListBuilder<ResolvedHttpRoute>();
+      _$this._additionalRoutes ??= ListBuilder<ResolvedHttpRoute>();
   set additionalRoutes(ListBuilder<ResolvedHttpRoute>? additionalRoutes) =>
       _$this._additionalRoutes = additionalRoutes;
 
@@ -2496,7 +2400,7 @@ class ResolvedHttpConfigBuilder
 
   MapBuilder<TypeReference, int>? _statusMappings;
   MapBuilder<TypeReference, int> get statusMappings =>
-      _$this._statusMappings ??= new MapBuilder<TypeReference, int>();
+      _$this._statusMappings ??= MapBuilder<TypeReference, int>();
   set statusMappings(MapBuilder<TypeReference, int>? statusMappings) =>
       _$this._statusMappings = statusMappings;
 
@@ -2516,7 +2420,6 @@ class ResolvedHttpConfigBuilder
 
   @override
   void replace(ResolvedHttpConfig other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedHttpConfig;
   }
 
@@ -2534,7 +2437,7 @@ class ResolvedHttpConfigBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedHttpConfig._(
+          _$ResolvedHttpConfig._(
             route: route.build(),
             additionalRoutes: additionalRoutes.build(),
             status: BuiltValueNullFieldError.checkNotNull(
@@ -2555,7 +2458,7 @@ class ResolvedHttpConfigBuilder
         _$failedField = 'statusMappings';
         statusMappings.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedHttpConfig',
           _$failedField,
           e.toString(),
@@ -2574,10 +2477,9 @@ class _$ResolvedStreamConfig extends ResolvedStreamConfig {
 
   factory _$ResolvedStreamConfig([
     void Function(ResolvedStreamConfigBuilder)? updates,
-  ]) => (new ResolvedStreamConfigBuilder()..update(updates))._build();
+  ]) => (ResolvedStreamConfigBuilder()..update(updates))._build();
 
   _$ResolvedStreamConfig._({this.type}) : super._();
-
   @override
   ResolvedStreamConfig rebuild(
     void Function(ResolvedStreamConfigBuilder) updates,
@@ -2585,7 +2487,7 @@ class _$ResolvedStreamConfig extends ResolvedStreamConfig {
 
   @override
   ResolvedStreamConfigBuilder toBuilder() =>
-      new ResolvedStreamConfigBuilder()..replace(this);
+      ResolvedStreamConfigBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2629,7 +2531,6 @@ class ResolvedStreamConfigBuilder
 
   @override
   void replace(ResolvedStreamConfig other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedStreamConfig;
   }
 
@@ -2642,7 +2543,7 @@ class ResolvedStreamConfigBuilder
   ResolvedStreamConfig build() => _build();
 
   _$ResolvedStreamConfig _build() {
-    final _$result = _$v ?? new _$ResolvedStreamConfig._(type: type);
+    final _$result = _$v ?? _$ResolvedStreamConfig._(type: type);
     replace(_$result);
     return _$result;
   }
@@ -2656,25 +2557,16 @@ class _$ResolvedHttpRoute extends ResolvedHttpRoute {
 
   factory _$ResolvedHttpRoute([
     void Function(ResolvedHttpRouteBuilder)? updates,
-  ]) => (new ResolvedHttpRouteBuilder()..update(updates))._build();
+  ]) => (ResolvedHttpRouteBuilder()..update(updates))._build();
 
-  _$ResolvedHttpRoute._({required this.method, required this.path})
-    : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      method,
-      r'ResolvedHttpRoute',
-      'method',
-    );
-    BuiltValueNullFieldError.checkNotNull(path, r'ResolvedHttpRoute', 'path');
-  }
-
+  _$ResolvedHttpRoute._({required this.method, required this.path}) : super._();
   @override
   ResolvedHttpRoute rebuild(void Function(ResolvedHttpRouteBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   ResolvedHttpRouteBuilder toBuilder() =>
-      new ResolvedHttpRouteBuilder()..replace(this);
+      ResolvedHttpRouteBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2728,7 +2620,6 @@ class ResolvedHttpRouteBuilder
 
   @override
   void replace(ResolvedHttpRoute other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedHttpRoute;
   }
 
@@ -2744,7 +2635,7 @@ class ResolvedHttpRouteBuilder
     ResolvedHttpRoute._defaults(this);
     final _$result =
         _$v ??
-        new _$ResolvedHttpRoute._(
+        _$ResolvedHttpRoute._(
           method: BuiltValueNullFieldError.checkNotNull(
             method,
             r'ResolvedHttpRoute',
@@ -2769,20 +2660,16 @@ class _$ResolvedVariable extends ResolvedVariable {
 
   factory _$ResolvedVariable([
     void Function(ResolvedVariableBuilder)? updates,
-  ]) => (new ResolvedVariableBuilder()..update(updates))._build();
+  ]) => (ResolvedVariableBuilder()..update(updates))._build();
 
-  _$ResolvedVariable._({required this.name, required this.value}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'ResolvedVariable', 'name');
-    BuiltValueNullFieldError.checkNotNull(value, r'ResolvedVariable', 'value');
-  }
-
+  _$ResolvedVariable._({required this.name, required this.value}) : super._();
   @override
   ResolvedVariable rebuild(void Function(ResolvedVariableBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   ResolvedVariableBuilder toBuilder() =>
-      new ResolvedVariableBuilder()..replace(this);
+      ResolvedVariableBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2836,7 +2723,6 @@ class ResolvedVariableBuilder
 
   @override
   void replace(ResolvedVariable other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedVariable;
   }
 
@@ -2851,7 +2737,7 @@ class ResolvedVariableBuilder
   _$ResolvedVariable _build() {
     final _$result =
         _$v ??
-        new _$ResolvedVariable._(
+        _$ResolvedVariable._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,
             r'ResolvedVariable',
@@ -2875,20 +2761,15 @@ class _$ResolvedSecret extends ResolvedSecret {
   final String value;
 
   factory _$ResolvedSecret([void Function(ResolvedSecretBuilder)? updates]) =>
-      (new ResolvedSecretBuilder()..update(updates))._build();
+      (ResolvedSecretBuilder()..update(updates))._build();
 
-  _$ResolvedSecret._({required this.name, required this.value}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'ResolvedSecret', 'name');
-    BuiltValueNullFieldError.checkNotNull(value, r'ResolvedSecret', 'value');
-  }
-
+  _$ResolvedSecret._({required this.name, required this.value}) : super._();
   @override
   ResolvedSecret rebuild(void Function(ResolvedSecretBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ResolvedSecretBuilder toBuilder() =>
-      new ResolvedSecretBuilder()..replace(this);
+  ResolvedSecretBuilder toBuilder() => ResolvedSecretBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2942,7 +2823,6 @@ class ResolvedSecretBuilder
 
   @override
   void replace(ResolvedSecret other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedSecret;
   }
 
@@ -2957,7 +2837,7 @@ class ResolvedSecretBuilder
   _$ResolvedSecret _build() {
     final _$result =
         _$v ??
-        new _$ResolvedSecret._(
+        _$ResolvedSecret._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,
             r'ResolvedSecret',
@@ -2981,28 +2861,16 @@ class _$ResolvedAuth extends ResolvedAuth {
   final BuiltList<ResolvedExternalAuthProvider> externalProviders;
 
   factory _$ResolvedAuth([void Function(ResolvedAuthBuilder)? updates]) =>
-      (new ResolvedAuthBuilder()..update(updates))._build();
+      (ResolvedAuthBuilder()..update(updates))._build();
 
   _$ResolvedAuth._({required this.providers, required this.externalProviders})
-    : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      providers,
-      r'ResolvedAuth',
-      'providers',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      externalProviders,
-      r'ResolvedAuth',
-      'externalProviders',
-    );
-  }
-
+    : super._();
   @override
   ResolvedAuth rebuild(void Function(ResolvedAuthBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ResolvedAuthBuilder toBuilder() => new ResolvedAuthBuilder()..replace(this);
+  ResolvedAuthBuilder toBuilder() => ResolvedAuthBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3036,14 +2904,13 @@ class ResolvedAuthBuilder
 
   ListBuilder<ResolvedAuthProvider>? _providers;
   ListBuilder<ResolvedAuthProvider> get providers =>
-      _$this._providers ??= new ListBuilder<ResolvedAuthProvider>();
+      _$this._providers ??= ListBuilder<ResolvedAuthProvider>();
   set providers(ListBuilder<ResolvedAuthProvider>? providers) =>
       _$this._providers = providers;
 
   ListBuilder<ResolvedExternalAuthProvider>? _externalProviders;
   ListBuilder<ResolvedExternalAuthProvider> get externalProviders =>
-      _$this._externalProviders ??=
-          new ListBuilder<ResolvedExternalAuthProvider>();
+      _$this._externalProviders ??= ListBuilder<ResolvedExternalAuthProvider>();
   set externalProviders(
     ListBuilder<ResolvedExternalAuthProvider>? externalProviders,
   ) => _$this._externalProviders = externalProviders;
@@ -3062,7 +2929,6 @@ class ResolvedAuthBuilder
 
   @override
   void replace(ResolvedAuth other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedAuth;
   }
 
@@ -3079,7 +2945,7 @@ class ResolvedAuthBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedAuth._(
+          _$ResolvedAuth._(
             providers: providers.build(),
             externalProviders: externalProviders.build(),
           );
@@ -3091,7 +2957,7 @@ class ResolvedAuthBuilder
         _$failedField = 'externalProviders';
         externalProviders.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedAuth',
           _$failedField,
           e.toString(),
@@ -3132,24 +2998,12 @@ class _$ResolvedEmailAuthProvider extends ResolvedEmailAuthProvider {
 
   factory _$ResolvedEmailAuthProvider([
     void Function(ResolvedEmailAuthProviderBuilder)? updates,
-  ]) => (new ResolvedEmailAuthProviderBuilder()..update(updates))._build();
+  ]) => (ResolvedEmailAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedEmailAuthProvider._({
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedEmailAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedEmailAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedEmailAuthProvider rebuild(
     void Function(ResolvedEmailAuthProviderBuilder) updates,
@@ -3157,7 +3011,7 @@ class _$ResolvedEmailAuthProvider extends ResolvedEmailAuthProvider {
 
   @override
   ResolvedEmailAuthProviderBuilder toBuilder() =>
-      new ResolvedEmailAuthProviderBuilder()..replace(this);
+      ResolvedEmailAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3214,7 +3068,6 @@ class ResolvedEmailAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedEmailAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedEmailAuthProvider;
   }
 
@@ -3230,7 +3083,7 @@ class ResolvedEmailAuthProviderBuilder
     ResolvedEmailAuthProvider._finalize(this);
     final _$result =
         _$v ??
-        new _$ResolvedEmailAuthProvider._(
+        _$ResolvedEmailAuthProvider._(
           authProviderId: BuiltValueNullFieldError.checkNotNull(
             authProviderId,
             r'ResolvedEmailAuthProvider',
@@ -3255,24 +3108,12 @@ class _$ResolvedSmsAuthProvider extends ResolvedSmsAuthProvider {
 
   factory _$ResolvedSmsAuthProvider([
     void Function(ResolvedSmsAuthProviderBuilder)? updates,
-  ]) => (new ResolvedSmsAuthProviderBuilder()..update(updates))._build();
+  ]) => (ResolvedSmsAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedSmsAuthProvider._({
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedSmsAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedSmsAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedSmsAuthProvider rebuild(
     void Function(ResolvedSmsAuthProviderBuilder) updates,
@@ -3280,7 +3121,7 @@ class _$ResolvedSmsAuthProvider extends ResolvedSmsAuthProvider {
 
   @override
   ResolvedSmsAuthProviderBuilder toBuilder() =>
-      new ResolvedSmsAuthProviderBuilder()..replace(this);
+      ResolvedSmsAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3337,7 +3178,6 @@ class ResolvedSmsAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedSmsAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedSmsAuthProvider;
   }
 
@@ -3353,7 +3193,7 @@ class ResolvedSmsAuthProviderBuilder
     ResolvedSmsAuthProvider._finalize(this);
     final _$result =
         _$v ??
-        new _$ResolvedSmsAuthProvider._(
+        _$ResolvedSmsAuthProvider._(
           authProviderId: BuiltValueNullFieldError.checkNotNull(
             authProviderId,
             r'ResolvedSmsAuthProvider',
@@ -3382,36 +3222,14 @@ class _$ResolvedGoogleAuthProvider extends ResolvedGoogleAuthProvider {
 
   factory _$ResolvedGoogleAuthProvider([
     void Function(ResolvedGoogleAuthProviderBuilder)? updates,
-  ]) => (new ResolvedGoogleAuthProviderBuilder()..update(updates))._build();
+  ]) => (ResolvedGoogleAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedGoogleAuthProvider._({
     required this.clientId,
     required this.clientSecret,
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'ResolvedGoogleAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      clientSecret,
-      r'ResolvedGoogleAuthProvider',
-      'clientSecret',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedGoogleAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedGoogleAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedGoogleAuthProvider rebuild(
     void Function(ResolvedGoogleAuthProviderBuilder) updates,
@@ -3419,7 +3237,7 @@ class _$ResolvedGoogleAuthProvider extends ResolvedGoogleAuthProvider {
 
   @override
   ResolvedGoogleAuthProviderBuilder toBuilder() =>
-      new ResolvedGoogleAuthProviderBuilder()..replace(this);
+      ResolvedGoogleAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3461,13 +3279,13 @@ class ResolvedGoogleAuthProviderBuilder
 
   ResolvedSecretBuilder? _clientId;
   ResolvedSecretBuilder get clientId =>
-      _$this._clientId ??= new ResolvedSecretBuilder();
+      _$this._clientId ??= ResolvedSecretBuilder();
   set clientId(covariant ResolvedSecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   ResolvedSecretBuilder? _clientSecret;
   ResolvedSecretBuilder get clientSecret =>
-      _$this._clientSecret ??= new ResolvedSecretBuilder();
+      _$this._clientSecret ??= ResolvedSecretBuilder();
   set clientSecret(covariant ResolvedSecretBuilder? clientSecret) =>
       _$this._clientSecret = clientSecret;
 
@@ -3496,7 +3314,6 @@ class ResolvedGoogleAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedGoogleAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedGoogleAuthProvider;
   }
 
@@ -3514,7 +3331,7 @@ class ResolvedGoogleAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedGoogleAuthProvider._(
+          _$ResolvedGoogleAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             authProviderId: BuiltValueNullFieldError.checkNotNull(
@@ -3536,7 +3353,7 @@ class ResolvedGoogleAuthProviderBuilder
         _$failedField = 'clientSecret';
         clientSecret.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedGoogleAuthProvider',
           _$failedField,
           e.toString(),
@@ -3565,7 +3382,7 @@ class _$ResolvedAppleAuthProvider extends ResolvedAppleAuthProvider {
 
   factory _$ResolvedAppleAuthProvider([
     void Function(ResolvedAppleAuthProviderBuilder)? updates,
-  ]) => (new ResolvedAppleAuthProviderBuilder()..update(updates))._build();
+  ]) => (ResolvedAppleAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedAppleAuthProvider._({
     required this.clientId,
@@ -3574,39 +3391,7 @@ class _$ResolvedAppleAuthProvider extends ResolvedAppleAuthProvider {
     required this.privateKey,
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'ResolvedAppleAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      teamId,
-      r'ResolvedAppleAuthProvider',
-      'teamId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      keyId,
-      r'ResolvedAppleAuthProvider',
-      'keyId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      privateKey,
-      r'ResolvedAppleAuthProvider',
-      'privateKey',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedAppleAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedAppleAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedAppleAuthProvider rebuild(
     void Function(ResolvedAppleAuthProviderBuilder) updates,
@@ -3614,7 +3399,7 @@ class _$ResolvedAppleAuthProvider extends ResolvedAppleAuthProvider {
 
   @override
   ResolvedAppleAuthProviderBuilder toBuilder() =>
-      new ResolvedAppleAuthProviderBuilder()..replace(this);
+      ResolvedAppleAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3662,24 +3447,23 @@ class ResolvedAppleAuthProviderBuilder
 
   ResolvedSecretBuilder? _clientId;
   ResolvedSecretBuilder get clientId =>
-      _$this._clientId ??= new ResolvedSecretBuilder();
+      _$this._clientId ??= ResolvedSecretBuilder();
   set clientId(covariant ResolvedSecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   ResolvedSecretBuilder? _teamId;
   ResolvedSecretBuilder get teamId =>
-      _$this._teamId ??= new ResolvedSecretBuilder();
+      _$this._teamId ??= ResolvedSecretBuilder();
   set teamId(covariant ResolvedSecretBuilder? teamId) =>
       _$this._teamId = teamId;
 
   ResolvedSecretBuilder? _keyId;
-  ResolvedSecretBuilder get keyId =>
-      _$this._keyId ??= new ResolvedSecretBuilder();
+  ResolvedSecretBuilder get keyId => _$this._keyId ??= ResolvedSecretBuilder();
   set keyId(covariant ResolvedSecretBuilder? keyId) => _$this._keyId = keyId;
 
   ResolvedSecretBuilder? _privateKey;
   ResolvedSecretBuilder get privateKey =>
-      _$this._privateKey ??= new ResolvedSecretBuilder();
+      _$this._privateKey ??= ResolvedSecretBuilder();
   set privateKey(covariant ResolvedSecretBuilder? privateKey) =>
       _$this._privateKey = privateKey;
 
@@ -3710,7 +3494,6 @@ class ResolvedAppleAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedAppleAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedAppleAuthProvider;
   }
 
@@ -3728,7 +3511,7 @@ class ResolvedAppleAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedAppleAuthProvider._(
+          _$ResolvedAppleAuthProvider._(
             clientId: clientId.build(),
             teamId: teamId.build(),
             keyId: keyId.build(),
@@ -3756,7 +3539,7 @@ class ResolvedAppleAuthProviderBuilder
         _$failedField = 'privateKey';
         privateKey.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedAppleAuthProvider',
           _$failedField,
           e.toString(),
@@ -3781,36 +3564,14 @@ class _$ResolvedGitHubAuthProvider extends ResolvedGitHubAuthProvider {
 
   factory _$ResolvedGitHubAuthProvider([
     void Function(ResolvedGitHubAuthProviderBuilder)? updates,
-  ]) => (new ResolvedGitHubAuthProviderBuilder()..update(updates))._build();
+  ]) => (ResolvedGitHubAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedGitHubAuthProvider._({
     required this.clientId,
     required this.clientSecret,
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      clientId,
-      r'ResolvedGitHubAuthProvider',
-      'clientId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      clientSecret,
-      r'ResolvedGitHubAuthProvider',
-      'clientSecret',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedGitHubAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedGitHubAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedGitHubAuthProvider rebuild(
     void Function(ResolvedGitHubAuthProviderBuilder) updates,
@@ -3818,7 +3579,7 @@ class _$ResolvedGitHubAuthProvider extends ResolvedGitHubAuthProvider {
 
   @override
   ResolvedGitHubAuthProviderBuilder toBuilder() =>
-      new ResolvedGitHubAuthProviderBuilder()..replace(this);
+      ResolvedGitHubAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3860,13 +3621,13 @@ class ResolvedGitHubAuthProviderBuilder
 
   ResolvedSecretBuilder? _clientId;
   ResolvedSecretBuilder get clientId =>
-      _$this._clientId ??= new ResolvedSecretBuilder();
+      _$this._clientId ??= ResolvedSecretBuilder();
   set clientId(covariant ResolvedSecretBuilder? clientId) =>
       _$this._clientId = clientId;
 
   ResolvedSecretBuilder? _clientSecret;
   ResolvedSecretBuilder get clientSecret =>
-      _$this._clientSecret ??= new ResolvedSecretBuilder();
+      _$this._clientSecret ??= ResolvedSecretBuilder();
   set clientSecret(covariant ResolvedSecretBuilder? clientSecret) =>
       _$this._clientSecret = clientSecret;
 
@@ -3895,7 +3656,6 @@ class ResolvedGitHubAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedGitHubAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedGitHubAuthProvider;
   }
 
@@ -3913,7 +3673,7 @@ class ResolvedGitHubAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedGitHubAuthProvider._(
+          _$ResolvedGitHubAuthProvider._(
             clientId: clientId.build(),
             clientSecret: clientSecret.build(),
             authProviderId: BuiltValueNullFieldError.checkNotNull(
@@ -3935,7 +3695,7 @@ class ResolvedGitHubAuthProviderBuilder
         _$failedField = 'clientSecret';
         clientSecret.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedGitHubAuthProvider',
           _$failedField,
           e.toString(),
@@ -3960,31 +3720,13 @@ class _$ResolvedFirebaseExternalAuthProvider
   factory _$ResolvedFirebaseExternalAuthProvider([
     void Function(ResolvedFirebaseExternalAuthProviderBuilder)? updates,
   ]) =>
-      (new ResolvedFirebaseExternalAuthProviderBuilder()..update(updates))
-          ._build();
+      (ResolvedFirebaseExternalAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedFirebaseExternalAuthProvider._({
     required this.projectId,
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      projectId,
-      r'ResolvedFirebaseExternalAuthProvider',
-      'projectId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedFirebaseExternalAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedFirebaseExternalAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedFirebaseExternalAuthProvider rebuild(
     void Function(ResolvedFirebaseExternalAuthProviderBuilder) updates,
@@ -3992,7 +3734,7 @@ class _$ResolvedFirebaseExternalAuthProvider
 
   @override
   ResolvedFirebaseExternalAuthProviderBuilder toBuilder() =>
-      new ResolvedFirebaseExternalAuthProviderBuilder()..replace(this);
+      ResolvedFirebaseExternalAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4034,7 +3776,7 @@ class ResolvedFirebaseExternalAuthProviderBuilder
 
   ResolvedVariableBuilder? _projectId;
   ResolvedVariableBuilder get projectId =>
-      _$this._projectId ??= new ResolvedVariableBuilder();
+      _$this._projectId ??= ResolvedVariableBuilder();
   set projectId(covariant ResolvedVariableBuilder? projectId) =>
       _$this._projectId = projectId;
 
@@ -4062,7 +3804,6 @@ class ResolvedFirebaseExternalAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedFirebaseExternalAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedFirebaseExternalAuthProvider;
   }
 
@@ -4082,7 +3823,7 @@ class ResolvedFirebaseExternalAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedFirebaseExternalAuthProvider._(
+          _$ResolvedFirebaseExternalAuthProvider._(
             projectId: projectId.build(),
             authProviderId: BuiltValueNullFieldError.checkNotNull(
               authProviderId,
@@ -4101,7 +3842,7 @@ class ResolvedFirebaseExternalAuthProviderBuilder
         _$failedField = 'projectId';
         projectId.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedFirebaseExternalAuthProvider',
           _$failedField,
           e.toString(),
@@ -4128,32 +3869,14 @@ class _$ResolvedSupabaseExternalAuthProvider
   factory _$ResolvedSupabaseExternalAuthProvider([
     void Function(ResolvedSupabaseExternalAuthProviderBuilder)? updates,
   ]) =>
-      (new ResolvedSupabaseExternalAuthProviderBuilder()..update(updates))
-          ._build();
+      (ResolvedSupabaseExternalAuthProviderBuilder()..update(updates))._build();
 
   _$ResolvedSupabaseExternalAuthProvider._({
     required this.projectUrl,
     this.jwtSecret,
     required this.authProviderId,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      projectUrl,
-      r'ResolvedSupabaseExternalAuthProvider',
-      'projectUrl',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      authProviderId,
-      r'ResolvedSupabaseExternalAuthProvider',
-      'authProviderId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedSupabaseExternalAuthProvider',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedSupabaseExternalAuthProvider rebuild(
     void Function(ResolvedSupabaseExternalAuthProviderBuilder) updates,
@@ -4161,7 +3884,7 @@ class _$ResolvedSupabaseExternalAuthProvider
 
   @override
   ResolvedSupabaseExternalAuthProviderBuilder toBuilder() =>
-      new ResolvedSupabaseExternalAuthProviderBuilder()..replace(this);
+      ResolvedSupabaseExternalAuthProviderBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4206,13 +3929,13 @@ class ResolvedSupabaseExternalAuthProviderBuilder
 
   ResolvedVariableBuilder? _projectUrl;
   ResolvedVariableBuilder get projectUrl =>
-      _$this._projectUrl ??= new ResolvedVariableBuilder();
+      _$this._projectUrl ??= ResolvedVariableBuilder();
   set projectUrl(covariant ResolvedVariableBuilder? projectUrl) =>
       _$this._projectUrl = projectUrl;
 
   ResolvedSecretBuilder? _jwtSecret;
   ResolvedSecretBuilder get jwtSecret =>
-      _$this._jwtSecret ??= new ResolvedSecretBuilder();
+      _$this._jwtSecret ??= ResolvedSecretBuilder();
   set jwtSecret(covariant ResolvedSecretBuilder? jwtSecret) =>
       _$this._jwtSecret = jwtSecret;
 
@@ -4241,7 +3964,6 @@ class ResolvedSupabaseExternalAuthProviderBuilder
 
   @override
   void replace(covariant ResolvedSupabaseExternalAuthProvider other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedSupabaseExternalAuthProvider;
   }
 
@@ -4261,7 +3983,7 @@ class ResolvedSupabaseExternalAuthProviderBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedSupabaseExternalAuthProvider._(
+          _$ResolvedSupabaseExternalAuthProvider._(
             projectUrl: projectUrl.build(),
             jwtSecret: _jwtSecret?.build(),
             authProviderId: BuiltValueNullFieldError.checkNotNull(
@@ -4283,7 +4005,7 @@ class ResolvedSupabaseExternalAuthProviderBuilder
         _$failedField = 'jwtSecret';
         _jwtSecret?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedSupabaseExternalAuthProvider',
           _$failedField,
           e.toString(),
@@ -4318,36 +4040,14 @@ class _$ResolvedDriftDatabaseSchema extends ResolvedDriftDatabaseSchema {
 
   factory _$ResolvedDriftDatabaseSchema([
     void Function(ResolvedDriftDatabaseSchemaBuilder)? updates,
-  ]) => (new ResolvedDriftDatabaseSchemaBuilder()..update(updates))._build();
+  ]) => (ResolvedDriftDatabaseSchemaBuilder()..update(updates))._build();
 
   _$ResolvedDriftDatabaseSchema._({
     required this.databaseSchemaId,
     required this.version,
     required this.$schemaJson,
     required this.type,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      databaseSchemaId,
-      r'ResolvedDriftDatabaseSchema',
-      'databaseSchemaId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      version,
-      r'ResolvedDriftDatabaseSchema',
-      'version',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      $schemaJson,
-      r'ResolvedDriftDatabaseSchema',
-      '\$schemaJson',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      type,
-      r'ResolvedDriftDatabaseSchema',
-      'type',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedDriftDatabaseSchema rebuild(
     void Function(ResolvedDriftDatabaseSchemaBuilder) updates,
@@ -4355,7 +4055,7 @@ class _$ResolvedDriftDatabaseSchema extends ResolvedDriftDatabaseSchema {
 
   @override
   ResolvedDriftDatabaseSchemaBuilder toBuilder() =>
-      new ResolvedDriftDatabaseSchemaBuilder()..replace(this);
+      ResolvedDriftDatabaseSchemaBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4432,7 +4132,6 @@ class ResolvedDriftDatabaseSchemaBuilder
 
   @override
   void replace(covariant ResolvedDriftDatabaseSchema other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedDriftDatabaseSchema;
   }
 
@@ -4447,7 +4146,7 @@ class ResolvedDriftDatabaseSchemaBuilder
   _$ResolvedDriftDatabaseSchema _build() {
     final _$result =
         _$v ??
-        new _$ResolvedDriftDatabaseSchema._(
+        _$ResolvedDriftDatabaseSchema._(
           databaseSchemaId: BuiltValueNullFieldError.checkNotNull(
             databaseSchemaId,
             r'ResolvedDriftDatabaseSchema',
@@ -4484,37 +4183,20 @@ class _$ResolvedDatabase extends ResolvedDatabase {
 
   factory _$ResolvedDatabase([
     void Function(ResolvedDatabaseBuilder)? updates,
-  ]) => (new ResolvedDatabaseBuilder()..update(updates))._build();
+  ]) => (ResolvedDatabaseBuilder()..update(updates))._build();
 
   _$ResolvedDatabase._({
     required this.databaseId,
     required this.schema,
     required this.config,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      databaseId,
-      r'ResolvedDatabase',
-      'databaseId',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      schema,
-      r'ResolvedDatabase',
-      'schema',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      config,
-      r'ResolvedDatabase',
-      'config',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedDatabase rebuild(void Function(ResolvedDatabaseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   ResolvedDatabaseBuilder toBuilder() =>
-      new ResolvedDatabaseBuilder()..replace(this);
+      ResolvedDatabaseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4576,7 +4258,6 @@ class ResolvedDatabaseBuilder
 
   @override
   void replace(ResolvedDatabase other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedDatabase;
   }
 
@@ -4591,7 +4272,7 @@ class ResolvedDatabaseBuilder
   _$ResolvedDatabase _build() {
     final _$result =
         _$v ??
-        new _$ResolvedDatabase._(
+        _$ResolvedDatabase._(
           databaseId: BuiltValueNullFieldError.checkNotNull(
             databaseId,
             r'ResolvedDatabase',
@@ -4621,24 +4302,12 @@ class _$ResolvedCelestDatabaseConfig extends ResolvedCelestDatabaseConfig {
 
   factory _$ResolvedCelestDatabaseConfig([
     void Function(ResolvedCelestDatabaseConfigBuilder)? updates,
-  ]) => (new ResolvedCelestDatabaseConfigBuilder()..update(updates))._build();
+  ]) => (ResolvedCelestDatabaseConfigBuilder()..update(updates))._build();
 
   _$ResolvedCelestDatabaseConfig._({
     required this.hostname,
     required this.token,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      hostname,
-      r'ResolvedCelestDatabaseConfig',
-      'hostname',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      token,
-      r'ResolvedCelestDatabaseConfig',
-      'token',
-    );
-  }
-
+  }) : super._();
   @override
   ResolvedCelestDatabaseConfig rebuild(
     void Function(ResolvedCelestDatabaseConfigBuilder) updates,
@@ -4646,7 +4315,7 @@ class _$ResolvedCelestDatabaseConfig extends ResolvedCelestDatabaseConfig {
 
   @override
   ResolvedCelestDatabaseConfigBuilder toBuilder() =>
-      new ResolvedCelestDatabaseConfigBuilder()..replace(this);
+      ResolvedCelestDatabaseConfigBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -4684,13 +4353,12 @@ class ResolvedCelestDatabaseConfigBuilder
 
   ResolvedVariableBuilder? _hostname;
   ResolvedVariableBuilder get hostname =>
-      _$this._hostname ??= new ResolvedVariableBuilder();
+      _$this._hostname ??= ResolvedVariableBuilder();
   set hostname(ResolvedVariableBuilder? hostname) =>
       _$this._hostname = hostname;
 
   ResolvedSecretBuilder? _token;
-  ResolvedSecretBuilder get token =>
-      _$this._token ??= new ResolvedSecretBuilder();
+  ResolvedSecretBuilder get token => _$this._token ??= ResolvedSecretBuilder();
   set token(ResolvedSecretBuilder? token) => _$this._token = token;
 
   ResolvedCelestDatabaseConfigBuilder();
@@ -4707,7 +4375,6 @@ class ResolvedCelestDatabaseConfigBuilder
 
   @override
   void replace(ResolvedCelestDatabaseConfig other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ResolvedCelestDatabaseConfig;
   }
 
@@ -4724,7 +4391,7 @@ class ResolvedCelestDatabaseConfigBuilder
     try {
       _$result =
           _$v ??
-          new _$ResolvedCelestDatabaseConfig._(
+          _$ResolvedCelestDatabaseConfig._(
             hostname: hostname.build(),
             token: token.build(),
           );
@@ -4736,7 +4403,7 @@ class ResolvedCelestDatabaseConfigBuilder
         _$failedField = 'token';
         token.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'ResolvedCelestDatabaseConfig',
           _$failedField,
           e.toString(),

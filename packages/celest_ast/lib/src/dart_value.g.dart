@@ -6,21 +6,20 @@ part of 'dart_value.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<DartString> _$dartStringSerializer = new _$DartStringSerializer();
-Serializer<DartInt> _$dartIntSerializer = new _$DartIntSerializer();
-Serializer<DartDouble> _$dartDoubleSerializer = new _$DartDoubleSerializer();
-Serializer<DartBool> _$dartBoolSerializer = new _$DartBoolSerializer();
-Serializer<DartList> _$dartListSerializer = new _$DartListSerializer();
-Serializer<DartMap> _$dartMapSerializer = new _$DartMapSerializer();
-Serializer<DartNull> _$dartNullSerializer = new _$DartNullSerializer();
-Serializer<DartRecord> _$dartRecordSerializer = new _$DartRecordSerializer();
-Serializer<DartEnum> _$dartEnumSerializer = new _$DartEnumSerializer();
-Serializer<DartInstance> _$dartInstanceSerializer =
-    new _$DartInstanceSerializer();
+Serializer<DartString> _$dartStringSerializer = _$DartStringSerializer();
+Serializer<DartInt> _$dartIntSerializer = _$DartIntSerializer();
+Serializer<DartDouble> _$dartDoubleSerializer = _$DartDoubleSerializer();
+Serializer<DartBool> _$dartBoolSerializer = _$DartBoolSerializer();
+Serializer<DartList> _$dartListSerializer = _$DartListSerializer();
+Serializer<DartMap> _$dartMapSerializer = _$DartMapSerializer();
+Serializer<DartNull> _$dartNullSerializer = _$DartNullSerializer();
+Serializer<DartRecord> _$dartRecordSerializer = _$DartRecordSerializer();
+Serializer<DartEnum> _$dartEnumSerializer = _$DartEnumSerializer();
+Serializer<DartInstance> _$dartInstanceSerializer = _$DartInstanceSerializer();
 Serializer<DartTypeLiteral> _$dartTypeLiteralSerializer =
-    new _$DartTypeLiteralSerializer();
+    _$DartTypeLiteralSerializer();
 Serializer<DartSymbolLiteral> _$dartSymbolLiteralSerializer =
-    new _$DartSymbolLiteralSerializer();
+    _$DartSymbolLiteralSerializer();
 
 class _$DartStringSerializer implements StructuredSerializer<DartString> {
   @override
@@ -56,7 +55,7 @@ class _$DartStringSerializer implements StructuredSerializer<DartString> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartStringBuilder();
+    final result = DartStringBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -119,7 +118,7 @@ class _$DartIntSerializer implements StructuredSerializer<DartInt> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartIntBuilder();
+    final result = DartIntBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -185,7 +184,7 @@ class _$DartDoubleSerializer implements StructuredSerializer<DartDouble> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartDoubleBuilder();
+    final result = DartDoubleBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -248,7 +247,7 @@ class _$DartBoolSerializer implements StructuredSerializer<DartBool> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartBoolBuilder();
+    final result = DartBoolBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -316,7 +315,7 @@ class _$DartListSerializer implements StructuredSerializer<DartList> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartListBuilder();
+    final result = DartListBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -388,7 +387,7 @@ class _$DartMapSerializer implements StructuredSerializer<DartMap> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartMapBuilder();
+    final result = DartMapBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -452,7 +451,7 @@ class _$DartNullSerializer implements StructuredSerializer<DartNull> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartNullBuilder();
+    final result = DartNullBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -520,7 +519,7 @@ class _$DartRecordSerializer implements StructuredSerializer<DartRecord> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartRecordBuilder();
+    final result = DartRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -605,7 +604,7 @@ class _$DartEnumSerializer implements StructuredSerializer<DartEnum> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartEnumBuilder();
+    final result = DartEnumBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -701,7 +700,7 @@ class _$DartInstanceSerializer implements StructuredSerializer<DartInstance> {
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartInstanceBuilder();
+    final result = DartInstanceBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -799,7 +798,7 @@ class _$DartTypeLiteralSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartTypeLiteralBuilder();
+    final result = DartTypeLiteralBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -867,7 +866,7 @@ class _$DartSymbolLiteralSerializer
     Iterable<Object?> serialized, {
     FullType specifiedType = FullType.unspecified,
   }) {
-    final result = new DartSymbolLiteralBuilder();
+    final result = DartSymbolLiteralBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -906,23 +905,15 @@ class _$DartString extends DartString {
   final TypeReference staticType;
 
   factory _$DartString([void Function(DartStringBuilder)? updates]) =>
-      (new DartStringBuilder()..update(updates))._build();
+      (DartStringBuilder()..update(updates))._build();
 
-  _$DartString._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartString', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartString',
-      'staticType',
-    );
-  }
-
+  _$DartString._({required this.value, required this.staticType}) : super._();
   @override
   DartString rebuild(void Function(DartStringBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartStringBuilder toBuilder() => new DartStringBuilder()..replace(this);
+  DartStringBuilder toBuilder() => DartStringBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -959,7 +950,7 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -977,7 +968,6 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
 
   @override
   void replace(DartString other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartString;
   }
 
@@ -994,7 +984,7 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartString._(
+          _$DartString._(
             value: BuiltValueNullFieldError.checkNotNull(
               value,
               r'DartString',
@@ -1008,7 +998,7 @@ class DartStringBuilder implements Builder<DartString, DartStringBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartString',
           _$failedField,
           e.toString(),
@@ -1028,19 +1018,15 @@ class _$DartInt extends DartInt {
   final TypeReference staticType;
 
   factory _$DartInt([void Function(DartIntBuilder)? updates]) =>
-      (new DartIntBuilder()..update(updates))._build();
+      (DartIntBuilder()..update(updates))._build();
 
-  _$DartInt._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartInt', 'value');
-    BuiltValueNullFieldError.checkNotNull(staticType, r'DartInt', 'staticType');
-  }
-
+  _$DartInt._({required this.value, required this.staticType}) : super._();
   @override
   DartInt rebuild(void Function(DartIntBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartIntBuilder toBuilder() => new DartIntBuilder()..replace(this);
+  DartIntBuilder toBuilder() => DartIntBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1077,7 +1063,7 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1095,7 +1081,6 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
 
   @override
   void replace(DartInt other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartInt;
   }
 
@@ -1112,7 +1097,7 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartInt._(
+          _$DartInt._(
             value: BuiltValueNullFieldError.checkNotNull(
               value,
               r'DartInt',
@@ -1126,7 +1111,7 @@ class DartIntBuilder implements Builder<DartInt, DartIntBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartInt',
           _$failedField,
           e.toString(),
@@ -1146,23 +1131,15 @@ class _$DartDouble extends DartDouble {
   final TypeReference staticType;
 
   factory _$DartDouble([void Function(DartDoubleBuilder)? updates]) =>
-      (new DartDoubleBuilder()..update(updates))._build();
+      (DartDoubleBuilder()..update(updates))._build();
 
-  _$DartDouble._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartDouble', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartDouble',
-      'staticType',
-    );
-  }
-
+  _$DartDouble._({required this.value, required this.staticType}) : super._();
   @override
   DartDouble rebuild(void Function(DartDoubleBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartDoubleBuilder toBuilder() => new DartDoubleBuilder()..replace(this);
+  DartDoubleBuilder toBuilder() => DartDoubleBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1199,7 +1176,7 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1217,7 +1194,6 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
 
   @override
   void replace(DartDouble other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartDouble;
   }
 
@@ -1234,7 +1210,7 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartDouble._(
+          _$DartDouble._(
             value: BuiltValueNullFieldError.checkNotNull(
               value,
               r'DartDouble',
@@ -1248,7 +1224,7 @@ class DartDoubleBuilder implements Builder<DartDouble, DartDoubleBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartDouble',
           _$failedField,
           e.toString(),
@@ -1268,23 +1244,15 @@ class _$DartBool extends DartBool {
   final TypeReference staticType;
 
   factory _$DartBool([void Function(DartBoolBuilder)? updates]) =>
-      (new DartBoolBuilder()..update(updates))._build();
+      (DartBoolBuilder()..update(updates))._build();
 
-  _$DartBool._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartBool', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartBool',
-      'staticType',
-    );
-  }
-
+  _$DartBool._({required this.value, required this.staticType}) : super._();
   @override
   DartBool rebuild(void Function(DartBoolBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartBoolBuilder toBuilder() => new DartBoolBuilder()..replace(this);
+  DartBoolBuilder toBuilder() => DartBoolBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1321,7 +1289,7 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1339,7 +1307,6 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
 
   @override
   void replace(DartBool other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartBool;
   }
 
@@ -1356,7 +1323,7 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartBool._(
+          _$DartBool._(
             value: BuiltValueNullFieldError.checkNotNull(
               value,
               r'DartBool',
@@ -1370,7 +1337,7 @@ class DartBoolBuilder implements Builder<DartBool, DartBoolBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartBool',
           _$failedField,
           e.toString(),
@@ -1390,23 +1357,15 @@ class _$DartList extends DartList {
   final TypeReference staticType;
 
   factory _$DartList([void Function(DartListBuilder)? updates]) =>
-      (new DartListBuilder()..update(updates))._build();
+      (DartListBuilder()..update(updates))._build();
 
-  _$DartList._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartList', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartList',
-      'staticType',
-    );
-  }
-
+  _$DartList._({required this.value, required this.staticType}) : super._();
   @override
   DartList rebuild(void Function(DartListBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartListBuilder toBuilder() => new DartListBuilder()..replace(this);
+  DartListBuilder toBuilder() => DartListBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1439,12 +1398,12 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
 
   ListBuilder<DartValue>? _value;
   ListBuilder<DartValue> get value =>
-      _$this._value ??= new ListBuilder<DartValue>();
+      _$this._value ??= ListBuilder<DartValue>();
   set value(ListBuilder<DartValue>? value) => _$this._value = value;
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1462,7 +1421,6 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
 
   @override
   void replace(DartList other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartList;
   }
 
@@ -1479,10 +1437,7 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartList._(
-            value: value.build(),
-            staticType: staticType.build(),
-          );
+          _$DartList._(value: value.build(), staticType: staticType.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1491,7 +1446,7 @@ class DartListBuilder implements Builder<DartList, DartListBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartList',
           _$failedField,
           e.toString(),
@@ -1511,19 +1466,15 @@ class _$DartMap extends DartMap {
   final TypeReference staticType;
 
   factory _$DartMap([void Function(DartMapBuilder)? updates]) =>
-      (new DartMapBuilder()..update(updates))._build();
+      (DartMapBuilder()..update(updates))._build();
 
-  _$DartMap._({required this.value, required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartMap', 'value');
-    BuiltValueNullFieldError.checkNotNull(staticType, r'DartMap', 'staticType');
-  }
-
+  _$DartMap._({required this.value, required this.staticType}) : super._();
   @override
   DartMap rebuild(void Function(DartMapBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartMapBuilder toBuilder() => new DartMapBuilder()..replace(this);
+  DartMapBuilder toBuilder() => DartMapBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1556,12 +1507,12 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
 
   MapBuilder<DartValue, DartValue>? _value;
   MapBuilder<DartValue, DartValue> get value =>
-      _$this._value ??= new MapBuilder<DartValue, DartValue>();
+      _$this._value ??= MapBuilder<DartValue, DartValue>();
   set value(MapBuilder<DartValue, DartValue>? value) => _$this._value = value;
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1579,7 +1530,6 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
 
   @override
   void replace(DartMap other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartMap;
   }
 
@@ -1596,7 +1546,7 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartMap._(value: value.build(), staticType: staticType.build());
+          _$DartMap._(value: value.build(), staticType: staticType.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1605,7 +1555,7 @@ class DartMapBuilder implements Builder<DartMap, DartMapBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartMap',
           _$failedField,
           e.toString(),
@@ -1623,22 +1573,15 @@ class _$DartNull extends DartNull {
   final TypeReference staticType;
 
   factory _$DartNull([void Function(DartNullBuilder)? updates]) =>
-      (new DartNullBuilder()..update(updates))._build();
+      (DartNullBuilder()..update(updates))._build();
 
-  _$DartNull._({required this.staticType}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartNull',
-      'staticType',
-    );
-  }
-
+  _$DartNull._({required this.staticType}) : super._();
   @override
   DartNull rebuild(void Function(DartNullBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartNullBuilder toBuilder() => new DartNullBuilder()..replace(this);
+  DartNullBuilder toBuilder() => DartNullBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1666,7 +1609,7 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1683,7 +1626,6 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
 
   @override
   void replace(DartNull other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartNull;
   }
 
@@ -1698,14 +1640,14 @@ class DartNullBuilder implements Builder<DartNull, DartNullBuilder> {
   _$DartNull _build() {
     _$DartNull _$result;
     try {
-      _$result = _$v ?? new _$DartNull._(staticType: staticType.build());
+      _$result = _$v ?? _$DartNull._(staticType: staticType.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartNull',
           _$failedField,
           e.toString(),
@@ -1727,36 +1669,19 @@ class _$DartRecord extends DartRecord {
   final TypeReference staticType;
 
   factory _$DartRecord([void Function(DartRecordBuilder)? updates]) =>
-      (new DartRecordBuilder()..update(updates))._build();
+      (DartRecordBuilder()..update(updates))._build();
 
   _$DartRecord._({
     required this.positionalFields,
     required this.namedFields,
     required this.staticType,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      positionalFields,
-      r'DartRecord',
-      'positionalFields',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      namedFields,
-      r'DartRecord',
-      'namedFields',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartRecord',
-      'staticType',
-    );
-  }
-
+  }) : super._();
   @override
   DartRecord rebuild(void Function(DartRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartRecordBuilder toBuilder() => new DartRecordBuilder()..replace(this);
+  DartRecordBuilder toBuilder() => DartRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1792,19 +1717,19 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
 
   ListBuilder<DartValue>? _positionalFields;
   ListBuilder<DartValue> get positionalFields =>
-      _$this._positionalFields ??= new ListBuilder<DartValue>();
+      _$this._positionalFields ??= ListBuilder<DartValue>();
   set positionalFields(ListBuilder<DartValue>? positionalFields) =>
       _$this._positionalFields = positionalFields;
 
   MapBuilder<String, DartValue>? _namedFields;
   MapBuilder<String, DartValue> get namedFields =>
-      _$this._namedFields ??= new MapBuilder<String, DartValue>();
+      _$this._namedFields ??= MapBuilder<String, DartValue>();
   set namedFields(MapBuilder<String, DartValue>? namedFields) =>
       _$this._namedFields = namedFields;
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1823,7 +1748,6 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
 
   @override
   void replace(DartRecord other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartRecord;
   }
 
@@ -1840,7 +1764,7 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartRecord._(
+          _$DartRecord._(
             positionalFields: positionalFields.build(),
             namedFields: namedFields.build(),
             staticType: staticType.build(),
@@ -1855,7 +1779,7 @@ class DartRecordBuilder implements Builder<DartRecord, DartRecordBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartRecord',
           _$failedField,
           e.toString(),
@@ -1877,28 +1801,19 @@ class _$DartEnum extends DartEnum {
   final TypeReference staticType;
 
   factory _$DartEnum([void Function(DartEnumBuilder)? updates]) =>
-      (new DartEnumBuilder()..update(updates))._build();
+      (DartEnumBuilder()..update(updates))._build();
 
   _$DartEnum._({
     required this.enumRef,
     required this.value,
     required this.staticType,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(enumRef, r'DartEnum', 'enumRef');
-    BuiltValueNullFieldError.checkNotNull(value, r'DartEnum', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartEnum',
-      'staticType',
-    );
-  }
-
+  }) : super._();
   @override
   DartEnum rebuild(void Function(DartEnumBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartEnumBuilder toBuilder() => new DartEnumBuilder()..replace(this);
+  DartEnumBuilder toBuilder() => DartEnumBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1934,7 +1849,7 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
 
   TypeReferenceBuilder? _enumRef;
   TypeReferenceBuilder get enumRef =>
-      _$this._enumRef ??= new TypeReferenceBuilder();
+      _$this._enumRef ??= TypeReferenceBuilder();
   set enumRef(TypeReferenceBuilder? enumRef) => _$this._enumRef = enumRef;
 
   String? _value;
@@ -1943,7 +1858,7 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -1962,7 +1877,6 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
 
   @override
   void replace(DartEnum other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartEnum;
   }
 
@@ -1979,7 +1893,7 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
     try {
       _$result =
           _$v ??
-          new _$DartEnum._(
+          _$DartEnum._(
             enumRef: enumRef.build(),
             value: BuiltValueNullFieldError.checkNotNull(
               value,
@@ -1997,7 +1911,7 @@ class DartEnumBuilder implements Builder<DartEnum, DartEnumBuilder> {
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartEnum',
           _$failedField,
           e.toString(),
@@ -2023,7 +1937,7 @@ class _$DartInstance extends DartInstance {
   final TypeReference staticType;
 
   factory _$DartInstance([void Function(DartInstanceBuilder)? updates]) =>
-      (new DartInstanceBuilder()..update(updates))._build();
+      (DartInstanceBuilder()..update(updates))._build();
 
   _$DartInstance._({
     required this.classRef,
@@ -2031,40 +1945,13 @@ class _$DartInstance extends DartInstance {
     required this.positionalArguments,
     required this.namedArguments,
     required this.staticType,
-  }) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-      classRef,
-      r'DartInstance',
-      'classRef',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      constructor,
-      r'DartInstance',
-      'constructor',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      positionalArguments,
-      r'DartInstance',
-      'positionalArguments',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      namedArguments,
-      r'DartInstance',
-      'namedArguments',
-    );
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartInstance',
-      'staticType',
-    );
-  }
-
+  }) : super._();
   @override
   DartInstance rebuild(void Function(DartInstanceBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartInstanceBuilder toBuilder() => new DartInstanceBuilder()..replace(this);
+  DartInstanceBuilder toBuilder() => DartInstanceBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2107,7 +1994,7 @@ class DartInstanceBuilder
 
   TypeReferenceBuilder? _classRef;
   TypeReferenceBuilder get classRef =>
-      _$this._classRef ??= new TypeReferenceBuilder();
+      _$this._classRef ??= TypeReferenceBuilder();
   set classRef(TypeReferenceBuilder? classRef) => _$this._classRef = classRef;
 
   String? _constructor;
@@ -2116,19 +2003,19 @@ class DartInstanceBuilder
 
   MapBuilder<String, DartValue>? _positionalArguments;
   MapBuilder<String, DartValue> get positionalArguments =>
-      _$this._positionalArguments ??= new MapBuilder<String, DartValue>();
+      _$this._positionalArguments ??= MapBuilder<String, DartValue>();
   set positionalArguments(MapBuilder<String, DartValue>? positionalArguments) =>
       _$this._positionalArguments = positionalArguments;
 
   MapBuilder<String, DartValue>? _namedArguments;
   MapBuilder<String, DartValue> get namedArguments =>
-      _$this._namedArguments ??= new MapBuilder<String, DartValue>();
+      _$this._namedArguments ??= MapBuilder<String, DartValue>();
   set namedArguments(MapBuilder<String, DartValue>? namedArguments) =>
       _$this._namedArguments = namedArguments;
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -2149,7 +2036,6 @@ class DartInstanceBuilder
 
   @override
   void replace(DartInstance other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartInstance;
   }
 
@@ -2166,7 +2052,7 @@ class DartInstanceBuilder
     try {
       _$result =
           _$v ??
-          new _$DartInstance._(
+          _$DartInstance._(
             classRef: classRef.build(),
             constructor: BuiltValueNullFieldError.checkNotNull(
               constructor,
@@ -2190,7 +2076,7 @@ class DartInstanceBuilder
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartInstance',
           _$failedField,
           e.toString(),
@@ -2210,25 +2096,16 @@ class _$DartTypeLiteral extends DartTypeLiteral {
   final TypeReference staticType;
 
   factory _$DartTypeLiteral([void Function(DartTypeLiteralBuilder)? updates]) =>
-      (new DartTypeLiteralBuilder()..update(updates))._build();
+      (DartTypeLiteralBuilder()..update(updates))._build();
 
   _$DartTypeLiteral._({required this.type, required this.staticType})
-    : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'DartTypeLiteral', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartTypeLiteral',
-      'staticType',
-    );
-  }
-
+    : super._();
   @override
   DartTypeLiteral rebuild(void Function(DartTypeLiteralBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DartTypeLiteralBuilder toBuilder() =>
-      new DartTypeLiteralBuilder()..replace(this);
+  DartTypeLiteralBuilder toBuilder() => DartTypeLiteralBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2261,12 +2138,12 @@ class DartTypeLiteralBuilder
   _$DartTypeLiteral? _$v;
 
   TypeReferenceBuilder? _type;
-  TypeReferenceBuilder get type => _$this._type ??= new TypeReferenceBuilder();
+  TypeReferenceBuilder get type => _$this._type ??= TypeReferenceBuilder();
   set type(TypeReferenceBuilder? type) => _$this._type = type;
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -2284,7 +2161,6 @@ class DartTypeLiteralBuilder
 
   @override
   void replace(DartTypeLiteral other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartTypeLiteral;
   }
 
@@ -2301,7 +2177,7 @@ class DartTypeLiteralBuilder
     try {
       _$result =
           _$v ??
-          new _$DartTypeLiteral._(
+          _$DartTypeLiteral._(
             type: type.build(),
             staticType: staticType.build(),
           );
@@ -2313,7 +2189,7 @@ class DartTypeLiteralBuilder
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartTypeLiteral',
           _$failedField,
           e.toString(),
@@ -2334,25 +2210,17 @@ class _$DartSymbolLiteral extends DartSymbolLiteral {
 
   factory _$DartSymbolLiteral([
     void Function(DartSymbolLiteralBuilder)? updates,
-  ]) => (new DartSymbolLiteralBuilder()..update(updates))._build();
+  ]) => (DartSymbolLiteralBuilder()..update(updates))._build();
 
   _$DartSymbolLiteral._({required this.value, required this.staticType})
-    : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'DartSymbolLiteral', 'value');
-    BuiltValueNullFieldError.checkNotNull(
-      staticType,
-      r'DartSymbolLiteral',
-      'staticType',
-    );
-  }
-
+    : super._();
   @override
   DartSymbolLiteral rebuild(void Function(DartSymbolLiteralBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   DartSymbolLiteralBuilder toBuilder() =>
-      new DartSymbolLiteralBuilder()..replace(this);
+      DartSymbolLiteralBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2390,7 +2258,7 @@ class DartSymbolLiteralBuilder
 
   TypeReferenceBuilder? _staticType;
   TypeReferenceBuilder get staticType =>
-      _$this._staticType ??= new TypeReferenceBuilder();
+      _$this._staticType ??= TypeReferenceBuilder();
   set staticType(TypeReferenceBuilder? staticType) =>
       _$this._staticType = staticType;
 
@@ -2408,7 +2276,6 @@ class DartSymbolLiteralBuilder
 
   @override
   void replace(DartSymbolLiteral other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DartSymbolLiteral;
   }
 
@@ -2425,7 +2292,7 @@ class DartSymbolLiteralBuilder
     try {
       _$result =
           _$v ??
-          new _$DartSymbolLiteral._(
+          _$DartSymbolLiteral._(
             value: BuiltValueNullFieldError.checkNotNull(
               value,
               r'DartSymbolLiteral',
@@ -2439,7 +2306,7 @@ class DartSymbolLiteralBuilder
         _$failedField = 'staticType';
         staticType.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
           r'DartSymbolLiteral',
           _$failedField,
           e.toString(),

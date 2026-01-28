@@ -238,6 +238,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
     String? projectName;
     String? projectDisplayName;
     ast.Region? projectRegion;
+    String? productionUrl;
     String? variableName;
     FileSpan? projectDefineLocation;
 
@@ -273,6 +274,11 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
               ),
             ):
               projectRegion = ast.Region.valueOf(region);
+            case NamedExpression(
+              name: Label(label: SimpleIdentifier(name: 'productionUrl')),
+              expression: SimpleStringLiteral(:final value)
+            ):
+              productionUrl = value;
             default:
               performance.captureError(
                 FormatException(
@@ -310,6 +316,7 @@ final class CelestProjectResolver with CelestAnalysisHelpers {
       // Environment is provided by the CLI flag so resolved projects target
       // the correct configuration bundle.
       displayName: projectDisplayName,
+      productionUrl: productionUrl,
       primaryRegion: projectRegion,
       reference: refer(
         variableName!,
